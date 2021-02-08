@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="schline.SchlineDAOImpl">
+
+	<!-- 과목인덱스로 과목명 가져오기 -->
+	<select id="getsubjectName" resultType="schline.ClassDTO">
+		SELECT subject_name FROM subject_tb WHERE subject_idx = #{0}
+	</select>
+	<!-- 유저아이디로 유저이름 가져오기 -->
+	<select id="getuserName" resultType="schline.UserVO">
+		SELECT user_name, user_id FROM user_tb WHERE user_id = #{0}
+	</select>
+
+	<!-- 시험문제리스트 가져오기(랜덤으로..) 10개만..추후 난이도별 과목별 추출 필요-->
+	<select id="examlist" resultType="schline.ExamDTO">
+		SELECT * FROM(SELECT * FROM exam_tb E 
+    		INNER JOIN question_tb Q ON E.exam_idx=Q.exam_idx
+			WHERE exam_type=#{0} AND subject_idx=#{1} ORDER BY DBMS_RANDOM.RANDOM)
+		WHERE ROWNUM <![CDATA[<=]]>10
+		<!-- SELECT * FROM exam_tb E 
+		    INNER JOIN question_tb Q ON E.exam_idx=Q.exam_idx
+		WHERE exam_type=#{0} ORDER BY DBMS_RANDOM.RANDOM -->
+	</select>
+	<!-- 과제 리스트 가져오기 -->
+	<select id="tasklist" resultType="schline.ExamDTO">
+		SELECT * FROM exam_tb WHERE exam_type=#{0} AND subject_idx=#{1}
+	</select>	
+	<!-- 객관식문제의 문항번호와 내용 가져오기 -->
+	<select id="questionlist" resultType="schline.ExamDTO">
+		SELECT * FROM questionlist_tb
+		<!-- select * from exam_tb E
+		    inner join question_tb Q on E.exam_idx=Q.exam_idx
+		    left outer join questionlist_tb L on Q.question_idx=L.question_idx
+		where L.question_idx=#{0} --> 
+	</select>
+	
+	<!-- 배점을 위한 idx 및 점수를 가져오는 쿼리 -->
+	<select id="scoringList" resultType="schline.ExamDTO">
+		SELECT * FROM question_tb
+	</select>
+	
+	<select id="getExam" resultType="schline.ExamDTO">
+		SELECT * FROM exam_tb WHERE exam_idx=#{0}
+	</select>
+	
+	<!-- 과제 제출용 작성 게시물 정보 가져오기 -->
+	<select id="insertTask" resultType="schline.ExamBoardDTO">
+		SELECT subject_name, user_name, exam_date, exam_name, exam_content, B.* from board_tb B
+		    JOIN subject_tb S ON B.subject_idx=S.subject_idx
+		    JOIN user_tb U ON B.user_id=U.user_id
+		    JOIN exam_tb E ON B.exam_idx=E.exam_idx
+		WHERE E.exam_idx=#{0} AND subject_idx=#{1} AND user_id=#{2} 
+	</select>
+	
+	<!-- 개인 과제물 작성(업로드) -->
+	<insert id="taskWrite">
+		INSERT INTO board_tb
+			(board_idx, subject_idx, board_type, user_id, board_title,
+			 board_content, board_file, board_flag_te, exam_idx)
+		VALUES
+			(seq_board_idx.NEXTVAL, #{_subject_idx}, 'exam', #{_user_id}, #{_board_title},
+			 #{_board_content}, #{_board_file}, 'N', #{_exam_idx}) 
+	</insert>
+		
+</mapper>

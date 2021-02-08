@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+  <mapper namespace="schline.ClassDTOImpl">
+  <select id="listCourse" resultType="schline.ClassDTO"
+  parameterType="schline.ClassDTO">
+     select Tb.* from (
+        select  R.*,s.subject_name,u.user_name from subject_tb  S
+         inner join registration_tb  R
+         on S.subject_idx = R.subject_idx 
+         inner join user_tb U
+         on s.user_id = u.user_id
+        where R.user_id = #{user_id}
+        order by regi_idx  desc 
+    ) Tb
+  </select>
+
+	<select id="listLecture" resultType="schline.VideoDTO"
+	parameterType="schline.VideoDTO">
+	select Tb.*, rownum rNum from (
+        select * from video_tb where subject_idx = #{subject_idx}
+         order by video_idx asc
+    ) Tb
+  </select>
+
+  
+  </mapper>

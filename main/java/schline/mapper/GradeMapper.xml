@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+  <mapper namespace="schline.GradeDTOImpl">
+  		
+  	  <!-- attendance_tb 와 video_tb 조인 -->
+	  <select id="listAttendance" resultType="schline.AttendanceDTO">
+	 	select Tb.*, rownum rNum from (
+		    select * from attendance_tb A
+			inner join video_tb V on A.video_idx=V.video_idx
+			where subject_idx = #{subject_idx} and user_id = #{user_id}
+			order by A.video_idx asc   
+		) Tb
+	  </select>  
+	  <!-- grade_tb 와 exam_tb 조인 -->
+	  <select id="listGrade" resultType="schline.GradeDTO">
+	 	select * from grade_tb G
+		inner join exam_tb E on G.exam_idx=E.exam_idx
+		where subject_idx = #{subject_idx} and user_id = #{user_id} and exam_scoring!=100
+		order by E.exam_idx asc 
+	  </select>  
+	  
+	  
+  </mapper>
