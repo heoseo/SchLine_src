@@ -1,5 +1,6 @@
 package schline;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -61,5 +62,12 @@ public interface SchlineDAOImpl {
 	
 	//게시물 삭제
 	public int teamDelete(String board_idx, String user_id);
+	
+	///////////////////// 교수페이지 처리 ////////////////////
+	
+	//해당 아이디가 담당하는 과목의 문제리스트 가져오기...
+	public ArrayList<ExamDTO> pexamList(String user_id);
+	//객관식
+	public ArrayList<ExamDTO> pquestionlist(String user_id);
 }
  

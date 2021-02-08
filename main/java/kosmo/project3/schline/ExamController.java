@@ -109,7 +109,6 @@ public class ExamController {
 	public String examList(Model model, HttpServletRequest req, Principal principal) {
 		/*
 		타입이 시험일때...
-		학생 정보가 필요할듯
 		*/
 		String subject_idx = req.getParameter("subject_idx");
 		System.out.println(subject_idx);
