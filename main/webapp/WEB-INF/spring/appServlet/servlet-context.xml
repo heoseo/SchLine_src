@@ -39,6 +39,13 @@
       <beans:property name="password" value="schline" />
    </beans:bean>
    
+   
+   	 <!--  JDBC를 사용하기 위한 빈 생성 --> 
+	 <beans:bean name="template"  class="org.springframework.jdbc.core.JdbcTemplate">
+	  <beans:property name="dataSource" ref="dataSource" />
+	 </beans:bean>
+   
+   
    <!-- Mybatis 빈 생성 -->
    <beans:bean id="sqlSessionFactory"
       class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -74,7 +81,7 @@
 	<beans:bean id="fileViewResolver"
 		 class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		 <beans:property name="order" value="0"/>
-	 </beans:bean>
+	</beans:bean>
 
    
 </beans:beans>

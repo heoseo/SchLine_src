@@ -17,7 +17,7 @@
 <style>
 #icon {
 	font-size: 20px;
-	text-align: center;
+	text-align: left;
 }
 #hover {
 	color: black;
@@ -34,24 +34,19 @@
 		<div class="col-sm-2 sidenav">
 			<br/>
 				<div class="list-group">
+				
+				<!-- 기존 코스★★★★★ -->
+<!-- 					<a href="./allSubject.do" class="list-group-item" id="hover" > -->
+<!-- 						<i class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i> -->
+<!-- 						<span style="text-align: center;">코스</span> -->
+<!-- 					</a> -->
 
-
-				  <div class="dropright">
-				    <button class="dropdown-toggle" type="button" data-toggle="dropdown">
+<!-- 				  <div class="dropright"> -->
+				    <a href="/schline/main/class.do" class="list-group-item">
 				    	<i class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">코스</span>
-				    <span class="caret"></span></button>
-				    <ul class="dropdown-menu">
-				      <li><a href="">HTML</a></li>
-				      <li><a href="">CSS</a></li>
-				      <li><a href="">JavaScript</a></li>
-				      <li class="divider"></li>
-				      <li><a href="">About Us</a></li>
-				    </ul>
-				  </div>
-					
-					
-					<a href="#" class="list-group-item">
+					</a>
+					<a href="/schline/main/totalTask.do" class="list-group-item">
 						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
 						<!-- 기존거★ -->
 <!-- 						<span style="text-align: center;">종합과제함</span> -->

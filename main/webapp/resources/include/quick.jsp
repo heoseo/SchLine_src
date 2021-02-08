@@ -2,56 +2,50 @@
     pageEncoding="UTF-8"%>
 <style>
 #quick {
-
-	border-radius: 5px;
-	font-size: 17px;
+	height: 100vh;
+	border-radius: 8px; 
 }
 #guick_ul {
-	list-style: none;
-	border-radius: 5px;
+    list-style: none;
+    padding-left: 0px;  
+
 }
 #guick_ul li {
+	padding-left: 50px;
+	padding-right: 50px;
 	text-align: center;
-	padding-bottom: 10px;
-		border-radius: 5px;
+	color: black;
+	font-weight: bold;
+	padding-left: 30px;
+	padding-right: 30px;
+	
 }
-#top {
-	font-size: 30px;
+.btn-group-vertical {
+	color: black;
+	font-weight: bold;
 }
-
-
-
 </style>
-
-
-<!-- <div style="position: absolute; top: 0px; right: 2px;"> -->
-<!--  	<ul id="guick_ul" class="list-group">
- 		<li><a href="#class" class="list-group-item list-group-item-action">강의실</a></li>
- 		<li><a href="#attend" class="list-group-item list-group-item-action">출결</a></li>
- 		<li><a href="#calendar" class="list-group-item list-group-item-action">캘린더</a></li>
- 		<li><a href="#homework" class="list-group-item list-group-item-action">과제함</a></li>
- 		<li><a href="#studyroom" class="list-group-item list-group-item-action">공부방</a></li>
- 	</ul> -->
-<!-- 		<div class="btn-group-vertical">
-		    <button type="button" class="btn list-group-item list-group-item-action"><a href="#class" class="list-group-item list-group-item-action">강의실</a></button><br />
-		    <button type="button" class="btn list-group-item list-group-item-action"><a href="#attend" class="list-group-item list-group-item-action">출결</a></button><br />
-		    <button type="button" class="btn list-group-item list-group-item-action"><a href="#calendar" class="list-group-item list-group-item-action">캘린더</a></button><br />
-		    <button type="button" class="btn list-group-item list-group-item-action"><a href="#homework" class="list-group-item list-group-item-action">과제함</a></button><br />
-		    <button type="button" class="btn list-group-item list-group-item-action"><a href="#studyroom" class="list-group-item list-group-item-action">공부방</a></button><br />
+<div id="quick" style="position: absolute; top: 0px; right: 2px;">
+<!-- 	<ul id="guick_ul" class="list-group"> -->
+<!-- 		<li><a href="#class" class="list-group-item list-group-item-action">강의실</a></li> -->
+<!-- 		<li><a href="#attend" class="list-group-item list-group-item-action">출결</a></li> -->
+<!-- 		<li><a href="#calendar" class="list-group-item list-group-item-action">캘린더</a></li> -->
+<!-- 		<li><a href="#homework" class="list-group-item list-group-item-action">과제함</a></li> -->
+<!-- 		<li><a href="#studyroom" class="list-group-item list-group-item-action">공부방</a></li> -->
+<!-- 	</ul> -->
+		<div class="btn-group-vertical">
+		    <button type="button" class="btn"><a href="#class" class="list-group-item list-group-item-action">강의실</a></button><br />
+		    <button type="button" class="btn"><a href="#attend" class="list-group-item list-group-item-action">출결</a></button><br />
+		    <button type="button" class="btn"><a href="#calendar" class="list-group-item list-group-item-action">캘린더</a></button><br />
+		    <button type="button" class="btn"><a href="#homework" class="list-group-item list-group-item-action">과제함</a></button><br />
+		    <button type="button" class="btn"><a href="#studyroom" class="list-group-item list-group-item-action">공부방</a></button><br />
 		   
- 		</div> -->
+  		</div>
+  		<div align="center">
+		   <a href="#top"><img alt="top" src="resources/images/top_btn.gif" /></a>  		
+  		</div>
+</div>
 
-	<div id="quick" style="position: absolute; top: 0px; right: 2px;">
-		<ul id="guick_ul">
-			<li><a href="#class" class="button" style="border: solid 3px;">강의실</a></li>
-			<li><a href="#attend" class="button" style="border: solid 3px;">출결</a></li>
-			<li><a href="#calendar" class="button" style="border: solid 3px;">캘린더</a></li>
-			<li><a href="#homework" class="button" style="border: solid 3px;">종합과제함</a></li>
-			<li><a href="#studyroom" class="button" style="border: solid 3px;">공부방</a></li>
-			<li><a href="#top" style="border: solid 3px;"><img alt="top" src="resources/images/top_btn.gif" id="top" /></a></li>
-			
-		</ul>
-	</div>
 
 
 <script type="text/javascript" language="javascript">
@@ -115,6 +109,6 @@ function initMoving(target, position, topLimit, btmLimit) {
 	 }, 30)
 	}
 	
-	initMoving(document.getElementById("quick"), 282, 0);
+	initMoving(document.getElementById("quick"), 203, 0);
 	/* function initMoving(target, position, topLimit, btmLimit) */ 
 </script>

@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
 import javax.websocket.OnMessage;
@@ -55,13 +56,22 @@ public class EchoHandler extends TextWebSocketHandler{
     //클라이언트 연결
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
+    	
     	System.out.println(session.getId()+"웹소켓 채팅 연결됨");
     	
+//    	HttpSession ses = new EchoHandler();
     	//Set컬렉션에 사용자 세션아이디 추가
 //    	clients.add(session);
         sessionList.add(session); //List사용시
         logger.info("{} 연결됨", session.getId());
+//        logger.info("{} 연결됨", session.getId());
         logger.info("연결IP: "+session.getRemoteAddress().getHostName());
+        
+        
+        /*
+        getCreateTime : 생성된 시간을 반환해주는 메소드입니다.
+		getLastAccessedTime : 마지막으로 세션을 access한 시간을 반환해줍니다.
+         */
     }
     
    
@@ -78,18 +88,31 @@ public class EchoHandler extends TextWebSocketHandler{
         synchronized (sessionList) {
         	System.out.println("메세지전송 실행");
         	logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
-        	
+//        	logger.info("{}로 부터 {} 받음", session.getId(), message.getPayload());
+        	 
+        	//sessionList에 저장된 아이디값은 임시로 생성된 값인데 어떻게 user_id로 변환해서 뿌려주지??★★★★★★
         	//모든 유저에게 메세지 출력
         	for(WebSocketSession user : sessionList){
+        		
+        		//귓속말 전송. 명령어가 @로 시작할때
+//        		if(message.getPayload().startsWith("@")) {
+//        			if(message.getPayload().startsWith("@"+user)) {
+//        				user.sendMessage(new TextMessage(message.getPayload()));
+//        			}
+//        		}
+//        		//신고할때
+//        		else if(message.getPayload().startsWith("/")) {
+//        			if(message.getPayload().startsWith("/"+user)) {
+//        				//관리자페이지로 신고내용이 전달된다.
+////        				user.sendMessage(new TextMessage(message.getPayload()));
+//        			}
+//        		}
         		//보낸 사용자는 받지않는 조건문
         		if (!session.getId().equals(user.getId())) {//user아니고 user.getId()로 해줘야함!!!
         			user.sendMessage(new TextMessage(message.getPayload()));
         		}
         	}
         }
-//        for(WebSocketSession sess : sessionList){
-//        	sess.sendMessage(new TextMessage(message.getPayload()));
-//        }
     }
     
     
@@ -106,11 +129,7 @@ public class EchoHandler extends TextWebSocketHandler{
     }
     
 	
-	
-	
-	
-	
-	
+
 	
 //	private static final List<Session> sessionList=new ArrayList<Session>();
 //	private static final Logger logger = LoggerFactory.getLogger(EchoHandler.class); 
@@ -118,7 +137,8 @@ public class EchoHandler extends TextWebSocketHandler{
 //
 //	
 //	@OnOpen 
-//	public void onOpen(Session session) {
+//	public void onOpen(Session session, HttpSession ses) {
+//		
 //		logger.info("Open session id:"+session.getId()); 
 //		try {
 //			final Basic basic=session.getBasicRemote();
@@ -168,7 +188,7 @@ public class EchoHandler extends TextWebSocketHandler{
 //		sessionList.remove(session);
 //	} 	
 //	
-	
+//	
 	
 	
 	

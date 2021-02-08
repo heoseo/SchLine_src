@@ -2,11 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
-
-
 <!-- 상단 인클루드 -->
-
 
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -56,7 +52,7 @@ if(session.getAttribute("user_id") != null){
 	
 	if(!request.getRequestURI().contains("accessDenied")){
 	
-%>	
+%>
 					<!-- 글 안적을거같으니 일단 주석처리 -->
 <!-- 					<p>Just another free, fully responsive site template<br /> -->
 <!-- 						built by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a>.</p> -->
@@ -71,28 +67,19 @@ if(session.getAttribute("user_id") != null){
 		<!-- Nav -->
 			<nav id="nav">
 				<ul>
-    				<li class="nav-item dropdown">
-						<a href="/schline/main/class.do" class="nav-link dropdown-toggle" data-toggle="dropdown">
+    				<li class="nav-item">
+						<a href="/schline/main/class.do">
 						강의실
 						</a>
-						<div class="dropdown-menu">
-					        <a class="dropdown-item" href="/schline/main/class.do">코스</a>
-					        <a class="dropdown-item" href="">종합과제함</a>
-				      	</div>
 					</li>
 					
-	 				<li class="nav-item dropdown">
-						<a href="<%=request.getContextPath() %>/schedule/alertList.do"
-						class="nav-link dropdown-toggle" data-toggle="dropdown">
+	 				<li class="nav-item">
+						<a href="<%=request.getContextPath() %>/schedule/alertList.do" >
 						일정</a>
-						<div class="dropdown-menu">
- 					        <a class="dropdown-item" href="<%=request.getContextPath() %>/schedule/alertList.do">알림</a>
-					        <a class="dropdown-item" href="<%=request.getContextPath() %>/schedule/calendar.do">캘린더</a>
-					    </div>
 					</li>
 					
 						<li><a href="<%=request.getContextPath() %>/class/studyRoom.do">공부방</a></li>
-						<li><a href="">계정</a></li>
+						<li><a href="/schline/user/userinfo.do">계정</a></li>
 						<li><a href="javascript:document.logout.submit()">로그아웃</a></li>
 				</ul>
 			</nav>
@@ -100,6 +87,8 @@ if(session.getAttribute("user_id") != null){
 			<form:form method="post"
 					action="${pageContext.request.contextPath }/member/logout" name="logout">
 			</form:form>
+				</ul>
+			</nav>
 			
 			<!-- 기존 네비 -->
 <!-- 			<nav id="nav"> -->
@@ -110,9 +99,9 @@ if(session.getAttribute("user_id") != null){
 <!-- 					<li><a href=""><h3>계정</h3></a></li> -->
 <!-- 				</ul> -->
 <!-- 			</nav> -->
-			<br />			
-
+			<br />	
+			
 <%
 	}
 }
-%>
+%>		

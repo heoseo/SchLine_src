@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- Ajax를 통해 과목정보를 가져와서 과제를 제출할 수 있도록 할것입니다! -->
 <div class="table-wrapper">
 <script type="text/javascript">
@@ -47,8 +48,9 @@ $(function(){
 					//성공시
 					alert('과제제출성공');
 				}
+				location.reload();
 				//과제작성란을 닫는다	
-				document.getElementById("taskWrite").innerHTML = "";
+				//document.getElementById("taskWrite").innerHTML = "";
 			},
 			error : function(e){//실패콜백메소드
 				alert("실패"+e);
@@ -58,7 +60,7 @@ $(function(){
 });
 </script>
 	<span style="display:block; text-align:center; font-size:1.3em;"><b>[제출 양식]</b></span><br />
-	<form name="taskFrm" method="post"  enctype="multipart/form-data">
+	<form:form name="taskFrm" method="post"  enctype="multipart/form-data">
 		 
 		<table class="alt" style="text-align:center;">
 			<tbody>
@@ -90,7 +92,7 @@ $(function(){
 				</tr>
 				<tr>
 					<td>내용</td>
-					<td colspan="3"><textarea name="board_content" style="height:200px;"></textarea></td>
+					<td colspan="3" style="height:300px"><textarea name="board_content" style="height:100%;"></textarea></td>
 				</tr>
 				<tr>
 					<td>파일첨부1</td>
@@ -114,5 +116,5 @@ $(function(){
 		<!-- 유저 아이디는 추후 세션(?)에서 가져올것 -->
 		<input type="hidden" name="user_id" value="${map.user_id }" />
 		<input type="hidden" name="exam_name" value="${map.exam_name }" />
-	</form>
+	</form:form>
 </div>

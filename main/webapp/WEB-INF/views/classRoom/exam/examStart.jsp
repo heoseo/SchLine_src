@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>시험 </title>
+<title>empty페이지 </title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
 
@@ -23,9 +23,9 @@
  
  <div style="text-align:center">
  <table><tr><td>
-    <h2><b>과목 : ${map.subject_name }</b></h2>
+    <h2><b>과목 : JAVA</b></h2>
     <!-- 과목별 값 받아오고..리스트 페이지에서 과제or시험 플래그를 활용하면 한 페이지로 컨트롤 가능할것 같음..보류 -->
-    <a href="../class/examList.do?subject_idx=${param.subject_idx }">
+    <a href="../class/examList.do">
     	<img src="<%=request.getContextPath() %>/resources/images/examimage.jpg" alt="시험" />
     </a>
 </td></tr></table>

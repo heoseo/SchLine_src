@@ -14,7 +14,7 @@
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
    <div style="text-align: center;">
-      <small>성적</small><!-- flag구분예정-->
+      <small>계정 메인</small><!-- flag구분예정-->
    </div>
    <hr /><!-- 구분자 -->
 	
@@ -46,10 +46,10 @@
 						<tr align="center" >
 							<c:forEach items="${attenlists }" var="row">
 										<td class="text-center">
-											<c:if test="${row.attendance_flag==3 }">
+											<c:if test="${row.attendance_flag==2 }">
 											O
 											</c:if>
-											<c:if test="${row.attendance_flag!=3 }">
+											<c:if test="${row.attendance_flag!=2 }">
 											X
 											</c:if>											
 										</td>

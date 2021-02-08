@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,136 +11,132 @@
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
 <style>
-#list {
-	border-radius: 10px;
-	border: solid 1px #A091B7;
-	background: #F7F7F7;
+#category {
 }
-#lista {
-	font-size: 20px;
-	font-weight: bold;
-	margin-left: 10px;
+#selectSapn {
+	border: solid;
+	width: 10px;
 }
-
-#iconAlert {
-	text-align: left;
-	margin-left: 30px;
+#searchDiv {
+	border: solid;
+	font-size: 0px;
 }
-/* #badge { */
-/* 	border-radius: 20px; */
-/* 	background: #87CEEB; */
-/* 	margin-left: 10px; */
-/* 	padding-left: 5px; */
-/* 	padding-right: 5px; */
-
-/* } */
+#listDate {text-align: right;}
 </style>
+
+<script>
+$(function(){	
+
+	//셀렉트박스에 onchange 이벤트 생성.
+	$('#selectBoard').change(function(){
+		alert("에젝체인지");
+		//셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소"를 함수로 전달.
+		
+		
+		//아잭스 셀렉트 체인지시.
+		$.ajax({
+			//내부 서블릿으로 요청을 전송함.
+			url : "../schedule/ajaxNoticeRead.do",
+			type : "post",
+			data :
+				{ type : $('#content option:selected').val() },
+			dateType : "html",
+			contentType : "application/x-www-form-urlencoded;chatset:utf-8",
+			beforeSend : function(xhr){
+	            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+	           },
+			success : function(Date) {
+				$("#content").html("");
+				$("#content").html(Date);
+				},
+			error : function(request,status,error) {
+				//확인하기
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+
+		        		"\n"+"error:"+error);
+			}
+		});
+		
+		
+		
+	});
+});
+
+</script>
+
 </head>
+
+<!-- 내용입력부분. 클래스속성 건드리지말것 -->
+<!-- <div class="col-lg-10"> -->
+<!-- <div class="container"> -->
+
 <!-- body 시작 -->
 <body class="is-preload">
 	<!-- 왼쪽메뉴 include -->
 	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
-
+	
+	<div id="main"><!-- mainDiv시작 -->
 	<hr />
-	<div class="col-lg-12" id="list" style="font-size: 5px;">
-	<br />
-
-		<script>
-
-			/* 
-			    open() : 광고나 공지사항을 게시할 팝업창을 열고싶을때
-			        주로 사용하는 함수.
-			        형식] window.open(창의경로, 창의이름, 창의속성(모양, 크기, 위치 등));
-			        -창의이름을 지정하지 않으면 동일한 창이 여러개 띄워질수도 있다.
-			        -창의이름이 동일하면 여러개의 창이 하나의 창에 띄워질수도 있다.
-			*/ 
-	        function noticeRead(){
-	            /*
-	            screen객체를 통해 사용하는 모니터의 해상도를 얻어올수있다.
-	           	 해상도와 팝업창의 크기를 이용하여 가운데로 위치를 지정한다.
-	            */
-	            var s_width = window.screen.width;
-	            var s_height = window.screen.height;
-	            
-	            var leftVar = s_width/2 - 300/2;
-	            var topVar = s_height/2 - 300/2;
-	            window.open("<%=request.getContextPath() %>/schedule/alertNoticeRead.do", "popup", 
-	                "width=800,height=800,left="+leftVar+",top="+ topVar);
-	        }
-	        function alertNoticeNotRead(){
-	            /*
-	            screen객체를 통해 사용하는 모니터의 해상도를 얻어올수있다.
-	           	 해상도와 팝업창의 크기를 이용하여 가운데로 위치를 지정한다.
-	            */
-	            var s_width = window.screen.width;
-	            var s_height = window.screen.height;
-	            
-	            var leftVar = s_width/2 - 300/2;
-	            var topVar = s_height/2 - 300/2;
-	            window.open("<%=request.getContextPath() %>/schedule/alertNoticeNotRead.do", "popup", 
-	                "width=800,height=800,left="+leftVar+",top="+ topVar);
-	        }
-	        function correction(){
-	            /*
-	            screen객체를 통해 사용하는 모니터의 해상도를 얻어올수있다.
-	           	 해상도와 팝업창의 크기를 이용하여 가운데로 위치를 지정한다.
-	            */
-	            var s_width = window.screen.width;
-	            var s_height = window.screen.height;
-	            
-	            var leftVar = s_width/2 - 300/2;
-	            var topVar = s_height/2 - 300/2;
-	            window.open("<%=request.getContextPath() %>/schedule/correction.do", "popup", 
-	                "width=800,height=800,left="+leftVar+",top="+ topVar);
-	        }
-	        function deadLine(){
-	            /*
-	            screen객체를 통해 사용하는 모니터의 해상도를 얻어올수있다.
-	           	 해상도와 팝업창의 크기를 이용하여 가운데로 위치를 지정한다.
-	            */
-	            var s_width = window.screen.width;
-	            var s_height = window.screen.height;
-	            
-	            var leftVar = s_width/2 - 300/2;
-	            var topVar = s_height/2 - 300/2;
-	            window.open("<%=request.getContextPath() %>/schedule/deadLine.do", "popup", 
-	                "width=800,height=800,left="+leftVar+",top="+ topVar);
-	        }
-	    </script>
-	    
-	    <div style="font-weight:bold; text-align:center; font-size: 30px;">알림</div>
-	    <div>&nbsp</div>
-
-		<a class="list-group-item" onclick="noticeRead();" id="lista">
-			<i class="fas fa-envelope-open-text" id="iconAlert" style="font-size: 40px">&nbsp&nbsp</i>
-			<span style="text-align: center;">과제공지 읽음</span>
-			<span class="badge badge-pill badge-danger" id="badge">7</span>
-		</a>
-
-		
-		<a class="list-group-item" onclick="alertNoticeNotRead();" id="lista"> 
-			<i class="fas fa-envelope-square" id="iconAlert" style="font-size: 40px">&nbsp&nbsp</i> 
-			<span style="text-align: center;">과제공지 안 읽음</span>
-			<span class="badge badge-pill badge-danger" id="badge">7</span>
-		</a>
-
-		<a class="list-group-item" onclick="correction();" id="lista"> 
-			<i class="fas fa-edit" id="iconAlert" style="font-size: 40px">&nbsp&nbsp</i> 
-			<span style="text-align: center;">다변수미적분-정정</span>
-			<span class="badge badge-pill badge-danger" id="badge">7</span>
-		</a>
- 
-		<a class="list-group-item" onclick="deadLine();" id="lista"> 
-			<i class="fas fa-exclamation-triangle" id="iconAlert" style="font-size: 40px">&nbsp&nbsp</i>
-			<span style="text-align: center;">화학2주차 과제 마감 3시간 전!!!</span>
-			<span class="badge badge-pill badge-danger" id="badge">7</span>
-		</a>
+		<select name="selectBoard" id="selectBoard" class="col-sm-4">
+			<option value="allBoard" >전부</option>
+			<option value="notiRead">읽은 공지 알림</option>
+			<option value="notiNotRead">안읽은 공지 알림</option>
+			<option value="task">과제</option>
+			<option value="exam">시험</option>
+		</select>
 		<br />
 
+<!-- 		<div id="searchDiv" class="col-sm-4"> -->
+<!-- 			<form method="get"> -->
+<!-- 				<select name="searchField"> -->
+<!-- 					<option value="contents">내용</option> -->
+<!-- 					<option value="name">작성자</option> -->
+<!-- 				</select> -->
+<!-- 				<input type="text" name="searchTxt"/> -->
+<!-- 				<input type="submit" value="검색" /> -->
+<!-- 			</form> -->
+<!-- 		</div> -->
 
-	</div>
-	<!-- list끝 -->
 
+
+		<div class="row" id="content">
+
+<!-- 읽은 공지사항 리스트 출력하기 -->
+<c:forEach items="${allLists }" var="row">
+				
+			<table style="height: 10px;">
+				<tr id="listTr">
+					<td id="contentTd">
+						<div id="listTitle">
+							글확인여부 : ${row.CHECK_FLAG }
+						</div>
+						<div id="listTitle">
+							공지제목 : ${row.TITLE }
+						</div>
+						<div id="listContent">
+							내용 : ${row.CONTENT }
+						</div>
+						<div id="listDate">
+							게시일 : ${row.POSTDATE }
+						</div>
+					</td>
+				</tr>
+			</table>
+				
+</c:forEach>
+			<!-- 방명록 반복 부분 e -->
+			<ul class="pagination justify-content-center">
+				${pagingImg }
+			</ul>
+		
+		
+		</div>
+<!-- 읽은 공지사항 리스트 끝.-->
+
+	
+
+	
+	
+	</div><!-- mainDiv끝 -->
 
 	<jsp:include page="/resources/include/bottom.jsp" />
 </body>

@@ -2,19 +2,54 @@ package schline;
 
 //출석체크용
 public class AttendanceDTO {
-	private int attendance_idx;
+	private String attendance_idx;
 	private String user_id;
 	private String video_idx;
-	private int play_time;
-	private int attendance_flag;
+	private String play_time;
+	private String attendance_flag;
+	private String currenttime;
 	//비디오 테이블 참조용 인덱스 추가
 	private String subject_idx;
 	private String video_postdate;
 	private String video_title;
 	private String video_end;
 	private String rnum;
-	
-	
+	public String getAttendance_idx() {
+		return attendance_idx;
+	}
+	public void setAttendance_idx(String attendance_idx) {
+		this.attendance_idx = attendance_idx;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public String getVideo_idx() {
+		return video_idx;
+	}
+	public void setVideo_idx(String video_idx) {
+		this.video_idx = video_idx;
+	}
+	public String getPlay_time() {
+		return play_time;
+	}
+	public void setPlay_time(String play_time) {
+		this.play_time = play_time;
+	}
+	public String getAttendance_flag() {
+		return attendance_flag;
+	}
+	public void setAttendance_flag(String attendance_flag) {
+		this.attendance_flag = attendance_flag;
+	}
+	public String getCurrenttime() {
+		return currenttime;
+	}
+	public void setCurrenttime(String currenttime) {
+		this.currenttime = currenttime;
+	}
 	public String getSubject_idx() {
 		return subject_idx;
 	}
@@ -45,36 +80,7 @@ public class AttendanceDTO {
 	public void setRnum(String rnum) {
 		this.rnum = rnum;
 	}
-	public int getAttendance_idx() {
-		return attendance_idx;
-	}
-	public void setAttendance_idx(int attendance_idx) {
-		this.attendance_idx = attendance_idx;
-	}
-	public String getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-	public String getVideo_idx() {
-		return video_idx;
-	}
-	public void setVideo_idx(String string) {
-		this.video_idx = string;
-	}
-	public int getPlay_time() {
-		return play_time;
-	}
-	public void setPlay_time(int play_time) {
-		this.play_time = play_time;
-	}
-	public int getAttendance_flag() {
-		return attendance_flag;
-	}
-	public void setAttendance_flag(int attendance_flag) {
-		this.attendance_flag = attendance_flag;
-	}
-
+	
+	
 	
 }

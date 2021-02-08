@@ -1,27 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>   
+
+<!--
+2021.02.02
+1) ★★★인클루드 메뉴바 링크는 각자 넣어주세요!!!★★
+2) ★★★각 view페이지 smail태그 안에있는 타이틀 일단 주석처리 해주세요(깔끔하게 스타일 변경)
+ -->
 
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
-<!-- 나머지 head속성은 인클루드에 있어요 -->
-<!-- 상단  인클루드 : 메뉴별 페이지 이동설정 해야함★★★★★★-->
-<%@ include file="/resources/include/top.jsp"%>
+		<title>스쿨라인 메인</title>
 
+<%@ include file="/resources/include/top.jsp" %>
+<br /><br /><br /><br /><br /><br />
+<%-- <form:form method="post" action="${pageContext.request.contextPath }" > --%>
+<%-- 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
+<!-- 	<input type="submit" value="로그아웃" /> -->
+<%-- </form:form> --%>
 
-<body class="is-preload" >
+<!-- /////////////////////Main시작////////////////////// -->
+<body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
+	
 	<div id="main">
 	
-	<br /><br /><br /><br />
+
+<br /><br /><br /><br />
 	<c:choose>
 		<c:when test="${not empty user_id }">
 			${user_id}님, 하이룽~^^*
 			
 			<form:form method="post"
-					action="${pageContext.request.contextPath }/member/logout">
+					action="${pageContext.request.contextPath }/security2/logout">
 					
 					<input type="submit" value="로그아웃" />
 			</form:form>
@@ -31,7 +43,7 @@
 				default로 /login으로 지정되므로  아래와같이 value="/login"으로 한다.
 <%-- 			<c:url value="/login" var="loginUrl"/> --%>
 			-->
-			<c:url value="/loginAction" var="loginUrl"/>
+			<c:url value="/login" var="loginUrl"/>
 			<form:form name="loginFrm" action="${loginUrl }" method="post">
 				<c:if test="${param.error != null }">
 					<p>아이디와 패스워드가 잘못되었습니다.</p>
@@ -55,9 +67,16 @@
 	</c:choose>
 
 
-	</div>
-</body>
 
-<!-- 하단 인클루드 -->
-<jsp:include page="/resources/include/footer.jsp" />
+
+	</div>
+		
+	<!-- 메인 퀵바 -->
+	<%@ include file="/resources/include/quick.jsp"%>
+	<!-- /////////////////////메인끝////////////////////// -->
+		</body>
+		
+	<!-- 하단 인클루드 -->
+	<jsp:include page="/resources/include/footer.jsp"/>
+
 </html>

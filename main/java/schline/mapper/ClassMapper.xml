@@ -25,5 +25,39 @@
     ) Tb
   </select>
 
-  
+	<select id="listVideo" resultType="schline.VideoDTO" parameterType="String">
+	select Tb.*, rownum rNum from (
+        select V.* from video_tb V
+        inner join subject_tb S
+        on v.subject_idx = s.subject_idx
+        where user_id = #{user} order by video_idx asc
+    ) Tb
+	</select>
+	<select  id="whatsub_id" resultType="String" parameterType="String">
+		select subject_idx from subject_tb where user_id = #{idx}
+	</select>
+	<insert id="upvid">
+	INSERT 	INTO video_tb values 
+	(seq_video_idx.nextval, #{idx}, sysdate, #{title}, #{end} ,#{server}) 
+  </insert>
+  <select  id="modilist" resultType="schline.VideoDTO" parameterType="String">
+  select Tb.*, rownum rNum from (
+        select * from video_tb where video_idx = #{idx}
+    ) Tb
+  </select>
+   <update id="modivid" parameterType="String">
+  update video_tb
+    set VIDEO_TITLE=#{title}, VIDEO_END=#{end},server_saved=#{server} where VIDEO_IDX=#{idx}
+  </update>
+   <delete id="deletevid">
+   delete from video_tb where video_idx = #{vid_idx}
+  </delete>
+	<update id="atupdatedb" parameterType="schline.AttendanceDTO">
+	update  attendance_tb set play_time =#{play_time}, 
+	attendance_flag =#{attendance_flag}, currenttime =#{currenttime}
+	 where user_id = #{user_id} and video_idx = #{video_idx}
+	</update>
+	<select id="selectat" resultType="schline.AttendanceDTO">
+	select * from attendance_tb where user_id = #{user} and video_idx = #{idx}
+	</select>
   </mapper>

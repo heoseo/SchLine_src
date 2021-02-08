@@ -14,7 +14,7 @@
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoomMain.jsp"/><!-- flag구분예정 -->
    <div style="text-align: center;">
-<!--       <small>코스</small>flag구분예정 -->
+      <small>코스</small><!-- flag구분예정-->
    </div>
    <hr /><!-- 구분자 -->
    
@@ -25,9 +25,7 @@
 					<h6>과목번호:${row.subject_idx }</h6>					
 					<h4><a href="../class/time.do?subject_idx=${row.subject_idx }">&emsp;${row.subject_name }</a></h4>
 					<h6 style="text-align:right ">${row.user_name }&emsp;</h6>
-				</div>
-				
-				
+				</div>		
 			</div>
 		</div>
 	</c:forEach>

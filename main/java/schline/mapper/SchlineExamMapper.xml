@@ -13,29 +13,54 @@
 	<select id="getuserName" resultType="schline.UserVO">
 		SELECT user_name, user_id FROM user_tb WHERE user_id = #{0}
 	</select>
+	<!-- 과목의 시험,과제 정보 가져오기 -->
+	<select id="getExamidx" resultType="Integer">
+		SELECT exam_idx from exam_tb WHERE subject_idx = #{0} AND exam_type = #{1}
+	</select>
 
-	<!-- 시험문제리스트 가져오기(랜덤으로..) 10개만..추후 난이도별 과목별 추출 필요-->
-	<select id="examlist" resultType="schline.ExamDTO">
-		SELECT * FROM(SELECT * FROM exam_tb E 
+	<!-- 과제,시험 플래그 -->
+	<select id="getCheck" resultType="int">
+		SELECT check_flag FROM examcheck_tb WHERE exam_idx = #{0} AND user_id = #{1}
+	</select>
+	
+	<!-- 시험문제리스트 가져오기(랜덤으로..) 문항수 10개(난이도2 5개 난이도3 5개)로 설정 -->
+	<select id="examlist" resultType="schline.ExamDTO" parameterType="java.util.Map">
+		SELECT Tb.*, ROWNUM rNum FROM
+			(
+	    	SELECT * FROM question_tb WHERE question_score=3 AND exam_idx IN
+	    	<foreach collection="examidxs" item="idx" open="(" close=")" separator=",">
+	    		#{idx}
+	    	</foreach>
+	    	ORDER BY DBMS_RANDOM.RANDOM
+	    	) Tb
+	    WHERE ROWNUM <![CDATA[<=]]> 5
+		UNION
+		SELECT Tb.*, ROWNUM rNum FROM
+			(
+	    	SELECT * FROM question_tb WHERE question_score=2 AND exam_idx IN
+ 		    <foreach collection="examidxs" item="idx" open="(" close=")" separator=",">
+	    		#{idx}
+	    	</foreach>
+	    	ORDER BY DBMS_RANDOM.RANDOM
+	    	)Tb 
+	    WHERE ROWNUM <![CDATA[<=]]> 5
+	
+		<!-- SELECT * FROM(SELECT * FROM exam_tb E 
     		INNER JOIN question_tb Q ON E.exam_idx=Q.exam_idx
 			WHERE exam_type=#{0} AND subject_idx=#{1} ORDER BY DBMS_RANDOM.RANDOM)
-		WHERE ROWNUM <![CDATA[<=]]>10
-		<!-- SELECT * FROM exam_tb E 
-		    INNER JOIN question_tb Q ON E.exam_idx=Q.exam_idx
-		WHERE exam_type=#{0} ORDER BY DBMS_RANDOM.RANDOM -->
+		WHERE ROWNUM <![CDATA[<=]]>10 -->
+
 	</select>
+	<!-- 객관식문제의 문항번호와 내용 가져오기 -->
+	<select id="questionlist" resultType="schline.ExamDTO">
+		SELECT * FROM questionlist_tb
+
+	</select>
+	
 	<!-- 과제 리스트 가져오기 -->
 	<select id="tasklist" resultType="schline.ExamDTO">
 		SELECT * FROM exam_tb WHERE exam_type=#{0} AND subject_idx=#{1}
 	</select>	
-	<!-- 객관식문제의 문항번호와 내용 가져오기 -->
-	<select id="questionlist" resultType="schline.ExamDTO">
-		SELECT * FROM questionlist_tb
-		<!-- select * from exam_tb E
-		    inner join question_tb Q on E.exam_idx=Q.exam_idx
-		    left outer join questionlist_tb L on Q.question_idx=L.question_idx
-		where L.question_idx=#{0} --> 
-	</select>
 	
 	<!-- 배점을 위한 idx 및 점수를 가져오는 쿼리 -->
 	<select id="scoringList" resultType="schline.ExamDTO">
@@ -43,26 +68,87 @@
 	</select>
 	
 	<select id="getExam" resultType="schline.ExamDTO">
-		SELECT * FROM exam_tb WHERE exam_idx=#{0}
+		SELECT * FROM exam_tb WHERE subject_idx=#{0} AND exam_idx=#{1}
 	</select>
 	
-	<!-- 과제 제출용 작성 게시물 정보 가져오기 -->
-	<select id="insertTask" resultType="schline.ExamBoardDTO">
-		SELECT subject_name, user_name, exam_date, exam_name, exam_content, B.* from board_tb B
-		    JOIN subject_tb S ON B.subject_idx=S.subject_idx
-		    JOIN user_tb U ON B.user_id=U.user_id
-		    JOIN exam_tb E ON B.exam_idx=E.exam_idx
-		WHERE E.exam_idx=#{0} AND subject_idx=#{1} AND user_id=#{2} 
+	<select id="getView" resultType="schline.ExamBoardDTO">
+		SELECT * FROM board_tb WHERE board_idx=#{0}
 	</select>
 	
 	<!-- 개인 과제물 작성(업로드) -->
 	<insert id="taskWrite">
 		INSERT INTO board_tb
 			(board_idx, subject_idx, board_type, user_id, board_title,
-			 board_content, board_file, board_flag_te, exam_idx)
+			 board_content, board_file, exam_idx)
 		VALUES
 			(seq_board_idx.NEXTVAL, #{_subject_idx}, 'exam', #{_user_id}, #{_board_title},
-			 #{_board_content}, #{_board_file}, 'N', #{_exam_idx}) 
+			 #{_board_content}, #{_board_file}, #{_exam_idx}) 
 	</insert>
-		
+	
+	
+	<!-- 협업 게시물 수 카운트 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) from board_tb B where user_id in
+		    (
+		    select user_id from teamproject_tb T where team_idx =
+		        (
+		        select team_idx from teamproject_tb where subject_idx=#{0} AND user_id=#{1}
+		        )
+		    AND subject_idx=#{0}
+		    )
+		AND subject_idx=#{0} AND board_type='team'
+	</select>
+	
+	<!-- 협업 리스트 받아오기 -->
+	<select id="teamList" resultType="schline.ExamBoardDTO">
+		SELECT * FROM
+		    (
+		    SELECT Tb.*, ROWNUM rNum FROM
+		        (
+		        SELECT * FROM board_tb B WHERE user_id IN
+		            (
+		            SELECT user_id FROM teamproject_tb T WHERE team_idx =
+		                (
+		                SELECT team_idx FROM teamproject_tb WHERE subject_idx=#{0} AND user_id=#{1}
+		                )
+		            AND subject_idx=#{0}
+		            )
+		        AND subject_idx=#{0} AND board_type='team' ORDER BY board_idx DESC
+		    )Tb
+		)
+		WHERE rNum<![CDATA[>=]]>#{2} AND rNum<![CDATA[<=]]>#{3}
+	</select>
+	
+	<!-- 팀 게시판 작성(일반게시물or과제물업로드) -->
+	<insert id="teamWrite">
+		INSERT INTO board_tb
+			(board_idx, subject_idx, board_type, user_id, board_title,
+			 board_flag_te, board_content, board_file)
+		VALUES
+			(seq_board_idx.NEXTVAL, #{_subject_idx}, 'team', #{_user_id}, #{_board_title},
+			 'Y', #{_board_content}, #{_board_file}) 
+	</insert>
+	
+	<!-- 협업게시판 게시물 수정 -->
+	<update id="teamEdit">
+		UPDATE board_tb SET board_title=#{1}, board_content=#{2}
+		WHERE board_idx=#{0}
+	
+	</update>
+	<!-- 협업게시판 게시물(파일변경) 수정 -->
+	<update id="teamFileEdit">
+		UPDATE board_tb SET board_title=#{_board_title},
+			board_content=#{_board_content}, board_file=#{_board_file}
+		WHERE board_idx = #{_board_idx}
+	</update>
+	
+	<!-- 협업게시판 게시물 삭제 -->
+	<delete id="teamDelete">
+		DELETE FROM board_tb WHERE board_idx = #{0} AND user_id=#{1}
+	</delete>
+	
+	<!-- 과제 및 시험 체크수정 -->
+	<update id="checkEdit">
+		UPDATE examcheck_tb SET check_flag= 1 WHERE exam_idx=#{0} AND user_id=#{1}
+	</update>
 </mapper>

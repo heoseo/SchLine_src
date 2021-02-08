@@ -29,6 +29,7 @@
 		<intercept-url pattern="/schedule/**" access="hasRole('STUDENT')" />
 		<intercept-url pattern="/chat/**" access="hasRole('STUDENT')" />
 		<intercept-url pattern="/studyRoom/**" access="hasRole('STUDENT')" />
+		<intercept-url pattern="/penboard/**" access="hasRole('STUDENT')" />
 		
 		<!-- 교수 권한 -->
 		<intercept-url pattern="/professor/**" access="hasRole('PROFESSOR')" />

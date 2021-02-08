@@ -3,13 +3,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <style>
 #icon {
-	font-size: 20px;
-	text-align: center;
+	font-size: 25px;
+	text-align: left;
 	padding-left: 5px;
 }
-
 </style>
-
 			<br />
 <!-- 강의실 왼쪽메뉴 선택바 -->
 <div id="main" class="container-fluid">

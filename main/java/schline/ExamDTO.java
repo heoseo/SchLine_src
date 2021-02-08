@@ -22,7 +22,15 @@ public class ExamDTO {
 	private String questionlist_content; //문항 내용
 	private String questionlist_num;	//문항 번호(1~99)
 	
+	//과제 확인 여부
+	private int check_flag;
 	
+	public int getCheck_flag() {
+		return check_flag;
+	}
+	public void setCheck_flag(int check_flag) {
+		this.check_flag = check_flag;
+	}
 	//getter/setter 생성
 	public int getExam_idx() {
 		return exam_idx;

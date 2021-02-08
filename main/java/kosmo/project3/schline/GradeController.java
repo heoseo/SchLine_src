@@ -1,6 +1,7 @@
 package kosmo.project3.schline;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import schline.AttendanceDTO;
-import schline.ClassDTOImpl;
 import schline.GradeDTO;
 import schline.GradeDTOImpl;
-import schline.VideoDTO;
+import schline.RegistrationDTO;
+import schline.UserInfoDTO;
 
 @Controller
 public class GradeController {
@@ -24,7 +25,7 @@ public class GradeController {
 	private SqlSession sqlSession;
 	
 	@RequestMapping("/class/grade.do")
-	public String lecture(Model model1, Model model2, Model model3, HttpServletRequest req) {
+	public String lecture(Model model, HttpServletRequest req) {
 		
 		int gradeNum = 0;
 		
@@ -33,20 +34,20 @@ public class GradeController {
 		attendanceDTO.setSubject_idx(req.getParameter("subject_idx"));
 		attendanceDTO.setUser_id("201701701");
 		ArrayList<AttendanceDTO> attenlists = sqlSession.getMapper(GradeDTOImpl.class).listAttendance(attendanceDTO);
-		model1.addAttribute("attenlists", attenlists);
+		model.addAttribute("attenlists", attenlists);
 		
 		//과제 성적
 		GradeDTO gradeDTO = new GradeDTO();
 		gradeDTO.setSubject_idx(req.getParameter("subject_idx"));
 		gradeDTO.setUser_id("201701701");
 		ArrayList<GradeDTO> gradelists = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO);
-		model2.addAttribute("gradelists", gradelists);
+		model.addAttribute("gradelists", gradelists);
 		
 		//성적 종합
 		//계산식 넣는 부분
 		//예시) 총합
 		for(int i =0 ; i<attenlists.size() ; i++) {
-			if(attenlists.get(i).getAttendance_flag()==3) {
+			if(attenlists.get(i).getAttendance_flag().equals("2")) {
 				gradeNum += 1;
 			}
 		}
@@ -64,44 +65,38 @@ public class GradeController {
 			gradeChar = "A";
 		}
 		else if(gradeNum>=85) {
-			gradeChar = "A-";
-		}
-		else if(gradeNum>=80) {
 			gradeChar = "B+";
 		}
-		else if(gradeNum>=75) {
+		else if(gradeNum>=80) {
 			gradeChar = "B";
 		}
-		else if(gradeNum>=70) {
-			gradeChar = "B-";
-		}
-		else if(gradeNum>=65) {
+		else if(gradeNum>=75) {
 			gradeChar = "C+";
 		}
-		else if(gradeNum>=60) {
+		else if(gradeNum>=70) {
 			gradeChar = "C";
 		}
-		else if(gradeNum>=55) {
-			gradeChar = "C-";
-		}
-		else if(gradeNum>=50) {
+		else if(gradeNum>=65) {
 			gradeChar = "D+";
 		}
-		else if(gradeNum>=45) {
+		else if(gradeNum>=60) {
 			gradeChar = "D";
-		}
-		else if(gradeNum>=40) {
-			gradeChar = "D-";
 		}
 		else {
 			gradeChar = "F";
 		}
 		
-		model3.addAttribute("gradeChar", gradeChar);
+		model.addAttribute("gradeChar", gradeChar);
 		
+		RegistrationDTO registrationDTO = new RegistrationDTO();
+		registrationDTO.setSubject_idx(req.getParameter("subject_idx"));
+		registrationDTO.setUser_id("201701701");
+		registrationDTO.setGrade_sub(Integer.toString(gradeNum));
+		sqlSession.getMapper(GradeDTOImpl.class).Registrationgrade(registrationDTO);
 		
 		return "classRoom/grade";
 	}
+	
 
 }
 
