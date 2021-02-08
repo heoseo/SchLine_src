@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="schedule.ScheduleDAOImpl">
+
+	
+	
+<!-- #########################캘린더쿼리문################################### -->
+
+	<select id="calendarList" resultType="schline.ExamDTO">
+		SELECT * FROM exam_tb E, user_tb U, registration_tb R
+		    WHERE U.user_id = R.user_id
+			    AND R.subject_idx = E.subject_idx
+			    AND  to_char(exam_date, 'yyyymm')>=#{0}
+	</select>
+
+<!-- #########################일정리스트쿼리문################################### -->			        
+			    
+
+<!-- 201701700에게 보이는 알림 개수
+	(읽음만 : check_Flag = 1, 
+		안읽음만 : check_Flag = 0, 
+		전부 : check_flag 없애기) -->
+   	<select id="getTotalCountAll" resultType="int">
+		SELECT count(*)
+		FROM (
+		    SELECT *
+		    FROM (  SELECT B.board_idx IDX, subject_idx SUB_IDX, board_title TITLE, board_content CONTENT, board_postdate POSTDATE, check_flag
+		            FROM board_tb B, noticecheck_tb NC
+		            WHERE NC.board_idx = B.board_idx
+		                AND board_type = 'noti'
+		                AND subject_idx in( select subject_idx
+		                                    from registration_tb
+		                                    where user_id = #{param1} )
+		                AND NC.user_id = #{param1}
+		    UNION
+		    SELECT *
+		    FROM(   SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_content CONTENT, exam_postdate POSTDATE, check_flag
+		            FROM exam_tb E, examcheck_tb EC
+		            where E.exam_idx = EC.exam_idx
+		                AND subject_idx in( select subject_idx
+		                                    from registration_tb
+		                                    where user_id = #{param1} )
+		                AND EC.user_id = #{param1}
+		        ) ExamList
+			)
+		)
+	</select> 
+		
+		
+		
+		
+<!-- (1)(4)(5) ,201701700학생 공지&과제.시험 리스트(읽음->안읽음 & 최신순 )
+		,읽음 : where check_flag = 1 , 안읽음 : where check_flag = 0 ,
+		  읽었든 안읽었든 공지&과제.시험&읽음&안읽음 
+		   전부 출력하려면 where check_flag = 1 없애기. -->
+	<select id="allListPage" resultType="schedule.NoticeDTO">
+		SELECT *
+		FROM (  SELECT AllList.*, rownum rNum 
+		        FROM   (
+		                SELECT *
+		                FROM (
+		                        SELECT *
+		                        FROM (  SELECT B.board_idx IDX, subject_idx SUB_IDX, board_title TITLE, board_content CONTENT, board_postdate POSTDATE, check_flag
+		                                FROM board_tb B, noticecheck_tb NC
+		                                WHERE NC.board_idx = B.board_idx
+		                                    AND board_type = 'noti'
+		                                    AND subject_idx in( select subject_idx
+		                                                        from registration_tb
+		                                                        where user_id = #{param1} )
+		                                    AND NC.user_id = #{param1}  
+		                            ) NotiList
+		                        UNION
+		                        SELECT *
+		                        FROM(   SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_content CONTENT, exam_postdate POSTDATE, check_flag
+		                                FROM exam_tb E, examcheck_tb EC
+		                                where E.exam_idx = EC.exam_idx
+		                                    AND subject_idx in( select subject_idx
+		                                                        from registration_tb
+		                                                        where user_id = #{param1} )
+		                                    AND EC.user_id = #{param1} 
+		                            ) ExamList
+		                    )  
+		                ORDER BY check_flag ASC,POSTDATE DESC
+		                )AllList 
+		    )
+		WHERE rNum BETWEEN #{param2} AND #{param3}
+	</select> 	    
+			    
+
+
+<!-- #########################일정쿼리문################################### -->	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+</mapper>
