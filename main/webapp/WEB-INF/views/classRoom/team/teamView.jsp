@@ -92,7 +92,8 @@ function isDelete(){
 			</div>	
 		</div>
 		<!-- ### 게시판의 body 부분 end ### -->
-
+    
+    
     
  <jsp:include page="/resources/include/bottom.jsp" />
 </body>

@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,10 +35,10 @@ public class TeamController {
 	private SqlSession sqlSession;
 	
 	@RequestMapping("/class/teamTask.do")
-	public String teamTask(Model model, HttpServletRequest req) {
+	public String teamTask(Model model, HttpServletRequest req, Principal principal) {
 		
 		//유저아이디
-		String user_id = "201701701";
+		String user_id = principal.getName();
 		String subject_idx = req.getParameter("subject_idx");
 		System.out.println(subject_idx);
 		
@@ -109,10 +110,10 @@ public class TeamController {
 	}
 	
 	@RequestMapping("/class/teamWrite.do")
-	public String teamWrite(Model model, HttpServletRequest req) {
+	public String teamWrite(Model model, HttpServletRequest req, Principal principal) {
 		
 		//유저아이디
-		String user_id = "201701701";
+		String user_id = principal.getName();
 		
 		//모델에 저장할 맵
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -132,7 +133,7 @@ public class TeamController {
 	}
 	
 	@RequestMapping(value="/class/teamWriteAction.do", method=RequestMethod.POST)
-	public String teamWriteAction(Model model, MultipartHttpServletRequest req) {
+	public String teamWriteAction(Model model, MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
 		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
@@ -158,7 +159,7 @@ public class TeamController {
 			//파일외에 폼값 받음.
 			subject_idx = req.getParameter("subject_idx"); //과목idx
 			
-			String user_id = "201701701"; //아이디
+			String user_id = principal.getName(); //아이디
 			String board_title = req.getParameter("board_title"); //과제물작성제목
 			String board_content = req.getParameter("board_content"); //과제물작성내용
 			
@@ -284,7 +285,7 @@ public class TeamController {
 	}
 	
 	@RequestMapping(value="/class/teamEditAction.do", method=RequestMethod.POST)
-	public String teamEditAction(Model model, MultipartHttpServletRequest req) {
+	public String teamEditAction(Model model, MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
 		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
@@ -302,7 +303,7 @@ public class TeamController {
 		int fileUp = 0;
 		try {
 			
-			String user_id = "201701701"; //아이디
+			String user_id = principal.getName(); //아이디
 			String board_title = req.getParameter("board_title"); //제목
 			String board_content = req.getParameter("board_content"); //내용
 				
@@ -379,9 +380,9 @@ public class TeamController {
 
 
 	@RequestMapping("/class/teamDelete.do")
-	public String teamDelete(Model model, HttpServletRequest req) {
+	public String teamDelete(Model model, HttpServletRequest req, Principal principal) {
 		
-		String user_id = "201701701"; //아이디
+		String user_id = principal.getName(); //아이디
 		String subject_idx = req.getParameter("subject_idx");
 		String board_idx = req.getParameter("board_idx");
 		String board_file = req.getParameter("board_file");
