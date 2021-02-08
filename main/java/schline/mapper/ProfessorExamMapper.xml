@@ -11,7 +11,7 @@
     	(SELECT subject_idx FROM subject_tb WHERE user_id=#{0}));
 	</select>
 	<!-- 객관식문제의 문항번호와 내용 가져오기 -->
-	<select id="questionlist" resultType="schline.ExamDTO">
+	<select id="pquestionlist" resultType="schline.ExamDTO">
 		SELECT * FROM questionlist_tb WHERE question_idx IN
 		(SELECT question_idx FROM question_tb WHERE exam_idx IN
 		(SELECT exam_idx FROM exam_tb WHERE subject_idx =
