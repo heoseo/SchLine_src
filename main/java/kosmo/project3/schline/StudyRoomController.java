@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import oracle.net.aso.b;
+import studyroom.BlockDTO;
 import studyroom.InfoCommand;
 import studyroom.InfoVO;
 import studyroom.StudyCommandImpl;
@@ -52,38 +54,22 @@ public class StudyRoomController {
 	@RequestMapping("/class/studyRoom.do")
 	public String studyRoom (HttpSession session, Model model) {
 		
-		String user_id = "201701700";
-//		String user_id = session.getAttribute("user_id");
+		String user_id = session.getAttribute("user_id").toString();
 		//로그인회원 프로필 불러오기
 		InfoVO loginPeople = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
-		//내랭킹, 접속시간
-		System.out.println("로그인회원 닉네임 = "+ loginPeople.getInfo_nick());
-		System.out.println("로그인회원 아이디 = "+ loginPeople.getUser_id());
-		System.out.println("로그인회원 사진 = "+ loginPeople.getInfo_img());
-		System.out.println("로그인회원 접속시간 = "+ loginPeople.getInfo_time());
-//		System.out.println("로그인회원 랭킹 = "+ loginPeople.get());
-		
-		//세션영역에 닉네임과 이미지 저장
-		session.setAttribute("user_id", user_id);//나중에 지우기!
-		session.setAttribute("info_nick", loginPeople.getInfo_nick());
-		session.setAttribute("info_img", loginPeople.getInfo_img());
+
 		//파라미터전송을 위해 모델객체에 로그인회원정보 저장
 		model.addAttribute("info_nick", loginPeople.getInfo_nick());
 		model.addAttribute("user_id", loginPeople.getUser_id());
 		model.addAttribute("info_img", loginPeople.getInfo_img());
 		model.addAttribute("info_time", loginPeople.getInfo_time());
 		model.addAttribute("info_atten", loginPeople.getInfo_atten());
-		//나의 랭킹순위 전달하기
-//		model.addAttribute("my_lank", );
+		model.addAttribute("reported_count", loginPeople.getReported_count());//신고횟수
 		
+//		session.setAttribute("info_img", loginPeople.getInfo_img());
 		//전체회원 리스트 불러오기 및 랭킹매기기
 		ArrayList<InfoVO> LankList = sqlSession.getMapper(StudyDAOImpl.class).lank_list();
 		model.addAttribute("LankList",LankList);
-		
-		//내 접속시간 및 랭킹 가져오기
-//		int MyLank = sqlSession.getMapper(StudyDAOImpl.class).my_lank(user_id);
-//		System.out.println("내랭킹"+MyLank);
-//		model.addAttribute(MyLank);//반환된 내 랭킹 담아주기
 		
 		return "studyRoom/studyRoom";
 	}
@@ -159,7 +145,10 @@ public class StudyRoomController {
 	
 	//프로필수정 팝업 ajax페이지 불러오기
 	@RequestMapping("/sudtyRoom/profileAjax.do")
-	public String profileAjax() {
+	public String profileAjax(HttpServletRequest req, Model model) {
+		model.addAttribute("user_id", req.getParameter("user_id"));
+		model.addAttribute("info_nick", req.getParameter("info_nick"));
+		model.addAttribute("info_img", req.getParameter("info_img"));
 		return "studyRoom/ajaxInfo";
 	}
 	
@@ -174,7 +163,7 @@ public class StudyRoomController {
 		return map;
 	}
 	
-
+	//이미지 그대로두고 닉네임만 바꿀때!!
 	//프로필 수정(파일업로드는 POST)
 	@RequestMapping(value = "/class/editInfo.do", method = RequestMethod.POST)
 	@ResponseBody
@@ -209,13 +198,24 @@ public class StudyRoomController {
 			System.out.println("중복아이디없음. 프로필수정 시작");
 		}
 		try {
+			//파일업로드 위한 멀티파트 객체 생성
+			MultipartFile mfile = null;
 			//////파일 업로드//////
 			//서버의 풀리적 경로 얻어오기
 			String path = req.getSession().getServletContext().getRealPath("/resources/profile_image");
 			System.out.println("path="+path);
 			
+			Iterator<String> itr = req.getFileNames();//변경한 이미지
+			while(itr.hasNext()) {
+				//전송된 파일의 이름을 읽어온다
+				change_img = (String)itr.next();
+				mfile = req.getFile(change_img);
+				System.out.println("파일이름="+mfile);
+			
 			//스프링에서는 파일이름 getFileNames() 으로 가지고온다!!
-			if(req.getFileNames()==null){//null에러방지 처리
+				//req.getFile().equals("")
+//			if(req.getFile().equals("")){//null에러방지 처리
+			if(mfile.getOriginalFilename().equals("")){//null에러방지 처리
 				//img변경이 없을땐 기존이미지로 바로 프로필 수정 진행한다.
 				System.out.println("기존이미지적용 프로필수정1");
 				result = sqlSession.getMapper(StudyDAOImpl.class)
@@ -242,41 +242,32 @@ public class StudyRoomController {
 					directory.mkdir();
 				}
 				
-				Iterator<String> itr = req.getFileNames();//변경한 이미지
-				while(itr.hasNext()) {
-					//파일업로드 위한 멀티파트 객체 생성
-					MultipartFile mfile = null;
-					//전송된 파일의 이름을 읽어온다
-					change_img = (String)itr.next();
-					mfile = req.getFile(change_img);
-					System.out.println("파일이름="+mfile);
-					
-					//한글깨짐방치 처리후 전송된 파일명을 가져옴
-					String originalName = new String(mfile.getOriginalFilename().getBytes(),"UTF-8");
-					
-					System.out.println("오리지널 파일이름="+originalName);
-					
-					//전송된 파일이 없다면 while문 처음으로 돌아간다.
-					if("".equals(originalName)) {continue;};
-					
-					//파일명에서 확장자를 가져옴.
-					String ext = originalName.substring(originalName.lastIndexOf('.'));
-					//UUID를 통해 생성된 문자열과 확장자를 합쳐서 파일명 완성
-					String saveFileName = user_id+"_img"+ext;
-					System.out.println("새롭게 저장한 파일이름"+saveFileName);
-					//물리적 경로에 새롭게 생성된 파일명으로 파일저장
-					File serverFullName = new File(path + File.separator + saveFileName);
-					
-					mfile.transferTo(serverFullName);
-					
-					//기존 프로필사진 실제파일 삭제처리(DB는 덮어쓰기)
-					result = sqlSession.getMapper(StudyDAOImpl.class)
-							.edit_profile(change_nick, saveFileName, user_id); 
+				//한글깨짐방치 처리후 전송된 파일명을 가져옴
+				String originalName = new String(mfile.getOriginalFilename().getBytes(),"UTF-8");
 				
-					if(result==1) {
-						System.out.println("파일 업로드 성공");
-						checkMap.put("result", 1);
-					}
+				System.out.println("오리지널 파일이름="+originalName);
+				
+				//전송된 파일이 없다면 while문 처음으로 돌아간다.
+				if("".equals(originalName)) {continue;};
+				
+				//파일명에서 확장자를 가져옴.
+				String ext = originalName.substring(originalName.lastIndexOf('.'));
+				//UUID를 통해 생성된 문자열과 확장자를 합쳐서 파일명 완성
+				String saveFileName = user_id+"_img"+ext;
+				System.out.println("새롭게 저장한 파일이름"+saveFileName);
+				//물리적 경로에 새롭게 생성된 파일명으로 파일저장
+				File serverFullName = new File(path + File.separator + saveFileName);
+				
+				mfile.transferTo(serverFullName);
+				
+				//기존 프로필사진 실제파일 삭제처리(DB는 덮어쓰기)
+				result = sqlSession.getMapper(StudyDAOImpl.class)
+						.edit_profile(change_nick, saveFileName, user_id); 
+			
+				if(result==1) {
+					System.out.println("파일 업로드 성공");
+					checkMap.put("result", 1);
+				}
 				}
 			}
 		}
@@ -336,19 +327,11 @@ public class StudyRoomController {
 	@ResponseBody
 	public Map<String, Object> studyTime(HttpServletRequest req, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("시간저장 함수호출");
 		//10초마다 정보저장해주는 함수 호출
 		String user_id = (String)session.getAttribute("user_id");
-		System.out.println("아이디="+user_id);
-		//null값이 전송된다!!!
 		int time = Integer.parseInt(req.getParameter("send_time").toString());
-		System.out.println(time);
-//		Double time = Double.parseDouble(req.getParameter("send_time"));
-		System.out.println("send_time="+time);
-		//System.out.println(str.getClass().getName()); //변수타입 출력
 		
 		int result= sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id, time);
-		System.out.println("결과값ㅅ"+result);
 		if(result==1) {
 			System.out.println("시간저장 성공");
 			map.put("setTime", 1);
@@ -356,10 +339,9 @@ public class StudyRoomController {
 		return map;
 	}
 	
-	//ajax로 내용 저장
 	//채팅내용전송시 자동저장
 	@RequestMapping("/class/chatSave.do")
-	@ResponseBody //이건 왜 붙이는거쥬 ? 값만 보낼때 쓰는거같음
+	@ResponseBody
 	public Map<String, Object> sendMSG(HttpServletRequest req, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("전송과 동시에 채팅내용 저장");
@@ -376,6 +358,87 @@ public class StudyRoomController {
 		}
 		return map;
 	}
+	
+	//채팅 닉네임확인, 신고, 차단 ajax
+	@RequestMapping("/class/checkUSer.do")
+	@ResponseBody //제이슨이나 컬렉션을 텍스트형식으로 웹에 뿌려줌
+	public Map<String, Object> checkUser(Model model, HttpServletRequest req, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("닉네임확인, 신고, 차단 컨트롤러 진입");
+		String user_id = session.getAttribute("user_id").toString();
+		String ot_nick =req.getParameter("ot_nick");
+		String flag = req.getParameter("flag").toString();//1은 신고, 0은 차단, 2는 프로필확인
+		System.out.println("ot_nick= "+ot_nick);
+		System.out.println("flag="+flag);
+		//닉네임으로 정보체크
+		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
+		if(other_pro.getInfo_nick()!=null) {
+			map.put("result", 1);//성공시 반환값 1을 담아줌
+		}
+		if(flag.equals("1")) {//신고하기 일 경우
+			int reported_count = sqlSession.getMapper(StudyDAOImpl.class).reported_people(ot_nick);
+			if(reported_count==1) {
+				System.out.println("신고성공");
+				map.put("check", 1);//성공시 반환값 1을 담아줌
+			}
+		}
+		else if(flag.equals("0")) {//차단하기 일 경우
+			//사용자 닉네임으로 아이디값을 받아와서 그 아이디를 차단해줌
+			String other_id = other_pro.getUser_id();
+			int block = sqlSession.getMapper(StudyDAOImpl.class).block_people(user_id, other_id);
+			if (block==1) {
+				System.out.println("차단성공");
+				map.put("check", 0);//성공시 반환값 1을 담아줌
+			}
+		}
+		return map;
+	}
+	
+	//프로필보기 링크로 이동
+	@RequestMapping("/class/openProfile.do")
+	public String openProfile(HttpServletRequest req, Model model) {
+		System.out.println("프로필 새창열기");
+		String ot_nick = req.getParameter("ot_nick");//프로필보기 사용자아이디
+		String user_id = req.getParameter("user_id");//로그인된 사용자아아디
+		System.out.println("ot_nick"+ot_nick);
+		
+		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
+		
+		if(other_pro.getInfo_nick()!=null) {
+			model.addAttribute("ot", other_pro);//배열에 담아주기
+		}
+		return "studyRoom/openProfile";
+	}
+	
+//	//신고와 차단
+	@RequestMapping("/class/studyBlock.do")
+	@ResponseBody
+	public Map<String, Object> studyBlock(HttpServletRequest req, Model model, HttpSession session) {
+		System.out.println("차단리스트 불러오기");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String ot_nick = req.getParameter("ot_nick").toString();
+		String user_id = session.getAttribute("user_id").toString();
+		
+		//닉네임으로 정보체크
+		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
+		
+//		Integer blockCheck = 
+		//		blockList.contains("ot_nick");
+		//null에러 방지를 위해 전체를 if문에 넣어줌
+		if(sqlSession.getMapper(StudyDAOImpl.class).check_bolck(other_pro.getUser_id(), user_id)==null) {
+			System.out.println("차단유저 아님, 다음진행");
+		}
+		else {
+			System.out.println(ot_nick+"차단유저의 메세지 전송됨");
+			map.put("check", 1);
+		}
+		return map;
+	}
+	
+	
+	
+	
 	
 	
 }

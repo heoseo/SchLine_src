@@ -7,16 +7,14 @@ public class InfoVO {
 	private int info_time; //누적 사용시간
 	private String info_nick; //닉네임
 	private String info_img; //프로필 이미지
+	private String reported_count;//신고횟수
 	
-	//내 등수를 가져오기 위해 추가된 변수(디비x)
-	private int info_lack;
-	public int getInfo_lack() {
-		return info_lack;
+	public String getReported_count() {
+		return reported_count;
 	}
-	public void setInfo_lack(int info_lack) {
-		this.info_lack = info_lack;
+	public void setReported_count(String reported_count) {
+		this.reported_count = reported_count;
 	}
-	
 	public String getUser_id() {
 		return user_id;
 	}
