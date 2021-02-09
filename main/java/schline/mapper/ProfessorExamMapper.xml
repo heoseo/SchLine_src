@@ -6,15 +6,56 @@
 <mapper namespace="schline.SchlineDAOImpl">
 	<!-- 해당 아이디의 과목으로 출제한 문제리스트 가져오기 -->
 	<select id="pexamList" resultType="schline.ExamDTO">
-		SELECT * FROM question_tb WHERE exam_idx in
+		SELECT * FROM exam_tb E
+    	JOIN question_tb Q ON E.exam_idx= Q.exam_idx  WHERE Q.exam_idx in
 		(SELECT exam_idx FROM exam_tb WHERE subject_idx =
-    	(SELECT subject_idx FROM subject_tb WHERE user_id=#{0}));
+    	(SELECT subject_idx FROM subject_tb WHERE user_id=#{0}))
 	</select>
 	<!-- 객관식문제의 문항번호와 내용 가져오기 -->
 	<select id="pquestionlist" resultType="schline.ExamDTO">
 		SELECT * FROM questionlist_tb WHERE question_idx IN
 		(SELECT question_idx FROM question_tb WHERE exam_idx IN
 		(SELECT exam_idx FROM exam_tb WHERE subject_idx =
-    	(SELECT subject_idx FROM subject_tb WHERE user_id=#{0})));
+    	(SELECT subject_idx FROM subject_tb WHERE user_id=#{0})))
 	</select>
+	
+	<!-- 과제리스트 가져오기 -->
+	<select id="ptasklist" resultType="schline.ExamDTO">
+		SELECT * FROM exam_tb WHERE exam_type=1 AND subject_idx=#{0}
+	</select>
+	
+	<!-- 담당과목idx 가져오기 -->
+	<select id="getSubject_idx" resultType="string">
+		SELECT subject_idx FROM subject_tb WHERE user_id=#{0}
+	</select>
+
+	<!-- 시험정보 입력 -->
+	<insert id="insertExam">
+		INSERT INTO exam_tb (exam_idx, subject_idx, exam_name, exam_date, exam_type, exam_content, exam_scoring)
+		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy'), 2, #{1}, #{3})
+	</insert>
+	<!-- 문제정보 입력 -->
+	<insert id="insertQuestion">
+		INSERT INTO question_tb (question_idx, exam_idx, question_type, answer, question_score, question_content)
+		VALUES (seq_question_idx.NEXTVAL, #{0}, #{1}, #{2}, #{3}, #{4})
+	</insert>
+	<insert id="insertQuestionList">
+	<!-- 객관식문항정보 입력 -->
+		INSERT INTO questionlist_tb (questionlist_idx, question_idx, questionlist_content, questionlist_num)
+		VALUES (seq_questionlist_idx.NEXTVAL, #{0}, #{1}, #{2})
+	</insert>
+	<select id="getExam_idx" resultType="string">
+		SELECT MAX(exam_idx) FROM exam_tb WHERE subject_idx=#{0}
+	</select>
+	<select id="getQuestion_idx" resultType="string">
+		SELECT MAX(question_idx) FROM question_tb
+	</select>
+	
+	<!-- 과제 입력 -->
+	<insert id="insertTask">
+		INSERT INTO exam_tb (exam_idx, subject_idx, exam_name, exam_date, exam_type, exam_content, exam_scoring)
+		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy'), '1', #{3}, #{4})
+	</insert>
+	
+	
 </mapper>

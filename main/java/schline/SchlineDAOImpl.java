@@ -63,10 +63,21 @@ public interface SchlineDAOImpl {
 	public int teamDelete(String board_idx, String user_id);
 	
 	///////////////////// 교수페이지 처리 ////////////////////
-	
+
 	//해당 아이디가 담당하는 과목의 문제리스트 가져오기...
 	public ArrayList<ExamDTO> pexamList(String user_id);
 	//객관식
 	public ArrayList<ExamDTO> pquestionlist(String user_id);
+	//문제입력
+	public int insertExam(String subject_idx, String exam_name, String exam_date, int exam_scoring);
+	public String getSubject_idx(String user_id);
+	public String getExam_idx(String subject_idx);
+	public int insertQuestion(String exam_idx, String question_type, String answer, String question_score, String question_content);
+	public String getQuestion_idx();
+	public int insertQuestionList(String question_idx, String questionlist_content, int questionlist_num);
+	
+	///교수페이지 과제////
+	ArrayList<ExamDTO> ptasklist(String subject_idx);
+	public int insertTask(String subject_idx, String exam_name, String exam_date, String exam_content, String exam_scoring);
 }
  

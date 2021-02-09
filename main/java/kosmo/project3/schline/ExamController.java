@@ -87,7 +87,7 @@ public class ExamController {
 			
 			String temp = edto.getExam_content().replace("\r\n", "<br/>");
 			edto.setExam_content(temp);
-				
+			
 			map.put("exam_idx", edto.getExam_idx());
 			map.put("subject_idx", edto.getSubject_idx());
 			map.put("exam_name", edto.getExam_name());

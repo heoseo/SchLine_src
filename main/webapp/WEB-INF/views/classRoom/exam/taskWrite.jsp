@@ -10,6 +10,7 @@ $(function(){
 	$('#taskWriteBtn').click(function(){
 		//폼의 빈값 체크
 		var f = document.taskFrm;
+		alert(f);
 		var data = new FormData(f);
 		if(f.board_title.value==""){
 			alert("제목을 입력하세요");
@@ -27,7 +28,7 @@ $(function(){
 		}
 		
 		$.ajax({
-			url : "taskWriteAction.do", //요청할경로
+			url : "/schline/class/taskWriteAction.do", //요청할경로
 			type : "post", //전송방식
 			beforeSend : function(xhr){
 	            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
