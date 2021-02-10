@@ -68,7 +68,7 @@ if(session.getAttribute("user_id") != null){
 			<nav id="nav">
 				<ul>
     				<li class="nav-item">
-						<a href="/schline/main/class.do">
+						<a href="/schline/professor/video.do">
 						강의실
 						</a>
 					</li>
