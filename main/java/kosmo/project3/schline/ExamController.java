@@ -267,7 +267,6 @@ public class ExamController {
 		returnObj.put("user_name", user_name);
 		returnObj.put("subject_name", subject_name);
 		
-		//과목인덱스를 유지하기 위해..redirect 지만 ajax modal 활용을 위해 테스트
 		return returnObj;
 	}
 	

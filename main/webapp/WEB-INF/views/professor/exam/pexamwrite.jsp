@@ -89,9 +89,9 @@ function makeQuestion(){
  	<div>
  	<button class="btn btn-primary" data-toggle="modal" data-target="#pexamwrite" style="width:100%">문제작성</button>
  	</div>
- 	<table id="addquestion">
+ 	<!-- <table id="addquestion">
  	<tr><td>작성한 문제</td></tr>
- 	</table>
+ 	</table> -->
 
  </div>
 

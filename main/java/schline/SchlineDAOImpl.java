@@ -75,9 +75,15 @@ public interface SchlineDAOImpl {
 	public int insertQuestion(String exam_idx, String question_type, String answer, String question_score, String question_content);
 	public String getQuestion_idx();
 	public int insertQuestionList(String question_idx, String questionlist_content, int questionlist_num);
+	//시험삭제를 위한 타입(객관식판단해야함)
+	public String getQuestionType(String question_idx);
+	public void deleteQuestionlist(String question_idx);
+	public int updateTask(String exam_name, String exam_date, String exam_content, String exam_scoring, String exam_idx);
+	public int deleteQuestion(String question_idx);
 	
 	///교수페이지 과제////
 	ArrayList<ExamDTO> ptasklist(String subject_idx);
 	public int insertTask(String subject_idx, String exam_name, String exam_date, String exam_content, String exam_scoring);
+	public int deleteTask(String exam_idx, String subject_idx);
 }
  

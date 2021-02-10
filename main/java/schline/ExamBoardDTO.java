@@ -13,7 +13,7 @@ public class ExamBoardDTO {
 	private java.sql.Date board_postdate;
 	private String board_flag_te;
 	private int exam_idx;
-	
+	private int team_num;
 	//다른 테이블과 조인
 	private String user_name;
 	private String subject_name;
@@ -22,6 +22,12 @@ public class ExamBoardDTO {
 	private java.sql.Date exam_date;
 	
 	
+	public int getTeam_num() {
+		return team_num;
+	}
+	public void setTeam_num(int team_num) {
+		this.team_num = team_num;
+	}
 	public String getExam_content() {
 		return exam_content;
 	}

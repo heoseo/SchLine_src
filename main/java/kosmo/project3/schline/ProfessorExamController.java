@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import schline.ExamDTO;
@@ -151,7 +152,7 @@ public class ProfessorExamController {
 		return "/professor/exam/pexamlist";
 	}
 	
-	@RequestMapping("/professor/ptaskWriteAction")
+	@RequestMapping("/professor/ptaskWriteAction.do")
 	public String ptaskWriteAction(Model model, HttpServletRequest req, Principal principal){
 		
 		String user_id = principal.getName();
@@ -177,5 +178,104 @@ public class ProfessorExamController {
 		}
 		
 		return "/professor/exam/alert";
+	}
+	
+	@RequestMapping("/professor/ptaskDelete.do")
+	public String ptaskDelete(Model model, HttpServletRequest req, Principal principal) {
+		
+		String user_id = principal.getName();
+		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(user_id);
+		String exam_type = req.getParameter("exam_type");
+		System.out.println("시험타입:"+exam_type);
+		int result = 0;
+		if(exam_type.equals("1")) {
+			
+			String exam_idx = req.getParameter("exam_idx");
+			result = sqlSession.getMapper(SchlineDAOImpl.class)
+					.deleteTask(exam_idx, subject_idx);
+			
+			System.out.println(result);
+			
+			if(result==1) {
+				model.addAttribute("msg", "삭제에 성공했습니다.");
+				model.addAttribute("url", "/schline/professor/ptaskList.do");
+			}
+			else {
+				model.addAttribute("msg", "삭제에 실패했습니다.");
+				model.addAttribute("url", "/schline/professor/ptaskList.do");
+			}
+		}
+		else {
+			System.out.println("이곳은 시험삭제입니다...");
+			String question_idx = req.getParameter("question_idx");
+			String question_type = sqlSession.getMapper(SchlineDAOImpl.class)
+					.getQuestionType(question_idx);
+			System.out.println("문제타입:"+question_type);
+			if(question_type.equals("1")) {
+				sqlSession.getMapper(SchlineDAOImpl.class)
+					.deleteQuestionlist(question_idx);
+				result = sqlSession.getMapper(SchlineDAOImpl.class)
+					.deleteQuestion(question_idx);
+			}
+			else {
+				result = sqlSession.getMapper(SchlineDAOImpl.class)
+						.deleteQuestion(question_idx);
+			}
+
+			if(result==1) {
+				model.addAttribute("msg", "삭제에 성공했습니다.");
+				model.addAttribute("url", "/schline/professor/pexamlist.do");
+			}
+			else {
+				model.addAttribute("msg", "삭제에 실패했습니다.");
+				model.addAttribute("url", "/schline/professor/pexamlist.do");
+			}
+			
+		}
+		return "/professor/exam/alert";
+	}
+	
+	@RequestMapping("/professor/ptaskEdit.do")
+	public String ptaskEdit(Model model, HttpServletRequest req, Principal principal) {
+		
+		String exam_idx = req.getParameter("exam_idx");
+		String user_id = principal.getName();
+		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(user_id);
+		
+		ExamDTO dto = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getExam(subject_idx, exam_idx);
+		
+		model.addAttribute("dto", dto);
+		
+		return "/professor/exam/ptaskEdit";
+	}
+	
+	@RequestMapping(value="/professor/ptaskEditAction.do", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> ptaskEditAction(Model model, HttpServletRequest req, Principal principal) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String user_id = principal.getName();
+		String exam_idx = req.getParameter("exam_idx");
+		String exam_name = req.getParameter("exam_name");
+		String exam_date = req.getParameter("exam_date");
+		String exam_content = req.getParameter("exam_content");
+		String exam_scoring = req.getParameter("exam_scoring");
+		System.out.printf("user_id: %s, exam_name: %s, exam_date: %s, exam_content: %s, score:%s"
+				,user_id, exam_name, exam_date, exam_content, exam_scoring);
+
+		int result = sqlSession.getMapper(SchlineDAOImpl.class)
+				.updateTask(exam_name, exam_date, exam_content, exam_scoring, exam_idx);
+		System.out.println("과제수정결과:"+result);
+		
+		
+		if(result==1) {
+			map.put("result", result);
+		}
+		else {
+			map.put("result", 0);
+		}
+		return map;
 	}
 }

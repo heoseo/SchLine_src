@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>시험문제 </title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
 
@@ -19,7 +18,7 @@ $(function () {
 	$('#datetimepicker1').datetimepicker({
 		format: 'L'}); 
 		$('#datetimepicker2').datetimepicker({
-			format: 'L', useCurrent: false 
+			format: 'L', useCurrent: false
 	}); 
 	$("#datetimepicker1").on("change.datetimepicker", 
 		function (e) {
@@ -49,7 +48,7 @@ function makequestion(){
 	else{
 	window.open('pexamwrite.do?exam_name='+exam_name+'&exam_date='+exam_date+
 			'&exam_scoring='+exam_scoring
-			,'makequestion','width=400, height=500, toolbars=no, menubar=no, scrollbars=no');
+			,'makequestion','width=420, height=500, toolbars=no, menubar=no, scrollbars=no');
 	}
 }
 function maketask(){
@@ -77,28 +76,25 @@ function maketask(){
 	if(c){
 		var f = document.ptaskWriteFrm;
 		f.method = 'post';
-		f.action = 'ptaskWriteAction';
+		f.action = 'ptaskWriteAction.do';
 		f.submit();
 	}
 }
 
 function onDelete(idx, type){
-	alert(type);
 	var exam_idx = idx;
 	if(type == 1){
 		var c = confirm("과제를 삭제하시겠습니까?");
 		if(c){
-			alert(exam_idx);	
-			location.href='';		
+			location.href='ptaskDelete.do?exam_idx='+exam_idx+'&exam_type='+type;		
 		}
 	}
 	else{
 		var c = confirm("문제를 삭제하시겠습니까?");
 		if(c){
 			alert(exam_idx);	
-			location.href='';		
+			location.href='ptaskDelete.do?question_idx='+exam_idx+'&exam_type='+type;			
 		}
-		
 	}
 }
 </script>
@@ -124,7 +120,7 @@ textarea { height : 200px; }
  	<td rowspan="2" style="vertical-align:middle; width:10%"><button class="btn btn-primary" 
  	onclick="makequestion();" style="min-width:0;">문제 등록</button></td></tr>
  	<tr>
- 	<td><input type="text" name="exam_name" id="task_name"/></td>
+ 	<td><input type="text" name="exam_name" id="exam_name"/></td>
  	<td>
  	
  	<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
@@ -133,7 +129,7 @@ textarea { height : 200px; }
  	<div class="input-group-text"><i class="fa fa-calendar"></i></div> </div> </div>
  	
  	</td>
- 	<td style="width:10%"><input type="number" name="exam_scoring" id="task_scoring" style="width:100%"/></td>
+ 	<td style="width:10%"><input type="number" name="exam_scoring" id="exam_scoring" style="width:100%"/></td>
  	</tr>
  	</table>
  	</div>
@@ -157,7 +153,7 @@ textarea { height : 200px; }
 				<td>${exam.answer }</td>
 				<td>${exam.question_score }</td>
 				<td>
-				<button type="button" class="btn btn-danger" onclick="onDelete(${exam.exam_idx}, 2)" 
+				<button type="button" class="btn btn-danger" onclick="onDelete(${exam.question_idx}, 2)" 
 					style="min-width:0; font-size:0.7em">
 					삭제</button>
 				</td>
@@ -236,7 +232,11 @@ textarea { height : 200px; }
 				<td>${exam.exam_scoring }</td>
 				<td>
 				<button type="button" class="btn btn-success" 
-					style="min-width:0; font-size:0.7em" onclick="location.href='ptaskEdit.do?exam_idx=${exam.exam_idx}';">
+					style="min-width:0; font-size:0.7em" 
+						onclick="
+						window.open('ptaskEdit.do?exam_idx=${exam.exam_idx}'
+						,'edittask','width=950, height=580, toolbars=no, menubar=no, scrollbars=no');"
+						>
 					수정</button>
 				<button type="button" class="btn btn-danger" onclick="onDelete(${exam.exam_idx}, 1)" 
 					style="min-width:0; font-size:0.7em">
