@@ -94,7 +94,7 @@ tr td:first-child {
 		var myTimeAll = $('#info_time').val();
 		var hour = parseInt(myTimeAll/3600);
 		var min = parseInt((myTimeAll%3600)/60);
-		var sec = parseInt(((myTimeAll%3600)%60)/60);
+		var sec = parseInt(((myTimeAll%3600)%60)%60);
 		$('#MyTimeAll').text(hour+"시간"+min+"분"+sec+"초");
 	});
 	
