@@ -8,7 +8,7 @@
 		<title>님,강의 수정페이지</title>
 <!-- 나머지 head속성은 인클루드에 있어요 -->
 <!-- 상단  인클루드 : 메뉴별 페이지 이동설정 해야함★★★★★★-->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
   <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
 
