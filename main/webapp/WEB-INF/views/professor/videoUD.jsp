@@ -8,7 +8,7 @@
 		<title>님,강의 수정페이지</title>
 <!-- 나머지 head속성은 인클루드에 있어요 -->
 <!-- 상단  인클루드 : 메뉴별 페이지 이동설정 해야함★★★★★★-->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
 <script>
 function deleteRow(idx,  saved){
 	if(confirm("정말 삭제하겠습니까?")){
