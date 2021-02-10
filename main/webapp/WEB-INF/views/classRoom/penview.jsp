@@ -1,7 +1,9 @@
+<%@page import="schline.PenBbsDTO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@  taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,9 +26,6 @@
 
 <div class="container">
 	
-	<form:form name="writeFrm" method="post" 
-		action="./writeAction.do" 
-		onsubmit="return checkValidate(this);">
 	<table border=1 width=800>
 	<colgroup>
 		<col width="10%"/>
@@ -64,27 +63,35 @@
 	</tr>
 	<tr>
 		<td colspan="6" align="center">	
-		<!-- 자가기 쓴 글에서만 보이게 -->
+		<c:set value="${viewRow.user_id}" var="p_user"/>
+		<c:set value="${user_id }" var="s_user"/>
+
+		<c:if test="${p_user eq s_user }">
 		<button type="button" 
 			onclick="location.href='./editOrdel.do?pen_idx=${viewRow.pen_idx}&mode=edit&nowPage=${nowPage }';">
 			수정하기</button>
-			
 		<button type="button" 
 			onclick="location.href='./editOrdel.do?pen_idx=${viewRow.pen_idx}&mode=delete&nowPage=${nowPage }';">
-			삭제하기</button>
-		<!-- 아닐경우 보이게 -->	
-		<button type="button" 
+			삭제하기</button>		
+		</c:if>
+         <c:if test="${p_user ne s_user }">
+      		<button type="button" 
 			onclick="location.href='./reply.do?pen_idx=${viewRow.pen_idx}&nowPage=${nowPage }';">
 			답변글달기</button>
+			</c:if>
 		<button type="button"      
 			onclick="location.href='./list.do?nowPage=${param.nowPage}&board_type=${viewRow.board_type }';">리스트보기</button>
-		</td>
+		
+			</td>
 		</tr>
 
 	</table>	
-	</form:form>
 </div>
+   <script>
    
+   
+   
+   </script>
    
             
    	<jsp:include page="/resources/include/bottom.jsp" />

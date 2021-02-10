@@ -52,6 +52,9 @@
    <delete id="deletevid">
    delete from video_tb where video_idx = #{vid_idx}
   </delete>
+   <delete id="delAttendance">
+   delete from attendance_tb where video_idx = #{vid_idx}
+  </delete>
 	<update id="atupdatedb" parameterType="schline.AttendanceDTO">
 	update  attendance_tb set play_time =#{play_time}, 
 	attendance_flag =#{attendance_flag}, currenttime =#{currenttime}
@@ -60,4 +63,15 @@
 	<select id="selectat" resultType="schline.AttendanceDTO">
 	select * from attendance_tb where user_id = #{user} and video_idx = #{idx}
 	</select>
+	<select id="getVideoIdx" resultType="String">
+	select video_idx from video_tb where server_saved = #{save}
+	</select>
+	<select id="StuList" resultType="String">
+	SELECT user_id from registration_tb where subject_idx = #{s_id}
+	</select>
+	<insert id="AttandanceInsDB" parameterType="schline.AttendanceDTO">
+	insert into attendance_tb values 
+	(seq_attendance_idx.nextval,#{user_id}, #{video_idx}, 0, 0, 0)
+
+  </insert>
   </mapper>
