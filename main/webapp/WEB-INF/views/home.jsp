@@ -14,7 +14,7 @@
 	<head>
 		<title>스쿨라인 메인</title>
 
-<%@ include file="/resources/include/top.jsp" %>
+<%@ include file="/resources/include/top.jsp" %> 
 <br /><br /><br /><br /><br /><br />
 <%-- <form:form method="post" action="${pageContext.request.contextPath }" > --%>
 <%-- 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>

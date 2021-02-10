@@ -49,32 +49,36 @@
 		)
 	</select> 
 		
+<!-- #########################페이징처리쿼리문 끝.################################### -->	
+
+
 		
+<!-- #########################일정게시판리스트뿌리기################################### -->			
 		
 		
 <!-- (1)(4)(5) ,201701700학생 공지&과제.시험 리스트(읽음->안읽음 & 최신순 )
 		,읽음 : where check_flag = 1 , 안읽음 : where check_flag = 0 ,
 		  읽었든 안읽었든 공지&과제.시험&읽음&안읽음 
 		   전부 출력하려면 where check_flag = 1 없애기. -->
-	<select id="allListPage" resultType="schedule.NoticeDTO">
+	<select id="allBoard" resultType="schedule.NoticeDTO">
 		SELECT *
 		FROM (  SELECT AllList.*, rownum rNum 
 		        FROM   (
 		                SELECT *
 		                FROM (
 		                        SELECT *
-		                        FROM (  SELECT B.board_idx IDX, subject_idx SUB_IDX, board_title TITLE, board_content CONTENT, board_postdate POSTDATE, check_flag
+		                        FROM (  SELECT B.board_idx IDX, subject_idx SUB_IDX, board_title TITLE, board_content CONTENT, board_postdate POSTDATE, check_flag, 'noti' noti_or_exam
 		                                FROM board_tb B, noticecheck_tb NC
 		                                WHERE NC.board_idx = B.board_idx
 		                                    AND board_type = 'noti'
 		                                    AND subject_idx in( select subject_idx
 		                                                        from registration_tb
 		                                                        where user_id = #{param1} )
-		                                    AND NC.user_id = #{param1}  
+		                                    AND NC.user_id = #{param1} 
 		                            ) NotiList
 		                        UNION
 		                        SELECT *
-		                        FROM(   SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_content CONTENT, exam_postdate POSTDATE, check_flag
+		                        FROM(   SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_content CONTENT, exam_postdate POSTDATE, check_flag, 'exam' noti_or_exam
 		                                FROM exam_tb E, examcheck_tb EC
 		                                where E.exam_idx = EC.exam_idx
 		                                    AND subject_idx in( select subject_idx
@@ -82,16 +86,179 @@
 		                                                        where user_id = #{param1} )
 		                                    AND EC.user_id = #{param1} 
 		                            ) ExamList
-		                    )  
-		                ORDER BY check_flag ASC,POSTDATE DESC
+		                    )
+		                ORDER BY POSTDATE DESC
 		                )AllList 
 		    )
 		WHERE rNum BETWEEN #{param2} AND #{param3}
-	</select> 	    
+	</select> 	
+	
+
+<!--
+(2) 모든 공지게시물 리스트 출력.
+201701700학생 공지사항 리스트(최신순으로 & 읽음->안읽음 순서대로)
+201701700은 파라미터로 바꾸기.
+-->
+	<select id="allNoti" resultType="schedule.NoticeDTO">
+		SELECT *
+		FROM (  SELECT NotiList.*, rownum rNum 
+		        FROM   (
+		                SELECT B.board_idx IDX, subject_idx SUB_IDX, board_title TITLE, board_content CONTENT, board_postdate POSTDATE, check_flag, 'noti' noti_or_exam
+		                FROM board_tb B, noticecheck_tb NC
+		                WHERE NC.board_idx = B.board_idx
+		                    AND board_type = 'noti'
+		                    AND subject_idx in( select subject_idx
+		                                        from registration_tb
+		                                        where user_id = #{param1} )
+		                    AND NC.user_id = #{param1}
+		                ORDER BY board_postdate DESC, check_flag  
+		                ) NotiList
+		        )
+		    WHERE rNum BETWEEN #{param2} AND #{param3}
+	</select> 	    	    
+	
+<!-- 과제,시험 리스트 -->
+<!--  
+(3)
+201701700학생 과제 리스트(최신순으로 & 읽음->안읽음 순서대로)
+201701700은 파라미터로 바꾸기.
+-->
+	<select id="taskAndExam" resultType="schedule.NoticeDTO">
+		SELECT *
+		FROM (  SELECT ExamList.*, rownum rNum
+		        FROM   (
+		                SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_postdate POSTDATE, exam_content CONTENT, check_flag, 'exam' noti_or_exam
+		                FROM exam_tb E, examcheck_tb EC
+		                where E.exam_idx = EC.exam_idx
+		                    AND subject_idx in( select subject_idx
+		                                        from registration_tb
+		                                        where user_id = #{param1})
+		                    AND EC.user_id = #{param1}
+		                ORDER BY exam_postdate DESC, check_flag
+		                ) ExamList
+		        )
+		    WHERE rNum BETWEEN #{param2} AND #{param3}
+	</select>
+	 	    
+<!--
+(1)(4)(5)
+	201701700학생 공지&과제.시험 리스트(읽음->안읽음 & 최신순 )
+	읽음 : where check_flag = 1
+ -->
+ 	<select id="notiRead" resultType="schedule.NoticeDTO">
+		SELECT *
+		FROM (  SELECT AllList.*, rownum rNum 
+		        FROM   (
+		                SELECT *
+		                FROM (
+		                        SELECT *
+		                        FROM (  SELECT B.board_idx IDX, subject_idx SUB_IDX, board_title TITLE, board_content CONTENT, board_postdate POSTDATE, check_flag, 'noti' noti_or_exam
+		                                FROM board_tb B, noticecheck_tb NC
+		                                WHERE NC.board_idx = B.board_idx
+		                                    AND board_type = 'noti'
+		                                    AND subject_idx in( select subject_idx
+		                                                        from registration_tb
+		                                                        where user_id = #{param1})
+		                                    AND NC.user_id = #{param1}
+		                            ) NotiList
+		                        UNION
+		                        SELECT *
+		                        FROM(   SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_content CONTENT, exam_postdate POSTDATE, check_flag, 'exam' noti_or_exam
+		                                FROM exam_tb E, examcheck_tb EC
+		                                where E.exam_idx = EC.exam_idx
+		                                    AND subject_idx in( select subject_idx
+		                                                        from registration_tb
+		                                                        where user_id = #{param1})
+		                                    AND EC.user_id = #{param1}
+		                            ) ExamList
+		                    )
+		                WHERE check_flag = 1    
+		                ORDER BY check_flag ASC,POSTDATE DESC
+		                )AllList 
+		    )
+		  WHERE rNum BETWEEN #{param2} AND #{param3}
+	</select>
+	
+	
+	
+<!--
+(1)(4)(5)
+	201701700학생 공지&과제.시험 리스트(읽음->안읽음 & 최신순 )
+	안읽음 : where check_flag = 0
+ -->
+ 	<select id="notiNotRead" resultType="schedule.NoticeDTO">
+		SELECT *
+		FROM (  SELECT AllList.*, rownum rNum 
+		        FROM   (
+		                SELECT *
+		                FROM (
+		                        SELECT *
+		                        FROM (  SELECT B.board_idx IDX, subject_idx SUB_IDX, board_title TITLE, board_content CONTENT, board_postdate POSTDATE, check_flag, 'noti' noti_or_exam
+		                                FROM board_tb B, noticecheck_tb NC
+		                                WHERE NC.board_idx = B.board_idx
+		                                    AND board_type = 'noti'
+		                                    AND subject_idx in( select subject_idx
+		                                                        from registration_tb
+		                                                        where user_id = #{param1})
+		                                    AND NC.user_id = #{param1}  
+		                            ) NotiList
+		                        UNION
+		                        SELECT *
+		                        FROM(   SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_content CONTENT, exam_postdate POSTDATE, check_flag, 'exam' noti_or_exam
+		                                FROM exam_tb E, examcheck_tb EC
+		                                where E.exam_idx = EC.exam_idx
+		                                    AND subject_idx in( select subject_idx
+		                                                        from registration_tb
+		                                                        where user_id = #{param1})
+		                                    AND EC.user_id = #{param1}
+		                            ) ExamList
+		                    )
+		                WHERE check_flag = 0 
+		                ORDER BY check_flag ASC,POSTDATE DESC
+		                )AllList 
+		    )
+         WHERE rNum BETWEEN #{param2} AND #{param3}
+	</select>
+
 			    
 
 
-<!-- #########################일정쿼리문################################### -->	
+<!-- #########################일정상세보기쿼리문################################### -->	
+
+
+	<!-- 과제 제출용 작성 게시물 정보 가져오기 -->
+<!-- 	<select id="insertTask" resultType="schline.ExamBoardDTO"> -->
+<!-- 		SELECT subject_name, user_name, exam_date, exam_name, exam_content, B.* from board_tb B -->
+<!-- 		    JOIN subject_tb S ON B.subject_idx=S.subject_idx -->
+<!-- 		    JOIN user_tb U ON B.user_id=U.user_id -->
+<!-- 		    JOIN exam_tb E ON B.exam_idx=E.exam_idx -->
+<!-- 		WHERE E.exam_idx=#{0} AND subject_idx=#{1} AND user_id=#{2}  -->
+<!-- 	</select> -->
+
+
+	<!-- 		select * from board_tb where board_idx = idx -->
+   <select id="noti" resultType="schedule.NoticeDTO">
+		SELECT * FROM board_tb B
+	      inner join user_tb U
+	      on B.user_id = U.user_id
+	      WHERE board_idx=#{param1}
+   </select>
+   
+   <!--  select * from exam_b where exam_idx = idx -->
+   <select id="exam" resultType="schedule.NoticeDTO">
+	    select * 
+	    from
+	    (
+	    SELECT exam_idx, S.subject_idx, exam_name, exam_postdate, exam_date, 
+	    exam_type, exam_content, exam_scoring, 
+	    subject_name, user_id FROM exam_tb E
+	      inner join subject_tb S
+	      on E.subject_idx = S.subject_idx
+	      WHERE exam_idx=#{param1}
+	    ) A
+	    inner join user_tb U
+	    on A.user_id= U.user_id
+   </select>
 
 
 

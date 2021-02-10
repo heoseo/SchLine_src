@@ -58,6 +58,7 @@
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="/schline/penboard/list.do?board_type=red"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
 						<a class="dropdown-item" href="/schline/penboard/list.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
+						<a class="dropdown-item" href="<%=request.getContextPath() %>/professor/noticeBoard.do"><i class="fas fa-pen-square"></i>&nbsp&nbsp교수용공지사항게시판</a> 
 					</div>
 				</div>
 

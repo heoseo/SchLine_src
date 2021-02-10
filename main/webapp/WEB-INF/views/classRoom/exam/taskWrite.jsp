@@ -27,7 +27,7 @@ $(function(){
 		}
 		
 		$.ajax({
-			url : "taskWriteAction.do", //요청할경로
+			url : "/schline/class/taskWriteAction.do", //요청할경로
 			type : "post", //전송방식
 			//contentType : "application/x-www-form-urlencoded;charset:utf-8",
 			data : data,

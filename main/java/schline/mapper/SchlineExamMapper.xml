@@ -54,7 +54,6 @@
 	<!-- 객관식문제의 문항번호와 내용 가져오기 -->
 	<select id="questionlist" resultType="schline.ExamDTO">
 		SELECT * FROM questionlist_tb
-
 	</select>
 	
 	<!-- 과제 리스트 가져오기 -->

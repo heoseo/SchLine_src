@@ -4,59 +4,67 @@ import java.sql.Date;
 
 public class NoticeDTO {
 	
-	//쿼리문 결과값에 맞춘 별칭변수.
+	//페이지처리 변수.
+	private int nowPage;
+	
+	//셀렉트>옵션값변환시> 쿼리문 결과값에 맞춘 별칭변수.
 	private int IDX;
 	private int SUB_IDX;
 	private String TITLE;
 	private String CONTENT;
 	private java.sql.Date POSTDATE;
 	private int RNUM;
+	
 	//공지사항 확인유무(0:확인안함. 1:확인).
 	private int CHECK_FLAG;
 	
-	
-	
-
-	
-	
-	//보드테이블 기본값들
-	private int board_idx;
+	//subject_tb 테이블 컬럼 변수선언.
 	private int subject_idx;
-	private String board_type;
 	private String user_id;
+	private String subject_name;
+
+	//board_tb 테이블 컬럼 변수선언, 중복되는건 뺌.
+	private int board_idx;
+	private String board_type;
 	private String board_title;
 	private String board_content;
 	private String board_file;
 	private java.sql.Date board_postdate;
 	private String board_flag_te;
 	private int exam_idx;
-	private java.sql.Date exam_postdate; //작성 날짜
 	
+	//exam_tb 테이블 컬럼 변수선언, 중복되는건 뺌.
+	private String exam_name; //과제 이름.
+	private java.sql.Date exam_postdate; //작성 날짜.
+	private java.sql.Date exam_date; //제출마감일.
+	private int exam_type; //과제(1) ,시험(2).
+	private String exam_content; //본문.
+	private int exam_scoring; //과제.시험.쪽지시험에 대한 배점.
 	
-	//다른 테이블과 조인
+	//user_tb 테이블 컬럼 변수선언, 사용자 명.
 	private String user_name;
-	private String subject_name;
-	private String exam_name;
-	private String exam_content;
-	private java.sql.Date exam_date;
-	
-	//registration_tb 테이블
+
+	//registration_tb 수강테이블명 컬럼 변수선언.
+	//중복되는건뺌.
 	//(학생(사용자가) 선택한 과목 리스트.)
 	private String regi_idx;
 	private String grade_sub;
 	
-	
-	
+	//noto_or_exam은 가상컬럼이라 board랑 exam테이블에는 없는 컬럼임당.
+	private String noti_or_exam;
+
+
+	//기본생성자.
 	public NoticeDTO() {}
 
 
-
-	public NoticeDTO(int iDX, int sUB_IDX, String tITLE, String cONTENT, Date pOSTDATE, int rNUM, int cHECK_FLAG,
-			int board_idx, int subject_idx, String board_type, String user_id, String board_title, String board_content,
-			String board_file, Date board_postdate, String board_flag_te, int exam_idx, Date exam_postdate,
-			String user_name, String subject_name, String exam_name, String exam_content, Date exam_date,
-			String regi_idx, String grade_sub) {
+	public NoticeDTO(int nowPage, int iDX, int sUB_IDX, String tITLE, String cONTENT, Date pOSTDATE, int rNUM,
+			int cHECK_FLAG, int subject_idx, String user_id, String subject_name, int board_idx, String board_type,
+			String board_title, String board_content, String board_file, Date board_postdate, String board_flag_te,
+			int exam_idx, String exam_name, Date exam_postdate, Date exam_date, int exam_type, String exam_content,
+			int exam_scoring, String user_name, String regi_idx, String grade_sub, String noti_or_exam) {
 		super();
+		this.nowPage = nowPage;
 		IDX = iDX;
 		SUB_IDX = sUB_IDX;
 		TITLE = tITLE;
@@ -64,26 +72,38 @@ public class NoticeDTO {
 		POSTDATE = pOSTDATE;
 		RNUM = rNUM;
 		CHECK_FLAG = cHECK_FLAG;
-		this.board_idx = board_idx;
 		this.subject_idx = subject_idx;
-		this.board_type = board_type;
 		this.user_id = user_id;
+		this.subject_name = subject_name;
+		this.board_idx = board_idx;
+		this.board_type = board_type;
 		this.board_title = board_title;
 		this.board_content = board_content;
 		this.board_file = board_file;
 		this.board_postdate = board_postdate;
 		this.board_flag_te = board_flag_te;
 		this.exam_idx = exam_idx;
-		this.exam_postdate = exam_postdate;
-		this.user_name = user_name;
-		this.subject_name = subject_name;
 		this.exam_name = exam_name;
-		this.exam_content = exam_content;
+		this.exam_postdate = exam_postdate;
 		this.exam_date = exam_date;
+		this.exam_type = exam_type;
+		this.exam_content = exam_content;
+		this.exam_scoring = exam_scoring;
+		this.user_name = user_name;
 		this.regi_idx = regi_idx;
 		this.grade_sub = grade_sub;
+		this.noti_or_exam = noti_or_exam;
 	}
 
+
+	public int getNowPage() {
+		return nowPage;
+	}
+
+
+	public void setNowPage(int nowPage) {
+		this.nowPage = nowPage;
+	}
 
 
 	public int getIDX() {
@@ -91,11 +111,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setIDX(int iDX) {
 		IDX = iDX;
 	}
-
 
 
 	public int getSUB_IDX() {
@@ -103,11 +121,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setSUB_IDX(int sUB_IDX) {
 		SUB_IDX = sUB_IDX;
 	}
-
 
 
 	public String getTITLE() {
@@ -115,11 +131,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setTITLE(String tITLE) {
 		TITLE = tITLE;
 	}
-
 
 
 	public String getCONTENT() {
@@ -127,11 +141,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setCONTENT(String cONTENT) {
 		CONTENT = cONTENT;
 	}
-
 
 
 	public java.sql.Date getPOSTDATE() {
@@ -139,11 +151,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setPOSTDATE(java.sql.Date pOSTDATE) {
 		POSTDATE = pOSTDATE;
 	}
-
 
 
 	public int getRNUM() {
@@ -151,11 +161,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setRNUM(int rNUM) {
 		RNUM = rNUM;
 	}
-
 
 
 	public int getCHECK_FLAG() {
@@ -163,23 +171,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setCHECK_FLAG(int cHECK_FLAG) {
 		CHECK_FLAG = cHECK_FLAG;
 	}
-
-
-
-	public int getBoard_idx() {
-		return board_idx;
-	}
-
-
-
-	public void setBoard_idx(int board_idx) {
-		this.board_idx = board_idx;
-	}
-
 
 
 	public int getSubject_idx() {
@@ -187,23 +181,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setSubject_idx(int subject_idx) {
 		this.subject_idx = subject_idx;
 	}
-
-
-
-	public String getBoard_type() {
-		return board_type;
-	}
-
-
-
-	public void setBoard_type(String board_type) {
-		this.board_type = board_type;
-	}
-
 
 
 	public String getUser_id() {
@@ -211,107 +191,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
 	}
-
-
-
-	public String getBoard_title() {
-		return board_title;
-	}
-
-
-
-	public void setBoard_title(String board_title) {
-		this.board_title = board_title;
-	}
-
-
-
-	public String getBoard_content() {
-		return board_content;
-	}
-
-
-
-	public void setBoard_content(String board_content) {
-		this.board_content = board_content;
-	}
-
-
-
-	public String getBoard_file() {
-		return board_file;
-	}
-
-
-
-	public void setBoard_file(String board_file) {
-		this.board_file = board_file;
-	}
-
-
-
-	public java.sql.Date getBoard_postdate() {
-		return board_postdate;
-	}
-
-
-
-	public void setBoard_postdate(java.sql.Date board_postdate) {
-		this.board_postdate = board_postdate;
-	}
-
-
-
-	public String getBoard_flag_te() {
-		return board_flag_te;
-	}
-
-
-
-	public void setBoard_flag_te(String board_flag_te) {
-		this.board_flag_te = board_flag_te;
-	}
-
-
-
-	public int getExam_idx() {
-		return exam_idx;
-	}
-
-
-
-	public void setExam_idx(int exam_idx) {
-		this.exam_idx = exam_idx;
-	}
-
-
-
-	public java.sql.Date getExam_postdate() {
-		return exam_postdate;
-	}
-
-
-
-	public void setExam_postdate(java.sql.Date exam_postdate) {
-		this.exam_postdate = exam_postdate;
-	}
-
-
-
-	public String getUser_name() {
-		return user_name;
-	}
-
-
-
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
-	}
-
 
 
 	public String getSubject_name() {
@@ -319,11 +201,89 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setSubject_name(String subject_name) {
 		this.subject_name = subject_name;
 	}
 
+
+	public int getBoard_idx() {
+		return board_idx;
+	}
+
+
+	public void setBoard_idx(int board_idx) {
+		this.board_idx = board_idx;
+	}
+
+
+	public String getBoard_type() {
+		return board_type;
+	}
+
+
+	public void setBoard_type(String board_type) {
+		this.board_type = board_type;
+	}
+
+
+	public String getBoard_title() {
+		return board_title;
+	}
+
+
+	public void setBoard_title(String board_title) {
+		this.board_title = board_title;
+	}
+
+
+	public String getBoard_content() {
+		return board_content;
+	}
+
+
+	public void setBoard_content(String board_content) {
+		this.board_content = board_content;
+	}
+
+
+	public String getBoard_file() {
+		return board_file;
+	}
+
+
+	public void setBoard_file(String board_file) {
+		this.board_file = board_file;
+	}
+
+
+	public java.sql.Date getBoard_postdate() {
+		return board_postdate;
+	}
+
+
+	public void setBoard_postdate(java.sql.Date board_postdate) {
+		this.board_postdate = board_postdate;
+	}
+
+
+	public String getBoard_flag_te() {
+		return board_flag_te;
+	}
+
+
+	public void setBoard_flag_te(String board_flag_te) {
+		this.board_flag_te = board_flag_te;
+	}
+
+
+	public int getExam_idx() {
+		return exam_idx;
+	}
+
+
+	public void setExam_idx(int exam_idx) {
+		this.exam_idx = exam_idx;
+	}
 
 
 	public String getExam_name() {
@@ -331,23 +291,19 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setExam_name(String exam_name) {
 		this.exam_name = exam_name;
 	}
 
 
-
-	public String getExam_content() {
-		return exam_content;
+	public java.sql.Date getExam_postdate() {
+		return exam_postdate;
 	}
 
 
-
-	public void setExam_content(String exam_content) {
-		this.exam_content = exam_content;
+	public void setExam_postdate(java.sql.Date exam_postdate) {
+		this.exam_postdate = exam_postdate;
 	}
-
 
 
 	public java.sql.Date getExam_date() {
@@ -355,11 +311,49 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setExam_date(java.sql.Date exam_date) {
 		this.exam_date = exam_date;
 	}
 
+
+	public int getExam_type() {
+		return exam_type;
+	}
+
+
+	public void setExam_type(int exam_type) {
+		this.exam_type = exam_type;
+	}
+
+
+	public String getExam_content() {
+		return exam_content;
+	}
+
+
+	public void setExam_content(String exam_content) {
+		this.exam_content = exam_content;
+	}
+
+
+	public int getExam_scoring() {
+		return exam_scoring;
+	}
+
+
+	public void setExam_scoring(int exam_scoring) {
+		this.exam_scoring = exam_scoring;
+	}
+
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
 
 
 	public String getRegi_idx() {
@@ -367,11 +361,9 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setRegi_idx(String regi_idx) {
 		this.regi_idx = regi_idx;
 	}
-
 
 
 	public String getGrade_sub() {
@@ -379,10 +371,27 @@ public class NoticeDTO {
 	}
 
 
-
 	public void setGrade_sub(String grade_sub) {
 		this.grade_sub = grade_sub;
 	}
+
+
+	public String getNoti_or_exam() {
+		return noti_or_exam;
+	}
+
+
+	public void setNoti_or_exam(String noti_or_exam) {
+		this.noti_or_exam = noti_or_exam;
+	}
+
+	
+	
+	
+
+
+
+	
 
 	
 

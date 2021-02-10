@@ -62,4 +62,3 @@ public interface SchlineDAOImpl {
 	//게시물 삭제
 	public int teamDelete(String board_idx, String user_id);
 }
- 
