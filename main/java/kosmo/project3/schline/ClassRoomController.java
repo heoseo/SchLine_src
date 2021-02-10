@@ -485,21 +485,7 @@ public class ClassRoomController {
 			return "classRoom/WebNoti";
 		}
 		
-		///////////// 스쿨라인 앱 컨트롤러  start///////////////
 		
-		@RequestMapping("/android/CourseList.do")
-		@ResponseBody
-		public ArrayList<ClassDTO> courseList(HttpServletRequest req){
-			
- 			ClassDTO classdto = new ClassDTO();
-			classdto.setUser_id("201701700");
-			ArrayList<ClassDTO> lists = 
-					sqlSession.getMapper(ClassDTOImpl.class).listCourse(classdto);
-			
-			return lists;
-			
-			
-		}
 		
 		
 		
