@@ -30,39 +30,117 @@
 			<div class="container">
 				<div class="container">
 					<div class="container">
-						<h4><a href="../class/grade.do?subject_idx=${row.subject_idx }">&emsp;과목명 :${row.subject_name }</a></h4>						
+						<h4><a href="../class/grade.do?subject_idx=${row.subject_idx }">&emsp;과목명 :${row.subject_name }</a></h4>
 						<h6>출결 현황</h6>
 						<table style="font-size: 5px;">
-							<c:choose>	
-								<c:when test="${empty attenlists }">
-					 				<tr>
-					 					<td colspan="6" align="center" height="100">
-					 						출결 현황이 없습니다.
-					 					</td>
-					 				</tr>
-								</c:when>
-								<c:otherwise>
-									<tr>
-										<c:forEach items="${attenlists }" var="row2">
-											<td>
-												${row2.rnum }번 강의	
-											</td>
-										</c:forEach>		
-									</tr>
-									<tr>
-										<c:forEach items="${attenlists }" var="row2">
-											<td>
-												<c:if test="${row2.attendance_flag==3 }">
-												O
-												</c:if>
-												<c:if test="${row2.attendance_flag!=3 }">
-												X
-												</c:if>											
-											</td>
-										</c:forEach>		
-									</tr>
-								</c:otherwise>	
-							</c:choose>
+								<c:choose>	
+									<c:when test="${row.rnum==1 }">
+						 				<tr>
+											<c:forEach items="${atten1 }" var="row2">
+												<td>
+													${row2.rnum }번 강의	
+												</td>
+											</c:forEach>		
+										</tr>
+										<tr>
+											<c:forEach items="${atten1 }" var="row2">
+												<td>
+													<c:if test="${row2.attendance_flag==2 }">
+													O
+													</c:if>
+													<c:if test="${row2.attendance_flag!=2 }">
+													X
+													</c:if>											
+												</td>
+											</c:forEach>		
+										</tr>
+									</c:when>
+									<c:when test="${row.rnum==2 }">
+						 				<tr>
+											<c:forEach items="${atten2 }" var="row3">
+												<td>
+													${row3.rnum }번 강의	
+												</td>
+											</c:forEach>		
+										</tr>
+										<tr>
+											<c:forEach items="${atten2 }" var="row3">
+												<td>
+													<c:if test="${row3.attendance_flag==2 }">
+													O
+													</c:if>
+													<c:if test="${row3.attendance_flag!=2 }">
+													X
+													</c:if>											
+												</td>
+											</c:forEach>		
+										</tr>
+									</c:when>
+									<c:when test="${row.rnum==3 }">
+						 				<tr>
+											<c:forEach items="${atten3 }" var="row4">
+												<td>
+													${row4.rnum }번 강의	
+												</td>
+											</c:forEach>		
+										</tr>
+										<tr>
+											<c:forEach items="${atten3 }" var="row4">
+												<td>
+													<c:if test="${row4.attendance_flag==2 }">
+													O
+													</c:if>
+													<c:if test="${row4.attendance_flag!=2 }">
+													X
+													</c:if>											
+												</td>
+											</c:forEach>		
+										</tr>
+									</c:when>
+									<c:when test="${row.rnum==4 }">
+						 				<tr>
+											<c:forEach items="${atten4 }" var="row5">
+												<td>
+													${row5.rnum }번 강의	
+												</td>
+											</c:forEach>		
+										</tr>
+										<tr>
+											<c:forEach items="${atten4 }" var="row5">
+												<td>
+													<c:if test="${row5.attendance_flag==2 }">
+													O
+													</c:if>
+													<c:if test="${row5.attendance_flag!=2 }">
+													X
+													</c:if>											
+												</td>
+											</c:forEach>		
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<c:forEach items="${atten5 }" var="row6">
+												<td>
+													${row6.rnum }번 강의	
+												</td>
+											</c:forEach>		
+										</tr>
+										<tr>
+											<c:forEach items="${atten5 }" var="row6">
+												<td>
+													<c:if test="${row6.attendance_flag==2 }">
+													O
+													</c:if>
+													<c:if test="${row6.attendance_flag!=2 }">
+													X
+													</c:if>											
+												</td>
+											</c:forEach>		
+										</tr>
+									</c:otherwise>
+								</c:choose>
+							
 						</table>
 					</div>
 				</div>

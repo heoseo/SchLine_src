@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,23 +27,27 @@ public class GradeController {
 	private SqlSession sqlSession;
 	
 	@RequestMapping("/class/grade.do")
-	public String lecture(Model model, HttpServletRequest req) {
+	public String grade(Model model, HttpSession session, HttpServletRequest req) {
 		
 		int gradeNum = 0;
-		
+		String user_id = (String) session.getAttribute("user_id");
+		System.out.println("user_id "+user_id); // 201701700
 		//출석
 		AttendanceDTO attendanceDTO = new AttendanceDTO();
 		attendanceDTO.setSubject_idx(req.getParameter("subject_idx"));
-		attendanceDTO.setUser_id("201701701");
+		System.out.println(req.getParameter("subject_idx")); // 1
+		attendanceDTO.setUser_id(user_id);
 		ArrayList<AttendanceDTO> attenlists = sqlSession.getMapper(GradeDTOImpl.class).listAttendance(attendanceDTO);
 		model.addAttribute("attenlists", attenlists);
+		System.out.println("attenlists "+attenlists); // 없음
 		
 		//과제 성적
 		GradeDTO gradeDTO = new GradeDTO();
 		gradeDTO.setSubject_idx(req.getParameter("subject_idx"));
-		gradeDTO.setUser_id("201701701");
+		gradeDTO.setUser_id(user_id);
 		ArrayList<GradeDTO> gradelists = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO);
 		model.addAttribute("gradelists", gradelists);
+		System.out.println("gradelists "+gradelists); 
 		
 		//성적 종합
 		//계산식 넣는 부분
@@ -90,7 +96,7 @@ public class GradeController {
 		
 		RegistrationDTO registrationDTO = new RegistrationDTO();
 		registrationDTO.setSubject_idx(req.getParameter("subject_idx"));
-		registrationDTO.setUser_id("201701701");
+		registrationDTO.setUser_id(user_id);
 		registrationDTO.setGrade_sub(Integer.toString(gradeNum));
 		sqlSession.getMapper(GradeDTOImpl.class).Registrationgrade(registrationDTO);
 		
