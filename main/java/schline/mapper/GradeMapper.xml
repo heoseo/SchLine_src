@@ -14,6 +14,27 @@
 			order by A.video_idx asc   
 		) Tb
 	  </select>  
+	  <select id="listAttendance2" resultType="schline.AttendanceDTO">
+	 	select Tb.*, rownum rNum from (
+		    select * from attendance_tb A
+			inner join video_tb V on A.video_idx=V.video_idx
+			where subject_idx = #{subject_idx}
+			order by A.video_idx asc   
+		) Tb
+	  </select>  
+	  <select id="attenupdate" resultType="schline.AttendanceDTO">
+	 	update attendance_tb set attendance_flag = #{attendance_flag }
+		where user_id = #{user_id } and video_idx = #{video_idx }
+	  </select>  
+	  
+	  <select id="videoConut" resultType="int">
+	 		select count(*) from video_tb where subject_idx= #{subject_idx}
+	  </select>  
+	  
+	  <select id="videoNum" resultType="schline.AttendanceDTO">
+	 		select video_idx from video_tb where subject_idx= #{subject_idx}
+	  </select>  
+	  
 	  <!-- grade_tb 와 exam_tb 조인 -->
 	  <select id="listGrade" resultType="schline.GradeDTO">
 	 	select * from grade_tb G
@@ -36,7 +57,7 @@
 	  </select>  
 	  
 	  <select id="RegistrationInfo" resultType="schline.UserInfoDTO">
-	 	select U.user_id, U.subject_idx, U.user_name, regi_idx, grade_sub, subject_name, R.user_name
+	 	select U.user_id, U.subject_idx, U.user_name, regi_idx, grade_sub, subject_name, R.user_name, rownum rNum 
 		from (select R.user_id, subject_idx, user_name, regi_idx, grade_sub
 		from user_tb U
 		inner join registration_tb R on U.user_id=R.user_id
@@ -47,6 +68,65 @@
 		on U.subject_idx = R.subject_idx
 		where U.user_id = #{user_id} 
 	  </select>  
+	 
+	  <select id="AttenInfo" resultType="schline.AttendanceDTO">
+	 	select A.attendance_flag, V.video_idx, V.subject_idx, rownum rNum 
+	 	from video_tb V
+		inner join attendance_tb A on A.video_idx=V.video_idx
+		where user_id = #{user_id} and subject_idx = #{subject_idx }
+	  </select>  
+	 
+	  <select id="boardInfo" resultType="schline.ExamBoardDTO">
+	 	select user_name, board_idx, subject_idx, board_title, board_file from board_tb B
+	 	inner join user_tb U on B.user_id = U.user_id
+		where B.user_id = #{user_id} and board_file is not null
+	  </select>  
+	 
+	  <select id="notiset" resultType="schline.UserSettingDTO">
+	 	update usersetting_tb set user_set = #{user_set } 
+		where user_id = #{user_id } and setting_name = #{setting_name }
+	  </select>  
+	 
+	  <select id="examset" resultType="schline.UserSettingDTO">
+	 	update usersetting_tb set user_set = #{user_set }
+		where user_id = #{user_id } and setting_name = #{setting_name }
+	  </select>  
+	
+	  <select id="blockuser" resultType="schline.UserInfoDTO">
+	 	select * from user_tb U
+		inner join chattingblock_tb C
+		on U.user_id = C.user_id
+		where U.user_id = #{user_id }
+	  </select>  
+	  
+	  <select id="blockdelete" resultType="schline.UserInfoDTO">
+	 	delete from chattingblock_tb where block_user = #{block_user } and user_id = #{user_id }
+	  </select>  
+	  
+	  <select id="subfind" resultType="schline.UserInfoDTO">
+	 	select subject_idx from subject_tb where user_id = #{user_id }
+	  </select>  
+	  
+	  <select id="studentlist" resultType="schline.UserInfoDTO">
+	 	select U.*, subject_idx, grade_sub, subject_name, team_idx from user_tb U 
+		inner join (
+		select RS.*, team_idx from (
+		            select R.*, subject_name  from registration_tb R
+		            inner join (
+		                        select * from subject_tb 
+		                        where user_id = #{user_id}
+		                        ) S
+		                    on R.subject_idx = S.subject_idx
+		            ) RS
+		    inner join (
+		                select user_id, team_idx from teamproject_tb where subject_idx = #{subject_idx}
+		                ) T
+		                on RS.user_id = T.user_id 
+		            ) RST
+		    on RST.user_id = U.user_id
+	  </select>  
+	  
+
 	  
 	  
   </mapper>

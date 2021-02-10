@@ -14,8 +14,7 @@
 	<head>
 		<title>스쿨라인 메인</title>
 
-<%@ include file="/resources/include/top.jsp" %> 
-<br /><br /><br /><br /><br /><br />
+<%@ include file="/resources/include/top.jsp" %>
 <%-- <form:form method="post" action="${pageContext.request.contextPath }" > --%>
 <%-- 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 <!-- 	<input type="submit" value="로그아웃" /> -->
@@ -27,7 +26,6 @@
 	<div id="main">
 	
 
-<br /><br /><br /><br />
 	<c:choose>
 		<c:when test="${not empty user_id }">
 			${user_id}님, 하이룽~^^*
