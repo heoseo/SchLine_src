@@ -16,6 +16,9 @@ public interface StudyDAOImpl {
 	//접속한 학생의 기존닉네임 체크
 	public InfoVO user_nick(String user_id);
 	
+	//닉네임으로 다른사람 프로필보기
+	public InfoVO other_profile(String ck_nick);
+
 	//아이디 중복확인
 	public int check_nick(@Param("_nick") String info_nick);
 	
@@ -37,4 +40,15 @@ public interface StudyDAOImpl {
 	
 	//채팅 기록 담기
 	public int chat_history(String user_id, String cont);
+	
+	//신고하기
+	public int reported_people(String other_nick);
+	
+	//차단하기
+	public int block_people(@Param("user_id") String user_id, @Param("other_id") String other_id);
+	
+	//차단목록 불러오기
+//	public ArrayList<BlockDTO> check_bolck(String ot_id, String user_id);
+	public Integer check_bolck(String ot_id, String user_id);
+	
 }

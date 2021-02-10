@@ -21,7 +21,7 @@ int month = cal.get(Calendar.MONTH) + 1;//현재월 불러오기
 %>
 <style>
 * {
-	text-align: center;	
+	text-align: center;
 }
 /* 프로필 이미지 사진 사이즈 및 모양 설정 */
 .image {
@@ -43,11 +43,12 @@ tr td:first-child {
 
 .entry {
 	width: 100%;
-	height: 85%;
-	background-image:
-		url('<%=request.getContextPath()%>/resources/images/pic07.jpg');
-	background-size : 100% auto;
-	padding: 25px;
+	height: 450px;
+<%-- 	background-image: url('<%=request.getContextPath()%>/resources/images/pic01.jpg'); background-size : 100% auto; --%>
+	padding: 40px;
+/* 	padding-left : 80px; */
+	padding-top : 60px;
+	text-align: center;
 }
 </style>
 
@@ -62,16 +63,10 @@ tr td:first-child {
 			name.focus();
 			return false;
 		}
-		// 	alert("목표공부 시간은?");
-		//모달창 띄워서 목표 공부시간 입력할수 있도록 하기(나중에하장 ㅎㅎㅎ...)
-		//채팅창으로 이동
-		// 	location.href="../class/studyRoomChat.do?user_id="+id+"&info_nick="+name+"&info_img="+image;
-		// 	location.href="../class/studyRoomChat.do";
+		if("${reported_count }">=10){
+			alert("신고횟수 10회이상이라 입장할수 없습니다.");
+		}
 	}
-
-	// var user_id = document.getElementById("user_id");
-	// console.log(user_id);근데 info.jsp 페이지 컨트롤러 거치는거 아냐? 저안에서 수정누를때 컨트롤러간다
-	//.jsp로 부르면 페이지 안뜰텐데 아ㅣ 그러ㅏㅁ 요청명으로 불러야해 ?ㅇㅇ헉 코드보다 주석이 많네
 	//프로필 수정 ajax
 	$(function() {
 		$.ajax({
@@ -80,8 +75,11 @@ tr td:first-child {
 			data : {
 				user_id : $('#user_id').val(),
 				info_nick : $('#info_nick').val(),
-				info_img : $('info_img').val()
+				info_img : $('#info_img').val()
 			},
+			beforeSend : function(xhr){
+	            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+	           },
 			dataType : "html",
 			contentType : "application/x-www-form-urlencoded;charset:utf-8",
 			success : function(d) {
@@ -95,18 +93,25 @@ tr td:first-child {
 		//내 공부방 접속시간 불러오기		
 		var myTimeAll = $('#info_time').val();
 		var hour = parseInt(myTimeAll/3600);
-		var min = Math.ceil(hour/60);
-		var sec = Math.ceil(hour%60);
-		$('#MyTimeAll').text(hour+":"+min+":"+sec);
+		var min = parseInt((myTimeAll%3600)/60);
+		var sec = parseInt(((myTimeAll%3600)%60)%60);
+		$('#MyTimeAll').text(hour+"시간"+min+"분"+sec+"초");
 	});
+	
+	var myTimeAll2;
+	var hour2;
+	var min2;
 </script>
 <!-- body 시작 -->
 <body class="is-preload">
 	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 -->
-	<div style="text-align: center;">
+<%-- 	<jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 --> --%>
+<div id="main" class="container-fluid" style="text-align: center;"> 
+
+
+<!-- 	<div style="text-align: center;"> -->
 		<!--    		<small>공부방</small> -->
-	</div>
+<!-- 	</div> -->
 	<hr />
 	<!-- 구분자 -->
 
@@ -116,53 +121,32 @@ tr td:first-child {
 	   그달에 맞는 랭킹 합산해주기
     -->
 	<!-- 페이지 레이아웃 구분 클래스 생성 -->
+	<br />
+	<div class="container">
 	<div class="row">
 		<div class="col-sm-5">
 			<form:form action="../class/studyRoomChat.do" method="post"
 				onsubmit="return chatWin();">
 				<!-- 사진안에 글씨작성 -->
-				<div class="entry" class="image"
-					style="text-align: left; font-size: 0.9em">
-					<br /> 비대면 시대 <br /> 함께 공부하는 기분을 낼 수 있는 학생 소통공간입니다. <br /> 백색소음과
-					시간대별로 바뀌는 배경화면, <br /> 매달 공부시간을 합산한 랭킹이 공부의욕을 북돋아줄거예요<br /> <br />
-					<b>우리 함께 공부해요!</b> <br /> <br />
+				<div class="entry" class="image">
+					<br />
+					<b>온라인 도서관</b><br /><br />
+					 대학친구들과 함께 공부하는 느낌<br />
+					 입장하시겠습니까 ?<br /><br />
+					<br />
 					<div align="center">
 						<button>입장하기</button>
 						<!-- 	 			<a href="../class/studyRoomChat.do"><button>입장하기</button></a> -->
 					</div>
 				</div>
 				<input type="hidden" id="user_id" name="user_id" value="${sessionScope.user_id }" />
-				<input type="hidden" id="info_nick" name="info_nick" value="${sessionScope.info_nick }" />
-				<input type="hidden" id="info_img" name="info_img"
-					value="<%=request.getContextPath()%>/resources/${info_img}" />
+				<input type="hidden" id="info_nick" name="info_nick" value="${info_nick }" />
+				<input type="hidden" id="info_img" name="info_img" value="${info_img}" />
 			</form:form>
 		</div>
 		
-		<div class="col-sm-3">
-			<table style="font-size: 0.8em">
-				<tr>
-<%-- 					<td colspan="3"><%=month%>월 랭킹</td> --%>
-					<td colspan="3">랭킹</td>
-				</tr>
-				<tr style="font-weight: bold;">
-					<td>등수</td>
-					<td>닉네임</td>
-					<td>시간</td>
-				</tr>
-				<!-- 등수 랭킹 매기기. 10위 까지만 나오도록! -->
-				<c:forEach items="${LankList }" var="rank" varStatus="status">
-					<tr>
-						<!-- index는 0부터, count는 1부터 시작 -->
-						<td>${status.count }</td>
-						<!-- 등수매기기 -->
-						<td>${rank.info_nick }</td>
-						<td>${rank.info_time }</td>
-					</tr>
-				</c:forEach>
-			</table>
-		</div>
-
-		<div class="col-sm-3">
+		
+		<div class="col-sm-4">
 			<!-- 프로필 -->
 			<table style="font-size: 0.8em">
 				<tr>
@@ -201,9 +185,6 @@ tr td:first-child {
 								</div>
 							</div></td>
 				</tr>
-				<tr style="font-weight: bold;">
-					<td></td>
-				</tr>
 				<tr>
 					<td>총 출석일</td>
 					<td>
@@ -216,11 +197,6 @@ tr td:first-child {
 					</td>
 				</tr>
 				<tr>
-					<td>누적시간</td>
-					<input type="hidden" id="info_time" value="${info_time }" />
-					<td id="MyTimeAll"></td>
-				</tr>
-				<tr>
 					<td>랭킹</td>
 					<c:forEach items="${LankList }" var="rank" varStatus="status">
 						<c:if test="${rank.user_id eq user_id}">
@@ -229,14 +205,68 @@ tr td:first-child {
 						</c:if>
 					</c:forEach>				
 				</tr>
+				<!-- 신고횟수 -->
+				<input type="hidden" name="reported_count" id="reported_count"
+				value="${reported_count }" />
+				
+				<tr>
+					<td>누적시간</td>
+					<input type="hidden" id="info_time" value="${info_time }" />
+					<td id="MyTimeAll"></td>
+				</tr>
 				<!-- 내 랭킹 불러오기 DAO 필요 -->
 			</table>
 			<br />
 
 		</div>
+		
+		
+		
+		
+		
+		<div class="col-sm-3">
+			<table style="font-size: 0.8em">
+				<tr>
+<%-- 					<td colspan="3"><%=month%>월 랭킹</td> --%>
+					<td colspan="3">랭킹</td>
+				</tr>
+				<tr style="font-weight: bold;">
+					<td>등수</td>
+					<td>닉네임</td>
+					<td>시간(s)</td>
+				</tr>
+				<!-- 등수 랭킹 매기기. 10위 까지만 나오도록! -->
+				<c:forEach items="${LankList }" var="co" varStatus="status">
+				<!-- 작동안함 -->
+				<script>
+				//랭킹시간
+// 				myTimeAll2 = "${rank.info_time }";
+// 				hour2 = parseInt(myTimeAll2/3600);
+// 				min2 = parseInt((myTimeAll2%3600)/60);
+// 				$('#other_time').text(hour2+"시간"+min2+"분");
+				</script>
+				
+					<tr>
+						<!-- index는 0부터, count는 1부터 시작 -->
+						<td>${status.count }</td>
+						<!-- 등수매기기 -->
+						<td>${co.info_nick }</td>
+						<td><span id="other_time">
+							${co.info_time }</span></td>
+							<!-- 신고값 히든폼 -->
+					</tr>
+				</c:forEach>
+			</table>
+		</div>
+
+		
 	</div>
 
-	<jsp:include page="/resources/include/bottom.jsp" />
+</div>
+</div>
+<!-- </div> -->
+<!-- </div> -->
+<%-- 	<jsp:include page="/resources/include/bottom.jsp" /> --%>
 </body>
 
 
