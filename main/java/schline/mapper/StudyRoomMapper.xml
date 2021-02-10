@@ -45,6 +45,11 @@ update/delete (☆where절의 갯수에따라 여러개 반환될수있음!)
 	SELECT * FROM chattinginfo_tb WHERE user_id = #{0}
 </select>
 
+<!-- 프로필보기 검색한 닉네임의 정보 -->
+<select id="other_profile" resultType="studyroom.InfoVO">
+	SELECT * FROM chattinginfo_tb WHERE info_nick = #{0}
+</select>
+
 <!-- 전체 회원리스트 랭킹순서대로 불러오기 -->
 <select id="study_list" resultType="studyroom.InfoVO">
 	SELECT * FROM chattinginfo_tb ORDER BY info_time DESC
@@ -96,6 +101,24 @@ WHERE rNum BETWEEN 1 AND 10
 	INSERT INTO chatting_tb VALUES (seq_chat_message_idx.nextval, #{0}, #{1}, sysdate)
 <!-- 	INSERT INTO chatting_tb(chat_message_idx, user_id, chat_content) VALUES (seq_chat_message_idx.nextval, #{0}, #{1}) -->
 </insert>
+
+<!-- 신고횟수 업데이트 -->
+<update id="reported_people">
+	UPDATE chattinginfo_tb 
+		SET reported_count = reported_count+1 WHERE info_nick = #{0}
+</update>
+
+<!-- 차단 -->
+<insert id="block_people">
+	INSERT INTO chattingblock_tb (user_id, block_user) VALUES (#{user_id}, #{other_id})
+</insert>
+
+<!-- 차단여부 확인 -->
+<!-- select에서 리스트 반환 원할때 dto하면 리스트 타입으로 자동반환 -->
+<!-- null을 받을수 있는 객체로 변경해줌 int는 널 못받음★★★★★★★★ -->
+<select id="check_bolck" resultType="Integer">
+	SELECT * FROM chattingblock_tb WHERE block_user=#{0} AND user_id = #{1} 
+</select>
 
 
 </mapper>
