@@ -8,7 +8,19 @@ public class UserVO {
 	private String user_pass;
 	private String email;
 	private int grade_total;
-	private String user_type;
+	private String authority;
+	private String enabled;
+	
+	
+	public String getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+	public String getAuthority() {
+		return authority;
+	}
 	public String getUser_id() {
 		return user_id;
 	}
@@ -51,11 +63,11 @@ public class UserVO {
 	public void setGrade_total(int grade_total) {
 		this.grade_total = grade_total;
 	}
-	public String getUser_type() {
-		return user_type;
+	public String getuthority() {
+		return authority;
 	}
-	public void setUser_type(String user_type) {
-		this.user_type = user_type;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
 
 }

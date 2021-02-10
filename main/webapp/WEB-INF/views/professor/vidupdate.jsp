@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,7 +19,7 @@
 	<br />
 	<br />
 	<div class="container">
-	    <form name="fileFrm" method="post" action="vidmodifyAction.do" 
+	    <form:form name="fileFrm" method="post" action="vidmodifyAction.do?${_csrf.parameterName}=${_csrf.token}" 
                enctype="multipart/form-data">
    	
     <table class="table table-bordered" >
@@ -52,7 +53,7 @@
    		 </td>   		 
    	 </tr>
     </table>
-    </form>
+    </form:form>
 	</div>
 	</div>
 </body>

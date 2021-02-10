@@ -18,6 +18,10 @@ public interface ClassDTOImpl {
 	public void modivid (@Param("idx") String video_idx, @Param("end") String end_date,
 			@Param("title") String title, @Param("server") String saveFilename);
 	public void deletevid (@Param("vid_idx") String idx);
+	public void delAttendance (@Param("vid_idx") String idx);
 	public void atupdatedb(AttendanceDTO attendanceDTO);
 	public AttendanceDTO selectat (@Param("user") String user_id, @Param("idx") String video_idx);
+	public String[] StuList (@Param("s_id") String subject_idx);
+	public String getVideoIdx (@Param("save") String saveFilename);
+	public void  AttandanceInsDB(AttendanceDTO attendanceDTO);
 }

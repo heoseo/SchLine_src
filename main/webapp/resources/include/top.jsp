@@ -99,7 +99,7 @@ if(session.getAttribute("user_id") != null){
 <!-- 					<li><a href=""><h3>계정</h3></a></li> -->
 <!-- 				</ul> -->
 <!-- 			</nav> -->
-			<br />	
+<!-- 			<br />	 -->
 			
 <%
 	}
