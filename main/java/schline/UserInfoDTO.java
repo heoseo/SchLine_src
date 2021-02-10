@@ -9,18 +9,27 @@ public class UserInfoDTO {
 	private String user_pass;
 	private String email;
 	private int grade_total;
-	private String user_type;
-	
+	private String authority;
+	private String enabled;
+	private String rnum;
+
 	//수강 ,기업, 과목 테이블 참조용
 	private String regi_idx;
 	private String subject_idx;
 	private String grade_sub;
+	private String orga_name;
 	
 	private String subject_name;
+	private String team_idx;
+	private String block_user;
 	
-	private String orga_name;
-	java.sql.Date expiration_date;
 	
+	public String getOrga_name() {
+		return orga_name;
+	}
+	public void setOrga_name(String orga_name) {
+		this.orga_name = orga_name;
+	}
 	public String getUser_id() {
 		return user_id;
 	}
@@ -63,11 +72,23 @@ public class UserInfoDTO {
 	public void setGrade_total(int grade_total) {
 		this.grade_total = grade_total;
 	}
-	public String getUser_type() {
-		return user_type;
+	public String getAuthority() {
+		return authority;
 	}
-	public void setUser_type(String user_type) {
-		this.user_type = user_type;
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+	public String getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(String enabled) {
+		this.enabled = enabled;
+	}
+	public String getRnum() {
+		return rnum;
+	}
+	public void setRnum(String rnum) {
+		this.rnum = rnum;
 	}
 	public String getRegi_idx() {
 		return regi_idx;
@@ -93,17 +114,17 @@ public class UserInfoDTO {
 	public void setSubject_name(String subject_name) {
 		this.subject_name = subject_name;
 	}
-	public String getOrga_name() {
-		return orga_name;
+	public String getTeam_idx() {
+		return team_idx;
 	}
-	public void setOrga_name(String orga_name) {
-		this.orga_name = orga_name;
+	public void setTeam_idx(String team_idx) {
+		this.team_idx = team_idx;
 	}
-	public java.sql.Date getExpiration_date() {
-		return expiration_date;
+	public String getBlock_user() {
+		return block_user;
 	}
-	public void setExpiration_date(java.sql.Date expiration_date) {
-		this.expiration_date = expiration_date;
+	public void setBlock_user(String block_user) {
+		this.block_user = block_user;
 	}
 	
 	

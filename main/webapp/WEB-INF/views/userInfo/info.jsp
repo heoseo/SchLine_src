@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,29 +59,77 @@
 			</c:otherwise>	
 		</c:choose>
     </table>
-    
+<!---------------------------------------------------   -->
     
     <table class="table  table-hover table-striped" >
 		<div style="text-align: center;">
 	    	<small>사용자 설정</small>
 	    </div>
 	    
-	    <li>
-	    	공지사항 알림 
-	    </li>
-	    <li>
-	    	과제 제출 알림
-	    </li>
-	    <li>
-	    	사용자 설정 3
-	    </li>
-	    <li>
-	    	사용자 설정 4
-	    </li>
-	    
+	    <form:form name="writeFrm" method="post" 
+			action="./notiSetting.do" >
+		<tr>
+			<td>공지 알림 설정</td>
+			<td>
+				<input type="radio" name="user_set" value="on" checked/>
+				<input type="radio" name="user_set" value="off" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+			<ul class="actions">
+				<li><input type="submit" value="전송하기" class="primary" /></li>
+			</ul>
+			</td>
+		</tr>
+		</form:form>
+		
+		<form:form name="writeFrm" method="post" 
+			action="./examSetting.do" >
+		<tr>
+			<td>과제 알림 설정</td>
+			<td>
+				<input type="radio" name="user_set" value="on" checked/>
+				<input type="radio" name="user_set" value="off" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+			<ul class="actions">
+				<li><input type="submit" value="전송하기" class="primary" /></li>
+			</ul>
+			</td>
+		</tr>
+		</form:form>
+		
+		<table class="alt" style="text-align:center">
+		<h5>차단 유저 관리</h5>
+		<c:choose>	
+			<c:when test="${empty lists }">
+ 				<tr>
+ 					<td colspan="6" align="center" height="100">
+ 						차단된 유저가 없습니다 
+ 					</td>
+ 				</tr>
+			</c:when>
+			<c:otherwise>
+				<c:forEach items="${lists2 }" var="row">
+					<tr>
+						<td>${row.block_user }</td>
+						<td style="width:5%">
+						<a href="blockDelete.do?block_user=${row.block_user }">
+						<img src="../resources/images/download.png" alt="download" style="max-width:100%; height:auto;"/>
+						</a>
+						</td>
+					</tr>
+				</c:forEach>
+			</c:otherwise>	
+		</c:choose>
+		</table>
+		
     </table>
     
-    
+<!-------------------------------------------------------> 
    <jsp:include page="/resources/include/bottom.jsp" />
 </body>
 
