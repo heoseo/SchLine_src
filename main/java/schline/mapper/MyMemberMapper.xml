@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="schline.UserDAO">
+	
+	<!-- 전달되는 파라미터와 반환타입이 모두 MemberVO타ㅣㅂ으로 설정됨. -->
+	<select id="memberLogin" resultType="schline.UserVO"
+			parameterType="schline.UserVO">
+      SELECT * FROM user_tb WHERE user_id=#{user_id} and user_pass=#{user_pass}
+   </select>
+   
+	
+</mapper>

@@ -43,23 +43,18 @@ public class HomeController {
 			String user_id = userDetails.getUsername();
 			user_auth = userDetails.getAuthorities();
 			
-//			System.out.println("HomeController > user_id : " + user_id);
-//			System.out.println("HomeController > user_auth : " + user_auth);
 			
 			session.setAttribute("user_id", user_id);
 			session.setAttribute("user_auth", user_auth);
 			
 			if(user_auth.toString().contains("ROLE_STUDENT")) {
-//				System.out.println("HomeController > role : ROLE_STUDENT");
 				return "main/studentHome";
 			}
 			else if(user_auth.toString().contains("ROLE_PROFESSOR")) {
-//				System.out.println("HomeController > role : ROLE_PROFESSOR");
 				return "main/professorHome";
 			}
 			else if(user_auth.toString().contains("ROLE_ADMIN")) {
-//				System.out.println("HomeController > role : ROLE_ADMIN");
-				return "main/adminHome";
+				return "admin/userList";
 			}
 		}
 		
