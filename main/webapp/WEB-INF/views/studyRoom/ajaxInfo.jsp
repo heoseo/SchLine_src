@@ -49,19 +49,13 @@
 				//교체한 파일 정보 불러오기
 				reader.onload = function(e) {//기존 파일 속성 변경
 					$("#profile_img").attr("src", e.target.result);
-					//	배열로 불러오는법 알게되면 적용할것★★★★★★★★★★★★★★★★★★
-					// 			$("#profile").each(function(index, item) {
-					// 				if(index==1){
-					// 					$(item).attr("src", e.target.result);
-					// 				}
-					// 			});
 				}
 				reader.readAsDataURL(f);
 			});
 		}
 		$('#editBtn').click(function() {
 			var fm = document.editFrm;
-			var data = new FormData(fm);
+			var data = new FormData(fm);//폼데이터 전송
 			//폼의 name값을 이용한 입력정보 체크
 			if (!fm.change_nick.value) {
 				alert('닉네임을 입력하세요');
@@ -78,6 +72,7 @@
 				alert('10자리 이하로 입력하세요');
 				return false;
 			}
+			//중복닉네임 체크 ajax
 			$.ajax({
 				url : "../class/editInfo.do", //요청할경로
 				type : "post", //전송방식
@@ -86,6 +81,14 @@
 				contentType : false,
 				processData : false,
 				dataType : "json", //콜백데이터의 형식
+				beforeSend : function(xhr){
+		            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+		           },
+				/*
+				콜백데이터 타입이 json이므로 별도의 파싱없이 즉시
+				데이터를 읽을수 있다. 만약 json타입이 아니라면
+				JSON.Parse()를 호출해야 한다.
+				 */
 				success : function(d) {
 					// 			alert(d.nonick);
 					// 			alert(d.editResult);
@@ -103,19 +106,6 @@
 // 						alert('회원정보 수정 성공');
 // 						location.reload();
 // 					}
-					
-					/*
-					콜백데이터 타입이 json이므로 별도의 파싱없이 즉시
-					데이터를 읽을수 있다. 만약 json타입이 아니라면
-					JSON.Parse()를 호출해야 한다.
-					 */
-					if (d.taskResult == 0) {
-						//실패시
-// 						alert('실패');
-					} else {
-						//성공시
-// 						alert('성공');
-					}
 				},
 				error : function(e) {//실패콜백메소드
 					alert("실패" + e);
@@ -125,16 +115,7 @@
 			$('#myModal').on('hide', function () {
 				location.reload();
 			});
-			
-			
 		});
-		// 	if(!fm.info_img){
-		// 		alert('이미지를 첨부해주세요');
-		// 	}
-
-		//파일 저장은 학번_profile.확장자 으로 되게한다
-		//저장경로는 /resources/profile_image
-		// }
 	</script>
 	
 	
@@ -143,7 +124,8 @@
 			<tr>
 				<!-- 파일첨부 만들기 -->
 				<td colspan="2" style="text-align: center;"><span class="image">
-						<!-- 	                    			<span class="image"> --> <c:choose>
+						<!-- 	                    			<span class="image"> --> 
+						<c:choose>
 							<c:when test="${info_img eq null }">
 								<img id="profile_img"
 									src="<%=request.getContextPath()%>/resources/profile_image/user.png"
@@ -153,8 +135,7 @@
 								<img id="profile_img"
 									src="<%=request.getContextPath()%>/resources/profile_image/${info_img}" alt="프로필 이미지" />
 							</c:otherwise>
-						</c:choose> <%-- <img id="profile_img" src="<%=request.getContextPath() %>/resources/profile_image/user.png" alt="프로필 이미지" /> --%>
-						<%-- 	<img id="profile_img" src="<%=request.getContextPath() %>/${info_img}" alt="프로필 이미지" /> --%>
+						</c:choose> 
 				</span> <input type="file" name="change_img" id="change_img" />
 				 <input type="hidden" name="info_img" value="${info_img }" />
 				</td>
@@ -166,7 +147,7 @@
 				<input type="hidden" name="user_id" value="${user_id }" />
 				<input type="hidden" name="info_nick" value="${info_nick }" />
 				<%-- 	                    		<input type="hidden" name="info_nick" value="<%=request.getParameter("info_nick")%>"/> --%>
-				<td><input type="text" name="change_nick"
+				<td><input type="text" name="change_nick" id="change_nick"
 					value="<%=(request.getParameter("info_nick") == null) ? "" : request.getParameter("info_nick")%>" />
 					<br />
 					<span id="result_ajax" style="color: red;"></span></td>

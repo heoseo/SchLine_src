@@ -17,6 +17,7 @@
 		 	authorities-by-username-query : 아이디를 이용하여 권한정볼르 가져오는 쿼리문을 작성한다.
 		
 	-->
+	<http pattern="/android/**" security="none" />
 	<http>
 			<!-- 로그인 페이지는 권한을 얻을 후 접근하는 것이 아니라
 				권한이 없는 사용자가 권한을 얻기위해 접근하므로, 모든 사용자가 접근할 수 있도록
@@ -35,6 +36,10 @@
 		<intercept-url pattern="/professor/**" access="hasRole('PROFESSOR')" />
 		<!-- 관리자 권한 -->
 		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
+		
+		
+		
+		
 		
 <!-- 		<intercept-url pattern="/**" access="hasRole('TEACHER, ROLE_STUDENT, ADMIN')" /> -->
 		<intercept-url pattern="/" access="permitAll" />
