@@ -51,7 +51,7 @@ public class HomeController {
 				return "main/studentHome";
 			}
 			else if(user_auth.toString().contains("ROLE_PROFESSOR")) {
-				return "main/professorHome";
+				return "redirect:professor/video.do";
 			}
 			else if(user_auth.toString().contains("ROLE_ADMIN")) {
 				return "admin/userList";
