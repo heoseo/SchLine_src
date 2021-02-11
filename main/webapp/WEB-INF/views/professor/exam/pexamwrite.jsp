@@ -56,7 +56,7 @@ function makeQuestion(){
 	var f = document.examMakeFrm
 	var data = new FormData(f);
 	$.ajax({
-		url : "/schline/professor/examwriteaction.do",
+		url : "/schline/professor/examWriteAction.do",
 		type : "post",
 		data : data,
 		contentType : false,

@@ -14,7 +14,7 @@ function taskWrite(subject_idx, exam_idx){
 		beforeSend : function(xhr){
             xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
            },
-		data : {"subject_idx" : subject_idx, "exam_type" : 1},
+		data : {"subject_idx" : subject_idx, "exam_type" : 1, "exam_idx" : exam_idx},
 		dataType : "html",
 		contentType : "application/x-www-form-urlencoded;chatset:utf-8",
 		success : function(Data){
@@ -44,6 +44,12 @@ $(function(){
 	$('#examBtn').click(function(){
 		var f = document.examFrm;
 		var data = new FormData(f);	
+		for (var value of data.values()) {
+		  	if(value==''){
+				alert('입력되지 않은 답안이 있습니다.');
+				return false;
+		  	}
+		}
 		$.ajax({
 			url : "examComplete.do", //요청할경로
 			type : "post", //전송방식
@@ -176,7 +182,7 @@ $(function(){
 		<div class="table-wrapper">
 			<table class="alt" style="text-align:center">
 			<c:forEach items="${examlist }" var="trow" varStatus="tloop">
-				<c:if test="${trow.exam_idx ne 0 }">
+				
 				<tr>
 					<td style="width:20%;">과제명</td>
 					<td style="text-align:left;">과제 내용</td>	
@@ -195,7 +201,7 @@ $(function(){
 					<c:if test="${check eq '제출' }">disabled="disabled"</c:if>>
 					</td>
 				</tr>
-				</c:if>
+				
 			</c:forEach>
 			</table>
 			<%-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, --%>

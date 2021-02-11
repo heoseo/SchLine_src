@@ -93,8 +93,13 @@ function maketask(){
 	        },
 	       	dataType : "json",
 	       	success : function(d){
-	       		alert('수정되었습니다');
-				self.close();
+	       		if(d.result==1){
+		       		alert('수정되었습니다');
+					self.close();
+	       		}
+	       		else{
+	       			alert('수정에 실패했습니다.');
+	       		}
 				
 			},
 			error : function(e){

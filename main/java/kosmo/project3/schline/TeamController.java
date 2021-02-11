@@ -39,13 +39,15 @@ public class TeamController {
 		
 		//유저아이디
 		String user_id = principal.getName();
+		System.out.println("아이디:"+user_id);
 		String subject_idx = req.getParameter("subject_idx");
 		System.out.println(subject_idx);
-		
+		String team_num = sqlSession.getMapper(SchlineDAOImpl.class).getTeamNum(user_id, subject_idx);
+		System.out.println("팀번호:"+team_num);
 		UserVO uvo;
 		
 		//게시물의 갯수를 카운트...
-		int totalRecordCount = sqlSession.getMapper(SchlineDAOImpl.class).getTotalCount(subject_idx, user_id);
+		int totalRecordCount = sqlSession.getMapper(SchlineDAOImpl.class).getTotalCount(subject_idx, team_num);
 		System.out.println("totalRecordCOunt="+totalRecordCount);
 		
 		//페이지 처리를 위한 설정값
@@ -61,11 +63,17 @@ public class TeamController {
 		int end = nowPage * pageSize;
 		
 		ArrayList<ExamBoardDTO> teamlist = 
-				sqlSession.getMapper(SchlineDAOImpl.class).teamList(subject_idx, user_id, start, end);
+				sqlSession.getMapper(SchlineDAOImpl.class).teamList(subject_idx, team_num, start, end);
+		
+		//가상번호 계산하여 부여하기
+		int virtualNum = 0;
+		int countNum = 0;
 		
 		//리스트 반복..
 		for(ExamBoardDTO dto : teamlist) {
 			
+			virtualNum = totalRecordCount -(((nowPage-1)*pageSize) + countNum++);
+			dto.setVirtualNum(virtualNum);
 			uvo = sqlSession.getMapper(SchlineDAOImpl.class).getuserName(dto.getUser_id());
 
 			dto.setUser_name(uvo.getUser_name());
@@ -80,7 +88,7 @@ public class TeamController {
 		
 		model.addAttribute("pagingImg", pagingImg);
 		model.addAttribute("teamlist", teamlist);
-		
+		model.addAttribute("team_num", team_num);
 		return "/classRoom/team/teamList";
 	}
 	
@@ -102,10 +110,12 @@ public class TeamController {
 		model.addAttribute("board_title", dto.getBoard_title());
 		model.addAttribute("board_content", dto.getBoard_content());
 		model.addAttribute("board_postdate", dto.getBoard_postdate());
+		model.addAttribute("team_num", dto.getTeam_num());
 		if(dto.getBoard_file()!=null) {
 			model.addAttribute("board_file", dto.getBoard_file());
 		}
-
+		model.addAttribute("user_id", dto.getUser_id());
+		
 		return "/classRoom/team/teamView";
 	}
 	
@@ -114,7 +124,8 @@ public class TeamController {
 		
 		//유저아이디
 		String user_id = principal.getName();
-		
+		String subject_idx = req.getParameter("subject_idx");
+		System.out.println(subject_idx);
 		//모델에 저장할 맵
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		
@@ -127,7 +138,7 @@ public class TeamController {
 		
 		//맵과 과목인덱스를 모델에 저장
 		model.addAttribute("paramMap", paramMap);
-		model.addAttribute("subject_idx", req.getParameter("subject_idx"));
+		model.addAttribute("subject_idx", subject_idx);
 		
 		return "/classRoom/team/teamWrite";
 	}
@@ -163,6 +174,9 @@ public class TeamController {
 			String board_title = req.getParameter("board_title"); //과제물작성제목
 			String board_content = req.getParameter("board_content"); //과제물작성내용
 			
+			String team_num = sqlSession.getMapper(SchlineDAOImpl.class).getTeamNum(user_id, subject_idx);
+			System.out.println("팀번호: "+team_num);
+			
 			//폼값 출력 테스트
 			System.out.printf("subject_idx=%s,user_id=%s,"
 					+ "board_title=%s,board_content=%s,exam_idx=%s"
@@ -183,7 +197,7 @@ public class TeamController {
 				System.out.println("mfile="+mfile);
 				//한글깨짐방지 처리후 전송된 파일명을 가져옴
 				String originalName = new String(mfile.getOriginalFilename().getBytes(), "UTF-8");
-				//서버로 전송된 파일이 없다면 while문의 처음으로 돌아간다.
+
 				String saveFileName = null;
 				if("".equals(originalName)) {
 					saveFileName = "";
@@ -207,7 +221,7 @@ public class TeamController {
 				
 				//DB에 insert하기...
 				fileUp = sqlSession.getMapper(SchlineDAOImpl.class)
-						.teamWrite(subject_idx, user_id, board_title, board_content, saveFileName);
+						.teamWrite(subject_idx, user_id, board_title, board_content, saveFileName, team_num);
 				
 //				Map file = new HashMap();
 //				맵에 저장하지 않고 DB에 하면될듯..추후처리
@@ -242,6 +256,7 @@ public class TeamController {
 		}
 		else {
 			returnObj.put("taskResult", 0);
+			returnStr = "redirect:/class/teamTask.do?subject_idx="+subject_idx;
 		}
 //		model.addAttribute("subject_idx", subject_idx);
 //		model.addAttribute("exam_idx", exam_idx);
@@ -361,7 +376,7 @@ public class TeamController {
 			returnStr = "redirect:teamTask.do?subject_idx="+subject_idx;
 		}
 		else {
-			returnStr = "";
+			returnStr = "redirect:teamTask.do?subject_idx="+subject_idx;
 		}
 		System.out.println(fileUp);
 		

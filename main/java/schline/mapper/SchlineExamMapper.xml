@@ -13,11 +13,14 @@
 	<select id="getuserName" resultType="schline.UserVO">
 		SELECT user_name, user_id FROM user_tb WHERE user_id = #{0}
 	</select>
-	<!-- 과목의 시험,과제 정보 가져오기 -->
+	<!-- 가장 낮은 인덱스 하나만 가져오기...추후 플래그 자동입력시 필요없음 -->
 	<select id="getExamidx" resultType="Integer">
+		SELECT min(exam_idx) from exam_tb WHERE subject_idx = #{0} AND exam_type = #{1}
+	</select>
+	<!-- 과목의 시험,과제 정보 가져오기 -->
+	<select id="getExamidxs" resultType="Integer">
 		SELECT exam_idx from exam_tb WHERE subject_idx = #{0} AND exam_type = #{1}
 	</select>
-
 	<!-- 과제,시험 플래그 -->
 	<select id="getCheck" resultType="int">
 		SELECT check_flag FROM examcheck_tb WHERE exam_idx = #{0} AND user_id = #{1}
@@ -25,7 +28,7 @@
 	
 	<!-- 시험문제리스트 가져오기(랜덤으로..) 문항수 10개(난이도2 5개 난이도3 5개)로 설정 -->
 	<select id="examlist" resultType="schline.ExamDTO" parameterType="java.util.Map">
-		SELECT Tb.*, ROWNUM rNum FROM
+		select * from (SELECT Tb.*, ROWNUM rNum FROM
 			(
 	    	SELECT * FROM question_tb WHERE question_score=3 AND exam_idx IN
 	    	<foreach collection="examidxs" item="idx" open="(" close=")" separator=",">
@@ -33,7 +36,7 @@
 	    	</foreach>
 	    	ORDER BY DBMS_RANDOM.RANDOM
 	    	) Tb
-	    WHERE ROWNUM <![CDATA[<=]]> 5
+	    WHERE ROWNUM <![CDATA[<=]]> 10 
 		UNION
 		SELECT Tb.*, ROWNUM rNum FROM
 			(
@@ -43,7 +46,7 @@
 	    	</foreach>
 	    	ORDER BY DBMS_RANDOM.RANDOM
 	    	)Tb 
-	    WHERE ROWNUM <![CDATA[<=]]> 5
+	    WHERE ROWNUM <![CDATA[<=]]> 25) order by DBMS_RANDOM.RANDOM
 	
 		<!-- SELECT * FROM(SELECT * FROM exam_tb E 
     		INNER JOIN question_tb Q ON E.exam_idx=Q.exam_idx
@@ -55,6 +58,15 @@
 	<select id="questionlist" resultType="schline.ExamDTO">
 		SELECT * FROM questionlist_tb
 	</select>
+	
+	<!-- 주관식 입력값 저장 -->
+	<insert id="insertAnswer">
+		INSERT INTO questionanswer_tb
+			(questionanswer_idx, question_idx, user_id, questionanswer_content)
+		VALUES
+			(seq_questionanswer_idx.NEXTVAL, #{0}, #{1}, #{2})
+	</insert>
+	
 	
 	<!-- 과제 리스트 가져오기 -->
 	<select id="tasklist" resultType="schline.ExamDTO">
@@ -84,36 +96,25 @@
 			 #{_board_content}, #{_board_file}, #{_exam_idx}) 
 	</insert>
 	
+	<!-- 팀번호 가져오기 -->
+	<select id="getTeamNum" resultType="string">
+	 SELECT team_idx FROM teamproject_tb WHERE user_id=#{0} AND subject_idx=#{1}
+	</select>
+	
 	
 	<!-- 협업 게시물 수 카운트 -->
 	<select id="getTotalCount" resultType="int">
-		SELECT count(*) from board_tb B where user_id in
-		    (
-		    select user_id from teamproject_tb T where team_idx =
-		        (
-		        select team_idx from teamproject_tb where subject_idx=#{0} AND user_id=#{1}
-		        )
-		    AND subject_idx=#{0}
-		    )
-		AND subject_idx=#{0} AND board_type='team'
+		SELECT count(*) from board_tb B where 
+		subject_idx=#{0} AND team_num=#{1}
 	</select>
 	
 	<!-- 협업 리스트 받아오기 -->
 	<select id="teamList" resultType="schline.ExamBoardDTO">
-		SELECT * FROM
-		    (
-		    SELECT Tb.*, ROWNUM rNum FROM
-		        (
-		        SELECT * FROM board_tb B WHERE user_id IN
-		            (
-		            SELECT user_id FROM teamproject_tb T WHERE team_idx =
-		                (
-		                SELECT team_idx FROM teamproject_tb WHERE subject_idx=#{0} AND user_id=#{1}
-		                )
-		            AND subject_idx=#{0}
-		            )
-		        AND subject_idx=#{0} AND board_type='team' ORDER BY board_idx DESC
-		    )Tb
+	SELECT * FROM (
+		SELECT Tb.*, rownum rNum FROM (
+			SELECT * FROM board_tb B where 
+			subject_idx=#{0} AND team_num=#{1} ORDER BY board_idx DESC
+			) Tb
 		)
 		WHERE rNum<![CDATA[>=]]>#{2} AND rNum<![CDATA[<=]]>#{3}
 	</select>
@@ -122,10 +123,10 @@
 	<insert id="teamWrite">
 		INSERT INTO board_tb
 			(board_idx, subject_idx, board_type, user_id, board_title,
-			 board_flag_te, board_content, board_file)
+			 board_flag_te, board_content, board_file, team_num)
 		VALUES
 			(seq_board_idx.NEXTVAL, #{_subject_idx}, 'team', #{_user_id}, #{_board_title},
-			 'Y', #{_board_content}, #{_board_file}) 
+			 'Y', #{_board_content}, #{_board_file}, #{_team_num}) 
 	</insert>
 	
 	<!-- 협업게시판 게시물 수정 -->
@@ -150,4 +151,5 @@
 	<update id="checkEdit">
 		UPDATE examcheck_tb SET check_flag= 1 WHERE exam_idx=#{0} AND user_id=#{1}
 	</update>
+
 </mapper>
