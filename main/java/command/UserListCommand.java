@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 
 import admin.AdminCommandImpl;
-import admin.model.AdminTemplateDAO;
+import admin.model.AdminUserTemplateDAO;
 import schline.UserVO;
+import schline.util.PagingUtil;
 
 /*
 - BbsCommandImpl 인터페이스를 구현했으므로 execute()는 반드시 오버라이딩 해야 한다.
@@ -19,7 +20,7 @@ public class UserListCommand implements AdminCommandImpl{
 	@Override
 	public void execute(Model model) {
 		
-		System.out.println("listCommand > execute() 호출");
+		System.out.println("UserListCommand > execute() 호출");
 		
 		/*
 		- 컨트롤로에서 인자로 전달한 model객체에는 request객체가 저장되어 있다.
@@ -28,16 +29,23 @@ public class UserListCommand implements AdminCommandImpl{
 		HttpServletRequest req = (HttpServletRequest)paramMap.get("req");
 		
 		// DAO객체 생성
-		AdminTemplateDAO dao = new AdminTemplateDAO();
+		AdminUserTemplateDAO dao = new AdminUserTemplateDAO();
 		
 		// 검색어 관련 폼값 처리
 		String addQueryString = "";
+		String userType = req.getParameter("userType");
+		if(userType == null)
+			userType = "PROFESSOR";
 		String searchUser = req.getParameter("searchUser");
-		paramMap.put("list_flag", "user");
-		paramMap.put("table", "user_tb");
+		
+		System.out.println("UserListController > userType : " + userType + ", searchUser : " + searchUser);
+		
+		addQueryString = String.format("userType=%s", userType);
+		paramMap.put("userType", userType);
+				
 		if(searchUser != null) {
-			addQueryString = String.format("searchUser=%s", searchUser);
-			paramMap.put("Word", searchUser);
+			addQueryString += String.format("searchUser=%s", searchUser);
+			paramMap.put("searchUser", searchUser);
 		}
 		
 		// paramMap : list_flag, table, Word 
@@ -79,29 +87,13 @@ public class UserListCommand implements AdminCommandImpl{
 		
 		for(UserVO row : listRows)
 		{
-			
 			virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
 			row.setVirtualNum(virtualNum);
-			
-			
-			// 답변글 출력시의 처리부분
-			String reSpace = "";
-			if(row.getBindent() > 0) {
-				
-				for(int i = 0 ; i < row.getBindent(); i++) {
-					reSpace += "&nbsp;&nbsp;";
-				}
-				// 제목앞에 reply 아이콘 추가 및 공백문자를 통한 들여쓰기 처리
-				row.setTitle(reSpace + 
-							"<img src='../images/re3.gif'>" +
-							row.getTitle());
-				
-			}
 		}
 		
 		// 리스트에 출력한 list컬렉션을 model객체에 저장한 후 뷰로 전달한다.
 		String pagingImg = PagingUtil.pagingImg(totalRecordCount, pageSize, blockPage, nowPage, 
-											req.getContextPath()+"/board/list.do?"+addQueryString);
+											req.getContextPath()+"/admin/userList?"+addQueryString);
 		
 		model.addAttribute("pagingImg", pagingImg);
 		model.addAttribute("totalPage", totalPage);
