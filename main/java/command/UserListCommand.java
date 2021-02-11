@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
+import Util.PagingUtil_admin;
 import admin.AdminCommandImpl;
 import admin.model.AdminUserTemplateDAO;
 import schline.UserVO;
@@ -85,14 +86,16 @@ public class UserListCommand implements AdminCommandImpl{
 		int virtualNum = 0;
 		int countNum = 0;
 		
+		System.out.println("UserListCommand > totalRecordCount = " + totalRecordCount );
 		for(UserVO row : listRows)
 		{
 			virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
+			System.out.println("UserListCommand > virtualNum = " + virtualNum );
 			row.setVirtualNum(virtualNum);
 		}
-		
+		 
 		// 리스트에 출력한 list컬렉션을 model객체에 저장한 후 뷰로 전달한다.
-		String pagingImg = PagingUtil.pagingImg(totalRecordCount, pageSize, blockPage, nowPage, 
+		String pagingImg = PagingUtil_admin.pagingImg(totalRecordCount, pageSize, blockPage, nowPage, 
 											req.getContextPath()+"/admin/userList?"+addQueryString);
 		
 		model.addAttribute("pagingImg", pagingImg);
