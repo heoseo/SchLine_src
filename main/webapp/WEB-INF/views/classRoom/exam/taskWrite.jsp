@@ -10,7 +10,6 @@ $(function(){
 	$('#taskWriteBtn').click(function(){
 		//폼의 빈값 체크
 		var f = document.taskFrm;
-		alert(f);
 		var data = new FormData(f);
 		if(f.board_title.value==""){
 			alert("제목을 입력하세요");

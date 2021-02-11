@@ -77,10 +77,7 @@ public class ExamController {
 		else{
 			System.out.println(exam_type+"   "+subject_idx+"   "+user_id);
 			
-			//과제도 리스트로 받아오면 좋으나..시연에서는 1개만 받아오는 것으로 처리
-			ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
-					.getExamidx(subject_idx, exam_type);
-			String exam_idx = examidxs.get(0).toString();
+			String exam_idx = req.getParameter("exam_idx");
 			System.out.println("될까요?"+exam_idx);
 			ExamDTO edto = sqlSession.getMapper(SchlineDAOImpl.class)
 					.getExam(subject_idx, exam_idx);
@@ -115,13 +112,17 @@ public class ExamController {
 		String user_id = principal.getName();
 		String exam_type = req.getParameter("exam_type");
 		System.out.println(exam_type);
+		
 		//자바과목의 시험타입 idx들 가져오기..
-		//select exam_idx from exam_tb where exam_type=2 AND subject_idx=1;
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getExamidxs(subject_idx, exam_type);
+		
+		//플래그 자동입력 후 삭제요망
+		ArrayList<Integer> examidx = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getExamidx(subject_idx, exam_type);
 		
 		//시험진행여부를 확인하는 플래그
-		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(examidxs.get(0), user_id);
+		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(examidx.get(0), user_id);
 		//int check_flag = edto.getCheck_flag();
 		System.out.println("플래그:"+check_flag);
 		
@@ -244,6 +245,10 @@ public class ExamController {
 					//주관식일 경우...(추가처리 필요)
 					else {
 						System.out.println("========위 문제는 주관식입니다..=========");
+						System.out.println("서술형 입력값:"+choice[i]);
+						int question_idx = dto.getQuestion_idx();
+						sqlSession.getMapper(SchlineDAOImpl.class)
+						.insertAnswer(question_idx, user_id, choice[i]);
 					}
 				}
 			}

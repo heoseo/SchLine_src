@@ -20,8 +20,16 @@ public class ExamBoardDTO {
 	private String exam_name;
 	private String exam_content;
 	private java.sql.Date exam_date;
+	//가상번호
+	private int virtualNum;
 	
 	
+	public int getVirtualNum() {
+		return virtualNum;
+	}
+	public void setVirtualNum(int virtualNum) {
+		this.virtualNum = virtualNum;
+	}
 	public int getTeam_num() {
 		return team_num;
 	}
