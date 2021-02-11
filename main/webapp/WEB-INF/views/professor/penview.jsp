@@ -7,15 +7,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>펜 게시판</title>
+<title>상세보기 교수-펜게시판</title>
 <!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
 
 
 <!-- body 시작 -->
 <body class="is-preload">
-<!-- 왼쪽메뉴 include -->
-<jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
 
 	<hr />
    	<div style="text-align: center;">
@@ -72,15 +70,15 @@
 			수정하기</button>
 		<button type="button" 
 			onclick="location.href='./editOrdel.do?pen_idx=${viewRow.pen_idx}&mode=delete&nowPage=${nowPage }&board_type=${viewRow.board_type }';">
-			삭제하기</button>			
+			삭제하기</button>		
 		</c:if>
-         <c:if test="${p_user ne s_user and replyRow.board_type ne 'red'}">
+         <c:if test="${p_user ne s_user }">
       		<button type="button" 
 			onclick="location.href='./reply.do?pen_idx=${viewRow.pen_idx}&nowPage=${nowPage }';">
 			답변글달기</button>
 			</c:if>
 		<button type="button"      
-			onclick="location.href='./list.do?nowPage=${param.nowPage}&board_type=${viewRow.board_type }';">리스트보기</button>
+			onclick="location.href='./penlist.do?nowPage=${param.nowPage}&board_type=${viewRow.board_type }';">리스트보기</button>
 		
 			</td>
 		</tr>
