@@ -24,7 +24,7 @@ function checkValidate(){
 }
 </script>
 <!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
 
 <!-- body 시작 -->
 <body class="is-preload">
