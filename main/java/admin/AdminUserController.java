@@ -48,7 +48,7 @@ public class AdminUserController {
 		command = new UserListCommand();
 		command.execute(model);
 		
-		return "07Board/list";
+		return "admin/userList";
 	}
 	
 	

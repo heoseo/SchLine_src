@@ -46,7 +46,7 @@ public class AdminClassController {
 		command = new UserListCommand();
 		command.execute(model);
 		
-		return "07Board/list";
+		return "admin/userList";
 	}
 //	@RequestMapping("/requestMapping/index.do")
 //	public String rmIndx() {
