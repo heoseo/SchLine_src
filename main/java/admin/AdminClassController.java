@@ -32,6 +32,7 @@ public class AdminClassController {
 		JdbcTemplateConst.template = this.template;
 	}
 	
+	
 	AdminCommandImpl command = null;
 	// 사용자 리스트 가졍괴
 
