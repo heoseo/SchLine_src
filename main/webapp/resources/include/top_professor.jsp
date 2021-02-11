@@ -74,11 +74,11 @@ if(session.getAttribute("user_id") != null){
 					</li>
 					
 	 				<li class="nav-item">
-						<a href="/schline/professor/" >
+						<a href="/schline/professor/ptaskList.do" >
 						과제</a>
 					</li>
 				
-					<li><a href="/schline/professor/">시험</a></li>
+					<li><a href="/schline/professor/pexamlist.do">시험</a></li>
 					<li>
 					<div class="dropdown" >
 						<div class="list-group-item dropdown-toggle" data-toggle="dropdown">
