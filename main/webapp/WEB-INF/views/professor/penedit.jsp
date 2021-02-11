@@ -5,19 +5,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>펜 게시판 - 답변</title>
+<title>펜 게시판 - 수정</title>
 <!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
 
 
 <!-- body 시작 -->
 <body class="is-preload">
-<!-- 왼쪽메뉴 include -->
-<jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
 
 	<hr />
    	<div style="text-align: center;">
-      	<small>답변 게시판</small><!-- flag구분예정-->
+      	<small>수정 게시판</small><!-- flag구분예정-->
    	</div>
    	<hr /><!-- 구분자 -->
    
@@ -38,16 +36,10 @@
 <div class="container">
 	
 	<form:form name="writeFrm" method="post" 
-		action="./replyAction.do" 
+		action="./editAction.do" 
 		onsubmit="return checkValidate(this);">
-		<input type="hidden" name="board_type" value="${replyRow.board_type }" />
-		<input type="hidden" name="pen_idx" value="${replyRow.pen_idx }" />
-		<input type="hidden" name="subject_idx" value="${replyRow.subject_idx }" />
+		<input type="hidden" name="pen_idx" value="${viewRow.pen_idx }" />
 		<input type="hidden" name="nowPage" value="${nowPage }" />
-		<input type="hidden" name="bgroup" value="${replyRow.bgroup }" />
-		<input type="hidden" name="bstep" value="${replyRow.bstep }" />
-		<input type="hidden" name="bindent" value="${replyRow.bindent }" />
-		
 	<table border=1 width=800>
 	<colgroup>
 		<col width="25%"/>
@@ -56,13 +48,13 @@
 	<tr>
 		<td>제목</td>
 		<td>		
-		<input type="text" name="board_title" style="width:90%;" id="demo-name" value="${replyRow.board_title }" placeholder="제목" />
+		<input type="text" name="board_title" style="width:90%;" id="demo-name" value="${viewRow.board_title }" placeholder="제목" />
 		</td>
 	</tr>
 	<tr>
 		<td>내용</td>
 		<td><textarea id="board_content" name="board_content" 
-				style="width:90%;" id="demo-message" placeholder="내용을 입력하세요" rows="6">${replyRow.board_content }</textarea>
+				style="width:90%;" id="demo-message" placeholder="내용을 입력하세요" rows="6">${viewRow.board_content }</textarea>
 		</td>
 	</tr>
 	<tr>
