@@ -15,8 +15,8 @@
   <link rel="stylesheet" href="video-canvas.css" />
   <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <link rel="stylesheet" href="/schline/resources/assets/css/main.css" />
-   <noscript><link rel="stylesheet" href="/schline/resources/assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" href="/schline/resources/assets/css/main.css" />
+	<noscript><link rel="stylesheet" href="/schline/resources/assets/css/noscript.css" /></noscript>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.1/css/font-awesome.min.css"/>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <style tyle="text/css">
@@ -47,37 +47,38 @@ input[type='range']::-webkit-slider-thumb{
 <body>
     <header>
     <br />
-         <div align="center">
-               <a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-                  <img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
-               </a>
-            </div>
+      	<div align="center">
+					<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
+						<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
+					</a>
+				</div>
     </header>  
-   <br /><!-- style="display:none" -->
-   <div id='timerBox' class="timerBox" >
-   <div  id="time" class="time" style="text-align: center">00:00:00</div>
-   <div  id="at" style="text-align: center">1</div>
-   </div>
+	<br /><!-- style="display:none" -->
+	<div id='timerBox' class="timerBox" >
+	<div  id="time" class="time" style="text-align: center;" >00:00:00</div>
+	<div  id="at" style="text-align: center">1</div>
+	</div>
     <!-- 비디오 태그 쓸꺼임-->
     <div id="playerbox" style="height:500px;width:700px;background:#333;margin:0px auto;">
-      <div id="vid_box" style="width:700px;height:450px; ">
-           <video id="my_video" >
-           <source src="../resources/video/${video_title }">
-           </video>
-      </div>
+	   <div id="vid_box" style="width:700px;height:450px; ">
+	        <video id="my_video" >
+	        <source src="../resources/video/${video_title }">
+	        </video>
+	   </div>
         <div id="video_contorls_bar" style="position: relative;">
             <span id="plapausebtn" >
-         <img src="../resources/images/play.png"  alt="play" width="20px" style="margin-bottom:-5px;cursor:pointer; "  />
-         </span>
+            
+			<img src="../resources/images/play.png"  alt="play" width="20px" style="margin-bottom:-5px;cursor:pointer; "  />
+			</span>
              <input type="range" id="seekslider" min="0" max="100" value="0" step="1">   
-            <span id="curtimetext">0:00:00</span> / <span id="durtimetext">0:00:00</span>
+            <span id="curtimetext" style="font-size:small;">0:00:00</span> / <span style="font-size:small;" id="durtimetext">0:00:00</span>
             &nbsp;
             <span id="mutebtn">
-         <img src="../resources/images/unmute.png"  alt="play" width="20px" style="margin-bottom:-5px;cursor:pointer; "  />            
+			<img src="../resources/images/unmute.png"  alt="play" width="20px" style="margin-bottom:-5px;cursor:pointer; "  />            
             </span>
             <input type="range" id="soundslider" min="0" max="100" value="0" step="1">   
             <span id="mutebtn">
-         <img src="../resources/images/mic.png" onClick="startConverting();" width="20px" style="margin-bottom:-5px;cursor:pointer; "  />            
+			<img src="../resources/images/mic.png" onClick="startConverting();" width="20px" style="margin-bottom:-5px;cursor:pointer; "  />            
             </span>
             <span class="float-right">
             <span style="background-color: #333; border:none; color:red; cursor: pointer;" onclick="penboard('red')" id="pen1" ><i class="fas fa-pencil-alt"></i></span>
@@ -91,8 +92,8 @@ input[type='range']::-webkit-slider-thumb{
             </span>
             </span>
           <div id="result" style="position: relative;  top:-65px; opacity:0.5;  color:white">
-         
-         </div>
+			
+			</div>
         <canvas ></canvas>
         </div>
        
@@ -119,7 +120,7 @@ var timer,timedb;
     fullscreenbtn  = document.getElementById("fullscreenbtn");
     vid_box  = document.getElementById("vid_box");
     setTimeout(function() {
-       updateData(); }, 3000); 
+    	updateData(); }, 3000); 
  
     vid.currentTime=${dto.getCurrenttime()};
 
@@ -136,8 +137,8 @@ var timer,timedb;
 }
 window.onload = intializePlayer;
 function init(){
-     document.getElementById("time").innerHTML = "00:00:00";
-   }
+	  document.getElementById("time").innerHTML = "00:00:00";
+	}
 
 function playPause(){
     if(vid.paused){
@@ -203,11 +204,11 @@ function seektimeUpdate(){
     durtimetext.innerHTML = durhours+":"+ durmins+":"+dursecs;
     //0.8로 바꿔야하는데 테스트할떄 40%만 들어도 출석으로 해놈
     if(vid.duration *0.4 <= time){
-       attendance=2;   
-       document.getElementById("at").innerHTML = attendance ;
+    	attendance=2;   
+    	document.getElementById("at").innerHTML = attendance ;
         }
     else{
-       attendance=1;   
+    	attendance=1;   
     }
 }
 function vidmute(){
@@ -235,7 +236,7 @@ function togglefullscreen(){
 }
 document.addEventListener("webkitfullscreenchange", function(){
     if(!document.webkitIsFullScreen){
-       playerbox.style.width = "700px";
+    	playerbox.style.width = "700px";
         playerbox.style.height = "500px";        
         vid_box.style.width = "700px";
         vid_box.style.height = "450px";            
@@ -246,7 +247,7 @@ document.addEventListener("webkitfullscreenchange", function(){
 });
 document.addEventListener("mozfullscreenchange", function(){
     if(!document.mozIsFullScreen){
-       playerbox.style.width = "700px";
+    	playerbox.style.width = "700px";
         playerbox.style.height = "500px";        
         vid_box.style.width = "700px";
         vid_box.style.height = "450px";            
@@ -256,7 +257,7 @@ document.addEventListener("mozfullscreenchange", function(){
 });
 document.addEventListener("MSFullscreenChange", function(){
     if(!document.msFullscreenElement){
-       playerbox.style.width = "700px";
+    	playerbox.style.width = "700px";
         playerbox.style.height = "500px";        
         vid_box.style.width = "700px";
         vid_box.style.height = "450px";            
@@ -274,52 +275,52 @@ var w, h, ratio;
 
 // Add a listener to wait for the 'loadedmetadata' state so the video's dimensions can be read
 video.addEventListener('loadedmetadata', function() {
-   // Calculate the ratio of the video's width to height
-   ratio = video.videoWidth / video.videoHeight;
-   // Define the required width as 100 pixels smaller than the actual video's width
-   w = video.videoWidth - 100;
-   // Calculate the height based on the video's width and the ratio
-   h = parseInt(w / ratio, 10);
-   // Set the canvas width and height to the values just calculated
-   canvas.width = w;
-   canvas.height = h;         
+	// Calculate the ratio of the video's width to height
+	ratio = video.videoWidth / video.videoHeight;
+	// Define the required width as 100 pixels smaller than the actual video's width
+	w = video.videoWidth - 100;
+	// Calculate the height based on the video's width and the ratio
+	h = parseInt(w / ratio, 10);
+	// Set the canvas width and height to the values just calculated
+	canvas.width = w;
+	canvas.height = h;			
 }, false);
 
 // Takes a snapshot of the video
 function snap() {
-   // Define the size of the rectangle that will be filled (basically the entire element)
-   context.fillRect(0, 0, w, h);
-   // Grab the image from the video
-   context.drawImage(video, 0, 0, w, h);
-   canvas.style.display="none";
-   sreenShot();
+	// Define the size of the rectangle that will be filled (basically the entire element)
+	context.fillRect(0, 0, w, h);
+	// Grab the image from the video
+	context.drawImage(video, 0, 0, w, h);
+	canvas.style.display="none";
+	sreenShot();
 }
 //캔버스 이미지로 변환후 에이젝스로 데이터 보내기
 function sreenShot() {
-   
-     var $canvas = document.createElement('canvas');
-      var myImg = $canvas.toDataURL('image/png');
-         var myImg = canvas.toDataURL("image/png");
-         myImg = myImg.replace("data:image/png;base64,", "");
+	
+	  var $canvas = document.createElement('canvas');
+	   var myImg = $canvas.toDataURL('image/png');
+			var myImg = canvas.toDataURL("image/png");
+			myImg = myImg.replace("data:image/png;base64,", "");
 
-         $.ajax({
-            type : "POST",
-            data : {
-               "imgSrc" : myImg,
-               "title" : "${name }"
-            },
-            dataType : "text",
-            url : "../yellow/ImgSave.do",
-            beforeSend : function(xhr){
-                  xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-                 },
-            success : function(data) {
-               console.log(data);
-            },
-            error : function(a, b, c) {   
-               alert("error");
-            }
-         });
+			$.ajax({
+				type : "POST",
+				data : {
+					"imgSrc" : myImg,
+					"title" : "${name }"
+				},
+				dataType : "text",
+				url : "../yellow/ImgSave.do",
+				beforeSend : function(xhr){
+		            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+		           },
+				success : function(data) {
+					console.log(data);
+				},
+				error : function(a, b, c) {	
+					alert("error");
+				}
+			});
 }
 
 //디비 30초 업데이트
@@ -328,18 +329,17 @@ function sreenShot() {
       url: "../class/atupdate.do",
       type:"post",
       data : {
-            idx : "${idx}",
-         play : time,
-         flag : attendance,
-         current : vid.currentTime         
-      }
-     , 
+    	  	idx : "${idx}",
+			play : time,
+			flag : attendance,
+			current : vid.currentTime			
+		}
+     , beforeSend : function(xhr){
+         xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+     },
       cache : false,
       success: function(data){ 
-         console.log(data);
-      },
-      error : function(a, b, c) {   
-         console.log(a+" "+ b+" "+ c)
+    	  console.log(data);
       }
     });
     timedb = setTimeout("updateData()", 10000); // 테스트 용으로 10초마다 보냄 >30초가 맞음
@@ -391,10 +391,10 @@ function startConverting ()
     }
 //빨간펜 파란펜
 function penboard(target){
-    var url = "../penboard/write.do?flag="+target+"&time="+$('#curtimetext').text()+"&vid_title="+"${name }&sub_idx="+${sub_idx};
-    var win = window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=600");
+	 var url = "../penboard/write.do?flag="+target+"&time="+$('#curtimetext').text()+"&vid_title="+"${name }&sub_idx="+${sub_idx};
+	 var win = window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=600");
 
-    
+	 
 }
 </script>
  <jsp:include page="/resources/include/bottom.jsp" />

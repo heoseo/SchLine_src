@@ -32,11 +32,25 @@
                 </div>
                 
                 <!-- 셀렉트 -->
-                <select name="user_type" class="form-control" style="width:100px; margin-bottom:15px;">
-				    <option value="professor">교수</option>
-				    <option value="student">학생</option>
-				    <option value="admin">관리자</option>
-				</select>
+                <form method="get">
+                	<table>
+                	<tr>
+                	<td>
+						<select name="userType" class="form-control" style="width:100px; margin-bottom:15px;">
+						    <option value="PROFESSOR">교수</option>
+						    <option value="STUDENT">학생</option>
+						    <option value="ADMIN">관리자</option>
+						</select>
+                	</td>
+					<td>
+						<input type="text" name="searchUser" />
+						<input type="submit" value="검색" />
+					</td>
+                	</tr>
+                	</table>
+				</form>
+                
+				
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="white-box">
@@ -53,16 +67,40 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Deshmukh</td>
-                                            <td>Prohaska</td>
-                                            <td>@Genelia</td>
-                                            <td>admin</td>
-                                        </tr>
+                                        <c:choose>
+											<c:when test="${empty listRows }">
+												<tr>
+													<td colspan="5" class="text-center">
+														등록된 게시물이 없습니다 ^^*
+													</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<c:forEach items="${listRows }" var="row" 
+													varStatus="loop">
+													<!-- 리스트반복시작 -->
+													<tr>
+														<td class="text-center">${row.virtualNum }</td>
+														<td class="text-left">${row.user_id}</td>
+														<td class="text-center">${row.user_name }</td>
+														<td class="text-center">${row.phone_num }</td>
+														<td class="text-center">${row.email }</td>
+														<!-- <td class="text-center">--</td> -->
+													</tr>
+													<!-- 리스트반복끝 -->
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
                                         
                                     </tbody>
                                 </table>
+                                
+                                <!-- 페이지번호 -->
+								<table border="1" width="90%">
+									<tr>
+										<td align="center">${pagingImg }</td>
+									</tr>
+								</table>
                             </div>
                         </div>
                     </div>

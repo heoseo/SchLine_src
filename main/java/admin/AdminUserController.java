@@ -18,7 +18,7 @@ import schline.util.JdbcTemplateConst;
 
 
 @Controller
-public class AdminClassController {
+public class AdminUserController {
 	
 	private JdbcTemplate template;
 
@@ -26,7 +26,7 @@ public class AdminClassController {
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
 		
-		System.out.println("@Autowired => JdbcTemplate 연결성공");
+		System.out.println("AdminUserController@Autowired => JdbcTemplate 연결성공");
 		
 		// JdbxTEmplate을 해당 프로그램 전체에서 사용하기 위한 설정
 		JdbcTemplateConst.template = this.template;
@@ -36,18 +36,23 @@ public class AdminClassController {
 	AdminCommandImpl command = null;
 	// 사용자 리스트 가졍괴
 
-	@RequestMapping("/board/list.do")
+	@RequestMapping("/admin/userList")
 	public String list(Model model, HttpServletRequest req) {
 		
 		/*
 		- 사용자로부터 받은 모든 요청은 request내장객체에 저장되고, 
 			이를 커맨드객체로 전달하기 위해 model에 저장한 후 매개변수로 전달한다.		 */
 		model.addAttribute("req", req);
+		
+
 		command = new UserListCommand();
 		command.execute(model);
 		
 		return "07Board/list";
 	}
+	
+	
+	
 //	@RequestMapping("/requestMapping/index.do")
 //	public String rmIndx() {
 //		

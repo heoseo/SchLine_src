@@ -36,25 +36,11 @@
 				<div class="list-group">
 				
 				<!-- 기존 코스★★★★★ -->
-					<a href="userinfo.do" class="list-group-item" >
+					<a href="professorinfo.do" class="list-group-item" >
 						<i class="fas fa-archive" id="icon">&nbsp&nbsp</i>
-						<span style="text-align: center;">사용자</span>
+						<span style="text-align: center;">전체 보기</span>
 					</a>
 					
-					<a href="SubjectAtten.do" class="list-group-item">
-						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
-						<span style="text-align: center;">수강 목록</span>
-					</a>
-					
-					<a href="SubjectGrade.do" class="list-group-item">
-						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
-						<span style="text-align: center;">성적 조회</span>
-					</a>
-					
-					<a href="SubjectFile.do" class="list-group-item">
-						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
-						<span style="text-align: center;">제출 파일</span>
-					</a>
 				</div>
 				<br />
 	</div>

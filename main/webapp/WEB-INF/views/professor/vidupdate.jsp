@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,7 @@
 		<title>님,강의 수정페이지</title>
 <!-- 나머지 head속성은 인클루드에 있어요 -->
 <!-- 상단  인클루드 : 메뉴별 페이지 이동설정 해야함★★★★★★-->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
   <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>  
   <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
 
@@ -18,7 +19,7 @@
 	<br />
 	<br />
 	<div class="container">
-	    <form name="fileFrm" method="post" action="vidmodifyAction.do" 
+	    <form:form name="fileFrm" method="post" action="vidmodifyAction.do?${_csrf.parameterName}=${_csrf.token}" 
                enctype="multipart/form-data">
    	
     <table class="table table-bordered" >
@@ -52,7 +53,7 @@
    		 </td>   		 
    	 </tr>
     </table>
-    </form>
+    </form:form>
 	</div>
 	</div>
 </body>
