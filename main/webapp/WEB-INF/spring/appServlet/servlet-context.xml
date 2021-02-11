@@ -24,6 +24,8 @@
    </beans:bean>
    
    <context:component-scan base-package="kosmo.project3.schline" />
+   <context:component-scan base-package="android" />
+   <context:component-scan base-package="admin" />
    
    <!-- 공부방 컨트롤을 위해 스캔추가 -->
 <!--    <context:component-scan base-package="studyroom.chat" /> -->

@@ -4,17 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>리스트페이지 </title>
+<title>교수 - 리스트페이지 </title>
 <!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
 
 
 <!-- body 시작 -->
 <body class="is-preload">
-<!-- 왼쪽메뉴 include -->
-<jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
 
 	
+   	
    	<hr /><!-- 구분자 -->
    
    	<div class="row text-right" style="margin-bottom:10px; padding-right:50px;">

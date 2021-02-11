@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -35,6 +37,9 @@ import org.springframework.stereotype.Repository;
 
 public class PenJdbcDAO {
 	
+	
+	
+	 
 	//멤버변수
 	JdbcTemplate template;
 	
@@ -51,6 +56,10 @@ public class PenJdbcDAO {
 		if(map.get("Word")!=null){
 			sql +=" and "+map.get("Column")+" "
 				+ " 	LIKE '%"+map.get("Word")+"%' ";				
+		}
+		if(map.get("subject_idx")!=null){
+			sql +=" and  subject_idx  "
+					+ "  =	"+map.get("subject_idx") ;				
 		}
 		//쿼리문에서 count(*)를 통해 반환되는 값을 정수형태로 반환한다.
 		return template.queryForObject(sql, Integer.class);		
@@ -77,7 +86,7 @@ public class PenJdbcDAO {
 				PreparedStatement psmt = con.prepareStatement(sql);
 				psmt.setString(1, penBbsDTO.getSubject_idx());
 				psmt.setString(2, penBbsDTO.getBoard_type());
-				psmt.setString(3, "201701701");
+				psmt.setString(3, penBbsDTO.getUser_id());
 				psmt.setString(4, penBbsDTO.getBoard_title());
 				psmt.setString(5, penBbsDTO.getBoard_content());
 				
@@ -179,7 +188,7 @@ public class PenJdbcDAO {
 					public void setValues(PreparedStatement ps) throws SQLException {
 						ps.setString(1, dto.getSubject_idx() );
 						ps.setString(2, dto.getBoard_type() );
-						ps.setString(3, "201701712");
+						ps.setString(3, dto.getUser_id());
 						ps.setString(4, dto.getBoard_title() );
 						ps.setString(5, dto.getBoard_content() );
 						ps.setString(6, dto.getBgroup());
@@ -201,7 +210,7 @@ public class PenJdbcDAO {
 				public void setValues(PreparedStatement ps) throws SQLException {
 					ps.setString(1, dto.getSubject_idx() );
 					ps.setString(2, dto.getBoard_type() );
-					ps.setString(3, "201701712");
+					ps.setString(3, dto.getUser_id());
 					ps.setString(4, dto.getBoard_title() );
 					ps.setString(5, dto.getBoard_content() );
 					ps.setString(6, dto.getBgroup());
@@ -220,7 +229,7 @@ public class PenJdbcDAO {
 		
 		String sql = "UPDATE penboard "
 				+ " SET bstep = bstep+1 "
-				+ " WHERE bgroup=? AND bstep=?";
+				+ " WHERE bgroup=? AND bstep>?";
 		template.update(sql, new PreparedStatementSetter() {
 			
 			@Override
@@ -247,7 +256,11 @@ public class PenJdbcDAO {
 			if(map.get("Word")!=null){
 				sql +=" and "+map.get("Column")+" "
 					+ " LIKE '%"+map.get("Word")+"%' ";				
-			}			
+			}	
+			if(map.get("subject_idx")!=null){
+				sql +=" and  subject_idx  "
+						+ "  =	"+map.get("subject_idx") ;				
+			}
 			sql += " ORDER BY bgroup DESC, bstep ASC"			
 			+"    ) Tb"
 			+")"

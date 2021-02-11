@@ -36,6 +36,7 @@
 	</servlet-mapping>
 	
 
+
 	<!-- 한글깨짐에 대한 설정 추가 -->
 
    <filter>
@@ -54,7 +55,7 @@
       <filter-name>encodingFilter</filter-name>
       <url-pattern>/*</url-pattern>
    </filter-mapping>	
-	
+
 	<!--시큐리티설정-->
    <filter>
       <filter-name>springSecurityFilterChain</filter-name>

@@ -13,7 +13,16 @@ public class AttendanceDTO {
 	private String video_postdate;
 	private String video_title;
 	private String video_end;
+	private String server_saved;
 	private String rnum;
+	
+	
+	public String getServer_saved() {
+		return server_saved;
+	}
+	public void setServer_saved(String server_saved) {
+		this.server_saved = server_saved;
+	}
 	public String getAttendance_idx() {
 		return attendance_idx;
 	}

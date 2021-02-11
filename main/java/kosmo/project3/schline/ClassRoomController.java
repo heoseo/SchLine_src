@@ -10,10 +10,12 @@ import java.util.Base64.Decoder;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +53,7 @@ public class ClassRoomController {
 	private SqlSession sqlSession;
 	
 	private JdbcTemplate template;
+	
 	@Autowired
 	public void setTemplate(JdbcTemplate template) {
 		this.template = template;
@@ -58,13 +61,15 @@ public class ClassRoomController {
 		//JdbcTemplate을 해당 프로그램 전체에서 사용하기 위한 설정
 		PenJdbcConst.template = this.template;
 	}
+	
+	
 	//강의실 눌렀을 때 코스로 이동
 	//로그인 끝나면 session 매개변수 상용
 	@RequestMapping("/main/class.do")
-	public String calssRoom(Model model) {
+	public String calssRoom(Model model, HttpSession session) {
 		
 		ClassDTO classdto = new ClassDTO();
-		classdto.setUser_id("201701701");
+		classdto.setUser_id(session.getAttribute("user_id").toString());
 		ArrayList<ClassDTO> lists =  sqlSession.getMapper(ClassDTOImpl.class).listCourse(classdto);
 		/*디버깅용
 		String sql = sqlSession.getConfiguration().getMappedStatement("listCourse")
@@ -86,8 +91,8 @@ public class ClassRoomController {
 	}
 	//교수용 강의 영상리스트 로그인 되면 세션에서 받아와.
 	@RequestMapping("/professor/video.do")
-	public String vidlist(Model model, HttpServletRequest req) {
-		String user_id = "202101000";
+	public String vidlist(Model model, HttpServletRequest req, HttpSession session) {
+		String user_id = session.getAttribute("user_id").toString();
 		ArrayList<VideoDTO> fileMap = sqlSession.getMapper(ClassDTOImpl.class).listVideo(user_id);
 		String subject_idx = sqlSession.getMapper(ClassDTOImpl.class).whatsub_id(user_id);
 		model.addAttribute("fileMap",fileMap);
@@ -96,13 +101,13 @@ public class ClassRoomController {
 		
 	}
 	@RequestMapping("/class/play.do")
-	public String play(Model model,  HttpServletRequest req) {
+	public String play(Model model,  HttpServletRequest req, HttpSession session) {
 		
 		String video_title = req.getParameter("title");
 		String name = req.getParameter("name");
 		String idx = req.getParameter("idx");
 		String sub_idx = req.getParameter("sub_idx");
-		String user_id = "201701701";
+		String user_id = session.getAttribute("user_id").toString();
 		
 		AttendanceDTO dto = sqlSession.getMapper(ClassDTOImpl.class).selectat(user_id, idx);
 		model.addAttribute("video_title", video_title);
@@ -169,8 +174,10 @@ public class ClassRoomController {
 				
 			}
 			sqlSession.getMapper(ClassDTOImpl.class).upvid(subject_idx, end_date, title,saveFilename);
-			
-	 
+			//학생 리스트 가져오고 디비 업뎃
+		   
+			String video_idx = sqlSession.getMapper(ClassDTOImpl.class).getVideoIdx(saveFilename);
+			attendanceInsert(subject_idx, video_idx);
 			
 			
 			
@@ -181,6 +188,18 @@ public class ClassRoomController {
 			e.printStackTrace();
 		}
 		return "redirect:video.do";
+	}
+	public  void attendanceInsert(String subject_idx, String video_idx) {
+		AttendanceDTO attendanceDTO = new AttendanceDTO();
+		attendanceDTO.setVideo_idx(video_idx);
+		String[] students =sqlSession.getMapper(ClassDTOImpl.class).StuList(subject_idx);
+		for(String str : students) {
+			attendanceDTO.setUser_id(str);
+			sqlSession.getMapper(ClassDTOImpl.class).AttandanceInsDB(attendanceDTO);			
+		}
+		
+		
+		
 	}
 	@RequestMapping("/professor/vidmodify.do")
 	public String gomodi(Model model, HttpServletRequest req) {
@@ -262,15 +281,19 @@ public class ClassRoomController {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		sqlSession.getMapper(ClassDTOImpl.class).delAttendance(idx);
 		sqlSession.getMapper(ClassDTOImpl.class).deletevid(idx);
+		
 		return "redirect:video.do";
 	}
+	
+	
 	//노란펜 캡쳐
 	@ResponseBody
 	@RequestMapping(value ="/yellow/ImgSave.do", method = RequestMethod.POST)
-	public ModelMap ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response) throws Exception {
+	public ModelMap ImgSaveTest(@RequestParam HashMap<Object, Object> param, final HttpServletRequest request, final HttpServletResponse response, HttpSession session) throws Exception {
 		ModelMap map = new ModelMap();
-		String user_id = "201701701";
+		String user_id = session.getAttribute("user_id").toString();
 		String title = request.getParameter("title");
 		String binaryData = request.getParameter("imgSrc");
 		FileOutputStream stream = null;
@@ -310,9 +333,10 @@ public class ClassRoomController {
 		map.addAttribute("resultMap", "");
 		return map;
 	}
+	
 	//출석 디비 업데이트
 		@RequestMapping("/class/atupdate.do")
-		public void atupdate(HttpServletRequest req) {
+		public void atupdate(HttpServletRequest req, HttpSession session) {
 			String idx = req.getParameter("idx");
 			String play = req.getParameter("play");
 			String flag = req.getParameter("flag");
@@ -322,7 +346,7 @@ public class ClassRoomController {
 			dto.setCurrenttime(current);
 			dto.setPlay_time(play);
 			dto.setVideo_idx(idx);
-			dto.setUser_id("201701701");
+			dto.setUser_id(session.getAttribute("user_id").toString());
 			
 			sqlSession.getMapper(ClassDTOImpl.class).atupdatedb(dto);
 			
@@ -331,13 +355,26 @@ public class ClassRoomController {
 		BbsCommandImpl command = null;
 		@RequestMapping("/penboard/list.do")
 		public String penlist(Model model, HttpServletRequest req) {
-			
+			model.addAttribute("url", "/penboard/list.do");
 			model.addAttribute("req", req);
 			
 			command = new ListCommand();
 			command.execute(model);
 			
 			return "classRoom/penlist";
+		}
+		@RequestMapping("/professor/penlist.do")
+		public String propenlist(Model model, HttpServletRequest req,HttpSession session) {
+			String user_id = session.getAttribute("user_id").toString();
+			String subject_idx = sqlSession.getMapper(ClassDTOImpl.class).whatsub_id(user_id);
+			model.addAttribute("subject_idx",subject_idx);
+			model.addAttribute("req", req);
+			model.addAttribute("url", "/professor/penlist.do");
+			
+			command = new ListCommand();
+			command.execute(model);
+			
+			return "professor/penlist";
 		}
 
 		@RequestMapping("/penboard/write.do")
@@ -356,8 +393,9 @@ public class ClassRoomController {
 		@RequestMapping(value="/penboard/writeAction.do",
 				method=RequestMethod.POST)
 		public String writeAction(Model model, HttpServletRequest req, 
-				PenBbsDTO penBbsDTO) {
+				PenBbsDTO penBbsDTO,HttpSession session) {
 			//request객체를 모델에 저장
+			penBbsDTO.setUser_id(session.getAttribute("user_id").toString());
 			model.addAttribute("req", req);
 			//View에서 전송한 폼값을 커맨드객체를 통해 저장후 model에 저장
 			model.addAttribute("penBbsDTO", penBbsDTO);
@@ -376,6 +414,16 @@ public class ClassRoomController {
 			command.execute(model);
 
 			return "classRoom/penview";
+		}
+		//게시물 상세보기
+		@RequestMapping("/professor/view.do")
+		public String proview(Model model, HttpServletRequest req)
+		{
+			model.addAttribute("req", req);
+			command = new ViewCommand();
+			command.execute(model);
+			
+			return "professor/penview";
 		}
 		//게시물 상세보기
 		@RequestMapping("/penboard/editOrdel.do")
@@ -405,7 +453,38 @@ public class ClassRoomController {
 				command.execute(model);
 				model.addAttribute("nowPage", nowPage);
 				model.addAttribute("board_type", req.getParameter("board_type"));
-				modePage = "redirect:list.do";	
+				modePage = "redirect:list.do?board_type="+req.getParameter("board_type");	
+			}
+			return modePage;
+		}
+		@RequestMapping("/professor/editOrdel.do")
+		public String proeditOrdelAction(Model model, HttpServletRequest req)
+		{
+			String modePage = null;
+			
+			String mode = req.getParameter("mode");
+			String pen_idx = req.getParameter("pen_idx");
+			String nowPage = req.getParameter("nowPage");
+			
+			PenJdbcDAO dao = new PenJdbcDAO();
+			
+			if(mode.equals("edit")) {
+				model.addAttribute("req",req);
+				command = new EditCommand();
+				command.execute(model);
+				
+				
+				
+				modePage = "professor/penedit";
+			}
+			else if(mode.equals("delete"))
+			{
+				model.addAttribute("req",req);
+				command = new DeleteActionCommand();
+				command.execute(model);
+				model.addAttribute("nowPage", nowPage);
+				model.addAttribute("board_type", req.getParameter("board_type"));
+				modePage = "redirect:penlist.do?board_type="+req.getParameter("board_type");	
 			}
 			return modePage;
 		}
@@ -419,6 +498,20 @@ public class ClassRoomController {
 			command = new EditActionCommand();
 			command.execute(model);
 
+			model.addAttribute("pen_idx", req.getParameter("pen_idx"));
+			model.addAttribute("nowPage", req.getParameter("nowPage"));
+			return "redirect:view.do";
+		}
+		//수정처리
+		@RequestMapping("/professor/editAction.do")
+		public String proeditAction(HttpServletRequest req,Model model, 
+				PenBbsDTO penBbsDTO){
+			
+			model.addAttribute("req", req);
+			model.addAttribute("penBbsDTO", penBbsDTO);
+			command = new EditActionCommand();
+			command.execute(model);
+			
 			model.addAttribute("pen_idx", req.getParameter("pen_idx"));
 			model.addAttribute("nowPage", req.getParameter("nowPage"));
 			return "redirect:view.do";
@@ -437,11 +530,26 @@ public class ClassRoomController {
 			model.addAttribute("nowPage", req.getParameter("nowPage"));
 			return "classRoom/penreply";
 		}
+		//답변글 작성폼
+		@RequestMapping("/professor/reply.do")
+		public String proreply(HttpServletRequest req,
+				Model model){
+			
+			System.out.println("reply()메소드호출");
+			
+			model.addAttribute("req", req);
+			command = new ReplyCommand();
+			command.execute(model);
+			
+			model.addAttribute("nowPage", req.getParameter("nowPage"));
+			return "professor/penreply";
+		}
 		//답변글 입력하기
 		@RequestMapping("/penboard/replyAction.do")
 		public String replyAction(HttpServletRequest req,
-				Model model, PenBbsDTO penBbsDTO){
+				Model model, PenBbsDTO penBbsDTO,HttpSession session){
 			//커맨드객체를 통해 입력폼에서 전송한 내용을 한번에 저장
+			penBbsDTO.setUser_id(session.getAttribute("user_id").toString());
 			model.addAttribute("penBbsDTO", penBbsDTO);
 			model.addAttribute("req", req);
 			command = new ReplyActionCommand();
@@ -451,8 +559,63 @@ public class ClassRoomController {
 			model.addAttribute("board_type", req.getParameter("board_type"));
 			return "redirect:list.do";
 		}	
+		//답변글 입력하기
+		@RequestMapping("/professor/replyAction.do")
+		public String proreplyAction(HttpServletRequest req,
+				Model model, PenBbsDTO penBbsDTO,HttpSession session){
+			//커맨드객체를 통해 입력폼에서 전송한 내용을 한번에 저장
+			penBbsDTO.setUser_id(session.getAttribute("user_id").toString());
+			model.addAttribute("penBbsDTO", penBbsDTO);
+			model.addAttribute("req", req);
+			command = new ReplyActionCommand();
+			command.execute(model);
+			
+			model.addAttribute("nowPage", req.getParameter("nowPage"));
+			model.addAttribute("board_type", req.getParameter("board_type"));
+			return "redirect:penlist.do";
+		}	
 
-	
+		//웹노티피케이션
+		@RequestMapping(value="/class/WebNoti.do",method=RequestMethod.GET)
+		public String webNoti() {
+			
+			return "classRoom/WebNoti";
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	
 	
 	

@@ -52,8 +52,10 @@
 			</c:otherwise>	
 		</c:choose>
 		</table>
+		
+		
 		<h2 align="left">
-	    	평균 성적 : ${gradeChar }
+	    	평균 성적 : ${gradeChar } (${gradeNum })
 	    </h2>
  		
  		
@@ -66,42 +68,109 @@
 				<div class="container">
 					<div class="container">
 						<h4><a href="../class/grade.do?subject_idx=${row.subject_idx }">&emsp;과목명 :${row.subject_name }</a></h4>						
-						<h6>출결 현황</h6>
 						<table style="font-size: 5px;">
+				 				<tr>
+									<td colspan="10">과제 점수</td>
+								</tr>
 							<c:choose>	
-								<c:when test="${empty gradelists }">
-							 				<tr>
-							 					<td colspan="6" align="center" height="100">
-							 						과제 현황이 없습니다.
-							 					</td>
-							 				</tr>
+								<c:when test="${row.rnum==1 }">
+									<tr align="center" align="center">
+										<c:forEach items="${gradelists1 }" var="row1">
+											<td class="text-center"><!-- 가상번호 -->
+												${row1.exam_name }
+											</td>
+										</c:forEach>		
+									</tr>
+									<tr align="center" >
+										<c:forEach items="${gradelists1 }" var="row1">
+											<td class="text-center">
+												${row1.grade_exam }										
+											</td>
+										</c:forEach>		
+									</tr>
+									<tr>
+									    	성적 : ${gradeChar1 }
+								    </tr>
+								</c:when>
+								<c:when test="${row.rnum==2 }">
+					 				<tr align="center" align="center">
+										<c:forEach items="${gradelists2 }" var="row2">
+											<td class="text-center"><!-- 가상번호 -->
+												${row2.exam_name }
+											</td>
+										</c:forEach>		
+									</tr>
+									<tr align="center" >
+										<c:forEach items="${gradelists2 }" var="row2">
+													<td class="text-center">
+														${row2.grade_exam }										
+													</td>
+										</c:forEach>		
+									</tr>
+									<tr>
+									    	성적 : ${gradeChar2 }
+								    </tr>
+								</c:when>
+								<c:when test="${row.rnum==3 }">
+					 				<tr align="center" align="center">
+										<c:forEach items="${gradelists3 }" var="row3">
+											<td class="text-center"><!-- 가상번호 -->
+												${row3.exam_name }
+											</td>
+										</c:forEach>		
+									</tr>
+									<tr align="center" >
+										<c:forEach items="${gradelists3 }" var="row3">
+													<td class="text-center">
+														${row3.grade_exam }										
+													</td>
+										</c:forEach>		
+									</tr>
+									<tr>
+									    	성적 : ${gradeChar3 }
+								    </tr>
+								</c:when>
+								<c:when test="${row.rnum==4 }">
+					 				<tr align="center" align="center">
+										<c:forEach items="${gradelists4 }" var="row4">
+											<td class="text-center"><!-- 가상번호 -->
+												${row4.exam_name }
+											</td>
+										</c:forEach>		
+									</tr>
+									<tr align="center" >
+										<c:forEach items="${gradelists4 }" var="row4">
+													<td class="text-center">
+														${row4.grade_exam }										
+													</td>
+										</c:forEach>		
+									</tr>
+									<tr>
+									    	성적 : ${gradeChar4 }
+								    </tr>
 								</c:when>
 								<c:otherwise>
-											<tr>
-												<td colspan="10">과제 현황</td>
-											</tr>
-											<tr align="center" align="center">
-												<c:forEach items="${gradelists }" var="row">
-													<td class="text-center"><!-- 가상번호 -->
-														${row.exam_name }
+								<div>
+									<tr align="center" align="center">
+										<c:forEach items="${gradelists5 }" var="row5">
+											<td class="text-center"><!-- 가상번호 -->
+												${row5.exam_name }
+											</td>
+										</c:forEach>		
+									</tr>
+									<tr align="center" >
+										<c:forEach items="${gradelists5 }" var="row5">
+													<td class="text-center">
+														${row5.grade_exam }										
 													</td>
-												</c:forEach>		
-											</tr>
-											<tr align="center" >
-												<c:forEach items="${gradelists }" var="row">
-															<td class="text-center">
-																${row.grade_exam }										
-															</td>
-												</c:forEach>		
-											</tr>
-								</c:otherwise>	
+										</c:forEach>		
+									</tr>
+									<tr>
+									    	성적 : ${gradeChar5 }
+								    </tr>
+								</c:otherwise>
 							</c:choose>
 						</table>
-						
-						<h3 align="right">
-						    	성적 : ${gradeChar }
-					    </h3>
-					    
 					</div>
 				</div>
 			</div>
