@@ -41,7 +41,7 @@
 					<!-- 메인 로고 이미지 -->
 					<div align="center">
 					<br /> 
-						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
+						<a href="/schline/professor/video.do"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
 							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
 						</a>
 					<br />

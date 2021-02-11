@@ -5,15 +5,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>펜 게시판 - 답변</title>
+<title>교수용 펜게시판 답변</title>
 <!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+<%@ include file="/resources/include/top_professor.jsp"%>
 
 
 <!-- body 시작 -->
 <body class="is-preload">
-<!-- 왼쪽메뉴 include -->
-<jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
 
 	<hr />
    	<div style="text-align: center;">
@@ -65,6 +63,20 @@
 				style="width:90%;" id="demo-message" placeholder="내용을 입력하세요" rows="6">${replyRow.board_content }</textarea>
 		</td>
 	</tr>
+	<c:if test="${replyRow.board_type eq 'red'}">
+	<tr>
+		<td colspan="2">위 내용을 정정 하시겠습니까?
+		<div class="col-4 col-12-small">
+			<input type="radio" id="demo-priority-low" name="yorn" value="yes" checked/>
+			<label for="demo-priority-low">예</label>
+		</div>
+		<div class="col-4 col-12-small">
+			<input type="radio" id="demo-priority-normal" value="no" name="yorn"/>
+			<label for="demo-priority-normal">아니요</label>
+		</div>
+		</td>
+	</tr>
+	</c:if>
 	<tr>
 		<td colspan="2" align="center">
 		<ul class="actions">
