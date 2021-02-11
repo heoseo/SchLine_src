@@ -57,6 +57,10 @@ public class PenJdbcDAO {
 			sql +=" and "+map.get("Column")+" "
 				+ " 	LIKE '%"+map.get("Word")+"%' ";				
 		}
+		if(map.get("subject_idx")!=null){
+			sql +=" and  subject_idx  "
+					+ "  =	"+map.get("subject_idx") ;				
+		}
 		//쿼리문에서 count(*)를 통해 반환되는 값을 정수형태로 반환한다.
 		return template.queryForObject(sql, Integer.class);		
 	}
@@ -225,7 +229,7 @@ public class PenJdbcDAO {
 		
 		String sql = "UPDATE penboard "
 				+ " SET bstep = bstep+1 "
-				+ " WHERE bgroup=? AND bstep=?";
+				+ " WHERE bgroup=? AND bstep>?";
 		template.update(sql, new PreparedStatementSetter() {
 			
 			@Override
@@ -252,7 +256,11 @@ public class PenJdbcDAO {
 			if(map.get("Word")!=null){
 				sql +=" and "+map.get("Column")+" "
 					+ " LIKE '%"+map.get("Word")+"%' ";				
-			}			
+			}	
+			if(map.get("subject_idx")!=null){
+				sql +=" and  subject_idx  "
+						+ "  =	"+map.get("subject_idx") ;				
+			}
 			sql += " ORDER BY bgroup DESC, bstep ASC"			
 			+"    ) Tb"
 			+")"
