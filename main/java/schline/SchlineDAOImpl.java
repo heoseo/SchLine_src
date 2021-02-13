@@ -22,8 +22,9 @@ public interface SchlineDAOImpl {
 	public ArrayList<ExamDTO> examlist(Map examidxs);
 	
 	//타입으로 과제 가져오기
-	public ArrayList<ExamDTO> tasklist(String exam_case, String subject_idx);
-	
+	public ArrayList<ExamDTO> tasklist(String exam_case, String subject_idx, String user_id);
+	//종합과제함 가져오기
+	public ArrayList<ExamDTO> getAllTask(String subject_idx);
 	//팀번호 가져오기
 	public String getTeamNum(String user_id, String subject_idx);
 	//협업게시판 리스트 가져오기
@@ -68,11 +69,15 @@ public interface SchlineDAOImpl {
 	
 	//게시물 삭제
 	public int teamDelete(String board_idx, String user_id);
+	//////////////////////점수처리/////////////////////////
+	//주관식 정답처리에 대한 점수증가
+	public int gradeUp(String question_score, String user_id, String exam_idx);
 	
 	///////////////////// 교수페이지 처리 ////////////////////
 
 	//해당 아이디가 담당하는 과목의 문제리스트 가져오기...
 	public ArrayList<ExamDTO> pexamList(String user_id);
+	public ArrayList<ExamDTO> ptasklist(String exam_type, String subejct_idx);
 	//객관식
 	public ArrayList<ExamDTO> pquestionlist(String user_id);
 	//문제입력
@@ -90,11 +95,16 @@ public interface SchlineDAOImpl {
 	public void deleteQuestionAnswer(String question_idx);
 	
 	///교수페이지 과제////
-	ArrayList<ExamDTO> ptasklist(String subject_idx);
 	public int insertTask(String subject_idx, String exam_name, String exam_date, String exam_content, String exam_scoring);
+	public void insertCheckList(ExamDTO examDTO);
+	public void deleteExamBoard(String exam_idx);
+	public void deleteCheckList(String exam_idx);
 	public int deleteTask(String exam_idx, String subject_idx);
 	//제출과제 확인용//
 	public int getTotalTask(String subject_idx);
 	public ArrayList<ExamBoardDTO> taskCheckList(String subject_idx, int start, int end);
+	
+	//주관식 확인
+	public ArrayList<ExamDTO> examCheckList(String subject_idx);
 }
  

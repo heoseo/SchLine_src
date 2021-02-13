@@ -67,10 +67,11 @@
 			(seq_questionanswer_idx.NEXTVAL, #{0}, #{1}, #{2})
 	</insert>
 	
-	
-	<!-- 과제 리스트 가져오기 -->
+	<!-- 과제 리스트 가져오기(학생) -->
 	<select id="tasklist" resultType="schline.ExamDTO">
-		SELECT * FROM exam_tb WHERE exam_type=#{0} AND subject_idx=#{1}
+		SELECT * FROM exam_tb E
+	    JOIN examcheck_tb C ON E.exam_idx=C.exam_idx
+		WHERE exam_type=#{0} AND subject_idx=#{1} AND user_id=#{2}
 	</select>	
 	
 	<!-- 배점을 위한 idx 및 점수를 가져오는 쿼리 -->
@@ -152,4 +153,11 @@
 		UPDATE examcheck_tb SET check_flag= 1 WHERE exam_idx=#{0} AND user_id=#{1}
 	</update>
 
+	<!-- 통합과제함 리스트 가져오기 -->
+	<select id="getAllTask" resultType="schline.ExamDTO">
+		SELECT * FROM exam_tb E
+    		JOIN subject_tb S on E.subject_idx = S.subject_idx
+			WHERE exam_type=1 AND E.subject_idx IN (
+   		SELECT subject_idx FROM registration_tb	WHERE user_id=#{0})
+	</select>
 </mapper>

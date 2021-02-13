@@ -20,9 +20,9 @@
 	<table>
 	<tr><td colspan="5" style="text-align:center">과제</td></tr>
 		<tr>
-			<td colspan="5"><a href="#" class="button primary fit">과제관리</a></td>
+			<td colspan="5"><a href="ptaskList.do" class="button primary fit">과제등록</a></td>
 		</tr>
-		<tr><td colspan="5"><br /></td></tr><tr><td colspan="5"></td></tr>
+		<tr><td colspan="5"><a href="taskCheck.do" class="button primary fit">과제확인</a></td></tr><tr><td colspan="5"></td></tr>
 		<tr><td colspan="5" style="text-align:center">협업 게시판</td></tr>
 		<tr>
 			<td><a href="teamList.do?team_num=1" class="button fit">협업1팀</a></td>

@@ -135,7 +135,8 @@ textarea { height : 200px; }
  	</div>
  	</form:form>
  </div>
- <div class="text-center"><h3>시험 문제 리스트</h3></div>
+ <div class="text-center"><h3 style="display:inline; margin-left:200px;">시험 문제 리스트</h3>
+ <input type="button" class="button primary small" value="주관식 채점" style="float:right" onclick="location.href='examCheck.do';"/></div>
  <br />
 <div class="table-wrapper">
 	<table class="alt text-center">

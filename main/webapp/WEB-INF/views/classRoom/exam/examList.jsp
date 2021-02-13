@@ -181,24 +181,30 @@ $(function(){
 	<p style="text-align:center; font-size:1.2em">${subject_name } 과제</p>
 		<div class="table-wrapper">
 			<table class="alt" style="text-align:center">
-			<c:forEach items="${examlist }" var="trow" varStatus="tloop">
 				
 				<tr>
 					<td style="width:20%;">과제명</td>
 					<td style="text-align:left;">과제 내용</td>	
 					<td style="width:15%">마감일</td>
-					<td style="width:15%">제출여부</td>
+					<td style="width:15%">제출여부	</td>
 					<td style="width:10%">제출하기</td>
 				</tr>
+			<c:forEach items="${examlist }" var="trow" varStatus="tloop">
 				<tr>
 					<td style="width:20%;" >${trow.exam_name }</td>
 					<td style="text-align:left; overflow:hidden;">${trow.exam_content }</td>	
 					<td style="width:15%">${trow.exam_date }</td>
-					<td style="width:15%">${check }</td>
+					<td style="width:15%">
+					<c:choose>
+					<c:when test="${trow.check_flag eq 0 }">미제출</c:when>
+					<c:otherwise>제출완료</c:otherwise>
+					</c:choose>					
+					</td>
 					<td style="width:10%"><input type="button" class="button primary"
 					 onclick="location.href='javascript:taskWrite(${param.subject_idx}, ${trow.exam_idx });'"
 					value="제출하기" style="min-width:0"
-					<c:if test="${check eq '제출' }">disabled="disabled"</c:if>>
+					<c:if test="${trow.check_flag eq 1 }">disabled="disabled"</c:if>
+					>
 					</td>
 				</tr>
 				

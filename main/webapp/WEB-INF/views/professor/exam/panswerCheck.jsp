@@ -10,17 +10,24 @@
 <!-- 상단  인클루드 : 메뉴별 페이지 이동설정 해야함★★★★★★-->
 <%@ include file="/resources/include/top_professor.jsp"%>
 <script>
-function answerscoring(){
-	
+function questionCorrect(){
+	var f = document.scoreFrm;
+	var c = confirm('정답처리 하시겠습니까?');
+	if(c){
+		alert('배점되었습니다.');
+		return true;
+	}
+	else{
+		return false;
+	}
 }
-
 
 </script>
 
 <body class="is-preload" >
 	<div id="main">
 	<br /><br />
-	<h2 style="text-align:center">제출 과제 리스트</h2>
+	<h2 style="text-align:center">주관식 입력 리스트</h2>
 <div class="table-wrapper">
 	<table class="alt" style="text-align:center">
 		<c:choose>	
@@ -32,39 +39,30 @@ function answerscoring(){
  				</tr>
 			</c:when>
 			<c:otherwise>
-				<c:forEach items="${examlist }" var="row" varStatus="loop">
+				<c:forEach items="${teamlist }" var="row" varStatus="loop">
 					<table>
-						<tr>
+						<tr style="vertical-align:middle;">
 							<%-- 순차적으로 문제번호 부여 --%>
-							<td><b>문제 ${loop.count }</b> : ${row.question_content } &nbsp;
-							<%-- 문제별 난이도 부여(추후 난이도별로 추출할 예정) --%>
-							<span style="font-size:0.7em;">(난이도 : ${row.question_score })</span>
-							</td>
+							<td style="width:30%">문제 : ${row.question_content }</td>
+							<td>입력한답 : ${row.questionanswer_content } &nbsp;</td>
+							<td style="width:15%">작성자:${row.user_name }</td>
+						<form:form name="scoreFrm" onsubmit="return questionCorrect();" method="post" action="examScoring.do">
+							<input type="hidden" name="exam_idx" id="exam_idx" value="${row.exam_idx }" />
+							<input type="hidden" name="user_id" id="user_id" value="${row.user_id }"/>
+							<input type="hidden" name="question_score" id="question_score" value="${row.question_score }"/>
+							<td style="width:10%"><input type="submit" class="button primary" style="min-width:0"
+							value="정답처리"></td>
 						</tr>
-						<td >정답입력 : <input type="text" name="choice" style="width:300px; height:30px; display:inline;"></td>
-						
 						<%-- 정답 확인을 위한 문항별 인덱스를 히든폼에 저장 --%>
-					<input type="hidden" name="questionNum" value="${row.question_idx }"/>
+						</form:form>
 					</table>
 				</c:forEach>
-					<input type="hidden" name="subject_idx" value="${param.subject_idx }"/>
-					<input type="hidden" name="exam_type" value="${param.exam_type }"/>
-				<span> <input type="button" id="examBtn" value="제출" style="float:right;"/> </span>
 				<br />
 			</c:otherwise>	
 		</c:choose>
 		</table>
 		<div>
 			<div class="row  mr-1">
-				<div class="col-10">
-					<ul class='pagination justify-content-center'>
-						${pagingImg }
-					</ul>
-				</div>
-				<div class="col-2 text-right pr-3">					
-					<input type="button" class="button primary"
-				 onclick="location.href='teamWrite.do?subject_idx=${param.subject_idx}&team_num=${param.team_num }'" value="작성" style="min-width:0"/>
-				</div>	
 			</div>
 		</div>
 	</div>

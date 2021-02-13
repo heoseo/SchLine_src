@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import schline.AttendanceDTO;
+import schline.ClassDTOImpl;
 import schline.ExamBoardDTO;
 import schline.ExamDTO;
 import schline.SchlineDAOImpl;
@@ -87,8 +89,11 @@ public class ProfessorExamController {
 				.insertExam(subject_idx, exam_name, exam_date, exam_scoring);
 		
 		if(result!=0) {
-			
+		
 			String exam_idx = sqlSession.getMapper(SchlineDAOImpl.class).getExam_idx(subject_idx);
+			//insertCheckList 메소드 호출하여 학생 체크리스트 insert
+			insertCheckList(subject_idx, exam_idx);
+			
 			System.out.println("시험일련번호:"+exam_idx);
 			model.addAttribute("exam_idx", exam_idx);
 		}
@@ -104,7 +109,6 @@ public class ProfessorExamController {
 	public Map<String, Object> examwriteaction(Model model, HttpServletRequest req, Principal principal){
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		
 		
 		String question_content = req.getParameter("question_content");
 		String exam_idx = req.getParameter("exam_idx");
@@ -150,7 +154,7 @@ public class ProfessorExamController {
 		String exam_type = "1";
 		
 		ArrayList<ExamDTO> pexamlist = sqlSession.getMapper(SchlineDAOImpl.class)
-					.tasklist(exam_type, subject_idx);
+					.ptasklist(exam_type, subject_idx);
 		
 		for(ExamDTO dto : pexamlist) {
 			
@@ -177,9 +181,14 @@ public class ProfessorExamController {
 
 		int result = sqlSession.getMapper(SchlineDAOImpl.class)
 				.insertTask(subject_idx, exam_name, exam_date, exam_content, exam_scoring);
+		
 		System.out.println("과제작성결과:"+result);
 		
 		if(result==1) {
+			String exam_idx = sqlSession.getMapper(SchlineDAOImpl.class).getExam_idx(subject_idx);
+			//insertCheckList 메소드 호출하여 학생 체크리스트 insert
+			insertCheckList(subject_idx, exam_idx);
+			
 			model.addAttribute("msg", "과제를 작성했습니다.");
 			model.addAttribute("url", "/schline/professor/ptaskList.do");
 		}
@@ -199,9 +208,15 @@ public class ProfessorExamController {
 		String exam_type = req.getParameter("exam_type");
 		System.out.println("시험타입:"+exam_type);
 		int result = 0;
+		
 		if(exam_type.equals("1")) {
 			
 			String exam_idx = req.getParameter("exam_idx");
+			System.out.println("삭제하려는과제인덱스:"+exam_idx);
+			sqlSession.getMapper(SchlineDAOImpl.class)
+					.deleteExamBoard(exam_idx);
+			sqlSession.getMapper(SchlineDAOImpl.class)
+					.deleteCheckList(exam_idx);
 			result = sqlSession.getMapper(SchlineDAOImpl.class)
 					.deleteTask(exam_idx, subject_idx);
 			
@@ -754,50 +769,26 @@ public class ProfessorExamController {
 		System.out.println("과목 인덱스 : "+subject_idx);
 		UserVO uvo;
 		
-		//게시물의 갯수를 카운트...
-		int totalRecordCount = sqlSession.getMapper(SchlineDAOImpl.class).getTotalTask(subject_idx);
-		System.out.println("totalRecordCOunt="+totalRecordCount);
-		System.out.println(totalRecordCount);
-		//페이지 처리를 위한 설정값
-		int pageSize = 5;
-		int blockPage = 5;
-		//전체 페이지수 계산
-		int totalPage = (int)Math.ceil((double)totalRecordCount/pageSize);
-		//현재페이지에 대한 파라미터 처리 및 시작/끝의 rownum구하기
-		int nowPage = req.getParameter("nowPage")==null ? 1 : 
-			Integer.parseInt(req.getParameter("nowPage"));
-		//select할 게시물의 구간을 계산
-		int start = (nowPage-1)*pageSize + 1;
-		int end = nowPage * pageSize;
-		
-		ArrayList<ExamBoardDTO> teamlist = 
-				sqlSession.getMapper(SchlineDAOImpl.class).taskCheckList(subject_idx, start, end);
-		
-		//가상번호 계산하여 부여하기
-		int virtualNum = 0;
-		int countNum = 0;
-		
+		ArrayList<ExamDTO> teamlist = 
+				sqlSession.getMapper(SchlineDAOImpl.class).examCheckList(subject_idx);
+	
 		//리스트 반복..
-		for(ExamBoardDTO dto : teamlist) {
-			
-			virtualNum = totalRecordCount -(((nowPage-1)*pageSize) + countNum++);
-			dto.setVirtualNum(virtualNum);
+		for(ExamDTO dto : teamlist) {
+		
 			uvo = sqlSession.getMapper(SchlineDAOImpl.class).getuserName(dto.getUser_id());
 
 			dto.setUser_name(uvo.getUser_name());
 			//줄바꿈처리
-			String temp = dto.getBoard_content().replace("\r\n", "<br/>");
-			dto.setBoard_content(temp);
+			String temp = dto.getQuestionanswer_content().replace("\r\n", "<br/>");
+			dto.setQuestionanswer_content(temp);
+			
+			temp = dto.getQuestion_content().replace("\r\n", "<br/>");
+			dto.setQuestion_content(temp);
 		}
 		
-		String pagingImg =
-				pagingImg(totalRecordCount, pageSize, blockPage, nowPage,
-					req.getContextPath()+"/professor/taskCheck.do?subject_idx="+subject_idx+"&");
-		
-		model.addAttribute("pagingImg", pagingImg);
 		model.addAttribute("teamlist", teamlist);
 		
-		return "/professor/exam/ptaskCheck";
+		return "/professor/exam/panswerCheck";
 	}
 	
 	
@@ -904,7 +895,47 @@ public class ProfessorExamController {
 		}		
 	}
 	
+	
+	@RequestMapping("/professor/examScoring.do")
+	public String examScoring(Model model, HttpServletRequest req) {
+		
+		String user_id = req.getParameter("user_id");
+		String question_score = req.getParameter("question_score");
+		String exam_idx = req.getParameter("exam_idx");
+		System.out.println(user_id+" "+question_score+" "+exam_idx);
+		int result = sqlSession.getMapper(SchlineDAOImpl.class)
+				.gradeUp(question_score, user_id, exam_idx);
+		System.out.println("점수반영결과:"+result);
+		if(result==1) {
+			System.out.println("점수반영 성공");
+		}
+		else {
+			System.out.println("반영실패..");
+		}
+		
+		return "redirect:examCheck.do";
+	}
+	
+	
+	
+	
 	//////기타 유틸 등....////////////
+	
+	//해당 과목을 수강중인 학생들의 id를 기준으로 examcheck테이블에 데이터생성(insert)
+	public void insertCheckList(String subject_idx, String exam_idx) {
+		
+		ExamDTO examDTO = new ExamDTO();
+		int idx = Integer.parseInt(exam_idx);
+		examDTO.setExam_idx(idx);
+		String[] students = sqlSession.getMapper(ClassDTOImpl.class)
+				.StuList(subject_idx);
+		for(String str : students) {
+			examDTO.setUser_id(str);
+			sqlSession.getMapper(SchlineDAOImpl.class)
+				.insertCheckList(examDTO);
+		}
+	}
+	
 	public static String pagingImg(int totalRecordCount, int pageSize, 
 			int blockPage, int nowPage,	String page) {
 		
