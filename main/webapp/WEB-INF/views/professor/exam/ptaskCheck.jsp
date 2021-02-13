@@ -34,10 +34,11 @@ function taskscoring(){
 			<c:otherwise>
 				<c:forEach items="${teamlist }" var="trow" varStatus="tloop">
 					<tr>
-						<td rowspan="3" style="width:5%; vertical-align:middle;">${trow.virtualNum }</td>
+						<td rowspan="2" style="width:5%; vertical-align:middle;">${trow.virtualNum }</td>
+						<td style="width:10%">제목</td>
 						<td style="text-align:left;">${trow.board_title }</td>
-						<td style="width:15%">${trow.user_name }</td>	
-						<td style="width:15%">${trow.board_postdate }</td>
+						<td style="width:15%">(작성자)<br/>${trow.user_name }</td>	
+						<td style="width:15%">(제출일)<br/>${trow.board_postdate }</td>
 						<td style="width:5%">
 					<c:if test="${not empty trow.board_file }">
 						<a href="teamDownload.do?board_file=${trow.board_file }">
@@ -47,17 +48,18 @@ function taskscoring(){
 						</td>
 					</tr>
 					<tr>
+					<td style="width:10%">내용</td>
 					<td colspan="4">
 					${trow.board_content }
 					</td>
 					</tr>
 					<tr>
-					<td colspan="4" style="width:10%">[${trow.user_name }] 학생의 과제점수 &ensp;:&ensp; 
+					<td colspan="6" style="width:10%">[${trow.user_name }] 학생의 과제점수 &ensp;:&ensp; 
 					<input type="number" name="score" id="" style="width:100px;"/>&ensp;
-					<input type="button" class="button small" style="margin-top:5px; font-size:0.8em" value="배점"
+					<input type="button" class="button small primary" style="margin-top:5px; font-size:0.8em" value="배점"
 						onclick="taskscoring();">
 					</td></tr>
-					<tr><td colspan="5"></td></tr>
+					<tr><td colspan="6"></td></tr>
 				</c:forEach>
 			</c:otherwise>	
 		</c:choose>

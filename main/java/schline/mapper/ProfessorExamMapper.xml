@@ -21,7 +21,7 @@
 	
 	<!-- 과제리스트 가져오기 -->
 	<select id="ptasklist" resultType="schline.ExamDTO">
-		SELECT * FROM exam_tb WHERE exam_type=1 AND subject_idx=#{0}
+		SELECT * FROM exam_tb WHERE exam_type=#{0} AND subject_idx=#{1}
 	</select>
 	
 	<!-- 담당과목idx 가져오기 -->
@@ -70,11 +70,23 @@
 		INSERT INTO exam_tb (exam_idx, subject_idx, exam_name, exam_date, exam_type, exam_content, exam_scoring)
 		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy'), '1', #{3}, #{4})
 	</insert>
+	<!-- 과제 및 시험 입력 후 해당 인덱스로.. 수강중인 학생들의 체크리스트 insert-->
+	<insert id="insertCheckList" parameterType="schline.ExamDTO">
+		INSERT INTO examcheck_tb VALUES
+		(#{exam_idx}, #{user_id}, 0)
+	</insert>
 	<!-- 과제 수정 -->
 	<update id="updateTask">
 		UPDATE exam_tb SET exam_name=#{0}, exam_date = to_date(#{1}, 'mm/dd/yyyy'), exam_content=#{2}, exam_scoring=#{3} WHERE exam_idx=#{4}  
 	</update>
 	<!-- 과제 삭제 -->
+	<!-- 체크리스트와 제출된 과제 게시판을 먼저 삭제해야함... -->
+	<delete id="deleteExamBoard">
+		DELETE FROM board_tb where exam_idx = #{0}
+	</delete>
+	<delete id="deleteCheckList">
+		DELETE FROM examcheck_tb where exam_idx = #{0}
+	</delete>
 	<delete id="deleteTask">
 		DELETE FROM exam_tb WHERE exam_idx = #{0} AND subject_idx = #{1}
 	</delete>
@@ -93,7 +105,17 @@
 		WHERE rNum<![CDATA[>=]]>#{1} AND rNum<![CDATA[<=]]>#{2}	
 	</select>
 	
-	<select id="answerCheck" resultType="schline.ExamDTO">
-		SELECT * FROM exam_tb WHERE
+	<!-- 주관식 답 데이터가 많아 20개만 우선 추출 -->
+	<select id="examCheckList" resultType="schline.ExamDTO">
+		select subject_idx, E.exam_idx, question_content, question_score, Q.question_idx, question_type, user_id, questionanswer_content
+			from exam_tb E join question_tb Q on E.exam_idx=Q.exam_idx
+	    	join questionanswer_tb A on Q.question_idx=A.question_idx 
+	    where subject_idx=#{0} and rownum<![CDATA[<=]]>20
 	</select>
+	
+	<update id="gradeUp">
+		UPDATE grade_tb SET grade_exam=#{0}
+		WHERE user_id =#{1} AND exam_idx=#{2}
+	</update>
+	
 </mapper>

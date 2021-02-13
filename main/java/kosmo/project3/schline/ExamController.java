@@ -215,7 +215,8 @@ public class ExamController {
 		
 		//점수
 		int score = 0;
-		
+		int s;
+		int idx;
 		for(ExamDTO dto : scoringList) {
 				
 			//문제의인덱스(총문제)의 크기만큼 반복(디버깅이 좀 필요해 보입니다... 헷갈림)
@@ -234,6 +235,16 @@ public class ExamController {
 						//정답이라면...
 						if(dto.getAnswer().equalsIgnoreCase(choice[i])) {
 							System.out.println((i+1)+"번 문제 정답");
+							
+							///////점수 자동입력...아마 점수없는 인덱스의 문제가 나오면 에러날듯?///////
+							idx = dto.getExam_idx();
+							s = dto.getQuestion_score();
+							String exam_idx = Integer.toString(idx);
+							String scoreStr = Integer.toString(s);
+							System.out.println(exam_idx+"<인덱스..점수>"+scoreStr);
+							sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(scoreStr, user_id, exam_idx);
+				//			////////////////////////////////////////////////////////////
+							
 							//점수 더하기
 							score += dto.getQuestion_score();
 						}
@@ -256,6 +267,12 @@ public class ExamController {
 		
 		String exam_type = req.getParameter("exam_type");
 		System.out.println(exam_type);
+		
+		/*
+		  시연에서는 시험 중 가장 낮은 인덱스 하나를 추출하여.. 완료처리하고
+		  시험진행한것으로 판단 .. 시험별로 출제하게 되면
+		  추후에 해당 시험의 인덱스를 받아와 완료처리하면 됨.
+		 */
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getExamidx(subject_idx, exam_type);
 		String exam_idx = examidxs.get(0).toString();
@@ -263,7 +280,7 @@ public class ExamController {
 		sqlSession.getMapper(SchlineDAOImpl.class).checkEdit(exam_idx, user_id);
 		//학생별로 점수를 insert 해야함!! 과제성적은  Grade 테이블에서 과제인덱스랑 점수 넣으면됨(insert)
 		
-		//할것!
+		
 		
 		////////////////////////////////////////////////////////////////////////////
 
@@ -290,9 +307,8 @@ public class ExamController {
 		//로그인한 사용자가 과제를 제출했는지 확인하는 사용자정보 받아올 필요가 있을듯..
 		String subject_idx = req.getParameter("subject_idx");
 		String exam_type = req.getParameter("exam_type");
-		ArrayList<Integer> examidxs =sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, exam_type);
-		Integer exam_idx = examidxs.get(0);
-		System.out.println("과제인덱스:"+exam_idx);
+		//ArrayList<Integer> examidxs =sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, exam_type);
+		//System.out.println("과제인덱스:"+exam_idx);
 		ClassDTO classdto = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getsubjectName(subject_idx);
 		String subject_name = classdto.getSubject_name();
@@ -300,23 +316,16 @@ public class ExamController {
 		
 		System.out.println("사용자 아이디"+user_id);
 		
-		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
-		
-		System.out.println("플래그:"+check_flag);
-		
-		if(check_flag!=1) {
-			model.addAttribute("check", "미제출");
-		}
-		else {
-			model.addAttribute("check", "제출");
-		}
-		
+		/*
+		 * if(check_flag!=1) { model.addAttribute("check", "미제출"); } else {
+		 * model.addAttribute("check", "제출"); }
+		 */
 		ArrayList<ExamDTO> examlist = 
-				sqlSession.getMapper(SchlineDAOImpl.class).tasklist("1", subject_idx);
+				sqlSession.getMapper(SchlineDAOImpl.class).tasklist("1", subject_idx, user_id);
 
 		//리스트 반복..
 		for(ExamDTO dto : examlist) {
-			
+			//int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
 			//줄바꿈처리
 			String temp = dto.getExam_content().replace("\r\n", "<br/>");
 			dto.setExam_content(temp);
@@ -456,6 +465,23 @@ public class ExamController {
 //		return "redirect:/class/taskList.do";
 		return returnObj;
 	}
+	
+	/////////////////////////////
+	////////종합과제함/////////////
+	
+	@RequestMapping("/main/totalTask.do")
+	public String totalTask(Model model, HttpServletRequest req, Principal principal) {
+		
+		String user_id = principal.getName();
+		
+		ArrayList<ExamDTO> examlist = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getAllTask(user_id);
+		
+		model.addAttribute("examlist", examlist);
+		
+		return "/main/totalTask";
+	}
+	
 	
 
 }

@@ -74,7 +74,7 @@ if(session.getAttribute("user_id") != null){
 					</li>
 					
 	 				<li class="nav-item">
-						<a href="/schline/professor/ptaskList.do" >
+						<a href="/schline/professor/select.do" >
 						과제</a>
 					</li>
 				

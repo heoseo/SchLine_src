@@ -31,8 +31,23 @@ public class ExamDTO {
 	
 	//정답 작성자 확인
 	private String user_id;
+	private String user_name;
+	//종합과제함용 과목명 가져오기
+	private String subject_name;
 	
 	
+	public String getSubject_name() {
+		return subject_name;
+	}
+	public void setSubject_name(String subject_name) {
+		this.subject_name = subject_name;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
 	public String getUser_id() {
 		return user_id;
 	}
