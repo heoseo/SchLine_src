@@ -114,7 +114,7 @@
 	</select>
 	
 	<update id="gradeUp">
-		UPDATE grade_tb SET grade_exam=#{0}
+		UPDATE grade_tb SET grade_exam=grade_exam + #{0}
 		WHERE user_id =#{1} AND exam_idx=#{2}
 	</update>
 	

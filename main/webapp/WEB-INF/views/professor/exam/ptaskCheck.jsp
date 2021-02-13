@@ -11,10 +11,15 @@
 <%@ include file="/resources/include/top_professor.jsp"%>
 <script>
 function taskscoring(){
-	
+	var c = confirm('배점 하시겠습니까?');
+	if(c){
+		alert('배점되었습니다.');
+		return true;
+	}
+	else{
+		return false;
+	}
 }
-
-
 </script>
 
 <body class="is-preload" >
@@ -54,11 +59,15 @@ function taskscoring(){
 					</td>
 					</tr>
 					<tr>
+					<form:form method="post" action="taskScoring.do" onsubmit="return taskscoring();">
 					<td colspan="6" style="width:10%">[${trow.user_name }] 학생의 과제점수 &ensp;:&ensp; 
-					<input type="number" name="score" id="" style="width:100px;"/>&ensp;
-					<input type="button" class="button small primary" style="margin-top:5px; font-size:0.8em" value="배점"
-						onclick="taskscoring();">
-					</td></tr>
+					<input type="number" name="score" style="width:100px;"/>&ensp;
+					<input type="submit" class="button small primary" style="margin-top:5px; font-size:0.8em" value="배점">
+					<input type="hidden" name="user_id" value="${trow.user_id }" />
+					<input type="hidden" name="exam_idx" value="${trow.exam_idx }" />
+					</td>
+					</form:form>
+					</tr>
 					<tr><td colspan="6"></td></tr>
 				</c:forEach>
 			</c:otherwise>	

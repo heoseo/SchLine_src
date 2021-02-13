@@ -219,7 +219,7 @@ public class ExamController {
 		int idx;
 		for(ExamDTO dto : scoringList) {
 				
-			//문제의인덱스(총문제)의 크기만큼 반복(디버깅이 좀 필요해 보입니다... 헷갈림)
+			//문제의인덱스(총문제)의 크기만큼 반복
 			for(int i = 0; i<questionNum.length; i++) {
 			
 				//리스트의 문제인덱스와 반복중인 문제의 인덱스가 같으면..
@@ -236,14 +236,13 @@ public class ExamController {
 						if(dto.getAnswer().equalsIgnoreCase(choice[i])) {
 							System.out.println((i+1)+"번 문제 정답");
 							
-							///////점수 자동입력...아마 점수없는 인덱스의 문제가 나오면 에러날듯?///////
 							idx = dto.getExam_idx();
 							s = dto.getQuestion_score();
 							String exam_idx = Integer.toString(idx);
 							String scoreStr = Integer.toString(s);
 							System.out.println(exam_idx+"<인덱스..점수>"+scoreStr);
-							sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(scoreStr, user_id, exam_idx);
-				//			////////////////////////////////////////////////////////////
+							//점수는 아래에서 최종적으로 합산하여 입력
+							//sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(scoreStr, user_id, exam_idx);
 							
 							//점수 더하기
 							score += dto.getQuestion_score();
@@ -253,7 +252,7 @@ public class ExamController {
 							System.out.println((i+1)+"번 문제 오답");
 						}
 					}
-					//주관식일 경우...(추가처리 필요)
+					//주관식일 경우...
 					else {
 						System.out.println("========위 문제는 주관식입니다..=========");
 						System.out.println("서술형 입력값:"+choice[i]);
@@ -266,7 +265,6 @@ public class ExamController {
 		}
 		
 		String exam_type = req.getParameter("exam_type");
-		System.out.println(exam_type);
 		
 		/*
 		  시연에서는 시험 중 가장 낮은 인덱스 하나를 추출하여.. 완료처리하고
@@ -276,11 +274,10 @@ public class ExamController {
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getExamidx(subject_idx, exam_type);
 		String exam_idx = examidxs.get(0).toString();
-		System.out.println(exam_idx);
 		sqlSession.getMapper(SchlineDAOImpl.class).checkEdit(exam_idx, user_id);
-		//학생별로 점수를 insert 해야함!! 과제성적은  Grade 테이블에서 과제인덱스랑 점수 넣으면됨(insert)
-		
-		
+		//학생별로 점수를 insert 마찬가지로 시연에서는 첫 인덱스에 점수 입력
+		String grade = Integer.toString(score);
+		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(grade, user_id, exam_idx);
 		
 		////////////////////////////////////////////////////////////////////////////
 
