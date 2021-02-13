@@ -788,7 +788,7 @@ public class ProfessorExamController {
 		
 		model.addAttribute("teamlist", teamlist);
 		
-		return "/professor/exam/panswerCheck";
+		return "/professor/exam/pexamCheck";
 	}
 	
 	
@@ -897,25 +897,43 @@ public class ProfessorExamController {
 	
 	
 	@RequestMapping("/professor/examScoring.do")
-	public String examScoring(Model model, HttpServletRequest req) {
+	public String examScoring(Model model, HttpServletRequest req, Principal principal) {
 		
+		//교수아이디로
+		String pro_id = principal.getName();
+		//과목을 얻어온 후
+		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(pro_id);
+		System.out.println("주관식용과목인덱스:"+subject_idx);
+		//학생 아이디 얻어옴
 		String user_id = req.getParameter("user_id");
+		//배점 얻어옴
 		String question_score = req.getParameter("question_score");
+		//문제의 인덱스
 		String exam_idx = req.getParameter("exam_idx");
 		System.out.println(user_id+" "+question_score+" "+exam_idx);
-		int result = sqlSession.getMapper(SchlineDAOImpl.class)
-				.gradeUp(question_score, user_id, exam_idx);
-		System.out.println("점수반영결과:"+result);
-		if(result==1) {
-			System.out.println("점수반영 성공");
-		}
-		else {
-			System.out.println("반영실패..");
-		}
-		
+	
+		//점수반영을 위한 인덱스 추출 및 점수 증가
+		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, "2");
+		String exam_idx_score = examidxs.get(0).toString();
+		System.out.println("주관식용 인덱스:"+exam_idx_score);
+		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(question_score, user_id, exam_idx_score);
+		System.out.println("점수반영 성공");
+
 		return "redirect:examCheck.do";
 	}
 	
+	@RequestMapping("/professor/taskScoring.do")
+	public String taskScoring(Model model, HttpServletRequest req, Principal principal) {
+		
+		String user_id = req.getParameter("user_id");
+		String grade_exam = req.getParameter("score");
+		String exam_idx = req.getParameter("exam_idx");
+		System.out.println("과제idx:"+exam_idx);
+		
+		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(grade_exam, user_id, exam_idx);
+		
+		return "redirect:taskCheck.do";
+	}
 	
 	
 	
