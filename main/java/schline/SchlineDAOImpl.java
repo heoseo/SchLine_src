@@ -1,5 +1,6 @@
 package schline;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -105,6 +106,8 @@ public interface SchlineDAOImpl {
 	public ArrayList<ExamBoardDTO> taskCheckList(String subject_idx, int start, int end);
 	
 	//주관식 확인
-	public ArrayList<ExamDTO> examCheckList(String subject_idx);
+	public ArrayList<ExamDTO> examCheckList(String subject_idx, String user_id);
+	//수강생리스트
+	public ArrayList<UserVO> getuserNames(String subject_idx);
 }
  

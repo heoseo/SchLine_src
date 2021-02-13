@@ -24,6 +24,12 @@
 		SELECT * FROM exam_tb WHERE exam_type=#{0} AND subject_idx=#{1}
 	</select>
 	
+	<select id="getuserNames" resultType="schline.UserVO">
+		select U.user_id, user_name from user_tb U 
+		join registration_tb R on U.user_id=R.user_id 
+		where subject_idx=#{0}
+	</select>
+	
 	<!-- 담당과목idx 가져오기 -->
 	<select id="getSubject_idx" resultType="string">
 		SELECT subject_idx FROM subject_tb WHERE user_id=#{0}
@@ -110,7 +116,7 @@
 		select subject_idx, E.exam_idx, question_content, question_score, Q.question_idx, question_type, user_id, questionanswer_content
 			from exam_tb E join question_tb Q on E.exam_idx=Q.exam_idx
 	    	join questionanswer_tb A on Q.question_idx=A.question_idx 
-	    where subject_idx=#{0} and rownum<![CDATA[<=]]>20
+	    where subject_idx=#{0} and A.user_id=#{1} and rownum<![CDATA[<=]]>200
 	</select>
 	
 	<update id="gradeUp">

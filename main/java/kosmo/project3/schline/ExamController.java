@@ -241,8 +241,8 @@ public class ExamController {
 							String exam_idx = Integer.toString(idx);
 							String scoreStr = Integer.toString(s);
 							System.out.println(exam_idx+"<인덱스..점수>"+scoreStr);
-							//점수는 아래에서 최종적으로 합산하여 입력
-							//sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(scoreStr, user_id, exam_idx);
+							//각 인덱스에 입력..
+							sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(scoreStr, user_id, exam_idx);
 							
 							//점수 더하기
 							score += dto.getQuestion_score();
@@ -263,25 +263,7 @@ public class ExamController {
 				}
 			}
 		}
-		
-		String exam_type = req.getParameter("exam_type");
-		
-		/*
-		  시연에서는 시험 중 가장 낮은 인덱스 하나를 추출하여.. 완료처리하고
-		  시험진행한것으로 판단 .. 시험별로 출제하게 되면
-		  추후에 해당 시험의 인덱스를 받아와 완료처리하면 됨.
-		 */
-		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
-				.getExamidx(subject_idx, exam_type);
-		String exam_idx = examidxs.get(0).toString();
-		sqlSession.getMapper(SchlineDAOImpl.class).checkEdit(exam_idx, user_id);
-		//학생별로 점수를 insert 마찬가지로 시연에서는 첫 인덱스에 점수 입력
-		String grade = Integer.toString(score);
-		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(grade, user_id, exam_idx);
-		
-		////////////////////////////////////////////////////////////////////////////
-
-		//returnObj.put("subject_idx", subject_idx); //없어도될듯...
+			
 		returnObj.put("score", score);
 		returnObj.put("user_name", user_name);
 		returnObj.put("subject_name", subject_name);
