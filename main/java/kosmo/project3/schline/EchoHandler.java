@@ -40,8 +40,10 @@ import kosmo.project3.schline.MainClass.UserClass;
 //1. handler패키지 클래스 생성 및 TextWebSocketHandler 상속
 //@ServerEndpoint("/echo.do")
 public class EchoHandler extends TextWebSocketHandler{
-
-
+	
+	public EchoHandler() {
+		System.out.println("채팅연결");
+	}
     /*
 		-클라이언트 접속때마다 Session id 저장하기에 static으로 선언
 		-웹브라우저가 웹소켓을 지원해야함. 닫으면 close됨
