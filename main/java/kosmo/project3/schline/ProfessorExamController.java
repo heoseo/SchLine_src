@@ -767,11 +767,17 @@ public class ProfessorExamController {
 		String user_id = principal.getName();
 		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(user_id);
 		System.out.println("과목 인덱스 : "+subject_idx);
+		String stu_id="";
 		UserVO uvo;
-		
+		//학생아이디
+		if(req.getParameter("id")!=null) {
+			stu_id = req.getParameter("id");			
+		}
+
 		ArrayList<ExamDTO> teamlist = 
-				sqlSession.getMapper(SchlineDAOImpl.class).examCheckList(subject_idx);
-	
+				sqlSession.getMapper(SchlineDAOImpl.class).examCheckList(subject_idx, stu_id);
+		ArrayList<UserVO> userlist =
+				sqlSession.getMapper(SchlineDAOImpl.class).getuserNames(subject_idx);
 		//리스트 반복..
 		for(ExamDTO dto : teamlist) {
 		
@@ -786,6 +792,7 @@ public class ProfessorExamController {
 			dto.setQuestion_content(temp);
 		}
 		
+		model.addAttribute("userlist", userlist);
 		model.addAttribute("teamlist", teamlist);
 		
 		return "/professor/exam/pexamCheck";
@@ -919,7 +926,7 @@ public class ProfessorExamController {
 		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(question_score, user_id, exam_idx_score);
 		System.out.println("점수반영 성공");
 
-		return "redirect:examCheck.do";
+		return "redirect:examCheck.do?id="+user_id;
 	}
 	
 	@RequestMapping("/professor/taskScoring.do")
