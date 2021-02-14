@@ -93,6 +93,7 @@ $(function () {
 //       clearInterval(myTimer);
 //       document.getElementById("time").innerHTML = timeElapsed;
 //    }
+
 });
 
 //오디오
@@ -109,27 +110,31 @@ function stop() {
 function btn1() {//30분
 	time=1800;
 	$('#myModal').modal("hide");
-
 }
 function btn2() {//1시간
     time=3600;
 	$('#myModal').modal("hide");
+
 }
 function btn3() {//2시간
   	time=7200;
 	$('#myModal').modal("hide");
+
 }
 function btn4() {//3시간
     time = 10800;
 	$('#myModal').modal("hide");
+
 }
 function btn5() {//6시간
     time = 21600;
     $('#myModal').modal("hide");
+
 }
 function btn6() {//12시간
     time = 43200;
 	$('#myModal').modal("hide");
+
 }
 
 //목표시간
@@ -152,17 +157,21 @@ var interval = setInterval(function() {
 	else{
    		$('#study_time').text("[목표] "+min+"분 ");
 	}
-   
 }, 1000);
+
 
 
 var progress = document.getElementById("progress");
 //프로그레스바 타이머 설정
-$('#progress').addEventListener("timeupdate", function () {
-	alert("이벤트리스너발생");
-  	progress.max = time;
-    progress.value = Integer($('#send_time').val());
-});
+function progressStart() {
+		alert("이벤트리스너발생2");
+	$('#progress').addEventListener("timeupdate", function () {
+		alert("이벤트리스너발생2");
+	  	progress.max = time;
+	    progress.value = Integer($('#send_time').val());
+	});
+}
+
 
 
 //디비에 정보 업데이트 시키기   
@@ -287,7 +296,7 @@ document.oncontextmenu = function() {
             <div id="entry" class="image" style="text-align: center;">
             	
             	<div style="vertical-align: middle; text-align: center;">
-               <progress value="0" id="progress"></progress>
+<!--                <progress value="" id="progress"></progress> -->
                <!--       <div> -->
                <button id="re" onclick="play()">RESTART</button>
                <button id="st" onclick="stop()">STOP</button>

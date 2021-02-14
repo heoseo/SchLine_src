@@ -2,88 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- 채팅 UI -->
-<!-- <link rel="stylesheet" href="../resources/assets/css/chat.css" /> -->
-<style>
-
-/* reset */
-
-ul,li,ol,dl,dd,dt{list-style:none;padding:0;margin:0;font-size:1em}
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
-legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
-label, input, button, select, img {vertical-align:middle}
-input, button {margin:0;padding:0;}
-button {cursor:pointer;font-family:'돋움', Dotum , sans-serif;border:none;padding:0;background:#fff;outline:0}
-input[type="submit"]{cursor:pointer;}
-textarea, select {font-family:'돋움', Dotum;font-size:1em}
-select {margin:0;padding:0}
-p {margin:0;padding:0;word-break:break-all}
-hr {display:none}
-pre {overflow-x:scroll;}
-a, a:link, a:visited {color:#000;text-decoration:none}
-a:hover{text-decoration:underline;color:#ff5191}
-a:focus, a:active {color:#000;text-decoration:none;}
-
-
-/* 본문 */
-
-#chat-wrapper{margin:0px; padding:5px; max-height: auto; width:580px;border-radius:10px 10px 0 0;background:#edecea;}
-#chat-header{background:url('../img/ctrl.png') #cecece 510px 20px no-repeat;padding:25px;border-radius:10px 10px 0 0}
-#chat-header h1{font-size:14px;}
-#chat-container{padding:20px}
-#chat-container:after{display:block;visibility:hidden;clear:both;content:"";}
-#chat-footer{background:#CECECE;padding:20px;}
-#chat-footer p.text-area{background:#fff;min-height:65px;border-radius:5px}
-#chat-footer p.text-area button{float:right;padding:25px 20px;border-radius:5px;background:#777;color:#fff;}
-
-/* 채팅 말풍선 */
-
-.chat{position:relative;width:100%;margin-bottom:10px}
-.chat:after{display:block;visibility:hidden;clear:both;content:"";}
-.chat .bubble{display:inline-block;max-width:300px;padding:10px;background:#fff;border-radius:5px;line-height:16px;}
-.chat .bubble-me{display:inline-block;max-width:300px;padding:10px;background:#D3E3F4;border-radius:5px;line-height:16px;}
-
-/* 왼쪽 채팅 */
-.chat-left{margin-left:10px;text-align: left;}
-.chat-left .profile{float:left;display:inline-block;width:50px;height:50px; border-radius: 70%; overflow: hidden;}
-.chat-left .chat-box{display:inline-block;margin:15px 0 0 10px;}
-
-/* -- 프로필 이미지 타입 -- */
-/* .chat-left .profile-img-{ */
-/* 	float: left; */
-/* 	width: 100%; */
-/* 	height: 100%; */
-/* 	object-fit: cover; */
-/* } */
-
-.chat-left .bubble{margin-left:10px; text-align: left;}
-.chat-left .bubble .bubble-tail{position:absolute;left:84px;top:25px;width:9px;height:10px;background: url('../resources/img/bubble-tail.png') 0 0 no-repeat;text-indent:-9999px}
-
-/* -- 오른쪽 채팅 -- */
-.chat-right{text-align:right;}
-.chat-right .profile{float:right;display:inline-block;width:50px;height:50px;border-radius: 70%; overflow: hidden;}
-.chat-right .chat-box{display:inline-block;margin:15px 10px 0 0;}
-
-/* 프로필 이미지 타입 */
-/* .chat-right .profile-img-{ */
-/* 	float: right; */
-/* 	width: 100%; */
-/* 	height: 100%; */
-/* 	object-fit: cover; */
-/* } */
-
-.chat-right .bubble-me {margin-right:10px;}
-.chat-right .bubble-tail {position:absolute;right:84px;top:25px;width:9px;height:10px;background: url('../resources/img/param.info_img }') 0 0 no-repeat;text-indent:-9999px}
-
-#messageWindow{max-height: auto;}
-
-</style>
-<!--
-할거 
-1. 차단
-2. 신고
-3. 상대프로필 보기
-4. 귓속말오면 알림창 띄우기
- -->
+<link rel="stylesheet" href="../resources/assets/css/chat.css" />
 
 <!-- <div class="container"> -->
 <!-- 채팅 -->
@@ -175,20 +94,21 @@ function send(){
     ws.send(sender+'|'+ msg + '|' + user_img);
    
     //귓속말할때
-    if(msg.startsWith("/")==true){//수정필요
+    if(msg.startsWith("/")==true){
 		var x = msg.split("/");
 		var z = x[1];//보내는사람
 		var y = x[2];
 // 		alert(y);
 		if(msg.startsWith("/"+z+"/")==true){
  			ajaxPro("3", z);//1은 신고, 0은 차단, 2는 프로필확인, 3은 회원여부 확인
-		    temp = msg.replace("/${info_nick}/","["+z+"에게 귓속말]");
+		    temp = msg.replace("/"+z+"/","["+z+"에게 귓속말]");
 		    //메세지 내용을 바꿔준다
 		    msg = temp;
    		}
 		else{
 		  alert("명령어를 잘못 입력하셨습니다.");
-		  return;
+	      $('#inputMessage').val("");
+		  return false;
 		}
     }
    //신고할때
@@ -292,6 +212,10 @@ function closeSocket(){
 }
 
 
+function bl_check(num) {
+	return num;
+}
+
 
 //상대응답
 function writeResponse(text){
@@ -300,7 +224,6 @@ function writeResponse(text){
     var sender = msgAll[0];
     var con = msgAll[1];
     var img = msgAll[2];
-   
     var msg;
     
     //다른 기기로 진입하더라도 보낸사람이 나일때는 전송되지 않게처리
@@ -322,43 +245,49 @@ function writeResponse(text){
            },
 	 	success : function(r){
 		 	if(r.check==1){//차단한 상대일때
-		 		return;//리턴되서 나가게한다.
+		 		bl_check = 1;
+		 		return;
+		 		//return false; //적용안됨
 		 	}//차단유저가 아닐경우 그냥 진행
-		 	console.log("차단유저아님. 진행");
 		},
 		error : function(e){
 			alert("메세지받아오기 차단부분 에러"+e);
 		}
 	});
-
-	var tmep;
-//     alert("/${info_nick}/")
-    //나에게보낸 귓속말일 경우
-	//관리자가 보낸 메세지일때
-	if(con.startsWith("admin")==true){
-// 		alert('admin진입');
-		$('#messageWindow').css("text-align", "center");
-		//이값이 왜 2번 나오지???★★★★★★★★★★
-        messages.innerHTML += "<br/>"+img;//3번째영역이 대화내용이므로
-    	messages.scrollTop = messages.scrollHeight;
-        return false;
-	}
-    if(con.startsWith("/")){
-		if(con.startsWith("/${info_nick}/")==true){
-			var x = con.split("/");
-			var y = con[2];
-		    temp = con.replace("/${info_nick}/","[귓속말]");
-		    //메세지 UI적용
-		    msg = makeBalloon(sender, temp, img);
-		    messages.innerHTML += msg;
-    	}
-		else return;
-	}
-	else{
-	    //명령어가 아닐시 모두에게 디스플레이
-		msg = makeBalloon(sender, con, img);
-		messages.innerHTML += "<br/>"+msg;
-	}
+	
+	//얘도 적용안됨★★★★★★★★★★★
+// 	if(bl_check==1){//차단한상대일때 밖으로 나감
+// 		alert("차단상대라 밖으로");
+// 		return false;
+// 	}
+// 	else{
+		var tmep;
+	    //나에게보낸 귓속말일 경우
+		//관리자가 보낸 메세지일때
+		if(con.startsWith("admin")==true){
+	// 		alert('admin진입');
+			$('#messageWindow').css("text-align", "center");
+	        messages.innerHTML += "<br/>"+img;//3번째영역이 대화내용이므로
+	    	messages.scrollTop = messages.scrollHeight;
+	        return false;
+		}
+	    if(con.startsWith("/")){
+			if(con.startsWith("/${info_nick}/")==true){
+				var x = con.split("/");
+				var y = con[2];
+			    temp = con.replace("/${info_nick}/","[귓속말]");
+			    //메세지 UI적용
+			    msg = makeBalloon(sender, temp, img);
+			    messages.innerHTML += msg;
+	    	}
+			else return;
+		}
+		else{
+		    //명령어가 아닐시 모두에게 디스플레이
+			msg = makeBalloon(sender, con, img);
+			messages.innerHTML += "<br/>"+msg;
+		}
+// 	}
     //스크롤바 항상 아래로
    messages.scrollTop = messages.scrollHeight;
 } 

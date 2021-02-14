@@ -65,6 +65,7 @@ tr td:first-child {
 		}
 		if("${reported_count }">=10){
 			alert("신고횟수 10회이상이라 입장할수 없습니다.");
+			return false;
 		}
 	}
 	//프로필 수정 ajax
