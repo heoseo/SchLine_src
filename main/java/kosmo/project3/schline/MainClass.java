@@ -8,12 +8,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+import javax.annotation.Resources;
+
 import org.apache.ibatis.logging.Log;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Controller;
 
 //서버
-@Controller
-public class MainClass {
+public class MainClass{
 
   private ServerSocket server;
 
