@@ -84,6 +84,16 @@
 		 class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		 <beans:property name="order" value="0"/>
 	</beans:bean>
+	
+	
+	<!-- 스레드 사용을 위한 빈 생성 -->
+	<beans:bean id="threadExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	    <beans:property name="corePoolSize" value="10" />
+	    <beans:property name="maxPoolSize" value="20" />
+	    <beans:property name="queueCapacity" value="10" />
+	    <beans:property name="waitForTasksToCompleteOnShutdown" value="true" />
+    </beans:bean>
+	
 
    
 </beans:beans>

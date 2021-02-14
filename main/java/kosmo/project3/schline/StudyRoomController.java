@@ -453,8 +453,4 @@ public class StudyRoomController {
 	}
 	
 	
-	
-	
-	
-	
 }
