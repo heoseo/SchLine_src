@@ -13,11 +13,11 @@
                                 aria-hidden="true"></i><span class="hide-menu">강의실</span></a>
                     </li>
                     <li>
-                        <a href="/schline/admin/attendView" class="waves-effect"><i class="fa fa-check-square-o fa-fw"
+                        <a href="/schline/admin/attend" class="waves-effect"><i class="fa fa-check-square-o fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">출석</span></a>
                     </li>
                     <li>
-                        <a href="/schline/admin/studyRoom/report" class="waves-effect"><i class="fa fa-pencil-square fa-fw"
+                        <a href="/schline/admin/studyRoom/user" class="waves-effect"><i class="fa fa-pencil-square fa-fw"
                                 aria-hidden="true"></i><span class="hide-menu">공부방</span></a>
                     </li>
                     
