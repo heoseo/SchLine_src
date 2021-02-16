@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import command.UserListCommand;
+import admin.command.UserListCommand;
 import schline.util.JdbcTemplateConst;
 
 
@@ -48,7 +48,7 @@ public class AdminUserController {
 		command = new UserListCommand();
 		command.execute(model);
 		
-		return "07Board/list";
+		return "admin/user/userList";
 	}
 	
 	
