@@ -31,6 +31,7 @@ public interface SchlineDAOImpl {
 	//협업게시판 리스트 가져오기
 	public int getTotalCount(String subject_idx, String team_num);
 	public ArrayList<ExamBoardDTO> teamList(String subject_idx, String team_num, int start, int end);
+	public ArrayList<ExamBoardDTO> teamList2(String subject_idx, String team_num);
 	
 	//객관식문제의 문항 가져오기
 	public ArrayList<ExamDTO> questionlist();

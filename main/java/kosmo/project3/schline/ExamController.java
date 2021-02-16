@@ -398,7 +398,6 @@ public class ExamController {
 				fileUp = sqlSession.getMapper(SchlineDAOImpl.class)
 					.taskWrite(subject_idx, user_id, board_title, board_content, saveFileName, exam_idx);
 				
-				
 //				Map file = new HashMap();
 //				맵에 저장하지 않고 DB에 하면될듯..추후처리
 //				원본파일명
