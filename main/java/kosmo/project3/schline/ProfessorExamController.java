@@ -146,7 +146,7 @@ public class ProfessorExamController {
 	}
 	
 	@RequestMapping("/professor/ptaskList.do")
-	public String ptaskWrite(Model model, HttpServletRequest req, Principal principal) {
+	public String ptaskList(Model model, HttpServletRequest req, Principal principal) {
 		
 		String user_id = principal.getName();
 

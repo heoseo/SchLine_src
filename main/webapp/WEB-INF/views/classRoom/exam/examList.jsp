@@ -107,7 +107,7 @@ $(function(){
 								<%-- 순차적으로 문제번호 부여 --%>
 								<td><b>문제 ${loop.count }</b> : ${row.question_content } &nbsp;
 								<%-- 문제별 난이도 부여(추후 난이도별로 추출할 예정) --%>
-								<span style="font-size:0.7em;">(난이도 : ${row.question_score })</span>
+								<span style="font-size:0.7em;">(배점 : ${row.question_score })</span>
 								</td>
 							</tr>
 							
@@ -127,11 +127,11 @@ $(function(){
 							<tr>
 								<td>정답선택 : 
 									<select name="choice" id="demo-category" style="width:100px; height:30px; display:inline;">
-										<option value="정답1" selected>1</option>
-										<option value="정답2">2</option>
-										<option value="정답3">3</option>
-										<option value="정답4">4</option>
-										<option value="정답5">5</option>
+										<option value="1" selected>1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
 									</select>
 								</td>
 							</tr>
@@ -202,9 +202,7 @@ $(function(){
 					</td>
 					<td style="width:10%"><input type="button" class="button primary"
 					 onclick="location.href='javascript:taskWrite(${param.subject_idx}, ${trow.exam_idx });'"
-					value="제출하기" style="min-width:0"
-					<c:if test="${trow.check_flag eq 1 }">disabled="disabled"</c:if>
-					>
+					value="제출하기" style="min-width:0">
 					</td>
 				</tr>
 				
