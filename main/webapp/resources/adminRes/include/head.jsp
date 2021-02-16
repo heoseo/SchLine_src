@@ -12,13 +12,13 @@
     <title>Pixel Admin Template by WrapPixel</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	<script src='<c:url value="/resources/assets/js/jquery.min.js"/>'></script>
-	<script src='<c:url value="/resources/assets/js/jquery.scrollex.min.js"/>'></script>
-	<script src='<c:url value="/resources/assets/js/jquery.scrolly.min.js"/>'></script>
-	<script src='<c:url value="/resources/assets/js/browser.min.js"/>'></script>
-	<script src='<c:url value="/resources/assets/js/breakpoints.min.js"/>'></script>
-	<script src='<c:url value="/resources/assets/js/util.js"/>'></script>
-	<script src='<c:url value="/resources/assets/js/main.js"/>'></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"/></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrollex.min.js"/></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrolly.min.js"/></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/browser.min.js"/></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/breakpoints.min.js"/></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"/></script>
+	<script src="<%=request.getContextPath() %>/resources/assets/js/main.js"/></script>
     <link rel="canonical" href="https://www.wrappixel.com/templates/pixel-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16"
