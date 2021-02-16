@@ -232,12 +232,14 @@ public class ClassRoomController {
 				 originalName = new String(mfile.getOriginalFilename().getBytes(),"UTF-8");
 				 System.out.println("originalName="+originalName);
 				 File befile = new File(path+File.separator+before);
-				 if( befile.exists() && befile.isFile()) {
-					 befile.delete();					 
-				 }
 				if("".equals(originalName)) {
 					//서버로 전송된 파일이 없다면 while문의 처음으로 돌아간다.
 					continue;
+				}else {
+					if( befile.exists() && befile.isFile()) {
+						befile.delete();					 
+					}
+					
 				}
 				String ext =
 						originalName.substring(originalName.lastIndexOf('.'));
