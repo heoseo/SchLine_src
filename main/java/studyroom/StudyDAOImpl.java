@@ -51,4 +51,8 @@ public interface StudyDAOImpl {
 //	public ArrayList<BlockDTO> check_bolck(String ot_id, String user_id);
 	public Integer check_bolck(String ot_id, String user_id);
 	
+	
+	////////////안드로이드///////////////////
+	public InfoVO login_info(InfoVO infoVO);
+	
 }

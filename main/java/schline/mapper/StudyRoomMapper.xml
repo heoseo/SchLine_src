@@ -121,4 +121,14 @@ WHERE rNum BETWEEN 1 AND 10
 </select>
 
 
+
+
+<!-- ///////안드로이드/////// -->
+<!-- 커맨드 객체를 전달받아 진행 
+전달되는 파라미터와 반환타입 모두 InfoVO -->
+<select id="login_info" resultType="studyroom.InfoVO" parameterType="studyroom.InfoVO">
+	SELECT * FROM chattinginfo_tb WHERE user_id = #{user_id}
+</select>
+
+
 </mapper>
