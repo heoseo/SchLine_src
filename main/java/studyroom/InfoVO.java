@@ -2,6 +2,11 @@ package studyroom;
 
 public class InfoVO {
 	
+	//추가
+	private String user_name;	// user_tb에서 조인.
+	// 가상번호 부여를 위한 멤버변수 추가
+	private int virtualNum;
+	
 	private String user_id;//사용자 아이디 PK, FK
 	private int info_atten; //총 출석일
 	private int info_time; //누적 사용시간
@@ -44,5 +49,17 @@ public class InfoVO {
 	}
 	public void setInfo_time(int info_time) {
 		this.info_time = info_time;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public int getVirtualNum() {
+		return virtualNum;
+	}
+	public void setVirtualNum(int virtualNum) {
+		this.virtualNum = virtualNum;
 	}
 }
