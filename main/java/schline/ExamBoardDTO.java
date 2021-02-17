@@ -13,15 +13,29 @@ public class ExamBoardDTO {
 	private java.sql.Date board_postdate;
 	private String board_flag_te;
 	private int exam_idx;
-	
+	private int team_num;
 	//다른 테이블과 조인
 	private String user_name;
 	private String subject_name;
 	private String exam_name;
 	private String exam_content;
 	private java.sql.Date exam_date;
+	//가상번호
+	private int virtualNum;
 	
 	
+	public int getVirtualNum() {
+		return virtualNum;
+	}
+	public void setVirtualNum(int virtualNum) {
+		this.virtualNum = virtualNum;
+	}
+	public int getTeam_num() {
+		return team_num;
+	}
+	public void setTeam_num(int team_num) {
+		this.team_num = team_num;
+	}
 	public String getExam_content() {
 		return exam_content;
 	}

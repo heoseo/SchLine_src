@@ -74,21 +74,21 @@ if(session.getAttribute("user_id") != null){
 					</li>
 					
 	 				<li class="nav-item">
-						<a href="/schline/professor/" >
+						<a href="/schline/professor/select.do" >
 						과제</a>
 					</li>
 				
-					<li><a href="/schline/professor/">시험</a></li>
+					<li><a href="/schline/professor/pexamlist.do">시험</a></li>
 					<li>
-					<div class="dropdown">
+					<div class="dropdown" >
 						<div class="list-group-item dropdown-toggle" data-toggle="dropdown">
 							<i class="fas fa-table" id="icon">&nbsp&nbsp</i> <span
 								style="text-align: center;" id="name">게시판</span>
 						</div>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="/schline/professor/notiBoardList.do"><i class="fas fa-question-circle"></i>&nbsp&nbsp공지사항</a> 
-							<a class="dropdown-item" href="/schline/professor/"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
-							<a class="dropdown-item" href="/schline/professor/"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
+							<a class="dropdown-item" href="/schline/professor/notiBoardList.do""><i class="fas fa-question-circle"></i>&nbsp&nbsp공지사항</a> 
+							<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=red"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
+							<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
 						</div>
 					</div>
 					</li>

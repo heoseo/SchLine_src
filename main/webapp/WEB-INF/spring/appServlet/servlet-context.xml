@@ -25,6 +25,7 @@
    
    <context:component-scan base-package="kosmo.project3.schline" />
    <context:component-scan base-package="android" />
+   <context:component-scan base-package="admin" />
    
    <!-- 공부방 컨트롤을 위해 스캔추가 -->
 <!--    <context:component-scan base-package="studyroom.chat" /> -->
@@ -83,6 +84,16 @@
 		 class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		 <beans:property name="order" value="0"/>
 	</beans:bean>
+	
+	
+	<!-- 스레드 사용을 위한 빈 생성 -->
+	<beans:bean id="threadExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+	    <beans:property name="corePoolSize" value="10" />
+	    <beans:property name="maxPoolSize" value="20" />
+	    <beans:property name="queueCapacity" value="10" />
+	    <beans:property name="waitForTasksToCompleteOnShutdown" value="true" />
+    </beans:bean>
+	
 
    
 </beans:beans>

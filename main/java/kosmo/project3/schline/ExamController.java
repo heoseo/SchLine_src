@@ -71,23 +71,35 @@ public class ExamController {
 		//시험일때 경로(시험시작)(equals 대신 자꾸 ==을 쓰네요..)
 		if(!exam_type.equals("1")) {
 			
+			
+			
+			//여기에 시험 인덱스에 맞는 리스트를 띄워야 합니다....!!
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			returnStr = "/classRoom/exam/examStart";
 		}
 		//과제 작성일때 추가 쿼리문 실행..및 정보저장, 경로 설정
 		else{
 			System.out.println(exam_type+"   "+subject_idx+"   "+user_id);
 			
-			//과제도 리스트로 받아오면 좋으나..시연에서는 1개만 받아오는 것으로 처리
-			ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
-					.getExamidx(subject_idx, exam_type);
-			String exam_idx = examidxs.get(0).toString();
+			String exam_idx = req.getParameter("exam_idx");
 			System.out.println("될까요?"+exam_idx);
 			ExamDTO edto = sqlSession.getMapper(SchlineDAOImpl.class)
 					.getExam(subject_idx, exam_idx);
 			
 			String temp = edto.getExam_content().replace("\r\n", "<br/>");
 			edto.setExam_content(temp);
-				
+			
 			map.put("exam_idx", edto.getExam_idx());
 			map.put("subject_idx", edto.getSubject_idx());
 			map.put("exam_name", edto.getExam_name());
@@ -115,13 +127,17 @@ public class ExamController {
 		String user_id = principal.getName();
 		String exam_type = req.getParameter("exam_type");
 		System.out.println(exam_type);
+
 		//자바과목의 시험타입 idx들 가져오기..
-		//select exam_idx from exam_tb where exam_type=2 AND subject_idx=1;
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getExamidxs(subject_idx, exam_type);
+		
+		//플래그 자동입력 후 삭제요망
+		ArrayList<Integer> examidx = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getExamidx(subject_idx, exam_type);
 		
 		//시험진행여부를 확인하는 플래그
-		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(examidxs.get(0), user_id);
+		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(examidx.get(0), user_id);
 		//int check_flag = edto.getCheck_flag();
 		System.out.println("플래그:"+check_flag);
 		
@@ -214,10 +230,11 @@ public class ExamController {
 		
 		//점수
 		int score = 0;
-		
+		int s;
+		int idx;
 		for(ExamDTO dto : scoringList) {
 				
-			//문제의인덱스(총문제)의 크기만큼 반복(디버깅이 좀 필요해 보입니다... 헷갈림)
+			//문제의인덱스(총문제)의 크기만큼 반복
 			for(int i = 0; i<questionNum.length; i++) {
 			
 				//리스트의 문제인덱스와 반복중인 문제의 인덱스가 같으면..
@@ -233,6 +250,15 @@ public class ExamController {
 						//정답이라면...
 						if(dto.getAnswer().equalsIgnoreCase(choice[i])) {
 							System.out.println((i+1)+"번 문제 정답");
+							
+							idx = dto.getExam_idx();
+							s = dto.getQuestion_score();
+							String exam_idx = Integer.toString(idx);
+							String scoreStr = Integer.toString(s);
+							System.out.println(exam_idx+"<인덱스..점수>"+scoreStr);
+							//각 인덱스에 입력..
+							sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(scoreStr, user_id, exam_idx);
+							
 							//점수 더하기
 							score += dto.getQuestion_score();
 						}
@@ -241,9 +267,13 @@ public class ExamController {
 							System.out.println((i+1)+"번 문제 오답");
 						}
 					}
-					//주관식일 경우...(추가처리 필요)
+					//주관식일 경우...
 					else {
 						System.out.println("========위 문제는 주관식입니다..=========");
+						System.out.println("서술형 입력값:"+choice[i]);
+						int question_idx = dto.getQuestion_idx();
+						sqlSession.getMapper(SchlineDAOImpl.class)
+						.insertAnswer(question_idx, user_id, choice[i]);
 					}
 				}
 			}
@@ -267,7 +297,6 @@ public class ExamController {
 		returnObj.put("user_name", user_name);
 		returnObj.put("subject_name", subject_name);
 		
-		//과목인덱스를 유지하기 위해..redirect 지만 ajax modal 활용을 위해 테스트
 		return returnObj;
 	}
 	
@@ -286,9 +315,8 @@ public class ExamController {
 		//로그인한 사용자가 과제를 제출했는지 확인하는 사용자정보 받아올 필요가 있을듯..
 		String subject_idx = req.getParameter("subject_idx");
 		String exam_type = req.getParameter("exam_type");
-		ArrayList<Integer> examidxs =sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, exam_type);
-		Integer exam_idx = examidxs.get(0);
-		System.out.println("과제인덱스:"+exam_idx);
+		//ArrayList<Integer> examidxs =sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, exam_type);
+		//System.out.println("과제인덱스:"+exam_idx);
 		ClassDTO classdto = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getsubjectName(subject_idx);
 		String subject_name = classdto.getSubject_name();
@@ -296,23 +324,27 @@ public class ExamController {
 		
 		System.out.println("사용자 아이디"+user_id);
 		
-		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
+//		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
+//		
+//		System.out.println("플래그:"+check_flag);
+//		
+//		if(check_flag!=1) {
+//			model.addAttribute("check", "미제출");
+//		}
+//		else {
+//			model.addAttribute("check", "제출");
+//		}
 		
-		System.out.println("플래그:"+check_flag);
-		
-		if(check_flag!=1) {
-			model.addAttribute("check", "미제출");
-		}
-		else {
-			model.addAttribute("check", "제출");
-		}
-		
+		/*
+		 * if(check_flag!=1) { model.addAttribute("check", "미제출"); } else {
+		 * model.addAttribute("check", "제출"); }
+		 */
 		ArrayList<ExamDTO> examlist = 
-				sqlSession.getMapper(SchlineDAOImpl.class).tasklist("1", subject_idx);
+				sqlSession.getMapper(SchlineDAOImpl.class).tasklist("1", subject_idx, user_id);
 
 		//리스트 반복..
 		for(ExamDTO dto : examlist) {
-			
+			//int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
 			//줄바꿈처리
 			String temp = dto.getExam_content().replace("\r\n", "<br/>");
 			dto.setExam_content(temp);
@@ -406,7 +438,6 @@ public class ExamController {
 				fileUp = sqlSession.getMapper(SchlineDAOImpl.class)
 					.taskWrite(subject_idx, user_id, board_title, board_content, saveFileName, exam_idx);
 				
-				
 //				Map file = new HashMap();
 //				맵에 저장하지 않고 DB에 하면될듯..추후처리
 //				원본파일명
@@ -452,6 +483,23 @@ public class ExamController {
 //		return "redirect:/class/taskList.do";
 		return returnObj;
 	}
+	
+	/////////////////////////////
+	////////종합과제함/////////////
+	
+	@RequestMapping("/class/totalTask.do")
+	public String totalTask(Model model, HttpServletRequest req, Principal principal) {
+		
+		String user_id = principal.getName();
+		
+		ArrayList<ExamDTO> examlist = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getAllTask(user_id);
+		
+		model.addAttribute("examlist", examlist);
+		
+		return "/main/totalTask";
+	}
+	
 	
 
 }

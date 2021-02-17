@@ -21,9 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SecurityController {
 	
 	@RequestMapping("/member/login.do")
-	public String securityIndex2Login(Model model, Authentication authentication, Principal principal) {
+	public String securityIndex2Login(Model model, Authentication authentication, Principal principal, HttpServletRequest request) {
 		
-		return "member/login";
+		String user_id = request.getParameter("user_id");
+		String user_pass = request.getParameter("user_pass");
+		
+		request.getParameter("SecurityConrtroller > user_id = : " +  user_id + "user_pass : " + user_pass);
+		
+		return "redirect:/";
 	}
 	
 	@RequestMapping("/member/getAuth")
