@@ -52,8 +52,8 @@ public class EchoHandler extends TextWebSocketHandler{
 //    private static Set<WebSocketSession> clients 
 //    	= Collections.synchronizedSet(new HashSet<WebSocketSession>());
     
-	 //세션 리스트(기존)
-  private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+	//세션 리스트(기존)
+	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
   
     //로그를 남기기위한 변수
     private static Logger logger = LoggerFactory.getLogger(EchoHandler.class);
