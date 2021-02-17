@@ -122,8 +122,8 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 <!-- 			private int exam_type;		//과제(1), 시험(2) -->
 					<div class="Task">&nbsp&nbsp<i class="fas fa-thumbtack" />
 					&nbsp&nbsp [ <%=dto.getExam_name() %> ] </div>
-					<div class="Task">&nbsp&nbsp<i class="fas fa-thumbtack" />
-					&nbsp&nbsp [ <%=dto.getExam_name() %> ] </div>
+<!-- 					<div class="Task">&nbsp&nbsp<i class="fas fa-thumbtack" /> -->
+<%-- 					&nbsp&nbsp [ <%=dto.getExam_name() %> ] </div> --%>
 				<%	}
 			  	}
 				%>

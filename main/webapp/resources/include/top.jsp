@@ -74,7 +74,7 @@ if(session.getAttribute("user_id") != null){
 					</li>
 					
 	 				<li class="nav-item">
-						<a href="<%=request.getContextPath() %>/schedule/alertList.do" >
+						<a href="<%=request.getContextPath() %>/schedule/alertList.do?type=allBoard">
 						일정</a>
 					</li>
 					
