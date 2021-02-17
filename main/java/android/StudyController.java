@@ -1,7 +1,13 @@
 package android;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,9 +17,14 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -154,119 +165,29 @@ return "06FileUpload/uploadList";
 }
 
 
-
-
-//선생님 코드
+//프로필 수정
 @RequestMapping(value = "/android/class/editProfile.do", method = RequestMethod.POST)
-@ResponseBody //@ResponseBody 사용할려면 반환값 - 컬렉션
-public Map uploadAndroid(Model model, MultipartHttpServletRequest req)
-{	
-	//서버의 물리적경로 얻어오기
-	String path = req.getSession().getServletContext().getRealPath("/resources/profile_image");
-	String user_id = req.getParameter("user_id");
-	//폼값과 파일명을 저장후 View로 전달하기 위한 맵 컬렉션
-	Map returnObj = new HashMap();
-	
-	try {
-		
-		//업로드폼의 file속성의 필드를 가져온다.(여기서는 2개임)
-		Iterator itr = req.getFileNames();
-		
-		MultipartFile mfile = null;
-		String fileName = "";
-		List resultList = new ArrayList();
-		//파일외에 폼값 받음.
-		String title = req.getParameter("title");
-		System.out.println("title="+title);
-		
-		/*
-		물리적경로를 기반으로 File객체를 생성한 후 지정된 디렉토리가
-		있는지 확인한다. 만약 없다면 mkdir()로 생성한다.
-		 */
-		File directory = new File(path);
-		if(!directory.isDirectory()) {
-			directory.mkdirs();
-		}
-		
-		//업로드폼의 file필드 갯수만큼 반복
-		while(itr.hasNext()) {
-			//전송된 파일의 이름을 읽어온다.
-			fileName = (String)itr.next();
-			mfile = req.getFile(fileName);
-			System.out.println("mfile="+mfile);
-			
-			//한글깨짐방지 처리후 전송된 파일명을 가져옴
-			String originalName = 
-					new String(mfile.getOriginalFilename().getBytes(),"UTF-8");
-			//서버로 전송된 파일이 없다면 while문의 처음으로 돌아간다.
-			if("".equals(originalName)) {
-				continue;
-			}
-			
-			//파일명에서 확장자를 가져옴.
-			String ext = originalName.substring(originalName.lastIndexOf('.'));
-			//UUID를 통해 생성된 문자열과 확장자를 합쳐서 파일명 완성
-			String saveFileName = user_id+"_img" + ext;
-			//물리적 경로에 새롭게 생성된 파일명으로 파일저장
-			File serverFullName = new File(path + File.separator + saveFileName);
-			
-			mfile.transferTo(serverFullName);
-			
-			Map file = new HashMap();
-			//원본 파일명
-			file.put("originalName", originalName);
-			//저장된 파일명
-			file.put("saveFileName", saveFileName);
-			//서버의 전체경로
-			file.put("serverFullName", serverFullName);
-			//제목
-			file.put("title", title);
-			
-			//위 4가지 정보를저장한 Map을 ArrayList에저장한다.
-			resultList.add(file);
-		}
-		//파일업로드에 성공했을때
-		returnObj.put("files", resultList);
-		returnObj.put("success", 1);//안드로이드 추가부분
-	}
-	catch (IOException e) {
-		//파일업로드에 실패했을때
-		returnObj.put("success", 0);//안드로이드 추가부분
-		e.printStackTrace();
-	}
-	catch (Exception e) {
-		e.printStackTrace();
-	}
-	//맵 반환
-	return returnObj;//안드로이드 추가부분
-}/*
-	안드로이드에서 사진을 업로드 한후 결과를 받아야 하므로
-	기존 View를 호출하는 부분에서 JSON데이터를 반환하는 형태로
-	변경한다.
-*/
-
-
-
-
-//@RequestMapping(value = "/android/class/editProfile.do", method = RequestMethod.POST)
-//@ResponseBody
+@ResponseBody
 public Map<String, Object> editInfo(Principal principal, Model model, MultipartHttpServletRequest req) 
 {
+	System.out.println("▶ 안드 프로필 수정 시작");
 	//결과값 반환을 위한 Map 생성
 	Map<String, Object> checkMap = new HashMap<String, Object>();
-	System.out.println("프로필 수정 시작");
-	
-	//String user_id = req.getParameter("user_id");//학번
-	String user_id = principal.getName();
+	//파라미터 받아오기
+	String user_id = req.getParameter("user_id");
+	System.out.println("안스프로필수정 user_id="+user_id);
 	String change_nick = req.getParameter("change_nick");//변경 닉네임
+	System.out.println("안스프로필수정 change_nick="+change_nick);
 	String info_img = req.getParameter("info_img");//기존 이미지
+	System.out.println("안스프로필수정 info_img="+info_img);
 	
 	String change_img;
 	int result;
 	System.out.println("파라미터 받아오기 완료");
-	
+	////여기서 왜 에러가 나지 ????????
 	//내 닉네임 확인
 	InfoVO myname_check = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
+	System.out.println("내닉네임 체크 ="+myname_check.getInfo_nick());
 	//기존닉네임과 변경한 닉네임이 같지 않을때 중복체크진행
 	if(!myname_check.getInfo_nick().equals(change_nick)) {
 		//닉네임 중복확인
@@ -365,7 +286,22 @@ public Map<String, Object> editInfo(Principal principal, Model model, MultipartH
 }
 
 
+//안드로이드 채팅방 이동
+@RequestMapping("/android/class/Chat.do")
+public String androidChat(Model model, HttpServletRequest req, HttpSession session, Principal principal) {
+	
+	//String user_id = req.getParameter("user_id");
+	String user_id = principal.getName();
 
+	//로그인회원 프로필 불러오기
+	InfoVO loginPeople = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
+	System.out.println("로그인회원 닉네임 = "+ loginPeople.getInfo_nick());
 	
+	//파라미터전송을 위해 모델객체에 로그인회원정보 저장
+	model.addAttribute("info_nick", loginPeople.getInfo_nick());
+	model.addAttribute("user_id", loginPeople.getUser_id());
+	model.addAttribute("info_img", loginPeople.getInfo_img());
 	
+	return "studyRoom/androidChat";
+}
 }
