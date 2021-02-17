@@ -343,11 +343,7 @@
 	<update id="checkExam">
 		update examcheck_tb set check_flag = 1 where user_id=#{param1} and exam_idx=#{param2}
 	</update>
-
-
-
-
-
+	
 
 
 

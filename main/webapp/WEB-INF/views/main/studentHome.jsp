@@ -111,7 +111,8 @@
 
 		<section id="calendar" class="main special">
 			<header class="major">
-				<h2>캘린더</h2>
+				<h2 style="font-weight:bold; padding-top: 0px">캘린더</h2>
+			<%@ include file="../schedule/calendarMain.jsp" %>
 			</header>
 		</section>
 
