@@ -330,9 +330,11 @@ public class StudyRoomController {
 			 	: 스프링 컨테이너의 전역변수로 선언된 SecurityContextHolder
 			 	객체를 통해 사용자 아이디를 얻어올수 있다.
 		*/
-		Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		UserDetails sch = (UserDetails)object;
-		String user_id = sch.getUsername();
+		//Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//UserDetails sch = (UserDetails)object;
+		//String user_id = sch.getUsername();
+		String user_id = session.getAttribute("user_id").toString();
+		
 		
 		//10초마다 정보저장해주는 함수 호출
 		int time = Integer.parseInt(req.getParameter("send_time").toString());

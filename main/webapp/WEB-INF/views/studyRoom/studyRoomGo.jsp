@@ -18,8 +18,8 @@
 button {min-width: 0;width: 30%;cursor: pointer;padding: 3px;min-height: 0;
    height: 40px;font-size: 0.7em;margin-bottom: 10px;}
 #entry {width: 100%;height: 85%;padding: 10px; background-image:url('');}
-#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;}
-#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;}
+#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px; vertical-align: middle;}
+#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;vertical-align: middle;}
 </style>
 
 

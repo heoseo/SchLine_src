@@ -275,33 +275,58 @@ public Map<String, Object> editInfo(Principal principal, Model model, MultipartH
 				checkMap.put("result", 1);
 			}
 			}
+			}
 		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		//return "studyRoom/studyRoom";
+		//ajax방식으로 페이지 이동 되지않고 결과값만 전송하기위한 map 반환
+		return checkMap;
 	}
-	catch (Exception e) {
-		e.printStackTrace();
+
+
+	//안드로이드 채팅방 이동
+	//@RequestMapping("/android/class/Chat.do")
+	@RequestMapping("/android/class/Chat.do")
+	public String androidChat(Model model, HttpServletRequest req, HttpSession session) {
+		
+		//String user_id = req.getParameter("user_id");
+		String user_id = "201701712";//리퀘스트 받기로 변경해야함
+		//session.setAttribute("user_id", user_id);
+	
+		//로그인회원 프로필 불러오기
+		InfoVO loginPeople = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
+		System.out.println("로그인회원 닉네임 = "+ loginPeople.getInfo_nick());
+		
+		//파라미터전송을 위해 모델객체에 로그인회원정보 저장
+		model.addAttribute("info_nick", loginPeople.getInfo_nick());
+		model.addAttribute("user_id", loginPeople.getUser_id());
+		model.addAttribute("info_img", loginPeople.getInfo_img());
+		
+		return "studyRoom/androidChat";
 	}
-	//return "studyRoom/studyRoom";
-	//ajax방식으로 페이지 이동 되지않고 결과값만 전송하기위한 map 반환
-	return checkMap;
-}
-
-
-//안드로이드 채팅방 이동
-@RequestMapping("/android/class/Chat.do")
-public String androidChat(Model model, HttpServletRequest req, HttpSession session, Principal principal) {
 	
-	//String user_id = req.getParameter("user_id");
-	String user_id = principal.getName();
-
-	//로그인회원 프로필 불러오기
-	InfoVO loginPeople = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
-	System.out.println("로그인회원 닉네임 = "+ loginPeople.getInfo_nick());
 	
-	//파라미터전송을 위해 모델객체에 로그인회원정보 저장
-	model.addAttribute("info_nick", loginPeople.getInfo_nick());
-	model.addAttribute("user_id", loginPeople.getUser_id());
-	model.addAttribute("info_img", loginPeople.getInfo_img());
+	//채팅내용전송시 자동저장
+	@RequestMapping("/android/chatSave.do")
+	@ResponseBody
+	public Map<String, Object> sendMSG(HttpServletRequest req, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("전송과 동시에 채팅내용 저장");
+		
+		String user_id = session.getAttribute("user_id").toString();
+		String chat_content = req.getParameter("chat_content");
+		System.out.println("user_id"+user_id);
+		System.out.println("컨텐츠"+chat_content);
+		int result = sqlSession.getMapper(StudyDAOImpl.class).chat_history(user_id, chat_content);
+		
+		if(result==1) {
+			System.out.println("채팅담기 성공");
+			map.put("result", 1);
+		}
+		return map;
+	}
 	
-	return "studyRoom/androidChat";
-}
+	
 }
