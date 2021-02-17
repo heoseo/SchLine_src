@@ -22,7 +22,9 @@
 	<div id="main">
 
 	<button><a href="./elements.do" class="button primary">elements.jsp</a></button>
-
+	<br />
+	<button><a href="../android/class/Chat.do" class="button primary">안드로이드 채팅</a></button>
+		
 	<!-- 1. 강의실 -->
 		<section id="class" class="main special">
 			<div class="spotlight">
