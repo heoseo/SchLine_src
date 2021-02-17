@@ -387,6 +387,7 @@ public class TeamController {
 	public void teamDownload (HttpServletRequest req, HttpServletResponse resp) {
 		
 		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		System.out.println("서버경로확인:"+path);
 		String file_name = req.getParameter("board_file");
 		
 		//다운로드 메소드 호출

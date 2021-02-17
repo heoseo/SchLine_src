@@ -62,101 +62,86 @@ public class AdminUserTemplateDAO {
 				+ " 	WHERE authority = '" + map.get("userType") + "' " ;
 		
 		
-		
 		if(map.get("searchUser") != null) {
-			sql += " 		LIKE '%" + map.get("searchUser") + "%' ";
+			sql += " 		AND user_name LIKE '%" + map.get("searchUser") + "%' ";
 		}
+		int result = template.queryForObject(sql, Integer.class);
+		System.out.println("AdminUserTEmpolateDAO > getotalCount : " + result);
 		
 		// 쿼리문에서 count(*)를 통해 정수값 반환
-		return template.queryForObject(sql, Integer.class);
+		return result;
 	}
 	
-	public ArrayList<UserVO> listPage(
+	public ArrayList<Admin_UserVO> listPage(
 			Map<String, Object> map){
-
-		int start = Integer.parseInt(map.get("start").toString());
-		int end = Integer.parseInt(map.get("end").toString());
+		System.out.println("AdminUserT~ param.s_idx : " + map.get("subject_idx"));
 		
-		String sql = ""
-		+" SELECT * "
-		+" FROM ("
-		+"    	SELECT Tb.*, rownum rNum "
-		+ "		FROM ("
-		+"        	SELECT * FROM user_tb ";				
-		if(map.get("Word")!=null){
-		sql +=" 	WHERE "+map.get("Column")+" "
-		+ " 			LIKE '%"+map.get("Word")+"%' ";				
-		}			
-		sql += " 	ORDER BY user_name ASC"
-		+"    		) Tb"
-		+"		)"
-		+" WHERE rNum BETWEEN "+start+" and "+end;
+		boolean flag = false;
+		int start = 0, end = 0;
+		if(map.get("start")!= null && map.get("end")!= null) {
+			start = Integer.parseInt(map.get("start").toString());
+			end = Integer.parseInt(map.get("end").toString());
+			flag = true;
+		}
 		
-		return (ArrayList<UserVO>)
+		String user_type = (String) map.get("userType");
+		
+		String sql = "";
+		if(user_type.equals("PROFESSOR")) {
+			sql += "	SELECT * "
+				+ "		FROM ( "
+				+ "			SELECT Tb.*, rownum rNum "
+				+ "			FROM ( "
+				+ "				SELECT subject_idx, subject_name, U.* "
+				+ "				FROM user_tb U, subject_tb S "
+				+ "				WHERE U.user_id = S.user_id "
+				+ "					AND authority = 'PROFESSOR' ";
+		}
+		else {
+			sql += " 	SELECT * "
+				+" 		FROM ("
+				+"    		SELECT Tb.*, rownum rNum "
+				+ "			FROM ("
+				+"        		SELECT * FROM user_tb U"				
+				+"				WHERE authority = '" + map.get("userType") + "' ";
+		}
+		
+		if(map.get("searchUser")!=null)
+		sql += " 					AND user_name LIKE '%"+map.get("searchUser")+"%' ";				
+		sql += " 			ORDER BY U.user_id ASC"
+		+"    				) Tb"
+		+"				)";
+		if(flag ==true)
+			sql +=" 	WHERE rNum BETWEEN "+start+" and "+end;
+		
+		
+		
+		
+		if(map.get("subject_idx") != null) {
+			sql = "		SELECT * "
+			+ "			FROM ("
+				+ "			SELECT Tb.*, rownum rNum "
+				+ "			FROM ("
+				+ "				SELECT U.* "
+				+ "				FROM registration_tb R, user_tb U "
+				+ "				WHERE R.user_id = U.user_id "
+				+ "   				AND subject_idx = 1 "
+				+ "				ORDER BY U.user_id ASC"
+				+ "				) Tb "
+				+ "			) ";
+			if(flag ==true)
+				sql +=" WHERE rNum BETWEEN "+start+" and "+end;
+			
+					
+		}
+		
+		System.out.println("AdminUserT~ sql : " + sql);
+		return (ArrayList<Admin_UserVO>)
 				template.query(sql, 
-				new BeanPropertyRowMapper<UserVO>(
-						UserVO.class));
+				new BeanPropertyRowMapper<Admin_UserVO>(
+						Admin_UserVO.class));
 	}
 	
-//	// 게시판 리스트 가져오기(페이지처리X)
-//	public ArrayList<SpringBbsDTO> list(Map<String, Object> map){
-//		
-//		String sql = ""
-//				+ "SELECT * FROM springboard ";
-//			if(map.get("Word")!= null) {
-//				sql += " WHERE " + map.get("Column") + " "
-//					+  " LIKE '%" + map.get("Word") + "%' ";
-//			}
-//			//sql += " ORDER BY idx DESC, ";			// 일반게시판 정렬
-//			sql += " ORDER BY bgroup DESC, bstep ASC";	// 답변형게시판 정렬
-//			
-//			
-//		/*
-//		- RowMapper 객체가 select를 통해 얻어온 ResultSet을 DTO객체에 저장하고
-//			List컬렉션에 적재하여 반환하게 된다. 	 */
-//		return (ArrayList<SpringBbsDTO>)
-//				template.query(sql,
-//							new BeanPropertyRowMapper<SpringBbsDTO>(
-//									SpringBbsDTO.class));
-//	}
-//	
-//	// 글쓰기 처리
-//	public void write(final SpringBbsDTO springBbsDTO) {
-//		/*
-//		- 매개변수로 전달되는 값을 익명클래스 내에서 사용할 때는 반드시 "final"로 선언하여 
-//			값의 변경이 불가능하게 해줘야 한다.
-//		- final로 선언하지 않을 경우 에러가 발생한다.
-//		 */
-//		
-//		System.out.println("PenJDBCDAO > template : " + template);
-//		
-//		template.update(new PreparedStatementCreator() {
-//			
-//			@Override
-//			public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-//
-//				/*
-//				- 답변형 게시판에서 원본글인 경우 idx와 bgroup은 반드시 일치해야 한다.
-//				- 리스트에서 게시물 정렬시 bgroup을 통해 order by절을 구성하기 때문이다.
-//				- 또한 nextval은 한 문장에서 여러번 사용해도 같은 시퀀스를 반환한다.		 */
-//				String sql = "INSERT INTO springboard ("
-//						+ "		idx, name, title, contents, hits "
-//						+ "		, bgroup, bstep, bindent, pass) "
-//						+ "VALUES ("
-//						+ "		springboard_seq.NEXTVAL, ?, ?, ?, 0, "
-//						+ "		springboard_seq.NEXTVAL, 0, 0, ?)";
-//			
-//				PreparedStatement psmt = con.prepareStatement(sql);
-//				psmt.setString(1, springBbsDTO.getName());
-//				psmt.setString(2, springBbsDTO.getTitle());
-//				psmt.setString(3, springBbsDTO.getContents());
-//				psmt.setString(4, springBbsDTO.getPass());
-//				
-//				return psmt;
-//			}
-//		});
-//			
-//	}
 //	
 //	// 조회수 증가
 //	public void updateHit(final String idx) {

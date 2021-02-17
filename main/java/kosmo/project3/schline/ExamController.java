@@ -71,6 +71,21 @@ public class ExamController {
 		//시험일때 경로(시험시작)(equals 대신 자꾸 ==을 쓰네요..)
 		if(!exam_type.equals("1")) {
 			
+			
+			
+			//여기에 시험 인덱스에 맞는 리스트를 띄워야 합니다....!!
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			returnStr = "/classRoom/exam/examStart";
 		}
 		//과제 작성일때 추가 쿼리문 실행..및 정보저장, 경로 설정
@@ -112,6 +127,18 @@ public class ExamController {
 		String user_id = principal.getName();
 		String exam_type = req.getParameter("exam_type");
 		System.out.println(exam_type);
+		
+		
+		/*
+		
+		시험 인덱스를 기준으로 가져온다면..
+		
+		이곳도 exam_idx로 판단하게 해야겠군요!!
+		
+		
+		 */
+		
+		
 		
 		//자바과목의 시험타입 idx들 가져오기..
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
@@ -398,7 +425,6 @@ public class ExamController {
 				fileUp = sqlSession.getMapper(SchlineDAOImpl.class)
 					.taskWrite(subject_idx, user_id, board_title, board_content, saveFileName, exam_idx);
 				
-				
 //				Map file = new HashMap();
 //				맵에 저장하지 않고 DB에 하면될듯..추후처리
 //				원본파일명
@@ -448,7 +474,7 @@ public class ExamController {
 	/////////////////////////////
 	////////종합과제함/////////////
 	
-	@RequestMapping("/main/totalTask.do")
+	@RequestMapping("/class/totalTask.do")
 	public String totalTask(Model model, HttpServletRequest req, Principal principal) {
 		
 		String user_id = principal.getName();
