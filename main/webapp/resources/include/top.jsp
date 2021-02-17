@@ -65,7 +65,7 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav">
+			<nav id="nav" style="background-color: #ADD8E6;">
 				<ul>
     				<li class="nav-item">
 						<a href="/schline/main/class.do">

@@ -119,15 +119,13 @@ public class StudyRoomController {
 	
 	//마이바티스로 변경
 	//공부방 채팅 이동
-	@RequestMapping(value = "/class/studyRoomChat.do", method = RequestMethod.POST)
+	@RequestMapping("/class/studyRoomChat.do")
 	public String studyRoomChatGo(Model model, HttpServletRequest req, HttpSession session,
 			Authentication authentication) {
 		
 		//시큐리티 Authentication 객체를 통한 사용자 아이디 얻기
 		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
 		String user_id = userDetails.getUsername();
-		
-		//접속수 올리기
 		
 		
 		//로그인회원 프로필 불러오기
@@ -138,14 +136,7 @@ public class StudyRoomController {
 		model.addAttribute("info_nick", loginPeople.getInfo_nick());
 		model.addAttribute("user_id", loginPeople.getUser_id());
 		model.addAttribute("info_img", loginPeople.getInfo_img());
-		
-		System.out.println("가입된 회원프로필 불러오기");
-		//전체회원 리스트 불러오기
-		ArrayList<InfoVO> studyList = sqlSession.getMapper(StudyDAOImpl.class).study_list();
-		
-		System.out.println("전체리스트 모델객체에 담기");
-		model.addAttribute("studyList", studyList);
-		
+
 		return "studyRoom/studyRoomGo";
 	}
 	
@@ -381,11 +372,13 @@ public class StudyRoomController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		System.out.println("닉네임확인, 신고, 차단 컨트롤러 진입");
+		
 		String user_id = session.getAttribute("user_id").toString();
 		String ot_nick =req.getParameter("ot_nick");
 		String flag = req.getParameter("flag").toString();//1은 신고, 0은 차단, 2는 프로필확인
 		System.out.println("ot_nick= "+ot_nick);
 		System.out.println("flag="+flag);
+		
 		//닉네임으로 정보체크
 		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
 		if(other_pro.getInfo_nick()!=null) {
@@ -453,4 +446,33 @@ public class StudyRoomController {
 	}
 	
 	
+	//출석증가
+	@RequestMapping("/class/attenPlus.do")
+	@ResponseBody
+	public Map<String, Object> attenPlus(HttpServletRequest req, Principal principal){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String user_id = principal.getName();
+		String today = req.getParameter("today");
+		System.out.println("today="+today);
+		
+		//날짜가 동일하면 insert하지않고, 다른날이면 insert
+		//널에러방지 Integer타입
+		if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)!=null) {
+			if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)==1){
+				//동일날짜있음. 출석 증가하지 않음
+				map.put("result", 0);
+			}
+		}
+		else {//동일날짜없음 출석증가
+			int attenPlus = sqlSession.getMapper(StudyDAOImpl.class).atten_plus(today, user_id);
+			if(attenPlus==1) {//출석증가 성공
+				map.put("result", 1);
+			}
+		}
+		
+		return map;
+	}
+	
+
 }
