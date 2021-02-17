@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import command.UserListCommand;
+import admin.command.ClassListCommand;
+import admin.command.UserListCommand;
 import schline.util.JdbcTemplateConst;
 
 
@@ -32,20 +33,21 @@ public class AdminClassController {
 		JdbcTemplateConst.template = this.template;
 	}
 	
+	
 	AdminCommandImpl command = null;
 	// 사용자 리스트 가졍괴
 
-	@RequestMapping("/board/list.do")
+	@RequestMapping("/admin/class")
 	public String list(Model model, HttpServletRequest req) {
 		
 		/*
 		- 사용자로부터 받은 모든 요청은 request내장객체에 저장되고, 
 			이를 커맨드객체로 전달하기 위해 model에 저장한 후 매개변수로 전달한다.		 */
 		model.addAttribute("req", req);
-		command = new UserListCommand();
+		command = new ClassListCommand();
 		command.execute(model);
 		
-		return "07Board/list";
+		return "admin/class/subjectList";
 	}
 //	@RequestMapping("/requestMapping/index.do")
 //	public String rmIndx() {

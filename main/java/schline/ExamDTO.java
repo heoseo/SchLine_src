@@ -22,9 +22,50 @@ public class ExamDTO {
 	private String questionlist_content; //문항 내용
 	private String questionlist_num;	//문항 번호(1~99)
 	
+	//주관식문제용 변수
+	private int questionanswer_idx; //문제답변의 인덱스
+	private String questionanswer_content; //주관식 답변의 내용
+	
 	//과제 확인 여부
 	private int check_flag;
 	
+	//정답 작성자 확인
+	private String user_id;
+	private String user_name;
+	//종합과제함용 과목명 가져오기
+	private String subject_name;
+	
+	
+	public String getSubject_name() {
+		return subject_name;
+	}
+	public void setSubject_name(String subject_name) {
+		this.subject_name = subject_name;
+	}
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+	public int getQuestionanswer_idx() {
+		return questionanswer_idx;
+	}
+	public void setQuestionanswer_idx(int questionanswer_idx) {
+		this.questionanswer_idx = questionanswer_idx;
+	}
+	public String getQuestionanswer_content() {
+		return questionanswer_content;
+	}
+	public void setQuestionanswer_content(String questionanswer_content) {
+		this.questionanswer_content = questionanswer_content;
+	}
 	public int getCheck_flag() {
 		return check_flag;
 	}

@@ -13,11 +13,7 @@
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
  <hr /><!-- 구분자 -->
- 
- <!-- 검색 인클루드 : 필요한분 쓰세요!!!!! -->
- <%@ include file="/resources/include/search.jsp"%>
- 
-<p style="text-align:center; font-size:1.2em">협업</p>
+<p style="text-align:center; font-size:1.2em">${team_num }팀 협업공간</p>
 	<div class="table-wrapper">
 		<table class="alt" style="text-align:center">
 		<c:choose>	
@@ -31,7 +27,7 @@
 			<c:otherwise>
 				<c:forEach items="${teamlist }" var="trow" varStatus="tloop">
 					<tr>
-						<td style="width:5%;">${tloop.count }</td>
+						<td style="width:5%;">${trow.virtualNum }</td>
 						<td style="text-align:left;">
 						<a href="teamView.do?board_idx=${trow.board_idx }&subject_idx=${trow.subject_idx}">
 						${trow.board_title }
@@ -60,7 +56,7 @@
 				</div>
 				<div class="col-2 text-right pr-3">					
 					<input type="button" class="button primary"
-				 onclick="location.href='teamWrite.do?subject_idx=${param.subject_idx}'" value="작성" style="min-width:0"/>
+				 onclick="location.href='teamWrite.do?subject_idx=${param.subject_idx }'" value="작성" style="min-width:0"/>
 				</div>	
 			</div>
 		</div>

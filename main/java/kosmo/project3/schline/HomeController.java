@@ -36,6 +36,7 @@ public class HomeController {
 		if(authentication != null) {
 			
 			Collection<? extends GrantedAuthority> user_auth = null;
+			System.out.println("authentication: " + authentication);
 			
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 			System.out.println("authorities: " + userDetails.getAuthorities());
@@ -51,10 +52,10 @@ public class HomeController {
 				return "main/studentHome";
 			}
 			else if(user_auth.toString().contains("ROLE_PROFESSOR")) {
-				return "main/professorHome";
+				return "redirect:professor/video.do";
 			}
 			else if(user_auth.toString().contains("ROLE_ADMIN")) {
-				return "admin/userList";
+				return "redirect:admin/userList";
 			}
 		}
 		

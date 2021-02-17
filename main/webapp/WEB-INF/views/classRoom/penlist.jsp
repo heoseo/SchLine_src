@@ -14,10 +14,7 @@
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
 
-	<hr />
-   	<div style="text-align: center;">
-      	<small>코스</small><!-- flag구분예정-->
-   	</div>
+	
    	<hr /><!-- 구분자 -->
    
    	<div class="row text-right" style="margin-bottom:10px; padding-right:50px;">
