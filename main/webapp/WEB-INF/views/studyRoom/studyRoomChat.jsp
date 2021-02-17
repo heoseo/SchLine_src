@@ -67,27 +67,28 @@ function send(){
     var msg = document.getElementById("inputMessage").value;
     var sender = document.getElementById("info_nick").value;
     var user_img = document.getElementById("info_img").value; //내 프로필
-   var time = nowTime();
+   	var time = nowTime();
    
-   //사용자 닉네임을 통해 프로필 이미지 불러오기
+   	//사용자 닉네임을 통해 프로필 이미지 불러오기
 //    $('.profile profile-img-a').attr("background", "url('"+user_img+") 0 0 no-repeat'");
    
-   //메세지가 없다면 작동하지 않음
-   if(msg==""){
-      return false;
-   }
-   //관리자가보낸 메세지일때는 서버로 전송만 해주고 창에는 띄워주지 않는다
-   if(msg.startsWith("admin")==true){
-      ws.send(sender+'|'+ msg +'|'+user_img);
-      return false;
-   }
-   //상대방 프로필보기
-   else if(msg.startsWith("@")==true){
-      var other = msg.split('@');
-      var other_nick = other[1];
-//    ajax로 닉네임체크 후 프로필창 띄워주기
-      ajaxPro(2, other_nick);
-      return false;
+   	//메세지가 없다면 작동하지 않음
+   	if(msg==""){
+      	return false;
+   	}
+   	//관리자가보낸 메세지일때는 서버로 전송만 해주고 창에는 띄워주지 않는다
+   	if(msg.startsWith("admin")==true){
+      	ws.send(sender+'|'+ msg +'|'+user_img);
+      	return false;
+   	}
+   	//상대방 프로필보기
+   	else if(msg.startsWith("@")==true){
+      	var other = msg.split('@');
+      	var other_nick = other[1];
+//  	ajax로 닉네임체크 후 프로필창 띄워주기
+      	ajaxPro(2, other_nick);
+    	$('#inputMessage').val('');
+      	return false;
     }
    
     //서버로 메세지 전송

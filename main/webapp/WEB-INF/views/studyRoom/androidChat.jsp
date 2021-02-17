@@ -1,22 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>안드로이드 채팅</title>
+<title></title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/default.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/assets/css/chat.css" />
 </head>
-<body>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!-- 채팅 UI -->
-<link rel="stylesheet" href="../resources/assets/css/chat.css" />
 
-<!-- <div class="container"> -->
+<!-- 시간저장은 안드에서? -->
+
+<%-- <%@ include file="/resources/include/top.jsp"%> --%>
+
+<body class="is-preload" >
+<div id="main">
+<div class="container">
 <!-- 채팅 -->
 <script type="text/javascript">
 
@@ -26,7 +28,32 @@ $(document).ready(function() {
    
    var info_nick = $('#info_nick').val();//닉네임
 //    alert(info_nick);
+    setInterval(function () { dbup();}, 10000); 
+    
+
 });
+
+
+//디비에 정보 업데이트 시키기   
+function dbup() {
+   $.ajax({
+      url : "../class/studyTimeSet.do",
+      type : "post",
+      data : {send_time :  $('#send_time').val()},
+      dataType : "json", //반환받는 데이터타입 map은 json(키,벨유)
+      contentType : "application/x-www-form-urlencoded;charset:utf-8", //post방식
+      success : function(d) {
+         $('#save_time').val(d.setTime);//d.키값 => 벨유값 들어옴
+      },
+      error : function(e) {
+         alert("오류" + e.status + ":" + e.statusText);
+      }
+   });
+}
+
+
+
+
 
 var ws; 
 var messages;
@@ -43,13 +70,13 @@ function openSocket(){
    ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
    //채팅창 open
    
-   	ws.onopen = function(event){
+      ws.onopen = function(event){
         //사용자가 입장했을때 다른사람들에게 뿌려줌
         $('#inputMessage').val("admin|'${info_nick}'님 도서관 입장하셨습니다.");
-      	send();
-      	//메세지인풋 다시 null로 만들어줌
-      	$('#inputMessage').val('');
-      	$('#inputMessage').focus();
+         send();
+         //메세지인풋 다시 null로 만들어줌
+         $('#inputMessage').val('');
+         $('#inputMessage').focus();
          
          if(event.data === undefined){
            return;
@@ -156,13 +183,10 @@ function send(){
    //스크롤 아래로
    messages.scrollTop = messages.scrollHeight;
    $.ajax({
-      url : "../class/chatSave.do",
+      url : "../android/chatSave.do",
       type : "post",
       data : {chat_content : msg},
       dataType : "json",
-      beforeSend : function(xhr){
-          xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-         },
       contentType : "application/x-www-form-urlencoded;charset:utf-8",
       success : function(d) {
 //          alert("채팅내용 세이브");
@@ -183,9 +207,6 @@ function ajaxPro(d, ot_nick) {
       dataType : "json",
       type : "post",
       contentType : "application/x-www-form-urlencoded;charset:utf-8",
-      beforeSend : function(xhr){
-            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-           },
        data : {
           flag : d,
           ot_nick : ot_nick
@@ -230,7 +251,7 @@ function closeSocket(){
 
 
 function blockPeople() {
-	
+   
 }
 
 
@@ -250,59 +271,56 @@ function writeResponse(text){
        return;
     }
     
-	//내가 차단한 상대일 경우 대화창을 띄우지 않는다.
-	blockPeople(sender);
-	
-	$.ajax({
-	   url : "../class/studyBlock.do",
-	   dataType : "json",
-	   type : "post",
-	   async: false, //동기방식으로 변경
-	   contentType : "application/x-www-form-urlencoded;charset:utf-8",
-	    data : {ot_nick : sender},
-	    beforeSend : function(xhr){
-	         xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-	        },
-	    success : function(r){
-	       if(r.check==1){//차단한 상대일때
-	          bl_check = 1;
-	          return false;//적용안됨
-	       }//차단유저가 아닐경우 그냥 진행
-	   },
-	   error : function(e){
-	      alert("메세지받아오기 차단부분 에러"+e);
-	   }
-	});
-	
-	//여기서 차단여부 구분해서 처리해줌
-	if(bl_check==1){//차단한상대일때 밖으로 나감
-	   return false;
-	}
-	
-	var tmep;
-	   //관리자가 보낸 메세지일때
-	   if(con.startsWith("admin")==true){
-	      $('#messageWindow').css("text-align", "center");
-	        messages.innerHTML += "<br/>"+img;//3번째영역이 대화내용이므로
-	       messages.scrollTop = messages.scrollHeight;
-	        return false;
-	   }
-	    if(con.startsWith("/")){
-	      if(con.startsWith("/${info_nick}/")==true){
-	         var x = con.split("/");
-	         var y = con[2];
-	          temp = con.replace("/${info_nick}/","[귓속말]");
-	          //메세지 UI적용
-	          msg = makeBalloon(sender, temp, img);
-	          messages.innerHTML += msg;
-	       }
-	      else return;
-	   }
-	   else{
-	       //명령어가 아닐시 모두에게 디스플레이
-	      msg = makeBalloon(sender, con, img);
-	      messages.innerHTML += "<br/>"+msg;
-	   }
+   //내가 차단한 상대일 경우 대화창을 띄우지 않는다.
+   blockPeople(sender);
+   
+   $.ajax({
+      url : "../class/studyBlock.do",
+      dataType : "json",
+      type : "post",
+      async: false, //동기방식으로 변경
+      contentType : "application/x-www-form-urlencoded;charset:utf-8",
+       data : {ot_nick : sender},
+       success : function(r){
+          if(r.check==1){//차단한 상대일때
+             bl_check = 1;
+             return false;//적용안됨
+          }//차단유저가 아닐경우 그냥 진행
+      },
+      error : function(e){
+         alert("메세지받아오기 차단부분 에러"+e);
+      }
+   });
+   
+   //여기서 차단여부 구분해서 처리해줌
+   if(bl_check==1){//차단한상대일때 밖으로 나감
+      return false;
+   }
+   
+   var tmep;
+      //관리자가 보낸 메세지일때
+      if(con.startsWith("admin")==true){
+         $('#messageWindow').css("text-align", "center");
+           messages.innerHTML += "<br/>"+img;//3번째영역이 대화내용이므로
+          messages.scrollTop = messages.scrollHeight;
+           return false;
+      }
+       if(con.startsWith("/")){
+         if(con.startsWith("/${info_nick}/")==true){
+            var x = con.split("/");
+            var y = con[2];
+             temp = con.replace("/${info_nick}/","[귓속말]");
+             //메세지 UI적용
+             msg = makeBalloon(sender, temp, img);
+             messages.innerHTML += msg;
+          }
+         else return;
+      }
+      else{
+          //명령어가 아닐시 모두에게 디스플레이
+         msg = makeBalloon(sender, con, img);
+         messages.innerHTML += "<br/>"+msg;
+      }
     //스크롤바 항상 아래로
    messages.scrollTop = messages.scrollHeight;
 } 
@@ -350,15 +368,6 @@ function nowTime(){
    
    return ampm+" "+h+":"+m;
 }
-
-//프로필 이미지 눌렀을때
-$('.profile-img').on('click', function () {
-   alert('이미지클릭');
-   window.onload('');
-   //form값을 넘겨줘야함
-   //상대방 이미지가 들어가야함
-   $('#other_img').val();
-});
 </script>
 
 <!-- 채팅 출력창 -->
@@ -369,12 +378,12 @@ $('.profile-img').on('click', function () {
 <table class="table table-bordered"
    style="min-width: 0; width: 100%; max-height: 100%">
    <!-- 히든폼으로 사용자정보 가져오기 -->
-   <form:form id="peopleFrm">
+   <form id="peopleFrm">
       <input type="hidden" id="chat_id" value="${user_id }"/>
       <input type="hidden" id="info_nick" value="${info_nick }" />
       <input type="hidden" id="other_img" name="other_img" value="" />
       <input type="hidden" id="info_img" name="info_img" value="<c:url value='/resources/profile_image/${info_img}'/>" />
-   </form:form>
+   </form>
    <tr>
       <td>
          <!-- 엔터키 입력시 전송 설정 --> <input type="text" id="inputMessage"
@@ -386,5 +395,7 @@ $('.profile-img').on('click', function () {
       </td>
    </tr>
 </table>
+</div>
+</div>
 </body>
 </html>
