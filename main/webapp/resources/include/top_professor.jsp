@@ -86,7 +86,7 @@ if(session.getAttribute("user_id") != null){
 								style="text-align: center;" id="name">게시판</span>
 						</div>
 						<div class="dropdown-menu">
-							<a class="dropdown-item" href="/schline/professor/notiBoardList.do""><i class="fas fa-question-circle"></i>&nbsp&nbsp공지사항</a> 
+							<a class="dropdown-item" href="/schline/professor/notiBoardList.do"><i class="fas fa-question-circle"></i>&nbsp&nbsp공지사항</a> 
 							<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=red"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
 							<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
 						</div>

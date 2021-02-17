@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import professor.NoticeBoardDTO;
 import schline.ClassDTO;
 import schline.ExamDTO;
 import schline.UserVO;
@@ -47,7 +48,10 @@ public interface ScheduleDAOImpl {
 
 
 
-
+//상세보기시  제출하기누를때 밑의 에이젝스로 폼출력하기. 과목idx받아오기.
+	//게시물리스트(과목셀렉).
+	public ArrayList<NoticeBoardDTO> getSubject(String user_id);
+	
 	
 	
 	

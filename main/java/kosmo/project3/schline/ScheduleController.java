@@ -1,6 +1,10 @@
 package kosmo.project3.schline;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import Util.PagingUtil;
+import professor.NoticeboardDAOImpl;
 import schedule.NoticeDTO;
 import schedule.ScheduleDAOImpl;
+import schline.ClassDTO;
+import schline.SchlineDAOImpl;
 
 @Controller
 public class ScheduleController {
@@ -213,6 +220,7 @@ public class ScheduleController {
 					model.addAttribute("nowPage", nowPage);
 					model.addAttribute("type", type);
 					
+					
 					view = "/schedule/taskAndExam";
 				
 				break;
@@ -295,6 +303,8 @@ public class ScheduleController {
 				
 				break;
 		}
+		
+		
 				
 		//디버깅용
 		//System.out.println("일정 컨트롤러에서> 전체게시물에서>  start : " + start + ", end : " + end);
@@ -303,42 +313,24 @@ public class ScheduleController {
 	}
 	
 	
-	//일정>알림 이동.
-//	@RequestMapping("/schedule/ListView.do")
-//	public String ajaxNoticeRead(Model model, HttpServletRequest req, HttpSession session) 
-//	{
-//		System.out.println("■[Schedule컨트롤러 > ListView.do 요청 들어옴.]■");
-//		String user_id = (String) session.getAttribute("user_id");
-//		//System.out.println("세션저장아이디체크>>>: " + user_id); 
-//		
-//		String type = req.getParameter("type"); 
-//		//System.out.println("일정 컨트롤러에서 셀렉트의 type이 뭐가 넘어왓니이1?!? :>>>>" + type);
-//		
-//		model.addAttribute("pagingImg", pagingImg);
-//		model.addAttribute("nowPage", nowPage);
-//		model.addAttribute("ajaxAlertList", ajaxAlertList);
-//		
-//
-//
-//		return "/schedule/ajaxAlertList";
-//	}
-	
-	
 	//일정>알림>게시물제목클릭시.상세보기.
 	@RequestMapping("/schedule/viewPop.do")
 	public String viewList(Model model, HttpServletRequest req, HttpSession session) {
 		
-		System.out.println("■[Schedule컨트롤러 > viewPop.do 요청 들어옴.]■");
+		System.out.println("■ [Schedule컨트롤러 > viewPop.do 요청 들어옴.]■");
 		
 		String user_id = (String) session.getAttribute("user_id");
 		System.out.println("세션저장아이디체크>>>>>>>>>>>>>>>>>>>>: " + user_id); 
 		
+		String nowPage = req.getParameter("nowPage");
+		
 		String IDX = req.getParameter("IDX");
+		String subject_idx = req.getParameter("subject_idx");
 		String noti_or_exam = req.getParameter("noti_or_exam");
 		
 		System.out.println("IDX > " + IDX);
+		System.out.println("상세보기입장커트롤러subject_idx > " + subject_idx);
 		System.out.println("noti_or_exam > " + noti_or_exam);
-		//String query = "SELECT * FROM board WHERE num=?";
 
 		String view = "";
 		ArrayList<NoticeDTO> viewList = null;
@@ -353,10 +345,19 @@ public class ScheduleController {
 			view = "/schedule/viewNoti";
 			break;
 		case "exam":
+		
+
 			viewList = sqlSession.getMapper(ScheduleDAOImpl.class)
 				.exam(IDX);
 			sqlSession.getMapper(ScheduleDAOImpl.class)
 					.checkExam(user_id, IDX);
+			
+			
+			model.addAttribute("user_id", user_id);
+			model.addAttribute("exam_idx", IDX);
+			model.addAttribute("subject_idx", subject_idx);
+			//System.out.println("과제상세보기 서브젝트idx잘나왔나요"+SUB_IDX);
+			model.addAttribute("nowPage", nowPage);
 			
 			view = "/schedule/viewExam";
 			break;
@@ -364,39 +365,110 @@ public class ScheduleController {
 		
 		System.out.println("viewList : >>" + viewList);
 		model.addAttribute("viewList", viewList);
-		
-		System.out.println("■ [Schedule컨트롤러 > viewPop.do 요청 들어옴.]■");
+
 		
 		return view;
 	}
+	
+	
 	//공지게시물 파일 다운로드.
-//	@RequestMapping("/schedule/download.do")
-//	public ModelAndView download(HttpServletRequest req, HttpServletResponse resp) throws Exception
-//	{
-//	
-//		System.out.println("■ [Schedule컨트롤러 > download.do 요청 들어옴.]■");
-//		
-//		//저장된 파일명.
-//		String fileName = req.getParameter("fileName");
-//		//원본파일명.
-//		String oriFileName = req.getParameter("oriFileName");
-//		//물리적경로.
-//		String saveDirectory = req.getSession().getServletContext()
-//			.getRealPath("resources/upload");
-//		//경로와 파일명을 통해 File객체 생성.
-//		File downloadFile = 
-//			new File(saveDirectory+"/"+fileName);
-//		//해당 경로에 파일이 있는지 확인.
-//		if(!downloadFile.canRead()) {
-//			throw new Exception("파일을 찾을수 없습니다.");
-//		}
-//		ModelAndView mv = new ModelAndView();
-//		mv.setViewName("fileDownloadView");//다운로드 할 View명.
-//		mv.addObject("downloadFile", downloadFile);//저장된파일명.
-//		mv.addObject("oriFileName", oriFileName);//원본파일명.
-//		
-//		return mv;	
-//	}
+	//다운로드처리.	
+	@RequestMapping("/schedule/download.do")
+	public void teamDownload (HttpServletRequest req, HttpServletResponse resp) {
+		
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		System.out.println("서버경로확인:"+path);
+		String file_name = req.getParameter("board_file");
+		
+		//다운로드 메소드 호출
+		download(req, resp, path, file_name);
+	}		
+				
+		//파일 다운로드 메소드
+		public static void download(
+				HttpServletRequest request,
+				HttpServletResponse response,
+				String directory, String fileName){
+			/*
+			파일다운로드 원리
+			1.웹브라우저가 인식하지 못하는 컨텐츠타입을 응답헤더에 설정해주면
+			웹브라우저는 자체 다운로드 창을 띄운다.
+			
+			2.서버에 저장된 파일을 출력스트림을 통해 웹브라우저에 출력한다.
+			*/
+			try{
+				//파일이 저장된 물리적인 경로를 가져온다.
+				//String saveDirectory = request.getServletContext().getRealPath(directory);
+				
+				//3.파일 크기를 얻기 위한 파일객체 생성
+				// - 다운로드시 프로그래스바를 표시하기 위함.
+				File f = new File(directory+File.separator+fileName);			
+				long length = f.length();
+				
+				//다운로드를 위한 응답헤더 설정
+				//4.다운로드창을 보여주기 위한 응답헤더 설정
+				//4-1.웹브라우저가 인식하지 못하는 컨텐츠타입(MIME)을 설정
+				response.setContentType("binary/octect-stream");
+				//4-2.다운로드시 프로그래스바를 표시하기위한 컨텐츠길이 설정(Long타입 인식?)
+				//response.setContentLengthLong(length);
+				
+				/*
+				4-3. 응답헤더명 : Content-Disposition
+					응답헤더명에 따른 값 : attachment;filename=파일명
+					setHeader(응답헤더명,헤더값)으로 추가함
+				브라우저 종류에 따라 한글파일명이 깨지는 경우가 있음으로
+				브라우저별 인코딩 방식을 달리하는것임(파일명을 인코딩)
+				*/
+				boolean isIE = 
+					request.getHeader("user-agent").toUpperCase().indexOf("MSIE")!=-1 ||
+					request.getHeader("user-agent").toUpperCase().indexOf("11.0")!=-1;
+				
+				if(isIE){//인터넷 익스플로러
+					fileName = URLEncoder.encode(fileName, "UTF-8");
+				}
+				else{//기타 웹브라우져
+				/*
+				new String(byte[] bytes, String charset)사용
+				1) 파일명을 byte형 배열로 변환
+				2) String클래스의 생성자에 
+					변환한 배열과 charset는 8859_1을 지정함.
+				*/
+					fileName = new String(fileName.getBytes("UTF-8"),"8859_1");
+				}
+				
+				response.setHeader("Content-Disposition", 
+						"attachment;filename="+fileName);
+				
+				/*
+				IO작업을 통해서 서버에 있는 파일을 웹브라우저에 바로 출력
+				
+				데이터소스 : 파일 - 노드스트림 : FileInputStream
+									필터스트림 : BufferedInputStream
+				데이터목적지 : 웹브라우저 - 노드스트림 : response.getOutputStream();
+											필터스트림 : BufferedOutputStream
+				*/
+				//5.서버에 있는 파일에 연결할 입력스트림 생성
+				BufferedInputStream bis 
+					= new BufferedInputStream(
+							new FileInputStream(f));
+				//6.웹브라우저에 연결할 출력스트림 생성
+				BufferedOutputStream bos 
+					= new BufferedOutputStream(
+							response.getOutputStream());
+				//7.bis로 읽고 bos로 웹브라우저에 출력
+				int data;
+				while((data=bis.read()) != -1){
+					bos.write(data);
+					//bos.flush();
+				}
+				//8.스트림 닫기
+				bis.close();
+				bos.close();
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}		
+		}	
 
 	
 //#################################################################	
