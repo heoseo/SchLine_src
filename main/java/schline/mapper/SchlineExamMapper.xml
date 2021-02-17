@@ -120,6 +120,12 @@
 		WHERE rNum<![CDATA[>=]]>#{2} AND rNum<![CDATA[<=]]>#{3}
 	</select>
 	
+	<select id="teamList2" resultType="schline.ExamBoardDTO">
+		SELECT B.*, user_name FROM board_tb B 
+		join user_tb U on B.user_id = U.user_id
+		where subject_idx=#{0} AND team_num=#{1} ORDER BY board_idx DESC
+	</select>
+	
 	<!-- 팀 게시판 작성(일반게시물or과제물업로드) -->
 	<insert id="teamWrite">
 		INSERT INTO board_tb
