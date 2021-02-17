@@ -41,7 +41,7 @@
 					<!-- 메인 로고 이미지 -->
 					<div align="center">
 					<br /> 
-						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
+						<a href="/schline/professor/video.do"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
 							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
 						</a>
 					<br />
@@ -69,16 +69,31 @@ if(session.getAttribute("user_id") != null){
 				<ul>
     				<li class="nav-item">
 						<a href="/schline/professor/video.do">
-						강의실
+						강의
 						</a>
 					</li>
 					
 	 				<li class="nav-item">
-						<a href="<%=request.getContextPath() %>/schedule/alertList.do" >
-						일정</a>
+						<a href="/schline/professor/" >
+						과제</a>
 					</li>
-					
-					<li><a href="<%=request.getContextPath() %>/class/studyRoom.do">공부방</a></li>
+				
+					<li><a href="/schline/professor/">시험</a></li>
+					<li>
+					<div class="dropdown">
+						<div class="list-group-item dropdown-toggle" data-toggle="dropdown">
+							<i class="fas fa-table" id="icon">&nbsp&nbsp</i> <span
+								style="text-align: center;" id="name">게시판</span>
+						</div>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="/schline/professor/notiBoardList.do"><i class="fas fa-question-circle"></i>&nbsp&nbsp공지사항</a> 
+							<a class="dropdown-item" href="/schline/professor/"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
+							<a class="dropdown-item" href="/schline/professor/"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
+						</div>
+					</div>
+					</li>
+					<li><a href="/schline/professor/">출석</a></li>
+					<li><a href="/schline/professor/">성적</a></li>
 					<li><a href="/schline/professor/professorinfo.do">계정</a></li>
 					<li><a href="javascript:document.logout.submit()">로그아웃</a></li>
 				</ul>
