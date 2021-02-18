@@ -127,19 +127,7 @@ public class ExamController {
 		String user_id = principal.getName();
 		String exam_type = req.getParameter("exam_type");
 		System.out.println(exam_type);
-		
-		
-		/*
-		
-		시험 인덱스를 기준으로 가져온다면..
-		
-		이곳도 exam_idx로 판단하게 해야겠군요!!
-		
-		
-		 */
-		
-		
-		
+
 		//자바과목의 시험타입 idx들 가져오기..
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getExamidxs(subject_idx, exam_type);
@@ -290,7 +278,21 @@ public class ExamController {
 				}
 			}
 		}
-			
+		
+		String exam_type = req.getParameter("exam_type");
+		System.out.println(exam_type);
+		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getExamidx(subject_idx, exam_type);
+		String exam_idx = examidxs.get(0).toString();
+		System.out.println(exam_idx);
+		sqlSession.getMapper(SchlineDAOImpl.class).checkEdit(exam_idx, user_id);
+		//학생별로 점수를 insert 해야함!! 과제성적은  Grade 테이블에서 과제인덱스랑 점수 넣으면됨(insert)
+		
+		//할것!
+		
+		////////////////////////////////////////////////////////////////////////////
+
+		//returnObj.put("subject_idx", subject_idx); //없어도될듯...
 		returnObj.put("score", score);
 		returnObj.put("user_name", user_name);
 		returnObj.put("subject_name", subject_name);
@@ -321,6 +323,17 @@ public class ExamController {
 		String user_id = principal.getName();
 		
 		System.out.println("사용자 아이디"+user_id);
+		
+//		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
+//		
+//		System.out.println("플래그:"+check_flag);
+//		
+//		if(check_flag!=1) {
+//			model.addAttribute("check", "미제출");
+//		}
+//		else {
+//			model.addAttribute("check", "제출");
+//		}
 		
 		/*
 		 * if(check_flag!=1) { model.addAttribute("check", "미제출"); } else {

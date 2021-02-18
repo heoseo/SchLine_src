@@ -1,11 +1,9 @@
 package kosmo.project3.schline;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import schline.AttendanceDTO;
 import schline.GradeDTO;
 import schline.GradeDTOImpl;
 import schline.RegistrationDTO;
-import schline.UserInfoDTO;
 
 @Controller
 public class GradeController {

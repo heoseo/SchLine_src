@@ -13,11 +13,11 @@
 <div id="main" class="container-fluid">
 	<div class="row content">
 		<br />
-		<div class="col-sm-2 sidenav">
+		<div class="col-sm-2 sidenav" style="font-weight: bold;">
 			<br />
 			<div class="list-group">
 				<!-- fas fa-clock, fas fa-bell -->
-				<a href="<%=request.getContextPath() %>/schedule/alertList.do" class="list-group-item">
+				<a href="<%=request.getContextPath() %>/schedule/alertList.do?type=allBoard" class="list-group-item">
 					<i class="fas fa-clock" id="icon">&nbsp&nbsp</i>
 					<span>알림</span>
 				</a>

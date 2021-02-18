@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 public interface GradeDTOImpl {
 	public ArrayList<AttendanceDTO> listAttendance(AttendanceDTO attendanceDTO);
 	public ArrayList<AttendanceDTO> listAttendance2(AttendanceDTO attendanceDTO);
+	public ArrayList<AndroidattenDTO> listAttendance3(AndroidattenDTO androidattenDTO);
 	public ArrayList<AttendanceDTO> attenupdate(AttendanceDTO attendanceDTO);
 	public int videoConut(AttendanceDTO attendanceDTO);
 	public ArrayList<AttendanceDTO> videoNum(AttendanceDTO attendanceDTO);
 	public ArrayList<GradeDTO> listGrade(GradeDTO gradeDTO);
+	public ArrayList<AndroidattenDTO> listGrade2(AndroidattenDTO androidattenDTO);
 	public ArrayList<RegistrationDTO> Registrationgrade(RegistrationDTO registrationDTO);	
 	public ArrayList<AttendanceDTO> AttenInfo(AttendanceDTO attendanceDTO);	
 	public ArrayList<UserInfoDTO> listInfo(UserInfoDTO userInfoDTO);	

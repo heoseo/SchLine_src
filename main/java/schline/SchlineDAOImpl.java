@@ -1,6 +1,5 @@
 package schline;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -71,6 +70,7 @@ public interface SchlineDAOImpl {
 	
 	//게시물 삭제
 	public int teamDelete(String board_idx, String user_id);
+
 	//////////////////////점수처리/////////////////////////
 	//주관식 정답처리에 대한 점수증가
 	public int gradeUp(String question_score, String user_id, String exam_idx);
@@ -111,4 +111,4 @@ public interface SchlineDAOImpl {
 	//수강생리스트
 	public ArrayList<UserVO> getuserNames(String subject_idx);
 }
- 
+
