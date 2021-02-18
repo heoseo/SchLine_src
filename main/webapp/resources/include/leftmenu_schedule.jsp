@@ -13,7 +13,7 @@
 <div id="main" class="container-fluid">
 	<div class="row content">
 		<br />
-		<div class="col-sm-2 sidenav">
+		<div class="col-sm-2 sidenav" style="font-weight: bold;">
 			<br />
 			<div class="list-group">
 				<!-- fas fa-clock, fas fa-bell -->
