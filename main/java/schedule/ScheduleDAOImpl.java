@@ -18,7 +18,7 @@ public interface ScheduleDAOImpl {
 //#####################캘린더#########################################	
 	
 	//캘린더에 과제.시험 마감일 리스트표시하기.
-	public ArrayList<ExamDTO> calendarList(String YearAndMonth);
+	public ArrayList<ExamDTO> calendarList(String user_id, String YearAndMonth);
 	
 //#####################알림리스트#########################################	
 	//일정에 공지,과제,시험 최근게시물 순으로 정렬하여 리스트 표시하기.
