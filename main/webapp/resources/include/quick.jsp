@@ -34,12 +34,11 @@
 <!-- 		<li><a href="#studyroom" class="list-group-item list-group-item-action">공부방</a></li> -->
 <!-- 	</ul> -->
 		<div class="btn-group-vertical">
-			<button s>강의실</button>
-		    <a href="#class" class="list-group-item list-group-item-action" style="width: 50px;">강의실</a><br />
-		    <a href="#attend" class="list-group-item list-group-item-action">출결</a><br />
-		    <a href="#calendar" class="list-group-item list-group-item-action">캘린더</a><br />
-		    <a href="#homework" class="list-group-item list-group-item-action">과제함</a><br />
-		    <a href="#studyroom" class="list-group-item list-group-item-action">공부방</a><br />
+		    <button type="button" class="btn"><a href="#class" class="list-group-item list-group-item-action">강의실</a></button><br />
+		    <button type="button" class="btn"><a href="#attend" class="list-group-item list-group-item-action">출결</a></button><br />
+		    <button type="button" class="btn"><a href="#calendar" class="list-group-item list-group-item-action">캘린더</a></button><br />
+		    <button type="button" class="btn"><a href="#homework" class="list-group-item list-group-item-action">과제함</a></button><br />
+		    <button type="button" class="btn"><a href="#studyroom" class="list-group-item list-group-item-action">공부방</a></button><br />
 		   
   		</div>
   		<div align="center">
