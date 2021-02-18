@@ -65,7 +65,7 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav">
+			<nav id="nav" style="background-color: #ADD8E6;">
 				<ul>
     				<li class="nav-item">
 						<a href="/schline/main/class.do">
@@ -79,7 +79,7 @@ if(session.getAttribute("user_id") != null){
 					</li>
 					
 						<li><a href="<%=request.getContextPath() %>/class/studyRoom.do">공부방</a></li>
-						<li><a href="/schline/user/userinfo.do">계정</a></li>
+						<li><a href="/schline/user/userinfo.do"><%=session.getAttribute("user_name") %></a></li>
 						<li><a href="javascript:document.logout.submit()">로그아웃</a></li>
 				</ul>
 			</nav>

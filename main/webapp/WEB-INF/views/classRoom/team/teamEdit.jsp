@@ -34,7 +34,8 @@ function checkValidate(){
  <hr /><!-- 구분자 -->
 	<!-- ### 게시판의 body 부분 start ### -->
 <p style="text-align:center; font-size:1.2em">협업</p>
-		<form:form action="teamEditAction.do" name="teamFrm" onsubmit="return checkValidate();"
+		<form:form action="teamEditAction.do?${_csrf.parameterName }=${_csrf.token }"
+		 name="teamFrm" onsubmit="return checkValidate();"
 		 method="post" enctype="multipart/form-data">
 		<div class="row ml-1 mr-4">
 			<table class="table table-bordered">
@@ -72,7 +73,7 @@ function checkValidate(){
 		<div class="row mb-3">
 			<div class="col-6"> 
 			<button type="button" class="btn btn-success" 
-				onclick="location.href='teamTask.do?subject_idx=${param.subject_idx }';">
+				onclick="location.href='teamTask.do?subject_idx=${param.subject_idx }&team_num=${team_num }';">
 				리스트보기</button>
 			</div>
 			<div class="col-6 text-right pr-5">					
@@ -81,7 +82,7 @@ function checkValidate(){
 		</div>
 		<input type="hidden" name="board_idx" value="${board_idx }" />
 		<input type="hidden" name="subject_idx" value="${param.subject_idx }" />
-		<input type="hidden" name="board_fiel" value="${board_file }" />
+		<input type="hidden" name="board_file" value="${board_file }" />
 		</form:form>
 
 		<!-- ### 게시판의 body 부분 end ### -->
