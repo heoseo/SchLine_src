@@ -123,7 +123,7 @@ WHERE rNum BETWEEN 1 AND 10
 		WHERE block_user=#{0} AND user_id = #{1} 
 </select>
 
-
+<!-- 출석조회 -->
 <select id="check_day" resultType="Integer">
 	SELECT * FROM chattinginfo_tb 
 		WHERE atten_day=#{0} AND user_id = #{1}

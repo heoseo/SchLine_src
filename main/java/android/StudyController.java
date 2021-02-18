@@ -19,6 +19,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.apache.ibatis.session.SqlSession;
 import org.json.simple.JSONObject;
@@ -184,7 +185,6 @@ public Map<String, Object> editInfo(Principal principal, Model model, MultipartH
 	String change_img;
 	int result;
 	System.out.println("파라미터 받아오기 완료");
-	////여기서 왜 에러가 나지 ????????
 	//내 닉네임 확인
 	InfoVO myname_check = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
 	System.out.println("내닉네임 체크 ="+myname_check.getInfo_nick());
@@ -308,6 +308,34 @@ public Map<String, Object> editInfo(Principal principal, Model model, MultipartH
 	}
 	
 	
+	//공부시간 10초별 저장해주기
+	@RequestMapping("/android/studyTimeSet.do")
+	@ResponseBody
+	public Map<String, Object> studyTime(HttpServletRequest req, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		/* 일반적인 클래스에서 사용자 정보 얻어오기
+			 	: 스프링 컨테이너의 전역변수로 선언된 SecurityContextHolder
+			 	객체를 통해 사용자 아이디를 얻어올수 있다.
+		*/
+		//Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		//UserDetails sch = (UserDetails)object;
+		//String user_id = sch.getUsername();
+		String user_id = session.getAttribute("user_id").toString();
+		
+		
+		//10초마다 정보저장해주는 함수 호출
+		int time = Integer.parseInt(req.getParameter("send_time").toString());
+		
+		int result= sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id, time);
+		if(result==1) {
+			System.out.println("시간저장 성공");
+			map.put("setTime", 1);
+		}
+		return map;
+	}
+	
+	
 	//채팅내용전송시 자동저장
 	@RequestMapping("/android/chatSave.do")
 	@ResponseBody
@@ -327,6 +355,120 @@ public Map<String, Object> editInfo(Principal principal, Model model, MultipartH
 		}
 		return map;
 	}
+	
+	
+	//채팅 닉네임확인, 신고, 차단 ajax
+	@RequestMapping("/android/checkUSer.do")
+	@ResponseBody //제이슨이나 컬렉션을 텍스트형식으로 웹에 뿌려줌
+	public Map<String, Object> checkUser(Model model, HttpServletRequest req, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("닉네임확인, 신고, 차단 컨트롤러 진입");
+		
+		String user_id = session.getAttribute("user_id").toString();
+		String ot_nick =req.getParameter("ot_nick");
+		String flag = req.getParameter("flag").toString();//1은 신고, 0은 차단, 2는 프로필확인
+		System.out.println("ot_nick= "+ot_nick);
+		System.out.println("flag="+flag);
+		
+		//닉네임으로 정보체크
+		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
+		if(other_pro.getInfo_nick()!=null) {
+			map.put("result", 1);//성공시 반환값 1을 담아줌
+		}
+		if(flag.equals("1")) {//신고하기 일 경우
+			int reported_count = sqlSession.getMapper(StudyDAOImpl.class).reported_people(ot_nick);
+			if(reported_count==1) {
+				System.out.println("신고성공");
+				map.put("check", 1);//성공시 반환값 1을 담아줌
+			}
+		}
+		else if(flag.equals("0")) {//차단하기 일 경우
+			//사용자 닉네임으로 아이디값을 받아와서 그 아이디를 차단해줌
+			String other_id = other_pro.getUser_id();
+			//차단한 유저가 중복되지않게 처리해주는게 좋은데...시간되면 하자
+			int block = sqlSession.getMapper(StudyDAOImpl.class).block_people(user_id, other_id);
+			if (block==1) {
+				System.out.println("차단성공");
+				map.put("check", 0);//성공시 반환값 1을 담아줌
+			}
+		}
+		return map;
+	}
+	
+	//프로필보기 링크로 이동
+	@RequestMapping("/android/openProfile.do")
+	public String openProfile(HttpServletRequest req, Model model) {
+		System.out.println("프로필 새창열기");
+		String ot_nick = req.getParameter("ot_nick");//프로필보기 사용자아이디
+		String user_id = req.getParameter("user_id");//로그인된 사용자아아디
+		System.out.println("ot_nick"+ot_nick);
+		
+		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
+		
+		if(other_pro.getInfo_nick()!=null) {
+			model.addAttribute("ot", other_pro);//배열에 담아주기
+		}
+		return "studyRoom/openProfile";
+	}
+	
+	//신고와 차단
+	@RequestMapping("/android/studyBlock.do")
+	@ResponseBody
+	public Map<String, Object> studyBlock(HttpServletRequest req, Model model, HttpSession session) {
+		System.out.println("차단리스트 불러오기");
+		Map<String, Object> map = new HashMap<String, Object>();
+		String ot_nick = req.getParameter("ot_nick").toString();
+		String user_id = session.getAttribute("user_id").toString();
+		
+		//닉네임으로 정보체크
+		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
+		
+//			Integer blockCheck = 
+		//		blockList.contains("ot_nick");
+		//null에러 방지를 위해 전체를 if문에 넣어줌
+		if(sqlSession.getMapper(StudyDAOImpl.class).check_bolck(other_pro.getUser_id(), user_id)==null) {
+			System.out.println("차단유저 아님, 다음진행");
+		}
+		else {
+			System.out.println(ot_nick+"차단유저의 메세지 전송됨");
+			map.put("check", 1);
+		}
+		return map;
+	}
+	
+	
+	//출석증가
+	@RequestMapping("/android/attenPlus.do")
+	@ResponseBody
+	public Map<String, Object> attenPlus(HttpServletRequest req, HttpSession session){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//String user_id = principal.getName();
+		String user_id = session.getAttribute("user_id").toString();
+		String today = req.getParameter("today");
+		System.out.println("today="+today);
+		
+		//날짜가 동일하면 insert하지않고, 다른날이면 insert
+		//널에러방지 Integer타입
+		if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)!=null) {
+			System.out.println("출석결과"+sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id));
+			if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)==1){
+				//동일날짜있음. 출석 증가하지 않음
+				map.put("result", 0);
+			}
+		}
+		else {//동일날짜없음 출석증가
+			int attenPlus = sqlSession.getMapper(StudyDAOImpl.class).atten_plus(today, user_id);
+			if(attenPlus==1) {//출석증가 성공
+				map.put("result", 1);
+			}
+		}
+		return map;
+	}
+
+	
+	
 	
 	
 }
