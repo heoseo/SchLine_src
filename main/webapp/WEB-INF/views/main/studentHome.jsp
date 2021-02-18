@@ -20,8 +20,6 @@
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
 	
 	<div id="main">
-
-	<button><a href="./elements.do" class="button primary">elements.jsp</a></button>
 	<br />
 		
 	<!-- 1. 강의실 -->

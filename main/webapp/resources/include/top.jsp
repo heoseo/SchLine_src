@@ -39,13 +39,13 @@
 	<!-- 			<header id="header" class="alt"> -->
 	<!-- 			<span class="logo"><img src="images/logo.svg" alt="" /></span> -->
 					<!-- 메인 로고 이미지 -->
-					<div align="center">
-					<br /> 
-						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기-->
-							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="250px" alt="스쿨라인 로고" />
-						</a>
-					<br />
-					</div>
+<!-- 					<div align="center"> -->
+<!-- 					<br />  -->
+<!-- 						<a href="/schline/">★★이미지클릭시 home으로 가기. home요청명 적기 -->
+<%-- 							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="250px" alt="스쿨라인 로고" /> --%>
+<!-- 						</a> -->
+<!-- 					<br /> -->
+<!-- 					</div> -->
 <%
 
 if(session.getAttribute("user_id") != null){
@@ -65,10 +65,15 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav" style="background-color: #ADD8E6;">
+			<nav id="nav" style="background-color: #ADD8E6; color:#145374; font-weight:bold;">	
 				<ul>
+					<li style="text-align: left;">
+						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기-->
+							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="150px" alt="스쿨라인 로고" />
+						</a>
+					</li>
     				<li class="nav-item">
-						<a href="/schline/main/class.do">
+						<a href="/schline/main/class.do" style="text-align: center;">
 						강의실
 						</a>
 					</li>
@@ -88,7 +93,7 @@ if(session.getAttribute("user_id") != null){
 					action="${pageContext.request.contextPath }/member/logout" name="logout">
 			</form:form>
 				</ul>
-			</nav>
+			</nav><br /><br />
 			
 			<!-- 기존 네비 -->
 <!-- 			<nav id="nav"> -->
