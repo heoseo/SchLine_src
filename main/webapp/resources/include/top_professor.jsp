@@ -65,7 +65,7 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav">
+			<nav id="nav" style="background-color: #ADD8E6; color:#145374; font-weight:bold;">
 				<ul>
     				<li class="nav-item">
 						<a href="/schline/professor/video.do">
@@ -95,7 +95,9 @@ if(session.getAttribute("user_id") != null){
 					<li><a href="/schline/professor/">출석</a></li>
 					<li><a href="/schline/professor/">성적</a></li>
 					<li><a href="/schline/professor/professorinfo.do">계정</a></li>
-					<li><a href="javascript:document.logout.submit()">로그아웃</a></li>
+					<li><a href="javascript:document.logout.submit()">
+					<i class="fas fa-sign-out-alt"></i>
+					로그아웃</a></li>
 				</ul>
 			</nav>
 			
@@ -114,7 +116,6 @@ if(session.getAttribute("user_id") != null){
 <!-- 					<li><a href=""><h3>계정</h3></a></li> -->
 <!-- 				</ul> -->
 <!-- 			</nav> -->
-			<br />	
 			
 <%
 	}
