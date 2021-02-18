@@ -50,11 +50,11 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 	border: solid 1px #C0C0C0;
 }
 .Task {
-	border: solid 1px #FF6347;
+	border: solid 1px #00334e;
 	border-radius: 5px;
 	font-size: 5px;
 	font-weight: bold;
-	color: 	#FF6347;
+	color: 	#00334e;
 }
 </style>
 
@@ -120,10 +120,8 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 <!-- 			private String exam_name;	 //과제 이름 -->
 <!-- 			private java.sql.Date exam_date;	//제출마감일 -->
 <!-- 			private int exam_type;		//과제(1), 시험(2) -->
-					<div class="Task">&nbsp&nbsp<i class="fas fa-thumbtack" />
-					&nbsp&nbsp [ <%=dto.getExam_name() %> ] </div>
-					<div class="Task">&nbsp&nbsp<i class="fas fa-thumbtack" />
-					&nbsp&nbsp [ <%=dto.getExam_name() %> ] </div>
+					<div class="Task">&nbsp;&nbsp;<i class="fas fa-thumbtack"></i>
+					&nbsp;&nbsp; [ <%=dto.getExam_name() %> ] </div>
 				<%	}
 			  	}
 				%>

@@ -20,12 +20,22 @@
 <!-- 	<input type="submit" value="로그아웃" /> -->
 <%-- </form:form> --%>
 
+<style type="text/css">
+#loginButton{
+	width: 100%;
+	text-align: center;
+	background:#ADD8E6; 
+	border-radius:5px;
+}
+</style>
 <!-- /////////////////////Main시작////////////////////// -->
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
+	<div style="text-align: center;">
+		<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" />
+	</div>
+	<hr />
+	<div id="main" style=" font-weight:bold; padding:30px">
 	
-	<div id="main">
-	
-
 	<c:choose>
 		<c:when test="${not empty user_id }">
 			${user_id}님, 하이룽~^^*
@@ -58,8 +68,10 @@
 					패스워드 : <input type="password" name="pass" value="qwer1234"/>
 				</p>
 				
-				<button type="submit" class="btn btn-danger" >
-					로그인하기</button>
+				<div>
+					<button type="submit" id="loginButton" style="font-weight:bold; background:#ADD8E6;">
+						로그인</button>
+				</div>
 			</form:form>
 		</c:otherwise>
 	</c:choose>
@@ -69,8 +81,6 @@
 
 	</div>
 		
-	<!-- 메인 퀵바 -->
-	<%@ include file="/resources/include/quick.jsp"%>
 	<!-- /////////////////////메인끝////////////////////// -->
 		</body>
 		
