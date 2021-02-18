@@ -65,4 +65,27 @@
    </ul>
 </div>
 </body>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<!-- <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+
+TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries
+<script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyCnuVHZ8NS3YBePVQks1BBiP2JB31pp7r4",
+    authDomain: "schlinenoti.firebaseapp.com",
+    projectId: "schlinenoti",
+    storageBucket: "schlinenoti.appspot.com",
+    messagingSenderId: "548620065983",
+    appId: "1:548620065983:web:47b5c99e96e173357e3a0a",
+    measurementId: "G-2EW0HRQHBX"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebas e.analytics();
+</script>-->
 </html>

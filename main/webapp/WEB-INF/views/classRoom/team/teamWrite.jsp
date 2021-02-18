@@ -34,7 +34,8 @@ function checkValidate(){
  <hr /><!-- 구분자 -->
 	<!-- ### 게시판의 body 부분 start ### -->
 <p style="text-align:center; font-size:1.2em">협업</p>
-		<form:form action="teamWriteAction.do${_csrf.parameterName}=${_csrf.token}" name="teamFrm" onsubmit="return checkValidate();"
+		<form:form action="teamWriteAction.do?${_csrf.parameterName }=${_csrf.token }"
+			 name="teamFrm" onsubmit="return checkValidate();"
 		 method="post" enctype="multipart/form-data">
 		<div class="row ml-1 mr-4">
 			<table class="table table-bordered">

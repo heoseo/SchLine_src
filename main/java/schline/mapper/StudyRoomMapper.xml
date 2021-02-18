@@ -98,7 +98,8 @@ WHERE rNum BETWEEN 1 AND 10
 
 <!-- 채팅내용 저장 -->
 <insert id="chat_history">
-	INSERT INTO chatting_tb VALUES (seq_chat_message_idx.nextval, #{0}, #{1}, sysdate)
+	INSERT INTO chatting_tb 
+		VALUES (seq_chat_message_idx.nextval, #{0}, #{1}, sysdate)
 <!-- 	INSERT INTO chatting_tb(chat_message_idx, user_id, chat_content) VALUES (seq_chat_message_idx.nextval, #{0}, #{1}) -->
 </insert>
 
@@ -110,14 +111,36 @@ WHERE rNum BETWEEN 1 AND 10
 
 <!-- 차단 -->
 <insert id="block_people">
-	INSERT INTO chattingblock_tb (user_id, block_user) VALUES (#{user_id}, #{other_id})
+	INSERT INTO chattingblock_tb (user_id, block_user) 
+		VALUES (#{user_id}, #{other_id})
 </insert>
 
 <!-- 차단여부 확인 -->
 <!-- select에서 리스트 반환 원할때 dto하면 리스트 타입으로 자동반환 -->
 <!-- null을 받을수 있는 객체로 변경해줌 int는 널 못받음★★★★★★★★ -->
 <select id="check_bolck" resultType="Integer">
-	SELECT * FROM chattingblock_tb WHERE block_user=#{0} AND user_id = #{1} 
+	SELECT * FROM chattingblock_tb 
+		WHERE block_user=#{0} AND user_id = #{1} 
+</select>
+
+<!-- 출석조회 -->
+<select id="check_day" resultType="Integer">
+	SELECT * FROM chattinginfo_tb 
+		WHERE atten_day=#{0} AND user_id = #{1}
+</select>
+
+<!-- 출석증가 -->
+<update id="atten_plus">
+	UPDATE chattinginfo_tb 
+		SET atten_day=#{0}, info_atten=info_atten+1 
+	WHERE user_id=#{1}
+</update>
+
+<!-- ///////안드로이드/////// -->
+<!-- 커맨드 객체를 전달받아 진행 
+전달되는 파라미터와 반환타입 모두 InfoVO -->
+<select id="login_info" resultType="studyroom.InfoVO" parameterType="studyroom.InfoVO">
+	SELECT * FROM chattinginfo_tb WHERE user_id = #{user_id}
 </select>
 
 
