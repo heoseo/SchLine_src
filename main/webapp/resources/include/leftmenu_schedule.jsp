@@ -17,7 +17,7 @@
 			<br />
 			<div class="list-group">
 				<!-- fas fa-clock, fas fa-bell -->
-				<a href="<%=request.getContextPath() %>/schedule/alertList.do" class="list-group-item">
+				<a href="<%=request.getContextPath() %>/schedule/alertList.do?type=allBoard" class="list-group-item">
 					<i class="fas fa-clock" id="icon">&nbsp&nbsp</i>
 					<span>알림</span>
 				</a>

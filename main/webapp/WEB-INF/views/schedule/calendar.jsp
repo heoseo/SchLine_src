@@ -39,7 +39,7 @@ int last_week = cDay.get(Calendar.DAY_OF_WEEK);//마지막일의 요일
 	font-size: 10px;
 	border: none;
 	text-align: right;
-	padding-left: 200px;
+	padding-left: 300px;
 }
 </style>
 <!-- style태그끝! -->
@@ -167,7 +167,7 @@ $(function() {
 						<!-- 캘린더 년도,월 출력. -->
 						<div class="calendarTitle">
 							<span class="calYear" id="calYear"><%=now_year%></span><span>년</span> 
-							<span class="calYear" id="calMon"><%=now_month%></span><span>월</span>
+							<span class="calMon" id="calMon"><%=now_month%></span><span>월</span>
 						
 							&nbsp&nbsp
 							<span id="button">
