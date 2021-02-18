@@ -4,6 +4,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,6 +18,9 @@ import javax.websocket.Session;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,13 +56,22 @@ public class StudyRoomController {
 	
 	//공부방 메인
 	@RequestMapping("/class/studyRoom.do")
-	public String studyRoom (HttpSession session, Model model) {
+	public String studyRoom (HttpSession session, Model model, Principal principal) {
 		
-		String user_id = session.getAttribute("user_id").toString();
+		/*
+		controller에서 시큐리티를 통해 로그인 한 사용자정보 얻어오기
+			: @Controller로 선언된 클래스에서는 메소드 인자로 
+			Principal 객체를 통해 사용자 아이디를 얻어올수 있다.
+		 */
+		//1.Principal 객체를 통한 사용자 아이디 얻기
+		//시큐리티 유저 아이디 얻어오기
+		String user_id = principal.getName();
+		
 		//로그인회원 프로필 불러오기
 		InfoVO loginPeople = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
 
 		//파라미터전송을 위해 모델객체에 로그인회원정보 저장
+//		model.addAttribute("loginPeople", loginPeople);
 		model.addAttribute("info_nick", loginPeople.getInfo_nick());
 		model.addAttribute("user_id", loginPeople.getUser_id());
 		model.addAttribute("info_img", loginPeople.getInfo_img());
@@ -66,7 +79,6 @@ public class StudyRoomController {
 		model.addAttribute("info_atten", loginPeople.getInfo_atten());
 		model.addAttribute("reported_count", loginPeople.getReported_count());//신고횟수
 		
-//		session.setAttribute("info_img", loginPeople.getInfo_img());
 		//전체회원 리스트 불러오기 및 랭킹매기기
 		ArrayList<InfoVO> LankList = sqlSession.getMapper(StudyDAOImpl.class).lank_list();
 		model.addAttribute("LankList",LankList);
@@ -107,38 +119,24 @@ public class StudyRoomController {
 	
 	//마이바티스로 변경
 	//공부방 채팅 이동
-	@RequestMapping(value = "/class/studyRoomChat.do", method = RequestMethod.POST)
-	public String studyRoomChatGo(Model model, HttpServletRequest req, HttpSession session) {
+	@RequestMapping("/class/studyRoomChat.do")
+	public String studyRoomChatGo(Model model, HttpServletRequest req, HttpSession session,
+			Authentication authentication) {
 		
-		String user_id = session.getAttribute("user_id").toString();
-//		String user_id = session.getAttribute("user_id");
-		
-		//접속수 올리기
+		//시큐리티 Authentication 객체를 통한 사용자 아이디 얻기
+		UserDetails userDetails = (UserDetails)authentication.getPrincipal();
+		String user_id = userDetails.getUsername();
 		
 		
 		//로그인회원 프로필 불러오기
 		InfoVO loginPeople = sqlSession.getMapper(StudyDAOImpl.class).user_nick(user_id);
 		System.out.println("로그인회원 닉네임 = "+ loginPeople.getInfo_nick());
 		
-		
-		
-		//세션영역에 닉네임과 이미지 저장
-//		session.setAttribute("info_nick", loginPeople.getInfo_nick());
-//		session.setAttribute("info_img", loginPeople.getInfo_img());
 		//파라미터전송을 위해 모델객체에 로그인회원정보 저장
 		model.addAttribute("info_nick", loginPeople.getInfo_nick());
 		model.addAttribute("user_id", loginPeople.getUser_id());
 		model.addAttribute("info_img", loginPeople.getInfo_img());
-		
-		//전체회원 정보 다 불러와서 넘겨줘야할듯...
-		System.out.println("가입된 회원프로필 불러오기");
-		
-		//전체회원 리스트 불러오기
-		ArrayList<InfoVO> studyList = sqlSession.getMapper(StudyDAOImpl.class).study_list();
-		
-		System.out.println("전체리스트 모델객체에 담기");
-		model.addAttribute("studyList", studyList);
-		
+
 		return "studyRoom/studyRoomGo";
 	}
 	
@@ -327,8 +325,18 @@ public class StudyRoomController {
 	@ResponseBody
 	public Map<String, Object> studyTime(HttpServletRequest req, HttpSession session){
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		/* 일반적인 클래스에서 사용자 정보 얻어오기
+			 	: 스프링 컨테이너의 전역변수로 선언된 SecurityContextHolder
+			 	객체를 통해 사용자 아이디를 얻어올수 있다.
+		*/
+		Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails sch = (UserDetails)object;
+		String user_id = sch.getUsername();
+		//String user_id = session.getAttribute("user_id").toString();
+		
+		
 		//10초마다 정보저장해주는 함수 호출
-		String user_id = (String)session.getAttribute("user_id");
 		int time = Integer.parseInt(req.getParameter("send_time").toString());
 		
 		int result= sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id, time);
@@ -366,11 +374,13 @@ public class StudyRoomController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		System.out.println("닉네임확인, 신고, 차단 컨트롤러 진입");
+		
 		String user_id = session.getAttribute("user_id").toString();
 		String ot_nick =req.getParameter("ot_nick");
 		String flag = req.getParameter("flag").toString();//1은 신고, 0은 차단, 2는 프로필확인
 		System.out.println("ot_nick= "+ot_nick);
 		System.out.println("flag="+flag);
+		
 		//닉네임으로 정보체크
 		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
 		if(other_pro.getInfo_nick()!=null) {
@@ -386,6 +396,7 @@ public class StudyRoomController {
 		else if(flag.equals("0")) {//차단하기 일 경우
 			//사용자 닉네임으로 아이디값을 받아와서 그 아이디를 차단해줌
 			String other_id = other_pro.getUser_id();
+			//차단한 유저가 중복되지않게 처리해주는게 좋은데...시간되면 하자
 			int block = sqlSession.getMapper(StudyDAOImpl.class).block_people(user_id, other_id);
 			if (block==1) {
 				System.out.println("차단성공");
@@ -437,8 +448,33 @@ public class StudyRoomController {
 	}
 	
 	
+	//출석증가
+	@RequestMapping("/class/attenPlus.do")
+	@ResponseBody
+	public Map<String, Object> attenPlus(HttpServletRequest req, Principal principal){
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("출석증가 컨트롤러");
+		String user_id = principal.getName();
+		String today = req.getParameter("today");
+		System.out.println("today="+today);
+		
+		//날짜가 동일하면 insert하지않고, 다른날이면 insert
+		//널에러방지 Integer타입
+		if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)!=null) {
+			if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)==1){
+				//동일날짜있음. 출석 증가하지 않음
+				map.put("result", 0);
+			}
+		}
+		else {//동일날짜없음 출석증가
+			int attenPlus = sqlSession.getMapper(StudyDAOImpl.class).atten_plus(today, user_id);
+			if(attenPlus==1) {//출석증가 성공
+				map.put("result", 1);
+			}
+		}
+		
+		return map;
+	}
 	
-	
-	
-	
+
 }

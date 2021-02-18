@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+
 /* reset */
 
 ul,li,ol,dl,dd,dt{list-style:none;padding:0;margin:0;font-size:1em}
@@ -21,7 +22,7 @@ a:focus, a:active {color:#000;text-decoration:none;}
 
 /* 본문 */
 
-#chat-wrapper{margin:20px auto;width:580px;border-radius:10px 10px 0 0;background:#edecea;}
+#chat-wrapper{margin:0px; padding:5px; max-height: auto; width:580px;border-radius:10px 10px 0 0;background:#edecea;}
 #chat-header{background:url('../img/ctrl.png') #cecece 510px 20px no-repeat;padding:25px;border-radius:10px 10px 0 0}
 #chat-header h1{font-size:14px;}
 #chat-container{padding:20px}
@@ -38,6 +39,7 @@ a:focus, a:active {color:#000;text-decoration:none;}
 .chat .bubble-me{display:inline-block;max-width:300px;padding:10px;background:#D3E3F4;border-radius:5px;line-height:16px;}
 
 /* 왼쪽 채팅 */
+.chat-left{margin-left:10px;text-align: left;}
 .chat-left .profile{float:left;display:inline-block;width:50px;height:50px; border-radius: 70%; overflow: hidden;}
 .chat-left .chat-box{display:inline-block;margin:15px 0 0 10px;}
 
@@ -49,7 +51,7 @@ a:focus, a:active {color:#000;text-decoration:none;}
 /* 	object-fit: cover; */
 /* } */
 
-.chat-left .bubble{margin-left:10px;}
+.chat-left .bubble{margin-left:10px; text-align: left;}
 .chat-left .bubble .bubble-tail{position:absolute;left:84px;top:25px;width:9px;height:10px;background: url('../resources/img/bubble-tail.png') 0 0 no-repeat;text-indent:-9999px}
 
 /* -- 오른쪽 채팅 -- */
@@ -67,3 +69,5 @@ a:focus, a:active {color:#000;text-decoration:none;}
 
 .chat-right .bubble-me {margin-right:10px;}
 .chat-right .bubble-tail {position:absolute;right:84px;top:25px;width:9px;height:10px;background: url('../resources/img/param.info_img }') 0 0 no-repeat;text-indent:-9999px}
+
+#messageWindow{max-height: auto;}

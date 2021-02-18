@@ -2,6 +2,8 @@ package kosmo.project3.schline;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,14 +36,15 @@ public class ExamController {
 
 	//시험시작, 또는 과제작성의 코드가 유사하여 통합...
 	@RequestMapping("/class/examStart.do")
-	public String examStart(Model model, HttpServletRequest req) {
+	public String examStart(Model model, HttpServletRequest req, Principal principal) {
 		
 		//과제정보를 가져오기 위한 파라미터 저장
 		String exam_type = req.getParameter("exam_type");
 		//선택했던 과목을 Get 파라미터로 받아옴
 		String subject_idx = req.getParameter("subject_idx");
 		//사용자 정보는 일단 더미를 임시로 가져옴..추후에 변경 필요
-		String user_id = "201701701";
+		String user_id = principal.getName();
+		System.out.println(user_id);
 
 		//과목을 받아왔으니.. 계정정보만 받아오면 될것 같군요
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -68,23 +71,35 @@ public class ExamController {
 		//시험일때 경로(시험시작)(equals 대신 자꾸 ==을 쓰네요..)
 		if(!exam_type.equals("1")) {
 			
+			
+			
+			//여기에 시험 인덱스에 맞는 리스트를 띄워야 합니다....!!
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			returnStr = "/classRoom/exam/examStart";
 		}
 		//과제 작성일때 추가 쿼리문 실행..및 정보저장, 경로 설정
 		else{
 			System.out.println(exam_type+"   "+subject_idx+"   "+user_id);
 			
-			//과제도 리스트로 받아오면 좋으나..시연에서는 1개만 받아오는 것으로 처리
-			ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
-					.getExamidx(subject_idx, exam_type);
-			String exam_idx = examidxs.get(0).toString();
+			String exam_idx = req.getParameter("exam_idx");
 			System.out.println("될까요?"+exam_idx);
 			ExamDTO edto = sqlSession.getMapper(SchlineDAOImpl.class)
 					.getExam(subject_idx, exam_idx);
 			
 			String temp = edto.getExam_content().replace("\r\n", "<br/>");
 			edto.setExam_content(temp);
-				
+			
 			map.put("exam_idx", edto.getExam_idx());
 			map.put("subject_idx", edto.getSubject_idx());
 			map.put("exam_name", edto.getExam_name());
@@ -103,22 +118,38 @@ public class ExamController {
 	}
 
 	@RequestMapping("/class/examList.do")
-	public String examList(Model model, HttpServletRequest req) {
+	public String examList(Model model, HttpServletRequest req, Principal principal) {
 		/*
 		타입이 시험일때...
-		학생 정보가 필요할듯
 		*/
 		String subject_idx = req.getParameter("subject_idx");
 		System.out.println(subject_idx);
-		String user_id = "201701701";
+		String user_id = principal.getName();
 		String exam_type = req.getParameter("exam_type");
+		System.out.println(exam_type);
+		
+		
+		/*
+		
+		시험 인덱스를 기준으로 가져온다면..
+		
+		이곳도 exam_idx로 판단하게 해야겠군요!!
+		
+		
+		 */
+		
+		
+		
 		//자바과목의 시험타입 idx들 가져오기..
-		//select exam_idx from exam_tb where exam_type=2 AND subject_idx=1;
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getExamidxs(subject_idx, exam_type);
+		
+		//플래그 자동입력 후 삭제요망
+		ArrayList<Integer> examidx = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getExamidx(subject_idx, exam_type);
 		
 		//시험진행여부를 확인하는 플래그
-		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(examidxs.get(0), user_id);
+		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(examidx.get(0), user_id);
 		//int check_flag = edto.getCheck_flag();
 		System.out.println("플래그:"+check_flag);
 		
@@ -168,7 +199,7 @@ public class ExamController {
 			model.addAttribute("subject_name", subject_name);
 			model.addAttribute("questionlist", questionlist);
 			model.addAttribute("examlist", examlist);
-			
+			model.addAttribute("exam_type", exam_type);
 			//뷰로 이동
 			return "/classRoom/exam/examList";
 		}
@@ -183,13 +214,13 @@ public class ExamController {
 	
 	@RequestMapping(value="/class/examComplete.do", method = {RequestMethod.POST, RequestMethod.GET})
 	@ResponseBody
-	public Map<String, Object> examComplete(Model model, HttpServletRequest req) {
+	public Map<String, Object> examComplete(Model model, HttpServletRequest req, Principal principal) {
 
 		/*
 		과목 및 학생별로 판단하기 위해 파라미터처리가 필요..
 		주관식인 경우 학생,문제,정답을 입력하는 테이블이 필요
 		*/
-		String user_id = "201701701"; //추후 파라미터로 처리
+		String user_id = principal.getName(); //추후 파라미터로 처리
 		
 		Map<String, Object> returnObj = new HashMap<String, Object>();
 		//학생이 입력한 정답의 값을 배열로 가져옴
@@ -211,10 +242,11 @@ public class ExamController {
 		
 		//점수
 		int score = 0;
-		
+		int s;
+		int idx;
 		for(ExamDTO dto : scoringList) {
 				
-			//문제의인덱스(총문제)의 크기만큼 반복(디버깅이 좀 필요해 보입니다... 헷갈림)
+			//문제의인덱스(총문제)의 크기만큼 반복
 			for(int i = 0; i<questionNum.length; i++) {
 			
 				//리스트의 문제인덱스와 반복중인 문제의 인덱스가 같으면..
@@ -230,6 +262,15 @@ public class ExamController {
 						//정답이라면...
 						if(dto.getAnswer().equalsIgnoreCase(choice[i])) {
 							System.out.println((i+1)+"번 문제 정답");
+							
+							idx = dto.getExam_idx();
+							s = dto.getQuestion_score();
+							String exam_idx = Integer.toString(idx);
+							String scoreStr = Integer.toString(s);
+							System.out.println(exam_idx+"<인덱스..점수>"+scoreStr);
+							//각 인덱스에 입력..
+							sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(scoreStr, user_id, exam_idx);
+							
 							//점수 더하기
 							score += dto.getQuestion_score();
 						}
@@ -238,29 +279,22 @@ public class ExamController {
 							System.out.println((i+1)+"번 문제 오답");
 						}
 					}
-					//주관식일 경우...(추가처리 필요)
+					//주관식일 경우...
 					else {
 						System.out.println("========위 문제는 주관식입니다..=========");
+						System.out.println("서술형 입력값:"+choice[i]);
+						int question_idx = dto.getQuestion_idx();
+						sqlSession.getMapper(SchlineDAOImpl.class)
+						.insertAnswer(question_idx, user_id, choice[i]);
 					}
 				}
 			}
 		}
-		
-		//임시로 시험인덱스 설정..test용
-		String exam_idx = "1";
-		sqlSession.getMapper(SchlineDAOImpl.class).checkEdit(exam_idx, user_id);
-		//학생별로 점수를 insert 해야함!! 과제성적은  Grade 테이블에서 과제인덱스랑 점수 넣으면됨(insert)
-		
-		//할것!
-		
-		////////////////////////////////////////////////////////////////////////////
-
-		//returnObj.put("subject_idx", subject_idx); //없어도될듯...
+			
 		returnObj.put("score", score);
 		returnObj.put("user_name", user_name);
 		returnObj.put("subject_name", subject_name);
 		
-		//과목인덱스를 유지하기 위해..redirect 지만 ajax modal 활용을 위해 테스트
 		return returnObj;
 	}
 	
@@ -274,39 +308,30 @@ public class ExamController {
 //	}
 	
 	@RequestMapping("/class/taskList.do")
-	public String taskList(Model model, HttpServletRequest req) {
+	public String taskList(Model model, HttpServletRequest req, Principal principal) {
 		
 		//로그인한 사용자가 과제를 제출했는지 확인하는 사용자정보 받아올 필요가 있을듯..
 		String subject_idx = req.getParameter("subject_idx");
 		String exam_type = req.getParameter("exam_type");
-		ArrayList<Integer> examidxs =sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, exam_type);
-		Integer exam_idx = examidxs.get(0);
-		System.out.println("과제인덱스:"+exam_idx);
+		//ArrayList<Integer> examidxs =sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, exam_type);
+		//System.out.println("과제인덱스:"+exam_idx);
 		ClassDTO classdto = sqlSession.getMapper(SchlineDAOImpl.class)
 				.getsubjectName(subject_idx);
 		String subject_name = classdto.getSubject_name();
-		String user_id = "201701701";
+		String user_id = principal.getName();
 		
-		//자바과목의 과제idx 쿼리로 변경 필요...
-		//select exam_idx from exam_tb where exam_type=1 AND subject_idx=1;
+		System.out.println("사용자 아이디"+user_id);
 		
-		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
-		
-		System.out.println("플래그:"+check_flag);
-		
-		if(check_flag!=1) {
-			model.addAttribute("check", "미제출");
-		}
-		else {
-			model.addAttribute("check", "제출");
-		}
-		
+		/*
+		 * if(check_flag!=1) { model.addAttribute("check", "미제출"); } else {
+		 * model.addAttribute("check", "제출"); }
+		 */
 		ArrayList<ExamDTO> examlist = 
-				sqlSession.getMapper(SchlineDAOImpl.class).tasklist("1", subject_idx);
+				sqlSession.getMapper(SchlineDAOImpl.class).tasklist("1", subject_idx, user_id);
 
 		//리스트 반복..
 		for(ExamDTO dto : examlist) {
-			
+			//int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
 			//줄바꿈처리
 			String temp = dto.getExam_content().replace("\r\n", "<br/>");
 			dto.setExam_content(temp);
@@ -321,7 +346,7 @@ public class ExamController {
 	
 	@RequestMapping(value="/class/taskWriteAction.do", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> taskWriteAction(MultipartHttpServletRequest req) {
+	public Map<String, Object> taskWriteAction(MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
 		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
@@ -400,7 +425,6 @@ public class ExamController {
 				fileUp = sqlSession.getMapper(SchlineDAOImpl.class)
 					.taskWrite(subject_idx, user_id, board_title, board_content, saveFileName, exam_idx);
 				
-				
 //				Map file = new HashMap();
 //				맵에 저장하지 않고 DB에 하면될듯..추후처리
 //				원본파일명
@@ -430,7 +454,7 @@ public class ExamController {
 		
 		if(fileUp!=0) {
 			returnObj.put("taskResult", 1);
-			String user_id = "201701701";
+			String user_id = principal.getName();
 			sqlSession.getMapper(SchlineDAOImpl.class).checkEdit(exam_idx, user_id);
 		}
 		else {
@@ -446,6 +470,23 @@ public class ExamController {
 //		return "redirect:/class/taskList.do";
 		return returnObj;
 	}
+	
+	/////////////////////////////
+	////////종합과제함/////////////
+	
+	@RequestMapping("/class/totalTask.do")
+	public String totalTask(Model model, HttpServletRequest req, Principal principal) {
+		
+		String user_id = principal.getName();
+		
+		ArrayList<ExamDTO> examlist = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getAllTask(user_id);
+		
+		model.addAttribute("examlist", examlist);
+		
+		return "/main/totalTask";
+	}
+	
 	
 
 }

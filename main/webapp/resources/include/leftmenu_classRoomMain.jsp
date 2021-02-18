@@ -46,7 +46,7 @@
 				    	<i class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">코스</span>
 					</a>
-					<a href="/schline/main/totalTask.do" class="list-group-item">
+					<a href="/schline/class/totalTask.do" class="list-group-item">
 						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
 						<!-- 기존거★ -->
 <!-- 						<span style="text-align: center;">종합과제함</span> -->

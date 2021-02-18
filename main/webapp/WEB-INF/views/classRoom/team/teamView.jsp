@@ -2,6 +2,7 @@
  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,6 +74,8 @@ function isDelete(){
 			</div>
 		<div class="row mb-3">
 			<div class="col-6"> 
+		<sec:authentication property="principal.username" var="user" />
+		<c:if test="${user eq user_id }">
 			<button type="button" class="btn btn-secondary"
 				onclick="location.href='teamEdit.do?board_idx=${board_idx }&subject_idx=${param.subject_idx}';">
 				수정하기</button>
@@ -84,6 +87,7 @@ function isDelete(){
 				onclick="isDelete();">
 				삭제하기</button> 
 		</form:form >
+		</c:if>
 			</div>
 			<div class="col-6 text-right pr-5">					
 			<button type="button" class="btn btn-success" 
@@ -92,7 +96,8 @@ function isDelete(){
 			</div>	
 		</div>
 		<!-- ### 게시판의 body 부분 end ### -->
-
+    
+    
     
  <jsp:include page="/resources/include/bottom.jsp" />
 </body>
