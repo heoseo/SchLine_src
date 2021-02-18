@@ -71,10 +71,10 @@
 			onclick="location.href='./editOrdel.do?pen_idx=${viewRow.pen_idx}&mode=edit&nowPage=${nowPage }';">
 			수정하기</button>
 		<button type="button" 
-			onclick="location.href='./editOrdel.do?pen_idx=${viewRow.pen_idx}&mode=delete&nowPage=${nowPage }';">
-			삭제하기</button>		
+			onclick="location.href='./editOrdel.do?pen_idx=${viewRow.pen_idx}&mode=delete&nowPage=${nowPage }&board_type=${viewRow.board_type }';">
+			삭제하기</button>			
 		</c:if>
-         <c:if test="${p_user ne s_user }">
+         <c:if test="${p_user ne s_user and replyRow.board_type ne 'red'}">
       		<button type="button" 
 			onclick="location.href='./reply.do?pen_idx=${viewRow.pen_idx}&nowPage=${nowPage }';">
 			답변글달기</button>

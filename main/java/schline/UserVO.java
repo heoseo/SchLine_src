@@ -10,6 +10,8 @@ public class UserVO {
 	private int grade_total;
 	private String authority;
 	private String enabled;
+	// 가상번호 부여를 위한 멤버변수 추가
+	private int virtualNum;
 	
 	
 	public String getEnabled() {
@@ -68,6 +70,12 @@ public class UserVO {
 	}
 	public void setAuthority(String authority) {
 		this.authority = authority;
+	}
+	public int getVirtualNum() {
+		return virtualNum;
+	}
+	public void setVirtualNum(int virtualNum) {
+		this.virtualNum = virtualNum;
 	}
 
 }

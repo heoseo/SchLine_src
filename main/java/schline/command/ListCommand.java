@@ -21,7 +21,9 @@ public class ListCommand implements BbsCommandImpl {
 	
 		Map<String, Object> paramMap = model.asMap();
 		HttpServletRequest req = (HttpServletRequest)paramMap.get("req");
- 
+		String url =(String)paramMap.get("url");
+		String subject_idx =(String)paramMap.get("subject_idx");
+		paramMap.put("subject_idx",subject_idx);
 		//DAO객체생성
 		PenJdbcDAO dao = new PenJdbcDAO();		
  
@@ -99,7 +101,7 @@ public class ListCommand implements BbsCommandImpl {
 		//리스트에 출력할 List컬렉션을 model객체에 저장한 후 뷰로 전달한다.
 		String pagingImg = PagingUtil.pagingImg(totalRecordCount,
 				pageSize, blockPage, nowPage,
-				req.getContextPath()+"/penboard/list.do?"+addQueryString+"board_type="+board_type+"&");
+				req.getContextPath()+url+"?"+addQueryString+"board_type="+board_type+"&");
 		model.addAttribute("pagingImg", pagingImg);
 		model.addAttribute("totalPage", totalPage);//전체페이지수
 		model.addAttribute("nowPage", nowPage);//현재페이지번호

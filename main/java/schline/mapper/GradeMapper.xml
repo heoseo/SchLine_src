@@ -70,6 +70,12 @@
 		inner join organization_tb O on U.orga_id=O.orga_id
 		where user_id = #{user_id}
 	  </select>  
+	  <select id="listInfo_admin" resultType="schline.UserInfoDTO">
+	 	select U.*, orga_name, expiration_date
+		from user_tb U
+		inner join organization_tb O on U.orga_id=O.orga_id
+		where user_id = #{user_id}
+	  </select>  
 	  
 	  <select id="RegistrationInfo" resultType="schline.UserInfoDTO">
 	 	select U.user_id, U.subject_idx, U.user_name, regi_idx, grade_sub, subject_name, R.user_name as professor, rownum rNum 
