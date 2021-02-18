@@ -56,6 +56,7 @@ function moveurl(url) {
 							<td style="width:10%; vertical-align:middle;">문제</td>
 							<td style="vertical-align:middle;"> ${row.question_content }</td>
 							<td style="width:15%">(작성자)<br/> ${row.user_name }</td>
+							<td style="width:15%">(배점)<br/>${row.question_score }점</td>
 						</tr>
 						<form:form name="scoreFrm" onsubmit="return questionCorrect();" method="post" action="examScoring.do">
 							<input type="hidden" name="exam_idx" id="exam_idx" value="${row.exam_idx }" />
@@ -63,7 +64,7 @@ function moveurl(url) {
 							<input type="hidden" name="question_score" id="question_score" value="${row.question_score }"/>
 							<tr>
 							<td>입력한 답</td>
-							<td> ${row.questionanswer_content } &nbsp;</td>
+							<td colspan="2"> ${row.questionanswer_content } &nbsp;</td>
 							<td rowspan="2" style="width:10%;">
 							<input type="submit" id="btn${loop.count }" class="button primary"
 							style="min-width:0" value="정답처리">

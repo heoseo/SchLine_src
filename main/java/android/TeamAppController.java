@@ -78,7 +78,7 @@ public class TeamAppController {
 		
 		System.out.println("다운로드 요청 들어옴");
 		
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		
