@@ -204,7 +204,9 @@
 		SELECT *
 		FROM (  SELECT ExamList.*, rownum rNum
 		        FROM   (
-		                SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, exam_postdate POSTDATE, exam_content CONTENT, exam_date, exam_scoring, check_flag, 'exam' noti_or_exam
+		                SELECT E.exam_idx IDX, subject_idx SUB_IDX, exam_name TITLE, 
+		                exam_postdate POSTDATE, exam_content CONTENT, exam_date,
+		                check_flag, 'exam' noti_or_exam
 		                FROM exam_tb E, examcheck_tb EC
 		                where E.exam_idx = EC.exam_idx
 		                    AND subject_idx in( select subject_idx

@@ -7,7 +7,7 @@
 2021.02.02
 1) ★★★인클루드 메뉴바 링크는 각자 넣어주세요!!!★★
 2) ★★★각 view페이지 smail태그 안에있는 타이틀 일단 주석처리 해주세요(깔끔하게 스타일 변경)
- -->
+ -->``
 
 <!DOCTYPE html>
 <html>
@@ -21,22 +21,21 @@
 <!-- 	<input type="submit" value="로그아웃" /> -->
 <%-- </form:form> --%>
 <style type="text/css">
-#login{
- width: 100%;
- text-align: center;
+#loginButton{
+	width: 100%;
+	text-align: center;
+	border-radius:5px;
+	
 }
 </style>
 <!-- /////////////////////Main시작////////////////////// -->
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
-	<br />
+
 	<div style="text-align: center;">
-		<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기-->
-			<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
-		</a>
+		<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" />
 	</div>
-	
+	<hr />
 	<div id="main" style=" font-weight:bold; padding:30px">
-	<br />
 	
 	<c:choose>
 		<c:when test="${not empty user_id }">
@@ -69,8 +68,8 @@
 				<p>
 					패스워드 : <input type="password" name="pass" value="qwer1234"/>
 				</p>
-				<div style="background:#ADD8E6; border-radius:5px;">
-					<button type="submit" id="login" style="font-weight:bold;">
+				<div style="border-radius:5px;">				
+					<button type="submit" id="loginButton" class="btn btn-default" style="font-weight:bold; background:#ADD8E6;">
 						로그인</button>
 				</div>
 			</form:form>
@@ -80,12 +79,7 @@
 	<br />
 	</div>
 		
-	<!-- 메인 퀵바 -->
-<%-- 	<%@ include file="/resources/include/quick.jsp"%> --%>
 	<!-- /////////////////////메인끝////////////////////// -->
 		</body>
-		
-	<!-- 하단 인클루드 -->
-	<jsp:include page="/resources/include/footer.jsp"/>
 
 </html>

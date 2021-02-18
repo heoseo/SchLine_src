@@ -100,8 +100,8 @@ public class PagingUtil {
 				pagingStr += ""
 					+ "<a href='javascript:paging("+(intTemp-blockPage)+");'>"
 					+ "<i class='fas fa-angle-left'></i></a>";
-			}
-			
+			}	
+
 			//페이지표시 제어를 위한 변수
 			int blockCount = 1;
 			/*
@@ -126,8 +126,10 @@ public class PagingUtil {
 					+ "<i class='fas fa-angle-right'></i></a>";
 				pagingStr += "&nbsp;";
 				pagingStr += "<a href='javascript:paging("+totalPage+");'>"
-					+ "<i class='fas fa-angle-double-right'></i></a>";
-			} 
+
+						+ "<i class='fas fa-angle-double-right'></i></a>";
+			} 		
+
 			return pagingStr;
 		} 
 

@@ -41,7 +41,7 @@ function paging(nowPage){
 				<option value="notiRead" ${param.type eq 'notiRead' ? 'selected' : '' }>읽은 공지</option>
 				<option value="notiNotRead" ${param.type eq 'notiNotRead' ? 'selected' : '' }>읽지않은 공지</option>
 			</select>
-			<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:#808080">	
+			<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:#808080">
 			<colgroup>
 				<col width="40px"/>
 				<col width="40px"/>
