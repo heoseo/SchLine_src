@@ -22,7 +22,8 @@
 	<div id="main">
 
 	<button><a href="./elements.do" class="button primary">elements.jsp</a></button>
-
+	<br />
+		
 	<!-- 1. 강의실 -->
 		<section id="class" class="main special">
 			<div class="spotlight">
