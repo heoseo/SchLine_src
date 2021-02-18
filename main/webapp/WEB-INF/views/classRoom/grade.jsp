@@ -13,9 +13,6 @@
 <body class="is-preload">
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
-   <div style="text-align: center;">
-      <small>계정 메인</small><!-- flag구분예정-->
-   </div>
    <hr /><!-- 구분자 -->
 	
 	<!-- 출결 테이블 -->
