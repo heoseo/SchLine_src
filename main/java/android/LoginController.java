@@ -76,7 +76,7 @@ public class LoginController {
 	public String loginWithoutForm(	@PathVariable(value="username") String username,
 									@PathVariable(value="pass") String pass) {
 	  
-	  List<GrantedAuthority> roles = new ArrayList<>(1);
+	  List<GrantedAuthority> roles = new ArrayList(1);
 	  String roleStr = username.equals("admin") ? "ROLE_ADMIN" : "ROLE_GUEST";
 	  roles.add(new SimpleGrantedAuthority(roleStr));
 	  
