@@ -9,10 +9,10 @@
 <!-- #########################캘린더쿼리문################################### -->
 
 	<select id="calendarList" resultType="schline.ExamDTO">
-		SELECT * FROM exam_tb E, user_tb U, registration_tb R
-		    WHERE U.user_id = R.user_id
-			    AND R.subject_idx = E.subject_idx
-			    AND  to_char(exam_date, 'yyyymm')>=#{0}
+		SELECT *
+			FROM exam_tb E 
+			WHERE subject_idx in (SELECT subject_idx from registration_tb WHERE user_id =#{0})
+			    AND  to_char(exam_date, 'yyyymm')=#{1}
 	</select>
 
 <!-- #########################일정리스트쿼리문################################### -->			        
