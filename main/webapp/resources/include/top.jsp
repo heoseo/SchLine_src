@@ -79,7 +79,7 @@ if(session.getAttribute("user_id") != null){
 					</li>
 					
 						<li><a href="<%=request.getContextPath() %>/class/studyRoom.do">공부방</a></li>
-						<li><a href="/schline/user/userinfo.do">계정</a></li>
+						<li><a href="/schline/user/userinfo.do"><%=session.getAttribute("user_name") %></a></li>
 						<li><a href="javascript:document.logout.submit()">로그아웃</a></li>
 				</ul>
 			</nav>
