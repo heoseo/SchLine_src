@@ -45,10 +45,8 @@ public class HomeController {
 		if(authentication != null) {
 			
 			Collection<? extends GrantedAuthority> user_auth = null;
-			System.out.println("authentication: " + authentication);
 			
 			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-			System.out.println("authorities: " + userDetails.getAuthorities());
 			
 			String user_id = userDetails.getUsername();
 			user_auth = userDetails.getAuthorities();
@@ -56,7 +54,6 @@ public class HomeController {
 			UserInfoDTO userInfoDTO = new UserInfoDTO();
 			userInfoDTO.setUser_id(user_id);
 			UserInfoDTO lists =  sqlSession.getMapper(GradeDTOImpl.class).listInfo_admin(userInfoDTO);
-			System.out.println("HomeController > lists.~ : " + lists.getUser_name());
 			String user_name = lists.getUser_name();
 			
 			

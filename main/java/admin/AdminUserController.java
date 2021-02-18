@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import admin.command.UserListCommand;
+import admin.model.UserListCommand;
 import schline.util.JdbcTemplateConst;
 
 
