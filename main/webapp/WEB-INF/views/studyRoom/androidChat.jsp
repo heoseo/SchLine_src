@@ -23,21 +23,37 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-   messages = document.getElementById("messageWindow");
-   openSocket();
-   
-   var info_nick = $('#info_nick').val();//닉네임
-//    alert(info_nick);
-    setInterval(function () { dbup();}, 10000); 
-    
+	
+	//출석증가
+	var dtime = new Date();//현재시간관련정보
+    //시간대별 바뀌는 배경화면 설정
+   	var d = dtime.getHours();//현재 시
+   	//(4~7):b1, (7~11)b2, (11~17)b3, (17~22)b4, (22~4):b5
+   	if(d>=4 && d<7) $('#messageWindow').css('background-image', 'url("../resources/images/b1.jpg")');
+   	else if(d>=7 && d<11) $('#messageWindow').css('background-image', 'url("../resources/images/b2.jpg")');
+   	else if(d>=11 && d<17) $('#messageWindow').css('background-image', 'url("../resources/images/b3.jpg")');
+   	else if(d>=17 && d<22) $('#messageWindow').css('background-image', 'url("../resources/images/b4.jpg")');
+   	else $('#messageWindow').css('background-image', 'url("../resources/images/b5.jpg")');
+	    
+	
+	var today = String(dtime.getFullYear())+String((dtime.getMonth()+1))+String(dtime.getDay());
+	attenPlus(today);
+	
+   	//타이머 스타트
+   	setTimeout(function() { start();}, 1000);
+   	//10초에 한번씩 db업데이트
+   	setInterval(function () { dbup();}, 10000);
 
+
+   	messages = document.getElementById("messageWindow");
+   	openSocket();
 });
 
-
+//안드로이드로 변경
 //디비에 정보 업데이트 시키기   
 function dbup() {
    $.ajax({
-      url : "../class/studyTimeSet.do",
+      url : "../studyTimeSet.do",
       type : "post",
       data : {send_time :  $('#send_time').val()},
       dataType : "json", //반환받는 데이터타입 map은 json(키,벨유)
@@ -51,8 +67,40 @@ function dbup() {
    });
 }
 
+//시간저장
+var timeElapsed = 0;
+function start() {
+	myTimer = setInterval(function(){
+	    timeElapsed += 1;//시간증가
+	    $('#send_time').val(timeElapsed);//컨트롤러 전송용
+	}, 1000);
+}
 
 
+ //출석증가
+ function attenPlus(today) {
+	$.ajax({
+	    url : "../attenPlus.do",
+	    type : "post",
+	    data : {today : today},
+	    dataType : "json",
+	    contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	    success : function(d) {
+	    	if(d.reslut==1){
+	    		//alert("출석증가");
+	    	}
+	    	else if(d.reslut==0){
+	    		//alert("이미출석 증가x");
+	    	}
+	    	else{
+	    		//alert(d+"출석예외");
+	    	}
+	    },
+	    error : function(e) {
+	       alert("출석증가 오류" + e.status + ":" + e.statusText);
+	    }
+	});
+}
 
 
 var ws; 
@@ -183,7 +231,7 @@ function send(){
    //스크롤 아래로
    messages.scrollTop = messages.scrollHeight;
    $.ajax({
-      url : "../android/chatSave.do",
+      url : "../chatSave.do",
       type : "post",
       data : {chat_content : msg},
       dataType : "json",
@@ -203,7 +251,7 @@ function send(){
 //닉네임 확인(닉네임확인, 프로필보기, 신고, 차단 동시진행)
 function ajaxPro(d, ot_nick) {
    $.ajax({
-      url : "../class/checkUSer.do",
+      url : "../checkUSer.do",
       dataType : "json",
       type : "post",
       contentType : "application/x-www-form-urlencoded;charset:utf-8",
@@ -215,7 +263,7 @@ function ajaxPro(d, ot_nick) {
 //           alert("아이디확인"+r);
          if(r.result==1){//반환 성공값이 1일때
              if(d==2){//프로필보기용
-               window.open("../class/openProfile.do?ot_nick="+ot_nick+"&user_id=${user_id}", "_blank", "width=600px, height=600px");
+               window.open("../openProfile.do?ot_nick="+ot_nick+"&user_id=${user_id}", "_blank", "width=600px, height=600px");
              }//프로필보기가 아닐경우 아무일도 하지않는다.
              else if(r.check==1){//신고하기 성공시
                   messages.innerHTML += "[알림]'"+ot_nick+"'를 신고했습니다.<br/>";
@@ -275,7 +323,7 @@ function writeResponse(text){
    blockPeople(sender);
    
    $.ajax({
-      url : "../class/studyBlock.do",
+      url : "../studyBlock.do",
       dataType : "json",
       type : "post",
       async: false, //동기방식으로 변경
@@ -372,7 +420,7 @@ function nowTime(){
 
 <!-- 채팅 출력창 -->
 <div id="messageWindow" class="border border-primary"
-   style="height: 500px; overflow: auto; padding: 20px;">
+   style="height: 500px; overflow: auto; padding: 20px; background-image: url('../resources/images/pic07.jpg');">
 </div>
 
 <table class="table table-bordered"
@@ -381,6 +429,7 @@ function nowTime(){
    <form id="peopleFrm">
       <input type="hidden" id="chat_id" value="${user_id }"/>
       <input type="hidden" id="info_nick" value="${info_nick }" />
+      <input type="hidden" id="send_time" value="" />
       <input type="hidden" id="other_img" name="other_img" value="" />
       <input type="hidden" id="info_img" name="info_img" value="<c:url value='/resources/profile_image/${info_img}'/>" />
    </form>

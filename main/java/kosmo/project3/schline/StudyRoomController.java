@@ -330,10 +330,10 @@ public class StudyRoomController {
 			 	: 스프링 컨테이너의 전역변수로 선언된 SecurityContextHolder
 			 	객체를 통해 사용자 아이디를 얻어올수 있다.
 		*/
-		//Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		//UserDetails sch = (UserDetails)object;
-		//String user_id = sch.getUsername();
-		String user_id = session.getAttribute("user_id").toString();
+		Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDetails sch = (UserDetails)object;
+		String user_id = sch.getUsername();
+		//String user_id = session.getAttribute("user_id").toString();
 		
 		
 		//10초마다 정보저장해주는 함수 호출
@@ -453,7 +453,7 @@ public class StudyRoomController {
 	@ResponseBody
 	public Map<String, Object> attenPlus(HttpServletRequest req, Principal principal){
 		Map<String, Object> map = new HashMap<String, Object>();
-		
+		System.out.println("출석증가 컨트롤러");
 		String user_id = principal.getName();
 		String today = req.getParameter("today");
 		System.out.println("today="+today);

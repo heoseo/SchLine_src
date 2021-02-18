@@ -80,6 +80,9 @@ $(function () {
 		    	else if(d.reslut==0){
 		    		//alert("이미출석 증가x");
 		    	}
+		    	else{
+		    		//alert(d+"출석예외");
+		    	}
 		    },
 		    error : function(e) {
 		       alert("출석증가 오류" + e.status + ":" + e.statusText);
