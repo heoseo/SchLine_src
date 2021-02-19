@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!-- 상단 인클루드 -->
+<!--<!-- 상단 인클루드 -->
 
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -39,13 +39,13 @@
 	<!-- 			<header id="header" class="alt"> -->
 	<!-- 			<span class="logo"><img src="images/logo.svg" alt="" /></span> -->
 					<!-- 메인 로고 이미지 -->
-					<div align="center">
-					<br /> 
-						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
-						</a>
-					<br />
-					</div>
+<!-- 					<div align="center"> -->
+<!-- 					<br />  -->
+<!-- 						<a href="/schline/">★★이미지클릭시 home으로 가기. home요청명 적기 -->
+<%-- 							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" /> --%>
+<!-- 						</a> -->
+<!-- 					<br /> -->
+<!-- 					</div> -->
 <%
 
 if(session.getAttribute("user_id") != null){
@@ -65,41 +65,38 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav">
-				<ul>
-    				<li class="nav-item">
-						<a href="/schline/main/class.do">
-						강의실
-						</a>
-					</li>
-					
-	 				<li class="nav-item">
-						<a href="<%=request.getContextPath() %>/schedule/alertList.do" >
-						일정</a>
-					</li>
-					
-						<li><a href="<%=request.getContextPath() %>/class/studyRoom.do">공부방</a></li>
-						<li><a href="/schline/user/userinfo.do">계정</a></li>
-						<li><a href="javascript:document.logout.submit()">로그아웃</a></li>
-				</ul>
-			</nav>
-			
-			<form:form method="post"
-					action="${pageContext.request.contextPath }/member/logout" name="logout">
-			</form:form>
-				</ul>
-			</nav>
-			
-			<!-- 기존 네비 -->
-<!-- 			<nav id="nav"> -->
-<!-- 				<ul> -->
-<!-- 					<li><a href="/schline/main/class.do"><h3>강의실</h3></a></li> -->
-<%-- 					<li><a href="<%=request.getContextPath() %>/schedule/alertList.do"><h3>일정</h3></a></li> --%>
-<%-- 					<li><a href="<%=request.getContextPath() %>/class/studyRoom.do"><h3>공부방</h3></a></li> --%>
-<!-- 					<li><a href=""><h3>계정</h3></a></li> -->
-<!-- 				</ul> -->
-<!-- 			</nav> -->
-<!-- 			<br />	 -->
+		<nav id="nav" font-weight:bold;">
+
+			<ul>
+				<li  class="nav-item" style="margin-right: 50px;">
+					<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
+						<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="200px" alt="스쿨라인 로고" />
+					</a>
+				</li>
+   				<li class="nav-item">
+					<a href="/schline/main/class.do">
+					강의실
+					</a>
+				</li>
+				
+ 				<li class="nav-item">
+					<a href="<%=request.getContextPath() %>/schedule/alertList.do?type=allBoard" >
+					일정</a>
+				</li>
+				
+					<li><a href="<%=request.getContextPath() %>/class/studyRoom.do">공부방</a></li>
+					<li><a href="/schline/user/userinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">&nbsp;</i><%=session.getAttribute("user_name") %></a></li>
+					<li><a href="javascript:document.logout.submit()">
+					<i class="fas fa-sign-out-alt" style="font-size:25px;">&nbsp;</i>로그아웃</a></li>
+			</ul>
+		</nav>
+		
+		<form:form method="post"
+				action="${pageContext.request.contextPath }/member/logout" name="logout">
+		</form:form>
+			</ul>
+		</nav>
+		<br />
 			
 <%
 	}
