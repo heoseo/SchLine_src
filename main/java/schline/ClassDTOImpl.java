@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import admin.FcmDTO;
+
 @Service
 public interface ClassDTOImpl {
 	public ArrayList<ClassDTO> listCourse(ClassDTO classdto);
@@ -27,4 +29,5 @@ public interface ClassDTOImpl {
 	public ArrayList<String> divIdList(@Param("idx") String subject_idx);
 	public String divID(String user_id);
 	public String stu_id(String bgroup , String bindent);
+	public ArrayList<FcmDTO> FcmSchedule ();
 }
