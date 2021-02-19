@@ -24,11 +24,11 @@ function openSocket(){
       writeResponse("WebSocket is already opened.");
       return;
    }
-   
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    //해당컴에 해당하는 경로로 변경해주기!
    ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+   //ws = new WebSocket("ws://192.168.0.24:9999/schline/echo.do/websocket");
    //채팅창 open
    
    	ws.onopen = function(event){
