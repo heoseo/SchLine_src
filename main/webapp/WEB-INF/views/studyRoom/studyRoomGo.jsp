@@ -36,54 +36,84 @@ $(function () {
        $('#audio').hide();
        $('#myModal').modal("show");
        
-       	//타이머 스타트
-       	setTimeout(function() { start();}, 1000);
-     	//10초에 한번씩 공부시간 db에 업데이트
-      	setInterval(function () { dbup();}, 10000); 
-    	
-     	//시간대별 바뀌는 배경화면 설정
-    	var dtime = new Date();//현재시간관련정보
-    	var d = dtime.getHours();//현재 시
-    	//(4~7):b1, (7~11)b2, (11~17)b3, (17~22)b4, (22~4):b5
-    	if(d>=4 && d<7) $('#entry').css('background-image', 'url("../resources/images/b1.jpg")');
-    	else if(d>=7 && d<11) $('#entry').css('background-image', 'url("../resources/images/b2.jpg")');
-    	else if(d>=11 && d<17) $('#entry').css('background-image', 'url("../resources/images/b3.jpg")');
-    	else if(d>=17 && d<22) $('#entry').css('background-image', 'url("../resources/images/b4.jpg")');
-    	else $('#entry').css('background-image', 'url("../resources/images/b5.jpg")');
+          //타이머 스타트
+          setTimeout(function() { start();}, 1000);
+        //10초에 한번씩 공부시간 db에 업데이트
+         setInterval(function () { dbup();}, 10000); 
+       
+        //시간대별 바뀌는 배경화면 설정
+       var dtime = new Date();//현재시간관련정보
+       var d = dtime.getHours();//현재 시
+       //(4~7):b1, (7~11)b2, (11~17)b3, (17~22)b4, (22~4):b5
+       if(d>=4 && d<7) $('#entry').css('background-image', 'url("../resources/images/b1.jpg")');
+       else if(d>=7 && d<11) $('#entry').css('background-image', 'url("../resources/images/b2.jpg")');
+       else if(d>=11 && d<17) $('#entry').css('background-image', 'url("../resources/images/b3.jpg")');
+       else if(d>=17 && d<22) $('#entry').css('background-image', 'url("../resources/images/b4.jpg")');
+       else $('#entry').css('background-image', 'url("../resources/images/b5.jpg")');
 
-		//나가기이벤트 : 크롬에서는 작동안함.
-//     	$(window).bind("beforeunload", function (e){
-//     		return "창을 닫으실래요?";
-//     	});
+      //나가기이벤트 : 크롬에서는 작동안함.
+//        $(window).bind("beforeunload", function (e){
+//           return "창을 닫으실래요?";
+//        });
+       
+//        //출석증가
+//        var today = String(dtime.getFullYear())+String((dtime.getMonth()+1))+String(dtime.getDay());
+//        //ajax호출
+//        attenPlus(today);
     }
+    
+    //출석증가
+    function attenPlus(today) {	
+      $.ajax({
+          url : "../class/attenPlus.do",
+          type : "post",
+          data : {today : today},
+          dataType : "json",
+          beforeSend : function(xhr){
+              xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+          },
+          contentType : "application/x-www-form-urlencoded;charset:utf-8",
+          success : function(d) {
+             if(d.reslut==1){
+                //alert("출석증가");
+             }
+             else if(d.reslut==0){
+                //alert("이미출석 증가x");
+             }
+          },
+          error : function(e) {
+             alert("출석증가 오류" + e.status + ":" + e.statusText);
+          }
+      });
+   }
    
     var timeElapsed = 0;
     var myTimer = 0;
     //타이머 시작
     function start() {
         myTimer = setInterval(function(){
-	        timeElapsed += 1;//시간증가
-	        var hour2 = parseInt(timeElapsed/3600);
-	        var min2 = parseInt((timeElapsed%3600)/60);
-	        var sec2 = parseInt(((timeElapsed%3600)%60)%60);
-	        
-	        if(hour2==0 && min2==0){
-		        $('#cutm').html(sec2+"초");
-	        }else if(min2==0){
-		        $('#cutm').html(min2+"분 "+sec2+"초");
-	        }
-	        else{
-		        $('#cutm').html(hour2+"시간 "+min2+"분 "+sec2+"초");
-	        }
-	        $('#send_time').val(timeElapsed);//컨트롤러 전송용
+           timeElapsed += 1;//시간증가
+           var hour2 = parseInt(timeElapsed/3600);
+           var min2 = parseInt((timeElapsed%3600)/60);
+           var sec2 = parseInt(((timeElapsed%3600)%60)%60);
+           
+           if(hour2==0 && min2==0){
+              $('#cutm').html(sec2+"초");
+           }else if(min2==0){
+              $('#cutm').html(min2+"분 "+sec2+"초");
+           }
+           else{
+              $('#cutm').html(hour2+"시간 "+min2+"분 "+sec2+"초");
+           }
+           $('#send_time').val(timeElapsed);//컨트롤러 전송용
         }, 1000) ;
     }
     
-// 	$('#progress').addEventListener("timeupdate", function () {
-// 		alert("이벤트리스너발생");
-// 	  	progress.max = time;
-// 	    progress.value = Integer($('#current_time').text());
-// 	});
+//    $('#progress').addEventListener("timeupdate", function () {
+//       alert("이벤트리스너발생");
+//         progress.max = time;
+//        progress.value = Integer($('#current_time').text());
+//    });
     
 //    function stop() {//타이머 종료
 //        clearInterval(myTimer);
@@ -108,22 +138,22 @@ function stop() {
 //모달 버튼 클릭시
 //시간은 초단위로 설정한다.
 function btn1() {//30분
-	time=1800;
-	$('#myModal').modal("hide");
+   time=1800;
+   $('#myModal').modal("hide");
 }
 function btn2() {//1시간
     time=3600;
-	$('#myModal').modal("hide");
+   $('#myModal').modal("hide");
 
 }
 function btn3() {//2시간
-  	time=7200;
-	$('#myModal').modal("hide");
+     time=7200;
+   $('#myModal').modal("hide");
 
 }
 function btn4() {//3시간
     time = 10800;
-	$('#myModal').modal("hide");
+   $('#myModal').modal("hide");
 
 }
 function btn5() {//6시간
@@ -133,7 +163,7 @@ function btn5() {//6시간
 }
 function btn6() {//12시간
     time = 43200;
-	$('#myModal').modal("hide");
+   $('#myModal').modal("hide");
 
 }
 
@@ -151,12 +181,12 @@ var interval = setInterval(function() {
    min = parseInt(time%3600)/60; //몫을계산
 //    sec = parseInt((time%3600)%60)/60); //나머지 계산
    
-	if(min==0){
-   		$('#study_time').text("[목표] "+hour+"시간 ");
-	}
-	else{
-   		$('#study_time').text("[목표] "+min+"분 ");
-	}
+   if(min==0){
+         $('#study_time').text("[목표] "+hour+"시간 ");
+   }
+   else{
+         $('#study_time').text("[목표] "+min+"분 ");
+   }
 }, 1000);
 
 
@@ -164,34 +194,34 @@ var interval = setInterval(function() {
 var progress = document.getElementById("progress");
 //프로그레스바 타이머 설정
 function progressStart() {
-		alert("이벤트리스너발생2");
-	$('#progress').addEventListener("timeupdate", function () {
-		alert("이벤트리스너발생2");
-	  	progress.max = time;
-	    progress.value = Integer($('#send_time').val());
-	});
+      alert("이벤트리스너발생2");
+   $('#progress').addEventListener("timeupdate", function () {
+      alert("이벤트리스너발생2");
+        progress.max = time;
+       progress.value = Integer($('#send_time').val());
+   });
 }
 
 
 
 //디비에 정보 업데이트 시키기   
 function dbup() {
-	$.ajax({
-		url : "../class/studyTimeSet.do",
-		type : "post",
-		data : {send_time :  $('#send_time').val()},
-		dataType : "json", //반환받는 데이터타입 map은 json(키,벨유)
-		contentType : "application/x-www-form-urlencoded;charset:utf-8", //post방식
-		beforeSend : function(xhr){
+   $.ajax({
+      url : "../class/studyTimeSet.do",
+      type : "post",
+      data : {send_time :  $('#send_time').val()},
+      dataType : "json", //반환받는 데이터타입 map은 json(키,벨유)
+      contentType : "application/x-www-form-urlencoded;charset:utf-8", //post방식
+      beforeSend : function(xhr){
             xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
            },
-		success : function(d) {
-			$('#save_time').val(d.setTime);//d.키값 => 벨유값 들어옴
-		},
-		error : function(e) {
-			alert("오류" + e.status + ":" + e.statusText);
-		}
-	});
+      success : function(d) {
+         $('#save_time').val(d.setTime);//d.키값 => 벨유값 들어옴
+      },
+      error : function(e) {
+         alert("오류" + e.status + ":" + e.statusText);
+      }
+   });
 }
 
 
@@ -268,34 +298,34 @@ document.oncontextmenu = function() {
                autoplay controls>
                audio태그를 지원하지 않는 브라우저입니다.
                <a href="<%=request.getContextPath()%>/resources/music/audio.mp3">여기</a>를
-               	클릭해서 다운받으세요
+                  클릭해서 다운받으세요
             </audio>
- 			<table style="background-color: white;  margin: 0;color: black; font-size: 0.8em;">
- 				<tr style="text-align: right; min-height:0; height:5px;">
- 					<td>
-		 				<span id="current_time" style="font-size: 0.7em;"></span>
-		 				<span id="cutm" style="font-size: 0.7em;"></span> /
-		                <span id="study_time" style="font-size: 0.7em;"></span>
- 					</td>
- 					<td>
-					  <button data-toggle="popover" style="font-size: 0.7em;" data-placement="top"
-					   title="" data-content="/닉네임/: 귓속말  , @닉네임: 프로필보기   #닉네임 : 신고"
-					   style="text-align:center;">명령어</button>
-					<script>
-					$(document).ready(function(){
-					  $('[data-toggle="popover"]').popover();   
-					});
-					</script>
- 					</td>
- 				</tr>
- 			</table>
-<!--  			<div style="text-align: center;"> -->
+          <table style="background-color: white;  margin: 0;color: black; font-size: 0.8em;">
+             <tr style="text-align: right; min-height:0; height:5px;">
+                <td>
+                   <span id="current_time" style="font-size: 0.7em;"></span>
+                   <span id="cutm" style="font-size: 0.7em;"></span> /
+                      <span id="study_time" style="font-size: 0.7em;"></span>
+                </td>
+                <td>
+                 <button data-toggle="popover" style="font-size: 0.7em;" data-placement="top"
+                  title="" data-content="/닉네임/: 귓속말  , @닉네임: 프로필보기   #닉네임 : 신고"
+                  style="text-align:center;">명령어</button>
+               <script>
+               $(document).ready(function(){
+                 $('[data-toggle="popover"]').popover();   
+               });
+               </script>
+                </td>
+             </tr>
+          </table>
+<!--           <div style="text-align: center;"> -->
 
 <!--             </div> -->
             <!-- 배경이미지 -->
             <div id="entry" class="image" style="text-align: center;">
-            	
-            	<div style="vertical-align: middle; text-align: center;">
+               
+               <div style="vertical-align: middle; text-align: center;">
 <!--                <progress value="" id="progress"></progress> -->
                <!--       <div> -->
                <button id="re" onclick="play()">RESTART</button>

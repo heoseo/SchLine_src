@@ -65,7 +65,7 @@
 		<div style="text-align: center;">
 	    	<small>사용자 설정</small>
 	    </div>
-	    
+	 <%--    
 	    <form:form name="writeFrm" method="post" 
 			action="./notiSetting.do" >
 		<tr>
@@ -100,7 +100,7 @@
 			</ul>
 			</td>
 		</tr>
-		</form:form>
+		</form:form> --%>
 		
 		<table class="alt" style="text-align:center">
 		<h5>차단 유저 관리</h5>

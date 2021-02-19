@@ -28,7 +28,7 @@
 				<a href="/schline/main/class.do" class="list-group-item"> <i
 					class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i> <span
 					style="text-align: center;">코스</span>
-				</a> <a href="#" class="list-group-item"> <i class="fab fa-youtube"
+				</a> <a href="time.do?subject_idx=${param.subject_idx }" class="list-group-item"> <i class="fab fa-youtube"
 					id="icon">&nbsp&nbsp</i> <span style="text-align: center;"
 					id="name">강의</span>
 				</a> <a href="teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
@@ -37,7 +37,7 @@
 				<!-- 성적페이지 들어가기 -->
 				<a href="grade.do?subject_idx=${param.subject_idx }" class="list-group-item">
 					<i class="fas fa-file-alt" id="icon">&nbsp&nbsp</i>
-					<span style="text-align: center;" id="name">성적</span>
+					<span style="text-align: center;" id="name">출결/성적</span>
 					
 				<!-- 시험페이지로 이동하기 위해 링크 추가 -->
 				</a> <a href="examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
