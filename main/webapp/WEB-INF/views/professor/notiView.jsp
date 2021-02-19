@@ -44,7 +44,7 @@
 	<div id="row" class="col-lg-12">
 <!-- 읽은 공지사항 리스트 출력하기 -->
 <c:forEach items="${getNotiView }" var="row">
-				<table>
+				<table class="table table-bordered table-hover table-striped">	
 					<tr>
 						<th class="text-center table-active align-middle">작성자</th>
 						<td>${row.user_name }</td>
@@ -77,15 +77,15 @@
 				</table>
 				<div class="row mb-3">
 					<div class="col-6"> 
-						<button type="button" class="btn btn-secondary" style="font-weight:bold;"
+						<button type="button" class="btn btn-light" style="font-weight:bold;"
 							onclick="location.href='./notiEdit.do?board_idx=${param.board_idx}&nowPage=${param.nowPage }';">
 							수정하기</button>
-						<button type="button" class="btn btn-success" style="font-weight:bold;"
+						<button type="button" class="btn btn-light" style="font-weight:bold;"
 							onclick="location.href='./notiDelete.do?&board_idx=${param.board_idx}&nowPage=${param.nowPage }';">
 							삭제하기</button> 
 					</div>
 					<div class="col-6 text-right pr-5">					
-						<button type="button" class="btn btn-warning" style="font-weight:bold;"
+						<button type="button" class="btn btn-light" style="font-weight:bold;"
 							onclick="location.href='./notiBoardList.do?nowPage=${param.nowPage }';">
 							리스트보기</button>
 					</div>	

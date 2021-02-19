@@ -11,7 +11,7 @@
 <%@ include file="/resources/include/top_professor.jsp"%>
 <body class="is-preload" >
 	<div id="main">
-	<br /><br /><br />
+	<br /><br />
 	<div style="text-align:center; font-weight:bold; font-size:25px">
 		<i class="fas fa-question-circle" style="padding-right:5px;"></i>
 		공지사항</div>
@@ -25,7 +25,7 @@
 			</div>
 			<br />
 			<!-- 게시판리스트부분 -->
-			<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:#808080">	
+			<table class="table table-bordered table-hover table-striped">	
 				<colgroup>
 					<col width="100px"/>
 					<col width="*"/>
@@ -36,11 +36,11 @@
 				</colgroup>				
 				<thead>
 				<tr class="text-center text-white">
-					<th class="text-center" style="font-weight:bold;">번호</th>
-					<th class="text-center" style="font-weight:bold;">제목</th>
-					<th class="text-center" style="font-weight:bold;">작성자</th>
-					<th class="text-center" style="font-weight:bold;">작성일</th>
-					<th class="text-center" style="font-weight:bold;">첨부</th>
+					<th class="text-center">번호</th>
+					<th class="text-center">제목</th>
+					<th class="text-center">작성자</th>
+					<th class="text-center">작성일</th>
+					<th class="text-center">첨부</th>
 				</tr>
 				</thead>				
 				<tbody>	

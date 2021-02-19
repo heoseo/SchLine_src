@@ -14,18 +14,17 @@
 -->
 <%@ include file="/resources/include/top.jsp"%>
 
-
 <!-- body 시작 -->
 <body class="is-preload">
 <!-- 왼쪽메뉴 include -->
 
 <jsp:include page="/resources/include/leftmenu_userInfo.jsp"/><!-- flag구분예정 -->
 
-
-   <table class="table  table-hover table-striped" >
+	<table class="table table-bordered table-hover table-striped">
 	<div style="text-align: center;">
-      <small>개인 정보</small>
+      <small style="font-size:1.2em">개인 정보</small>
     </div>
+    <hr />
     	<c:choose >	
 			<c:when test="${empty lists }">
 		 		<tr>

@@ -44,10 +44,11 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 #td {
 	padding-top: 0px;
 	padding-bottom: 50px;
-	color: black;
 	font-size: 15px;
 	font-weight: normal;
-	border: solid 1px #C0C0C0;
+ 	border: solid 1px #C0C0C0;
+	text-align:left;
+	padding-left:2px;
 }
 .Task {
 	border: solid 1px #00334e;
@@ -58,7 +59,7 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 }
 </style>
 
-<table id="calTable" cellpadding="0" cellspacing="0" border="0" class="calendar">
+<table id="calTable" class="calendar">
 		<colgroup>
 			<col width="14%" />
 			<col width="14%" />

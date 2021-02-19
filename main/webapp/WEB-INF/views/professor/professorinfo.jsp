@@ -20,17 +20,14 @@
 <!-- 왼쪽메뉴 include -->
 
 <jsp:include page="/resources/include/leftmenu_professor.jsp"/><!-- flag구분예정 -->
-   <div style="text-align: center;">
-      <small>교수페이지 계정 메인</small>
-   </div>
-   <hr /><!-- 구분자 -->
-   
-   <table style="font-size: 15px;" >
-	<div style="text-align: center;">
-      <small>학생 정보</small>
+<div><hr /><!-- 구분자 -->
+  	<div style="text-align: center;">
+      <small style="font-size:1.5em;">학생 정보</small>
     </div>
+    <br />
+	<table class="table table-bordered table-hover table-striped" style="font-size:15px; text-align:center;">	
     	<tr>
-    		<td rowspan="2" width="10%"></td>
+    		<td rowspan="2" width="10%">이름</td>
     		<td rowspan="2" width="15%">학번</td>
     		<td rowspan="2" width="10%">팀 번호</td>
     		<td colspan="${videoNum }">출결</td>
@@ -76,7 +73,7 @@
 	    	</tr>
     	</c:forEach>
     </table>
-
+</div>
    <jsp:include page="/resources/include/bottom.jsp" />
 </body>
 
