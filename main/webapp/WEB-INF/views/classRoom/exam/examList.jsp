@@ -88,7 +88,7 @@ $(function(){
 	</head>
 	<div id="wrapper">
 		<div align="center">
-			<br /><img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" /><br />
+			<br /><img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" /><br />
 		</div>
 	<%-- body 시작 --%>
 		<body class="is-preload">

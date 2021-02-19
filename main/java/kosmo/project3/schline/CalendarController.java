@@ -3,6 +3,7 @@ package kosmo.project3.schline;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,12 @@ public class CalendarController {
 		}
 		//캘린더 에이젝스.
 		@RequestMapping("/schedule/ajaxCalendar.do")
-		public String ajaxCalendar(Model model, HttpServletRequest req) {
+		public String ajaxCalendar(Model model, HttpServletRequest req, HttpSession session) {
+			
+			System.out.println("■[Calendar컨트롤러 > ajaxCalendar.do 요청 들어옴.]■");
+			
+			String user_id = (String) session.getAttribute("user_id");
+			System.out.println("세션저장아이디체크>>>>>: " + user_id); 
 			
 			//파라미터 저장을 위한 DTO객체 생성.
 			String year = req.getParameter("year").toString();
@@ -64,7 +70,7 @@ public class CalendarController {
 			//Mybatis로 한것..
 			ArrayList<ExamDTO> lists =
 				sqlSession.getMapper(ScheduleDAOImpl.class)
-					.calendarList(YearAndMonth);
+					.calendarList(user_id, YearAndMonth);
 			
 			model.addAttribute("lists", lists);
 		

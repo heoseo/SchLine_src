@@ -1,52 +1,19 @@
 package admin.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.PreparedStatementSetter;
 
-import schline.UserVO;
 import schline.util.JdbcTemplateConst;
 
 
-/*	* JdbcTemplate 관련 주요 메소드
-	 - List query(String sql, RowMapper rowMapper)
-	 	: 여러개의 레코드를 반환하는 select계열의 쿼리문인 경우 사용
- 	 - List query(String sql, Object[] args, RowMapper rowMapper)
- 	 	: 인파라미터를 가진 여러개의 레코드를 반환하는 select계열의 쿼리문인 경우 사용
- 	 	
- 	 - Object queryForObject(String sql, RowMapper rowMapper)
- 	 	: 하나의 레코드를 반환하는 select계열의 쿼리문 실행시 사용된다.
- 	 - Object queryForObject(String sql, Object[] args, RowMapper rowMapper)
- 	 	: 인파라미터가 있고, 하나의 레코드를 반환하는 select계열의 쿼리문 실행시 사용된다.
-
- 	 - int queryForInt(String sql)
- 	 	: 쿼리문의 실행결과가 숫자를 반환하는 select계열의 쿼리문에 사용된다.
- 	 - int queryForInt(String sql, Object[] args)
- 	 	: 인파라미터가 있고, 쿼리문의 실행결과가 숫자를 반환하는 select계열의 쿼리문에 사용된다.
- 	 	
- 	 - int update(String sql)
- 	 	: 인파라미터가 없는 update/delete/insert 쿼리문을 처리할 때 사용
- 	 - int update(String sql, Object[] args)
- 	 	: 인파라미터가 있는 update/delete/insert 쿼리문을 처리할 때 사용
- */
 public class AdminUserTemplateDAO {
 	
 	// 멤버변수
 	JdbcTemplate template;
 	
-	// 생성자
-	/*
-	- 컨트롤러에서 @Aturowired를 통해 자동주입 받았던 빈을 정적변수인
-		JdbcTemplateConst.template에 값을 할당하였으므로, 
-		DB연결정보를 DAO에서 바로 사용하기 위해 값을 가져온다.	 */
 	public AdminUserTemplateDAO() {
 		this.template = JdbcTemplateConst.template;
 		System.out.println("AdminUserTemplateDAO() 생성자 호출");
@@ -55,15 +22,14 @@ public class AdminUserTemplateDAO {
 	public void close() {
 	}
 	
-	// MAP => Column, Word
 	public int getTotalCount(Map<String, Object> map) {
 		String sql = "	SELECT COUNT(*) "
 				+ "		FROM user_tb "
-				+ " 	WHERE authority = '" + map.get("userType") + "' " ;
+				+ " 	WHERE authority = '" + map.get("searchColumn") + "' " ;
 		
 		
-		if(map.get("searchUser") != null) {
-			sql += " 		AND user_name LIKE '%" + map.get("searchUser") + "%' ";
+		if(map.get("searchWord") != null) {
+			sql += " 		AND user_name LIKE '%" + map.get("searchWord") + "%' ";
 		}
 		int result = template.queryForObject(sql, Integer.class);
 		System.out.println("AdminUserTEmpolateDAO > getotalCount : " + result);
@@ -74,7 +40,6 @@ public class AdminUserTemplateDAO {
 	
 	public ArrayList<Admin_UserVO> listPage(
 			Map<String, Object> map){
-		System.out.println("AdminUserT~ param.s_idx : " + map.get("subject_idx"));
 		
 		boolean flag = false;
 		int start = 0, end = 0;
@@ -84,30 +49,19 @@ public class AdminUserTemplateDAO {
 			flag = true;
 		}
 		
-		String user_type = (String) map.get("userType");
+		String searchColumn = (String) map.get("searchColumn");
 		
-		String sql = "";
-		if(user_type.equals("PROFESSOR")) {
-			sql += "	SELECT * "
+		String sql = "	SELECT * "
 				+ "		FROM ( "
 				+ "			SELECT Tb.*, rownum rNum "
 				+ "			FROM ( "
 				+ "				SELECT subject_idx, subject_name, U.* "
 				+ "				FROM user_tb U, subject_tb S "
 				+ "				WHERE U.user_id = S.user_id "
-				+ "					AND authority = 'PROFESSOR' ";
-		}
-		else {
-			sql += " 	SELECT * "
-				+" 		FROM ("
-				+"    		SELECT Tb.*, rownum rNum "
-				+ "			FROM ("
-				+"        		SELECT * FROM user_tb U"				
-				+"				WHERE authority = '" + map.get("userType") + "' ";
-		}
+				+ "					AND authority = '"+map.get("searchColumn")+"' ";
 		
-		if(map.get("searchUser")!=null)
-		sql += " 					AND user_name LIKE '%"+map.get("searchUser")+"%' ";				
+		if(map.get("searchWord")!=null)
+		sql += " 					AND user_name LIKE '%"+map.get("searchWord")+"%' ";				
 		sql += " 			ORDER BY U.user_id ASC"
 		+"    				) Tb"
 		+"				)";
@@ -117,25 +71,24 @@ public class AdminUserTemplateDAO {
 		
 		
 		
-		if(map.get("subject_idx") != null) {
-			sql = "		SELECT * "
-			+ "			FROM ("
-				+ "			SELECT Tb.*, rownum rNum "
-				+ "			FROM ("
-				+ "				SELECT U.* "
-				+ "				FROM registration_tb R, user_tb U "
-				+ "				WHERE R.user_id = U.user_id "
-				+ "   				AND subject_idx = 1 "
-				+ "				ORDER BY U.user_id ASC"
-				+ "				) Tb "
-				+ "			) ";
-			if(flag ==true)
-				sql +=" WHERE rNum BETWEEN "+start+" and "+end;
-			
-					
-		}
+//		if(map.get("subject_idx") != null) {
+//			sql = "		SELECT * "
+//			+ "			FROM ("
+//				+ "			SELECT Tb.*, rownum rNum "
+//				+ "			FROM ("
+//				+ "				SELECT U.* "
+//				+ "				FROM registration_tb R, user_tb U "
+//				+ "				WHERE R.user_id = U.user_id "
+//				+ "   				AND subject_idx = 1 "
+//				+ "				ORDER BY U.user_id ASC"
+//				+ "				) Tb "
+//				+ "			) ";
+//			if(flag ==true)
+//				sql +=" WHERE rNum BETWEEN "+start+" and "+end;
+//			
+//					
+//		}
 		
-		System.out.println("AdminUserT~ sql : " + sql);
 		return (ArrayList<Admin_UserVO>)
 				template.query(sql, 
 				new BeanPropertyRowMapper<Admin_UserVO>(
