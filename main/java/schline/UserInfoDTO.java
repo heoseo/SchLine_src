@@ -12,6 +12,7 @@ public class UserInfoDTO {
 	private String authority;
 	private String enabled;
 	private String rnum;
+	private String professor;
 
 	//수강 ,기업, 과목 테이블 참조용
 	private String regi_idx;
@@ -24,6 +25,12 @@ public class UserInfoDTO {
 	private String block_user;
 	
 	
+	public String getProfessor() {
+		return professor;
+	}
+	public void setProfessor(String professor) {
+		this.professor = professor;
+	}
 	public String getOrga_name() {
 		return orga_name;
 	}

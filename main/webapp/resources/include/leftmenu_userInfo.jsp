@@ -32,7 +32,6 @@
 	<div class="row content">
 	<br />
 		<div class="col-sm-2 sidenav">
-			<br/>
 				<div class="list-group">
 				
 				<!-- 기존 코스★★★★★ -->
