@@ -15,15 +15,12 @@
 }
 
 </style>
-<!-- johee test!!!! -->
-<br/>
 <div id="main" class="container-fluid">
-	<br />
+
 	<div class="row content">
-		<br />
+	<br />
 		<div class="col-sm-2 sidenav">
 			<br />
-			
 			<div class="list-group">
 				<a href="/schline/main/class.do" class="list-group-item"> <i
 					class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i> <span
@@ -64,7 +61,6 @@
 
 
 			</div>
-			<br />
 		</div>
 
 		<br />

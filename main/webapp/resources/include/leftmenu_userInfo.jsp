@@ -18,15 +18,14 @@
 #icon {
 	font-size: 20px;
 	text-align: left;
+	padding-left: 5px;
 }
 #hover {
 	color: black;
 	background: #F7F7F7; 
 	text-decoration: underline;
 }
-
 </style>
-<br />
 <div id="main" class="container-fluid">
 	<br/>
 	<div class="row content">
@@ -35,13 +34,13 @@
 				<div class="list-group">
 				
 				<!-- 기존 코스★★★★★ -->
-					<a href="userinfo.do" class="list-group-item" >
-						<i class="fas fa-archive" id="icon">&nbsp&nbsp</i>
+					<a href="userinfo.do" class="list-group-item">
+						<i class="	fas fa-user-alt" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">사용자</span>
 					</a>
 					
 					<a href="SubjectAtten.do" class="list-group-item">
-						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
+						<i class="fas fa-list-alt" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">수강 목록</span>
 					</a>
 					

@@ -26,7 +26,6 @@
 }
 
 </style>
-<br />
 <div id="main" class="container-fluid">
 	<br/>
 	<div class="row content">
@@ -44,7 +43,7 @@
 				</div>
 				<br />
 	</div>
-	<br/>
+	<br/><br/>
 <!-- 내용입력부분. 클래스속성 건드리지말것 -->
 <div class="col-lg-10">
 <div class="container">
