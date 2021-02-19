@@ -47,15 +47,12 @@ public interface StudyDAOImpl {
 	//차단하기
 	public int block_people(@Param("user_id") String user_id, @Param("other_id") String other_id);
 	
-	//차단해제
-	public void unblock_people(String user_id, String other_id);
-	
 	//차단목록 불러오기
 //	public ArrayList<BlockDTO> check_bolck(String ot_id, String user_id);
 	public Integer check_bolck(String ot_id, String user_id);
 	
 	//동일한 날짜에 접속한적 있는지 체크
-	public int check_day(String today, String user_id);
+	public Integer check_day(String today, String user_id);
 	
 	//출석카운트 증가
 	public int atten_plus(String today, String user_id);
