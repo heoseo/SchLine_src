@@ -14,13 +14,10 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/assets/css/main.css" />
-<noscript>
 	<link rel="stylesheet"
 		href="<%=request.getContextPath()%>/resources/assets/css/noscript.css" />
-</noscript>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/assets/css/main.css" />
 </head>
 
 <style>
@@ -67,12 +64,13 @@
 				 	if(r.check==0){//차단하기 성공시
 				 		alert("차단성공");
 				 	}
-				 	else{alert("차단실패");}
+				 	else{alert("차단해제");}
 				},
 				error : function(e){
 					alert("에러"+e);
 				}
 			});
+			location.reload();
 		}
 // 	});
 </script>
@@ -83,14 +81,13 @@
 	<!-- 메인 로고 이미지 -->
 	<div align="center">
 	<br />
+	<h1><u>프로필 보기</u></h1>
 		<a href="#"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-			<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
+<%-- 			<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" /> --%>
 		</a>
-	<br />
 	</div>
-	<!-- 메인 로고 이미지 -->
+	
 	<div align="center">
-		<br />
 		<table>
 			<tr >
 				<td  style="text-align: center;">
