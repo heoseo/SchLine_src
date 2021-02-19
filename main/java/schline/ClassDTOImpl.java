@@ -24,4 +24,7 @@ public interface ClassDTOImpl {
 	public String[] StuList (@Param("s_id") String subject_idx);
 	public String getVideoIdx (@Param("save") String saveFilename);
 	public void  AttandanceInsDB(AttendanceDTO attendanceDTO);
+	public ArrayList<String> divIdList(@Param("idx") String subject_idx);
+	public String divID(String user_id);
+	public String stu_id(String bgroup , String bindent);
 }
