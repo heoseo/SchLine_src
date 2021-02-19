@@ -65,7 +65,7 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-		<nav id="nav" font-weight:bold;">
+		<nav id="nav">
 
 			<ul>
 				<li  class="nav-item" style="margin-right: 50px;">
@@ -96,7 +96,7 @@ if(session.getAttribute("user_id") != null){
 		</form:form>
 			</ul>
 		</nav>
-		<br />
+		<br /><br />
 			
 <%
 	}

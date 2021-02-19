@@ -49,7 +49,7 @@ input[type='range']::-webkit-slider-thumb{
     <br />
       	<div align="center">
 					<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-						<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
+						<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" />
 					</a>
 				</div>
     </header>  

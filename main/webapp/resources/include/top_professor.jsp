@@ -100,8 +100,7 @@ if(session.getAttribute("user_id") != null){
 			</form:form>
 				</ul>
 			</nav>
-		<hr />
-			
+			<br />
 <%
 	}
 }

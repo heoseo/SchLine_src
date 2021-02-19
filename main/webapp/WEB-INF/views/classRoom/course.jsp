@@ -13,8 +13,8 @@
 <body class="is-preload">
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoomMain.jsp"/><!-- flag구분예정 -->
-   <div style="text-align: center;">
-      <small>코스</small><!-- flag구분예정-->
+   <div style="text-align:center;">
+      <small style="font-size:1.2em">코스</small><!-- flag구분예정-->
    </div>
    <hr /><!-- 구분자 -->
    
