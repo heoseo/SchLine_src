@@ -30,11 +30,11 @@ function paging(nowPage){
 	
 	<div id="main"><!-- mainDiv시작 -->
 	<hr />
-		<div style="text-align:center; font-weight:bold; font-size:30px">
+		<div style="text-align:center; font-weight:bold; font-size: 30px">
 		<i class="fas fa-clock" style="padding-right:5px; text-align: center;"></i>
 		알림</div>
-		<div class="row" id="content"> 
-			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
+		<div class="row" id="content">
+			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight: bold;">
 				<option value="allBoard" ${param.type eq 'allBoard' ? 'selected' : '' }>전부</option>
 				<option value="allNoti" ${param.type eq 'allNoti' ? 'selected' : '' }>공지</option>
 				<option value="taskAndExam" ${param.type eq 'taskAndExam' ? 'selected' : '' }>과제/시험</option>
@@ -61,7 +61,7 @@ function paging(nowPage){
 <c:forEach items="${List }" var="row">
 				<tr>
 					<td class="text-center" >${row.RNUM}</td>
-					<td id="checkFlagIcon" class="text-center" >
+					<td class="text-center" >
 					<c:choose>
 						<c:when test="${row.CHECK_FLAG == 1 }">
 							<i class="far fa-envelope-open fa-lg" style="color:#808080"></i>
@@ -71,7 +71,7 @@ function paging(nowPage){
 						</c:otherwise>
 					</c:choose>
 					</td>
-					<td id="listTitle">
+					<td>
 						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}" target="_blank">
 							제목 : ${row.TITLE } 
 						</a>
@@ -79,14 +79,14 @@ function paging(nowPage){
 					<td class="text-center" >${row.POSTDATE }</td>
 				</tr>
 </c:forEach>
-			</tbody>
-			</table>
-			<div style="padding-left: 400px;">
-				<!-- 방명록 반복 부분 e -->
-				<ul class="pagination justify-content-center">
-					${pagingImg }
-				</ul>
-			</div>
+				</tbody>
+				</table>
+				<div style="padding-left: 400px;">
+					<!-- 방명록 반복 부분 e -->
+					<ul class="pagination justify-content-center">
+						${pagingImg }
+					</ul>
+				</div>
 		</div>
 		<!-- 공지사항 리스트 끝.-->
 

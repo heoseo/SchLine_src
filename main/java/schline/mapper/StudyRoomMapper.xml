@@ -114,6 +114,10 @@ WHERE rNum BETWEEN 1 AND 10
 	INSERT INTO chattingblock_tb (user_id, block_user) 
 		VALUES (#{user_id}, #{other_id})
 </insert>
+<!-- 차단해제 -->
+<delete id="unblock_people">
+	DELETE FROM chattingblock_tb WHERE user_id=#{0} AND block_user = #{1}
+</delete>
 
 <!-- 차단여부 확인 -->
 <!-- select에서 리스트 반환 원할때 dto하면 리스트 타입으로 자동반환 -->
@@ -124,8 +128,8 @@ WHERE rNum BETWEEN 1 AND 10
 </select>
 
 <!-- 출석조회 -->
-<select id="check_day" resultType="Integer">
-	SELECT * FROM chattinginfo_tb 
+<select id="check_day" resultType="int">
+	SELECT COUNT(*) FROM chattinginfo_tb 
 		WHERE atten_day=#{0} AND user_id = #{1}
 </select>
 
@@ -142,6 +146,8 @@ WHERE rNum BETWEEN 1 AND 10
 <select id="login_info" resultType="studyroom.InfoVO" parameterType="studyroom.InfoVO">
 	SELECT * FROM chattinginfo_tb WHERE user_id = #{user_id}
 </select>
+
+
 
 
 </mapper>

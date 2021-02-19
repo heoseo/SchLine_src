@@ -20,6 +20,8 @@
 <div id="main">
 <div class="container">
 <!-- 채팅 -->
+
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -115,7 +117,9 @@ function openSocket(){
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    //해당컴에 해당하는 경로로 변경해주기!
-   ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+   	ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+    //ws = new WebSocket("ws://192.168.25.47:9999/schline/echo.do/websocket");
+
    //채팅창 open
    
       ws.onopen = function(event){
@@ -420,7 +424,7 @@ function nowTime(){
 
 <!-- 채팅 출력창 -->
 <div id="messageWindow" class="border border-primary"
-   style="height: 500px; overflow: auto; padding: 20px; background-image: url('../resources/images/pic07.jpg');">
+   style="height: 1000px; width:auto; overflow: auto; background-image: url('../resources/images/pic07.jpg'); font-size: 2em;">
 </div>
 
 <table class="table table-bordered"

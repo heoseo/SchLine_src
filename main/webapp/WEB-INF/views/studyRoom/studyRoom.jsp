@@ -151,7 +151,7 @@ tr td:first-child {
             <input type="hidden" id="info_img" name="info_img" value="${info_img}" />
          </form:form>
          
-         	<button><a href="../android/class/Chat.do" class="button primary">안드로이드 채팅</a></button>
+<!--          	<button><a href="../android/class/Chat.do" class="button primary">안드로이드 채팅</a></button> -->
          
          
       </div>
