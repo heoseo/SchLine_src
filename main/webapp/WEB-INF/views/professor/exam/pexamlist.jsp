@@ -31,9 +31,10 @@ $(function () {
 });
 function makequestion(){
 	var exam_name = document.getElementById("exam_name").value;
+	var exam_content = document.getElementById("exam_content").value;
 	var exam_date = document.getElementById("exam_date").value;
 	var exam_scoring = document.getElementById("exam_scoring").value;
-	if(exam_name==""){
+	if(exam_content==""){
 		alert("시험명을 입력하세요");
 		return false;
 	}
@@ -46,11 +47,11 @@ function makequestion(){
 		return false;
 	}
 	else{
-	window.open('pexamwrite.do?exam_name='+exam_name+'&exam_date='+exam_date+
+	window.open('pexamwrite.do?exam_idx='+exam_name+'&exam_content='+exam_content+'&exam_date='+exam_date+
 			'&exam_scoring='+exam_scoring
 			,'makequestion','width=420, height=500, toolbars=no, menubar=no, scrollbars=no');
 	}
-}
+};
 function maketask(){
 	var task_name = document.getElementById("task_name").value;
 	var task_date = document.getElementById("task_date").value;
@@ -79,7 +80,7 @@ function maketask(){
 		f.action = 'ptaskWriteAction.do';
 		f.submit();
 	}
-}
+};
 
 function onDelete(idx, type){
 	var exam_idx = idx;
@@ -96,7 +97,10 @@ function onDelete(idx, type){
 			location.href='ptaskDelete.do?question_idx='+exam_idx+'&exam_type='+type;			
 		}
 	}
-}
+};
+function moveurl(url) { 
+    location.href = url;
+} 
 </script>
 <style>
 textarea { height : 200px; }
@@ -108,19 +112,29 @@ textarea { height : 200px; }
 <div class="container">
  <hr /><!-- 구분자 -->
  <c:if test="${exam_type eq 2 }">
+ <h3 style="text-align:center;">시험 등록하기</h3>
  <div id="setquestion">
- 	<form:form>
+ 	<form:form id="examlistFrm">
  	<div>
  	<table class="alt text-center">
  	<tr>
- 	<td rowspan="2" style="vertical-align:middle; width:10%;">시험<br />등록</td>
+ 	<td rowspan="2" style="vertical-align:middle; width:8%;">시험<br />등록</td>
  	<td>시험명</td>
+ 	<td>시험내용</td>
  	<td style="width:20%">종료일</td>
  	<td style="width:15%">총 배점</td>
  	<td rowspan="2" style="vertical-align:middle; width:10%"><button class="btn btn-primary" 
  	onclick="makequestion();" style="min-width:0;">문제 등록</button></td></tr>
  	<tr>
- 	<td><input type="text" name="exam_name" id="exam_name"/></td>
+ 	<td>
+ 	<select name="exam_idx" id="exam_name">
+ 	<!-- 추후에 과목별 인덱스와 시험제목을 파라미터로 받아야함 -->
+ 	<c:forEach items="${pexamlist }" var="erow" varStatus="eloop">
+ 		<option value="${erow.exam_idx }">${erow.exam_name }</option>
+ 	</c:forEach>
+ 	</select>
+ 	</td>
+ 	<td><input type="text" name="exam_content" id="exam_content"/></td>
  	<td>
  	
  	<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
@@ -135,21 +149,36 @@ textarea { height : 200px; }
  	</div>
  	</form:form>
  </div>
- <div class="text-center"><h3 style="display:inline; margin-left:200px;">시험 문제 리스트</h3>
+ <div class="text-center"><h3 style="display:inline; margin-left:150px;">시험 문제 리스트</h3>
  <input type="button" class="button primary small" value="주관식 채점" style="float:right" onclick="location.href='examCheck.do';"/></div>
  <br />
-<div class="table-wrapper">
+ <select name="id" style="width:200px; display:inline" onchange="moveurl(this.value);">
+		<option value="" selected>시험을 선택하세요</option>
+	<c:forEach items="${pexamlist }" var="urow" varStatus="loop">
+		<option value="pexamlist.do?exam_idx=${urow.exam_idx }">${urow.exam_name }</option>
+	</c:forEach>
+</select>
+
+<div class="table-wrapper mt-1">
 	<table class="alt text-center">
 			<tr>
-				<td style="width:25%">시험명</td>
+				<td style="width:10%">시험명</td>
+				<td>시험내용</td>
 				<td>문제내용</td>
 				<td>정답</td>
 				<td style="width:8%">배점</td>
 				<td style="width:8%">삭제</td>
 			</tr>
-		<c:forEach items="${pexamlist}" var="exam" varStatus="eloop">
+	<c:choose>
+	<c:when test="${empty param.exam_idx }">
+		<tr><td colspan="6">시험을 선택하세요</td></tr>
+	</c:when>
+	<c:otherwise>
+		<c:forEach items="${pinexamList}" var="exam" varStatus="eloop">
+		<c:if test="${exam.exam_idx eq param.exam_idx }">
 			<tr>
 				<td>${exam.exam_name }</td>
+				<td>${exam.exam_content }</td>
 				<td>${exam.question_content }</td>
 				<td>${exam.answer }</td>
 				<td>${exam.question_score }</td>
@@ -163,7 +192,7 @@ textarea { height : 200px; }
 			<c:if test="${exam.question_type eq 1 }">
 			<tr>
 			<td style="vertical-align:middle">문항</td>
-			<td class="text-left" colspan="4">
+			<td class="text-left" colspan="5">
 			<%-- 문항을 추출한다 --%>
 			<c:forEach items="${questionlist }" var="question" varStatus="qloop">
 			<c:if test="${exam.question_idx eq question.question_idx }">
@@ -174,7 +203,10 @@ textarea { height : 200px; }
 			</td>
 			</tr>
 			</c:if>
+		</c:if>
 		</c:forEach>
+		</c:otherwise>
+		</c:choose>
 	</table>
 </c:if>
 
@@ -224,6 +256,7 @@ textarea { height : 200px; }
 				<td style="width:10%">수정/삭제</td>
 			</tr>
 		<c:forEach items="${pexamlist}" var="exam" varStatus="eloop">
+		
 			<tr>
 				<td>${eloop.count }</td>
 				<td>${exam.exam_name }</td>
@@ -244,6 +277,7 @@ textarea { height : 200px; }
 					삭제</button>
 				</td>
 			</tr>
+	
 		</c:forEach>
 	</table>
  </c:if>
