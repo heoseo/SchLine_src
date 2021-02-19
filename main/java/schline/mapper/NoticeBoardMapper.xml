@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="professor.NoticeboardDAOImpl">
+
+
+<!-- #########################리스트쿼리문################################### -->			        
+			    
+	<!-- //보드테이블 공지게시물 갯수 카운트 -->
+   	<select id="boardCount" resultType="int">
+		SELECT COUNT(*)
+		FROM board_tb B, user_tb U
+		WHERE board_type = 'noti'
+		    AND B.user_id = U.user_id
+		    AND B.user_id= #{param1} 
+	</select> 
+		
+<!-- #########################페이징처리쿼리문 끝.################################### -->	
+<!-- #########################공지게시판리스트뿌리기################################### -->			
+	
+	<!-- //게시물리스트(보드공지테이블,샘이름유저테이블셀렉). -->
+	<select id="getNoticeBoard" resultType="professor.NoticeBoardDTO">
+		SELECT *
+		FROM (  SELECT NotiList.*, rownum rNum 
+		         FROM   (
+		                SELECT  U.user_name, B.*
+		                FROM board_tb B, user_tb U
+		                WHERE board_type = 'noti' 
+		                    AND B.user_id = U.user_id
+		                    AND B.user_id= #{param1}
+		                ORDER BY board_idx DESC
+		                ) NotiList
+		    )
+		WHERE rNum BETWEEN #{param2} AND #{param3}
+	</select>	 
+	
+	<!-- //아이디로 선생님 정보 get. -->
+	<select id="getProfessor" resultType="professor.NoticeBoardDTO">
+		select * from user_tb where user_id=#{0}
+	</select>	 
+	
+	<!-- 글쓰기에서 전송하기클릭시 인설트.-->
+	<insert id="insertBoard">
+		INSERT INTO board_tb (board_idx, subject_idx,
+		        board_type, user_id, board_title,
+		        board_content, board_file)
+		    VALUES (seq_board_idx.nextval, 1,
+		            'noti', #{0}, #{1},
+		            #{2}, #{3})
+	</insert>
+	
+	<!-- 인설트시 생성된 board_idx시퀀스값 받아오기. -->
+	<select id="getSeqIdx" resultType="professor.NoticeBoardDTO">
+		SELECT last_number FROM user_sequences 
+		WHERE sequence_name=upper('seq_board_idx')
+	</select>
+	
+	<!-- registration_tb테이블 샘과목 idx 를 보내 학생user_id값받아오는 셀렉트. -->    
+	<select id="getSubject" resultType="professor.NoticeBoardDTO">
+		SELECT * FROM subject_tb WHERE user_id=#{param1} 
+	</select>
+
+	<!-- registration_tb테이블 샘과목 idx 를 보내 학생user_id값받아오는 셀렉트. -->    
+	<select id="getStudent" resultType="professor.NoticeBoardDTO">
+		SELECT user_id 
+		FROM registration_tb
+		WHERE subject_idx = #{0}
+	</select> 	    	    
+	
+	<insert id="notiCheck">
+		INSERT INTO noticecheck_tb VALUES(#{0},#{1},0)
+	</insert> 	    	    
+
+	<!-- 글쓰기끝##################################### -->
+	
+	<!-- 제목클릭스상세보기##################################### -->
+	<select id="getNotiView" resultType="professor.NoticeBoardDTO">
+		SELECT * FROM board_tb B
+	      inner join user_tb U
+	      on B.user_id = U.user_id
+	      WHERE board_idx=#{param1}
+	</select> 
+		
+	<update id="notiEditAction">
+		UPDATE board_tb 
+	    SET board_title=#{param1}, board_content=#{param2}, 
+	    board_file=#{param3}
+	WHERE board_idx=#{param4}
+	</update>
+		
+	<delete id="deleteCheck">
+		DELETE from noticecheck_tb WHERE board_idx=#{0}
+	</delete>
+	<delete id="deleteNotiBoard">
+		DELETE from board_tb WHERE board_idx=#{0}
+	</delete>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+</mapper>

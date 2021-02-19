@@ -18,8 +18,8 @@
 button {min-width: 0;width: 30%;cursor: pointer;padding: 3px;min-height: 0;
    height: 40px;font-size: 0.7em;margin-bottom: 10px;}
 #entry {width: 100%;height: 85%;padding: 10px; background-image:url('');}
-#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;}
-#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;}
+#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px; vertical-align: middle;}
+#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;vertical-align: middle;}
 </style>
 
 
@@ -36,6 +36,7 @@ $(function () {
        $('#audio').hide();
        $('#myModal').modal("show");
        
+<<<<<<< HEAD
           //타이머 스타트
           setTimeout(function() { start();}, 1000);
         //10초에 한번씩 공부시간 db에 업데이트
@@ -86,12 +87,68 @@ $(function () {
           }
       });
    }
+=======
+       	//타이머 스타트
+       	setTimeout(function() { start();}, 1000);
+     	//10초에 한번씩 공부시간 db에 업데이트
+      	setInterval(function () { dbup();}, 10000); 
+    	
+     	//시간대별 바뀌는 배경화면 설정
+    	var dtime = new Date();//현재시간관련정보
+    	var d = dtime.getHours();//현재 시
+    	//(4~7):b1, (7~11)b2, (11~17)b3, (17~22)b4, (22~4):b5
+    	if(d>=4 && d<7) $('#entry').css('background-image', 'url("../resources/images/b1.jpg")');
+    	else if(d>=7 && d<11) $('#entry').css('background-image', 'url("../resources/images/b2.jpg")');
+    	else if(d>=11 && d<17) $('#entry').css('background-image', 'url("../resources/images/b3.jpg")');
+    	else if(d>=17 && d<22) $('#entry').css('background-image', 'url("../resources/images/b4.jpg")');
+    	else $('#entry').css('background-image', 'url("../resources/images/b5.jpg")');
+
+		//나가기이벤트 : 크롬에서는 작동안함.
+//     	$(window).bind("beforeunload", function (e){
+//     		return "창을 닫으실래요?";
+//     	});
+    	
+    	//출석증가
+    	var today = String(dtime.getFullYear())+String((dtime.getMonth()+1))+String(dtime.getDay());
+    	//ajax호출
+    	attenPlus(today);
+    }
+    
+    //출석증가
+    function attenPlus(today) {
+		$.ajax({
+		    url : "../class/attenPlus.do",
+		    type : "post",
+		    data : {today : today},
+		    dataType : "json",
+		    beforeSend : function(xhr){
+		        xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+		    },
+		    contentType : "application/x-www-form-urlencoded;charset:utf-8",
+		    success : function(d) {
+		    	if(d.reslut==1){
+		    		//alert("출석증가");
+		    	}
+		    	else if(d.reslut==0){
+		    		//alert("이미출석 증가x");
+		    	}
+		    	else{
+		    		//alert(d+"출석예외");
+		    	}
+		    },
+		    error : function(e) {
+		       alert("출석증가 오류" + e.status + ":" + e.statusText);
+		    }
+		});
+	}
+>>>>>>> master
    
     var timeElapsed = 0;
     var myTimer = 0;
     //타이머 시작
     function start() {
         myTimer = setInterval(function(){
+<<<<<<< HEAD
            timeElapsed += 1;//시간증가
            var hour2 = parseInt(timeElapsed/3600);
            var min2 = parseInt((timeElapsed%3600)/60);
@@ -107,6 +164,23 @@ $(function () {
            }
            $('#send_time').val(timeElapsed);//컨트롤러 전송용
         }, 1000) ;
+=======
+	        timeElapsed += 1;//시간증가
+	        var hour2 = parseInt(timeElapsed/3600);
+	        var min2 = parseInt((timeElapsed%3600)/60);
+	        var sec2 = parseInt(((timeElapsed%3600)%60)%60);
+	        
+	        if(hour2==0 && min2==0){
+		        $('#cutm').html(sec2+"초");
+	        }else if(hour2==0){
+		        $('#cutm').html(min2+"분 "+sec2+"초");
+	        }
+	        else{
+		        $('#cutm').html(hour2+"시간 "+min2+"분 "+sec2+"초");
+	        }
+	        $('#send_time').val(timeElapsed);//컨트롤러 전송용
+        }, 1000);
+>>>>>>> master
     }
     
 //    $('#progress').addEventListener("timeupdate", function () {
@@ -143,6 +217,7 @@ function btn1() {//30분
 }
 function btn2() {//1시간
     time=3600;
+<<<<<<< HEAD
    $('#myModal').modal("hide");
 
 }
@@ -155,16 +230,30 @@ function btn4() {//3시간
     time = 10800;
    $('#myModal').modal("hide");
 
+=======
+	$('#myModal').modal("hide");
+}
+function btn3() {//2시간
+  	time=7200;
+	$('#myModal').modal("hide");
+}
+function btn4() {//3시간
+    time = 10800;
+	$('#myModal').modal("hide");
+>>>>>>> master
 }
 function btn5() {//6시간
     time = 21600;
     $('#myModal').modal("hide");
-
 }
 function btn6() {//12시간
     time = 43200;
+<<<<<<< HEAD
    $('#myModal').modal("hide");
 
+=======
+	$('#myModal').modal("hide");
+>>>>>>> master
 }
 
 //목표시간

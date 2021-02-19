@@ -1,73 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%
-
-%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>알림</title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
-<style>
-#category {
-}
-#selectSapn {
-	border: solid;
-	width: 10px;
-}
-#searchDiv {
-	border: solid;
-	font-size: 0px;
-}
-#listDate {text-align: right;}
-</style>
-
 <script>
-$(function(){	
-
-	//셀렉트박스에 onchange 이벤트 생성.
-	$('#selectBoard').change(function(){
-		alert("에젝체인지");
-		//셀렉트 박스 선택이 바뀔때 "셀렉트박스 요소"를 함수로 전달.
-		
-		
-		//아잭스 셀렉트 체인지시.
-		$.ajax({
-			//내부 서블릿으로 요청을 전송함.
-			url : "../schedule/ajaxNoticeRead.do",
-			type : "post",
-			data :
-				{ type : $('#content option:selected').val() },
-			dateType : "html",
-			contentType : "application/x-www-form-urlencoded;chatset:utf-8",
-			beforeSend : function(xhr){
-	            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-	           },
-			success : function(Date) {
-				$("#content").html("");
-				$("#content").html(Date);
-				},
-			error : function(request,status,error) {
-				//확인하기
-		        alert("code:"+request.status+"\n"+"message:"+request.responseText+
-		        		"\n"+"error:"+error);
-			}
-		});
-		
-		
-		
-	});
-});
-
+function paging(nowPage){
+	var numSelect = document.getElementById("selectBoard");
+	var value = numSelect.options[numSelect.selectedIndex].value;
+	
+	location.href="./alertList.do?type="+value+"&nowPage="+nowPage;
+}
 </script>
-
+<style type="text/css">
+#selectBoard{
+	margin-bottom: 15px;
+}
+</style>
 </head>
-
-<!-- 내용입력부분. 클래스속성 건드리지말것 -->
-<!-- <div class="col-lg-10"> -->
-<!-- <div class="container"> -->
 
 <!-- body 시작 -->
 <body class="is-preload">
@@ -76,63 +30,65 @@ $(function(){
 	
 	<div id="main"><!-- mainDiv시작 -->
 	<hr />
-		<select name="selectBoard" id="selectBoard" class="col-sm-4">
-			<option value="allBoard" >전부</option>
-			<option value="notiRead">읽은 공지 알림</option>
-			<option value="notiNotRead">안읽은 공지 알림</option>
-			<option value="task">과제</option>
-			<option value="exam">시험</option>
-		</select>
-		<br />
-
-<!-- 		<div id="searchDiv" class="col-sm-4"> -->
-<!-- 			<form method="get"> -->
-<!-- 				<select name="searchField"> -->
-<!-- 					<option value="contents">내용</option> -->
-<!-- 					<option value="name">작성자</option> -->
-<!-- 				</select> -->
-<!-- 				<input type="text" name="searchTxt"/> -->
-<!-- 				<input type="submit" value="검색" /> -->
-<!-- 			</form> -->
-<!-- 		</div> -->
-
-
-
-		<div class="row" id="content">
-
-<!-- 읽은 공지사항 리스트 출력하기 -->
-<c:forEach items="${allLists }" var="row">
-				
-			<table style="height: 10px;">
-				<tr id="listTr">
-					<td id="contentTd">
-						<div id="listTitle">
-							글확인여부 : ${row.CHECK_FLAG }
-						</div>
-						<div id="listTitle">
-							공지제목 : ${row.TITLE }
-						</div>
-						<div id="listContent">
-							내용 : ${row.CONTENT }
-						</div>
-						<div id="listDate">
-							게시일 : ${row.POSTDATE }
-						</div>
-					</td>
+		<div style="text-align:center; font-weight:bold; font-size:30px">
+		<i class="fas fa-clock" style="padding-right:5px; text-align: center;"></i>
+		알림</div>
+		<div class="row" id="content"> 
+			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
+				<option value="allBoard" ${param.type eq 'allBoard' ? 'selected' : '' }>전부</option>
+				<option value="allNoti" ${param.type eq 'allNoti' ? 'selected' : '' }>공지</option>
+				<option value="taskAndExam" ${param.type eq 'taskAndExam' ? 'selected' : '' }>과제/시험</option>
+				<option value="notiRead" ${param.type eq 'notiRead' ? 'selected' : '' }>읽은 공지</option>
+				<option value="notiNotRead" ${param.type eq 'notiNotRead' ? 'selected' : '' }>읽지않은 공지</option>
+			</select>
+			<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:#808080">
+			<colgroup>
+				<col width="40px"/>
+				<col width="40px"/>
+				<col width="300"/>
+				<col width="100px"/>
+			</colgroup>	
+			<thead>
+				<tr>
+					<th class="text-center" style="font-weight:bold;">번호</th>
+					<th class="text-center" style="font-weight:bold;">확인</th>
+					<th style="font-weight:bold;">제목</th>
+					<th class="text-center" style="font-weight:bold;">작성일</th>
 				</tr>
-			</table>
-				
+			</thead>
+			<tbody>
+<!-- 읽은 공지사항 리스트 출력하기 -->
+<c:forEach items="${List }" var="row">
+				<tr>
+					<td class="text-center" >${row.RNUM}</td>
+					<td id="checkFlagIcon" class="text-center" >
+					<c:choose>
+						<c:when test="${row.CHECK_FLAG == 1 }">
+							<i class="far fa-envelope-open fa-lg" style="color:#808080"></i>
+						</c:when>
+						<c:otherwise>
+							<i class="fas fa-envelope-square fa-2x" style="color:#4682B4"></i>
+						</c:otherwise>
+					</c:choose>
+					</td>
+					<td id="listTitle">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}" target="_blank">
+							제목 : ${row.TITLE } 
+						</a>
+					</td>
+					<td class="text-center" >${row.POSTDATE }</td>
+				</tr>
 </c:forEach>
-			<!-- 방명록 반복 부분 e -->
-			<ul class="pagination justify-content-center">
-				${pagingImg }
-			</ul>
-		
-		
+			</tbody>
+			</table>
+			<div style="padding-left: 400px;">
+				<!-- 방명록 반복 부분 e -->
+				<ul class="pagination justify-content-center">
+					${pagingImg }
+				</ul>
+			</div>
 		</div>
-<!-- 읽은 공지사항 리스트 끝.-->
-
-	
+		<!-- 공지사항 리스트 끝.-->
 
 	
 	

@@ -59,7 +59,7 @@ public class ExamAppController {
 	
 	System.out.println("과제업로드 요청 들어옴");
 	//서버의 물리적경로 얻어오기
-	String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+	String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/task");
 	System.out.println(path);
 	//파일 insert 결과를 확인하기 위한 수
 	int fileUp = 0;

@@ -8,7 +8,7 @@ request.setCharacterEncoding("UTF-8");
 
 
 //캘린더
-Calendar tDay = Calendar.getInstance(); //현재날짜
+Calendar tDay = Calendar.getInstance(); //현재날짜 오늘날짜
 int now_year = tDay.get(Calendar.YEAR); //현재년도
 int now_month = tDay.get(Calendar.MONTH) + 1; //현재월
 int now_week = tDay.get(Calendar.DAY_OF_WEEK);//현재요일(일1, 토7)
@@ -16,9 +16,10 @@ int now_day = tDay.get(Calendar.DATE); //현재일
 int last_day = tDay.getActualMaximum(Calendar.DAY_OF_MONTH);//현재달 마지막 일
 
 Calendar cDay = Calendar.getInstance();
-cDay.set(cDay.DAY_OF_MONTH, 1);//DAY_OF_MONTH를 1로 설정(월의 첫날)
+cDay.set(cDay.DAY_OF_MONTH, 1);//DAY_OF_MONTH를 1로 설정(월의 첫날) 2월 1일
 int first_week = cDay.get(Calendar.DAY_OF_WEEK);//위에서 설정한 1일의 요일
-cDay.set(cDay.DAY_OF_MONTH, last_day);//DAY_OF_MONTH를 1로 설정(월의 첫날)
+
+cDay.set(cDay.DAY_OF_MONTH, last_day);//DAY_OF_MONTH를 1로 설정(월의 첫날) 2월 28일
 int last_week = cDay.get(Calendar.DAY_OF_WEEK);//마지막일의 요일
 %>
 
@@ -28,60 +29,20 @@ int last_week = cDay.get(Calendar.DAY_OF_WEEK);//마지막일의 요일
 <title>캘린더</title>
 <!-- 캘린더CSS -->
 <style>
-/* .calendarTitle { */
-/* 	font-weight: bold; */
-/* } */
-
-/* .Year { */
-/* 	padding-left: 400px; */
-/* 	font-size: 20px; */
-/* } */
-
-/* #buttonMove { */
-/* 	padding-left: 50px; */
-/* 	font-size: 10px; */
-/* } */
-
-/* .calendarTable { */
-/* 	border: solid 2px #E8D9FF; */
-/* 	text-align: right; */
-/* } */
-
-/* .calendarTr { */
-/* 	padding: 50px; */
-/* } */
-
-/* .calendarTh { */
-/* 	text-align: center; */
-/* 	padding: 5px; */
-/* 	background: #E8D9FF; */
-/* 	font-weight: bold; */
-/* } */
-
-/* .calendarTd { */
-/* 	text-align: left; */
-/* 	color: black; */
-/* 	padding-top: 0; */
-/* 	padding-left: 0.5; */
-/* 	padding-bottom: 60px; */
-/* 	border: solid 2px #E8D9FF; */
-/* 	font-size: 15px; */
-/* } */
-
-/* .Task { */
-/* 	border: solid 2px #4682B4; */
-/* 	border-radius: 5px; */
-/* 	background: #87CEEB; */
-/* 	font-size: 5px; */
-/* 	font-weight: bold; */
-/* 	color: #4169E1; */
-/* } */
+.calendarTitle {
+	font-weight: normal;
+	color: black;
+	text-align: right;
+	font-size: 1em;
+}
+#button {
+	font-size: 10px;
+	border: none;
+	text-align: right;
+	padding-left: 300px;
+}
 </style>
 <!-- style태그끝! -->
-
-
-<!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
 <script>
 //캘린더 아잭스
 $(function() {
@@ -91,7 +52,7 @@ $(function() {
 	var mon = $('#calMon');
 	var year = $('#calYear');
 	
-	//아잭스 시작(현재상태)
+	//에이잭스 시작(현재상태)
 	$.ajax({
 		url : "<%=request.getContextPath() %>/schedule/ajaxCalendar.do",
 		type : "post",
@@ -101,6 +62,9 @@ $(function() {
 			month : $('#calMon').text(),
 			},
 		dateType : "html",
+		beforeSend : function(xhr){
+            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+           },
 		contentType : "application/x-www-form-urlencoded;chatset:utf-8",
 		success : function(Date) {
 			$("#calBody").html(Date);
@@ -130,6 +94,9 @@ $(function() {
 				month : $('#calMon').text(),
 				},
 			dateType : "html",
+			beforeSend : function(xhr){
+	            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+	           },
 			contentType : "application/x-www-form-urlencoded;chatset:utf-8",
 			success : function(Date) {
 				$("#calBody").html(Date);
@@ -158,6 +125,9 @@ $(function() {
 				month : $('#calMon').text(),
 				},
 			dateType : "html",
+			beforeSend : function(xhr){
+	            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+	           },
 			contentType : "application/x-www-form-urlencoded;chatset:utf-8",
 			success : function(Date) {
 				$("#calBody").html(Date);
@@ -173,50 +143,42 @@ $(function() {
 <!-- body 시작 -->
 <body class="is-preload">
 
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" /><!-- flag구분예정 -->
-
 	<!-- 캘린더시작. -->
 	<hr />
 	
 	<div id="main" class="col-lg-12 sidenav">
-	
-		<div>
-			<span class="Year" id="calYear"><%=now_year%>년 <%=now_month%>월</span>
-			<span id="buttonMove"> 
-				<a href="../schedule/calendar.do?y=<%=now_year%>&m=<%=now_month-1 %>" class="button small">
-					<i class='fas fa-chevron-left'></i>
-				</a>
-				<a href="../schedule/calendar.do?y=<%=now_year%>&m=<%=now_month+1%>" class="button small">
-					<i class='fas fa-chevron-right'></i>
-				</a>
-			</span>
-		</div>
 
 		<div class="contents_box">
-			<table border="0">
+		
 			
+			<table>
 				<input type="hidden" id="hyear" name="hyear" value="<%=now_year%>" />
 				<input type="hidden" id="hmonth" name="hmonth" value="<%=now_month%>" />
 				
 				<tr>
 					<td>
-						<button id="calBefore" style="border:0">
-							<i class='fas fa-chevron-left'></i>
-						</button>
-					</td>
-					<td>
-						<span id="calYear" style="font-size: 1.4em; font-weight: bold;"><%=now_year%></span>&nbsp;&nbsp;
-						<span id="calMon" style="font-size: 1.2em;"><%=now_month%></span>
-						<span style="font-size: 1.2em;">월</span> 
-					<td>
-						<!-- 캘린더 버튼. 다음달-->
-						<button id="calAfter" style="border: 0">
-							<i class='fas fa-chevron-right' style="margin-top: 3px;"></i>
-						</button>
+
+						<!-- 캘린더 년도,월 출력. -->
+						<div class="calendarTitle">
+							<span class="calYear" id="calYear"><%=now_year%></span><span>년</span> 
+							<span class="calMon" id="calMon"><%=now_month%></span><span>월</span>
+						
+							&nbsp&nbsp
+							<span id="button">
+								<!-- 캘린더 버튼. 이전달달 -->
+								<button id="calBefore" class="button small">
+									<i class='fas fa-chevron-left'></i>
+								</button>
+								<!-- 캘린더 버튼. 다음달 -->				
+								<button id="calAfter" class="button small" style="margin-right: 0px">
+									<i class='fas fa-chevron-right'></i>
+								</button>
+							</span>
+						</div> 
 					</td>
 				</tr>				
 			</table>
+			
 			
 			<div id="calBody">
 				달력Display
@@ -224,17 +186,5 @@ $(function() {
 		</div><!-- contents_box끝 -->
 		
 	</div><!-- main div끝 <-->
-
-
-
-
-<!-- #################################################################### -->
-
-			<jsp:include page="/resources/include/bottom.jsp" />
 </body>
-
-
-<!-- 하단 인클루드 -->
-<jsp:include page="/resources/include/footer.jsp" />
-
 </html>
