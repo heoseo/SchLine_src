@@ -500,37 +500,37 @@ public class UserInfoController {
 			e.printStackTrace();
 		}		
 	}
-		
-	@RequestMapping("/user/notiSetting.do")
-	public String notiSetting(Model model, HttpServletRequest req, HttpSession session) {
-		String user_set = req.getParameter("user_set");
-//		System.out.println(user_set);
-		String user_id = (String) session.getAttribute("user_id");
-		
-		UserSettingDTO userSettingDTO = new UserSettingDTO();
-		userSettingDTO.setUser_id(user_id);
-		userSettingDTO.setUser_set(user_set);
-		userSettingDTO.setSetting_name("noti");
-		sqlSession.getMapper(GradeDTOImpl.class).notiset(userSettingDTO);
-		
-		return "redirect:userinfo.do";
-		
-	}
-	@RequestMapping("/user/examSetting.do")
-	public String examSetting(Model model, HttpServletRequest req, HttpSession session) {
-		String user_set = req.getParameter("user_set");
-//		System.out.println(user_set);
-		String user_id = (String) session.getAttribute("user_id");
-		
-		UserSettingDTO userSettingDTO = new UserSettingDTO();
-		userSettingDTO.setUser_id(user_id);
-		userSettingDTO.setUser_set(user_set);
-		userSettingDTO.setSetting_name("exam");
-		sqlSession.getMapper(GradeDTOImpl.class).examset(userSettingDTO);
-		
-		return "redirect:userinfo.do";
-		
-	}
+//		
+//	@RequestMapping("/user/notiSetting.do")
+//	public String notiSetting(Model model, HttpServletRequest req, HttpSession session) {
+//		String user_set = req.getParameter("user_set");
+////		System.out.println(user_set);
+//		String user_id = (String) session.getAttribute("user_id");
+//		
+//		UserSettingDTO userSettingDTO = new UserSettingDTO();
+//		userSettingDTO.setUser_id(user_id);
+//		userSettingDTO.setUser_set(user_set);
+//		userSettingDTO.setSetting_name("noti");
+//		sqlSession.getMapper(GradeDTOImpl.class).notiset(userSettingDTO);
+//		
+//		return "redirect:userinfo.do";
+//		
+//	}
+//	@RequestMapping("/user/examSetting.do")
+//	public String examSetting(Model model, HttpServletRequest req, HttpSession session) {
+//		String user_set = req.getParameter("user_set");
+////		System.out.println(user_set);
+//		String user_id = (String) session.getAttribute("user_id");
+//		
+//		UserSettingDTO userSettingDTO = new UserSettingDTO();
+//		userSettingDTO.setUser_id(user_id);
+//		userSettingDTO.setUser_set(user_set);
+//		userSettingDTO.setSetting_name("exam");
+//		sqlSession.getMapper(GradeDTOImpl.class).examset(userSettingDTO);
+//		
+//		return "redirect:userinfo.do";
+//		
+//	}
 	
 	@RequestMapping("/user/blockDelete.do")
 	public String blockDelete (HttpServletRequest req, HttpSession session) {

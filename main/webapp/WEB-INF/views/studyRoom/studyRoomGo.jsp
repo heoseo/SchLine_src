@@ -18,8 +18,8 @@
 button {min-width: 0;width: 30%;cursor: pointer;padding: 3px;min-height: 0;
    height: 40px;font-size: 0.7em;margin-bottom: 10px;}
 #entry {width: 100%;height: 85%;padding: 10px; background-image:url('');}
-#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;}
-#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;}
+#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px; vertical-align: middle;}
+#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;vertical-align: middle;}
 </style>
 
 
@@ -55,7 +55,40 @@ $(function () {
 //     	$(window).bind("beforeunload", function (e){
 //     		return "창을 닫으실래요?";
 //     	});
+    	
+    	//출석증가
+    	var today = String(dtime.getFullYear())+String((dtime.getMonth()+1))+String(dtime.getDay());
+    	//ajax호출
+    	attenPlus(today);
     }
+    
+    //출석증가
+    function attenPlus(today) {
+		$.ajax({
+		    url : "../class/attenPlus.do",
+		    type : "post",
+		    data : {today : today},
+		    dataType : "json",
+		    beforeSend : function(xhr){
+		        xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+		    },
+		    contentType : "application/x-www-form-urlencoded;charset:utf-8",
+		    success : function(d) {
+		    	if(d.reslut==1){
+		    		//alert("출석증가");
+		    	}
+		    	else if(d.reslut==0){
+		    		//alert("이미출석 증가x");
+		    	}
+		    	else{
+		    		//alert(d+"출석예외");
+		    	}
+		    },
+		    error : function(e) {
+		       alert("출석증가 오류" + e.status + ":" + e.statusText);
+		    }
+		});
+	}
    
     var timeElapsed = 0;
     var myTimer = 0;
@@ -69,14 +102,14 @@ $(function () {
 	        
 	        if(hour2==0 && min2==0){
 		        $('#cutm').html(sec2+"초");
-	        }else if(min2==0){
+	        }else if(hour2==0){
 		        $('#cutm').html(min2+"분 "+sec2+"초");
 	        }
 	        else{
 		        $('#cutm').html(hour2+"시간 "+min2+"분 "+sec2+"초");
 	        }
 	        $('#send_time').val(timeElapsed);//컨트롤러 전송용
-        }, 1000) ;
+        }, 1000);
     }
     
 // 	$('#progress').addEventListener("timeupdate", function () {
@@ -114,27 +147,22 @@ function btn1() {//30분
 function btn2() {//1시간
     time=3600;
 	$('#myModal').modal("hide");
-
 }
 function btn3() {//2시간
   	time=7200;
 	$('#myModal').modal("hide");
-
 }
 function btn4() {//3시간
     time = 10800;
 	$('#myModal').modal("hide");
-
 }
 function btn5() {//6시간
     time = 21600;
     $('#myModal').modal("hide");
-
 }
 function btn6() {//12시간
     time = 43200;
 	$('#myModal').modal("hide");
-
 }
 
 //목표시간
