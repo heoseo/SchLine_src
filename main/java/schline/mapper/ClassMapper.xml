@@ -16,6 +16,20 @@
         order by regi_idx  desc 
     ) Tb
   </select>
+  <select id="divIdList" resultType="String" parameterType="String">
+  select  device_id from registration_tb r 
+		inner join user_tb u
+		on r.user_id = u.user_id
+		where r.subject_idx = #{idx} and not device_id is null
+  </select>
+  
+  <select id="stu_id" resultType="String" parameterType="String">
+ 	select user_id from penboard where bgroup = #{0} and bindent =#{1}
+  </select>
+  
+  <select id="divID" resultType="String" parameterType="String">
+  select device_id from user_tb where user_id = #{0}
+  </select>
 
 	<select id="listLecture" resultType="schline.VideoDTO"
 	parameterType="schline.VideoDTO">

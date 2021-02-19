@@ -21,7 +21,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import schline.ExamDTO;
 import schline.GradeDTOImpl;
+import schline.SchlineDAOImpl;
 import schline.UserInfoDTO;
 
 /**
@@ -39,7 +41,7 @@ public class HomeController {
 	private SqlSession sqlSession;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String goMain(Principal principal, Authentication authentication, HttpSession session) {
+	public String goMain(Principal principal, Authentication authentication, HttpSession session, Model model) {
 //		System.out.println("HomeController > / 요청 들어옴.");
 		
 		if(authentication != null) {
@@ -62,6 +64,13 @@ public class HomeController {
 			session.setAttribute("user_name", user_name);
 			
 			if(user_auth.toString().contains("ROLE_STUDENT")) {
+				
+				//메인 과제리스트 뿌리기 시작
+				ArrayList<ExamDTO> examlist = sqlSession.getMapper(SchlineDAOImpl.class)
+						.getMainTask(user_id);
+				model.addAttribute("examlist", examlist);
+				//메인 과제리스트 뿌리기 종료
+				
 				return "main/studentHome";
 			}
 			else if(user_auth.toString().contains("ROLE_PROFESSOR")) {

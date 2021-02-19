@@ -92,8 +92,7 @@ function onDelete(idx, type){
 	}
 	else{
 		var c = confirm("문제를 삭제하시겠습니까?");
-		if(c){
-			alert(exam_idx);	
+		if(c){	
 			location.href='ptaskDelete.do?question_idx='+exam_idx+'&exam_type='+type;			
 		}
 	}

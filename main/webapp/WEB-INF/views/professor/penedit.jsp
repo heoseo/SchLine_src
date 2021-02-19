@@ -39,7 +39,10 @@
 		action="./editAction.do" 
 		onsubmit="return checkValidate(this);">
 		<input type="hidden" name="pen_idx" value="${viewRow.pen_idx }" />
+		<input type="hidden" name="board_type" value="${viewRow.board_type }" />
+			<input type="hidden" name="subject_idx" value="${viewRow.subject_idx }" />
 		<input type="hidden" name="nowPage" value="${nowPage }" />
+		<input type="hidden" name="bgroup" value="${viewRow.bgroup }" />
 	<table border=1 width=800>
 	<colgroup>
 		<col width="25%"/>
@@ -57,6 +60,20 @@
 				style="width:90%;" id="demo-message" placeholder="내용을 입력하세요" rows="6">${viewRow.board_content }</textarea>
 		</td>
 	</tr>
+		<c:if test="${viewRow.board_type eq 'red'}">
+	<tr>
+		<td colspan="2">위 내용을 정정 하시겠습니까?
+		<div class="col-4 col-12-small">
+			<input type="radio" id="demo-priority-low" name="yorn" value="yes" <c:if test="${viewRow.yorn eq 'yes' }">checked</c:if>/>
+			<label for="demo-priority-low">예</label>
+		</div>
+		<div class="col-4 col-12-small">
+			<input type="radio" id="demo-priority-normal" value="no" name="yorn" <c:if test="${viewRow.yorn eq 'no' }">checked</c:if>/>
+			<label for="demo-priority-normal">아니요</label>
+		</div>
+		</td>
+	</tr>
+	</c:if>
 	<tr>
 		<td colspan="2" align="center">
 		<ul class="actions">
