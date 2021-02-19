@@ -45,12 +45,12 @@
 					</a>
 					
 					<a href="SubjectGrade.do" class="list-group-item">
-						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
+						<i class="fas fa-star" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">성적 조회</span>
 					</a>
 					
 					<a href="SubjectFile.do" class="list-group-item">
-						<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
+						<i class="fas fa-folder" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">제출 파일</span>
 					</a>
 				</div>

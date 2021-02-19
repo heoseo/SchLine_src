@@ -64,10 +64,10 @@
 										</td>
 							</c:forEach>
 							<tr>
-								<td colspan="2" align="center">
-									<ul class="actions">
-										<li><input type="submit" value="전송하기" class="primary" /></li>
-									</ul>
+								<td colspan="10" align="center">
+									<div class="actions">
+										<input type="submit" value="전송하기" class="primary btn-hover" style="padding: 0px 420px 0px 420px" />
+									</div>
 								</td>
 							</tr>		
 							</tr>
