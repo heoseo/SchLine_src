@@ -20,15 +20,10 @@
 <!-- 왼쪽메뉴 include -->
 
 <jsp:include page="/resources/include/leftmenu_professor_student.jsp"/><!-- flag구분예정 -->
-   <div style="text-align: center;">
-      <small>교수페이지 계정 메인</small>
-   </div>
+<div>
+
    <hr /><!-- 구분자 -->
-   
-   <table class="table  table-hover table-striped" >
-	<div style="text-align: center;">
-      <small>출결</small>
-    </div>
+	<table class="table table-bordered table-hover table-striped" style="font-size:15px;">	
 		<c:choose>	
 			
 			<c:when test="${empty attenlists }">
@@ -40,7 +35,7 @@
 			</c:when>
 			<c:otherwise>
 						<tr>
-							<td colspan="10">출결 현황</td>
+							<td colspan="10" align="center" style="font-size:20px;">출결 현황</td>
 						</tr>
 						<tr align="center" align="center">
 							<c:forEach items="${attenlists }" var="row2">
@@ -83,10 +78,7 @@
     </table>
     
     <!-- 과제 테이블 -->
-    <table class="table  table-hover table-striped" >
-	<div style="text-align: center;">
-      <small>과제</small>
-    </div>
+	<table class="table table-bordered table-hover table-striped" style="font-size:15px;">	
 		<c:choose>	
 			
 			<c:when test="${empty gradelists }">
@@ -96,9 +88,9 @@
 		 					</td>
 		 				</tr>
 			</c:when>
-			<c:otherwise>
+			<c:otherwise> 
 						<tr>
-							<td colspan="10">과제 현황</td>
+							<td colspan="10" style="text-align:center; font-size:20px">과제 현황</td>
 						</tr>
 						<tr align="center" align="center">
 							<c:forEach items="${gradelists }" var="row">
@@ -123,7 +115,7 @@
 	    	<td>성적 : ${gradeChar }</td>
 	    </tr>
     </table>
-
+</div>  
    <jsp:include page="/resources/include/bottom.jsp" />
 </body>
 

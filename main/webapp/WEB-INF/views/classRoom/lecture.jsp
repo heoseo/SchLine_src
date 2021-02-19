@@ -40,8 +40,9 @@
 
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
+<br />
    <div style="text-align: center;">
-      <small><span id="opne_btn" style="cursor:pointer;">강의 <i class="fas fa-info-circle"></i></span></small><!-- flag구분예정-->
+      <small><span id="opne_btn" style="cursor:pointer; font-size:1.2em">강의 <i class="fas fa-info-circle"></i></span></small><!-- flag구분예정-->
    </div>
    <hr /><!-- 구분자 -->
 
@@ -55,7 +56,7 @@
     <div class="modal_layer">
     </div>
 </div>
-	<table class="table  table-hover table-striped">
+	<table class="table table-hover table-striped">
 	<c:choose>	
 	<c:when test="${empty lists }">
  				<tr>

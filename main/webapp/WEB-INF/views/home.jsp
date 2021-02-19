@@ -69,7 +69,7 @@
 					패스워드 : <input type="password" name="pass" value="qwer1234"/>
 				</p>
 				<div style="border-radius:5px;">				
-					<button type="submit" id="loginButton" class="btn btn-default" style="font-weight:bold; background:#ADD8E6;">
+					<button type="submit" id="loginButton" class="btn btn-primary btn-hover" style="font-weight:bold;">
 						로그인</button>
 				</div>
 			</form:form>

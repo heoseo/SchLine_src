@@ -65,7 +65,7 @@ $(function(){
 	<span style="display:block; text-align:center; font-size:1.3em;"><b>[제출 양식]</b></span><br />
 	<form:form name="taskFrm" method="post"  enctype="multipart/form-data">
 		 
-		<table class="alt" style="text-align:center;">
+		<table class="table table-bordered table-hover table-striped" style="text-align:center; background:#ADD8E6">
 			<tbody>
 				<tr>
 					<!-- 
