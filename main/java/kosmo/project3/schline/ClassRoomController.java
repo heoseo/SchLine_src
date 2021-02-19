@@ -1,8 +1,14 @@
 package kosmo.project3.schline;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -18,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -29,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import schline.AttendanceDTO;
 import schline.ClassDTO;
@@ -486,6 +494,8 @@ public class ClassRoomController {
 				command.execute(model);
 				model.addAttribute("nowPage", nowPage);
 				model.addAttribute("board_type", req.getParameter("board_type"));
+				model.addAttribute("pen_idx",pen_idx);
+				model.addAttribute("mode",mode);
 				modePage = "redirect:penlist.do?board_type="+req.getParameter("board_type");	
 			}
 			return modePage;
@@ -507,13 +517,92 @@ public class ClassRoomController {
 		//수정처리
 		@RequestMapping("/professor/editAction.do")
 		public String proeditAction(HttpServletRequest req,Model model, 
-				PenBbsDTO penBbsDTO){
+				PenBbsDTO penBbsDTO, HttpServletResponse response)  throws UnsupportedEncodingException {
 			
 			model.addAttribute("req", req);
 			model.addAttribute("penBbsDTO", penBbsDTO);
 			command = new EditActionCommand();
 			command.execute(model);
-			
+			if (req.getParameter("board_type").equals("red")) {
+				ArrayList<String> deviceList = new ArrayList<String>();
+				System.out.println("펜bbsdto yorn "+penBbsDTO.getYorn());
+				if(penBbsDTO.getYorn().equals("yes")) {
+					System.out.println("수정: "+penBbsDTO.getSubject_idx());
+					deviceList = sqlSession.getMapper(ClassDTOImpl.class).divIdList(penBbsDTO.getSubject_idx());					
+					for (int i = 0; i < deviceList.size(); i++) {
+						System.out.println("디바이스 아이디리스트 "+deviceList.get(i));
+					}
+				}else {
+					String stu_id = sqlSession.getMapper(ClassDTOImpl.class).stu_id(penBbsDTO.getBgroup(), "0");
+					String divId  = sqlSession.getMapper(ClassDTOImpl.class).divID(stu_id);
+					System.out.println("sql="+divId);
+					deviceList.add(divId);
+				}
+				String ApiKey = "AAAAf7xN3L8:APA91bFZJxe0rqAa5gzTfndBsuJLzU-pj6lYed78fGYsCJgCfIGBh8hcV-gBfAiRPOsdVUa4B3Gsw5gw6PltELeEBKenpDxnmIOvt7Lyxb_vHCW4RuWaVR5g_BSNMIi2nxfSV7ruNw8p";
+				String fcmURL = "https://fcm.googleapis.com/fcm/send";
+				
+				response.setCharacterEncoding("UTF-8");
+				req.setCharacterEncoding("UTF-8");
+				String notiTitle = penBbsDTO.getBoard_title();
+				String notiBody = penBbsDTO.getBoard_content();
+				String message = req.getParameter("message");
+				System.out.println(notiTitle+"--"+message);
+
+				try{
+					
+	
+					//연결
+					URL url = new URL(fcmURL);
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					
+					conn.setUseCaches(false);
+					conn.setDoInput(true);
+					conn.setDoOutput(true);
+					
+					conn.setRequestMethod("POST");
+					conn.setRequestProperty("Authorization", "key="+ApiKey);
+					conn.setRequestProperty("Content-Type", "application/json");
+					
+					JSONObject json = new JSONObject();
+					
+					JSONObject noti = new JSONObject();
+					noti.put("title", notiTitle);
+					noti.put("body", notiBody);
+					
+					JSONObject data = new JSONObject();
+					data.put("message", message);
+					
+					//json.put("to", deviceId1);//한명한테 보낼때..
+					json.put("registration_ids", deviceList);//여러명한테 보낼때..
+					
+					json.put("notification", noti);
+					json.put("data", data);
+					
+					try{
+						OutputStreamWriter wr = new OutputStreamWriter(
+								conn.getOutputStream());
+						System.out.println("JSON="+ json.toString());
+						wr.write(json.toString());
+						wr.flush();
+						
+						BufferedReader br = new BufferedReader(
+								new InputStreamReader(conn.getInputStream()));
+						
+						String output;
+						System.out.println("Output from Server ... \n");
+						while((output = br.readLine()) != null){
+							System.out.println(output);
+						}
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+					
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+			}
 			model.addAttribute("pen_idx", req.getParameter("pen_idx"));
 			model.addAttribute("nowPage", req.getParameter("nowPage"));
 			return "redirect:view.do";
@@ -550,40 +639,202 @@ public class ClassRoomController {
 		@RequestMapping("/penboard/replyAction.do")
 		public String replyAction(HttpServletRequest req,
 				Model model, PenBbsDTO penBbsDTO,HttpSession session){
-			//커맨드객체를 통해 입력폼에서 전송한 내용을 한번에 저장
+			//커맨드객체를 통해 입력폼에서 전송한 내용을 한번에 저장			
 			penBbsDTO.setUser_id(session.getAttribute("user_id").toString());
 			model.addAttribute("penBbsDTO", penBbsDTO);
 			model.addAttribute("req", req);
 			command = new ReplyActionCommand();
 			command.execute(model);
-
+			
 			model.addAttribute("nowPage", req.getParameter("nowPage"));
 			model.addAttribute("board_type", req.getParameter("board_type"));
 			return "redirect:list.do";
 		}	
 		//답변글 입력하기
 		@RequestMapping("/professor/replyAction.do")
-		public String proreplyAction(HttpServletRequest req,
-				Model model, PenBbsDTO penBbsDTO,HttpSession session){
+		public String proreplyAction(HttpServletRequest req, HttpServletResponse response,
+				Model model, PenBbsDTO penBbsDTO,HttpSession session)  throws UnsupportedEncodingException {
 			//커맨드객체를 통해 입력폼에서 전송한 내용을 한번에 저장
 			penBbsDTO.setUser_id(session.getAttribute("user_id").toString());
 			model.addAttribute("penBbsDTO", penBbsDTO);
 			model.addAttribute("req", req);
 			command = new ReplyActionCommand();
 			command.execute(model);
-			
+
+			if (req.getParameter("board_type").equals("red")) {
+				ArrayList<String> deviceList = new ArrayList<String>();
+				if(penBbsDTO.getYorn().equals("yes")) {
+					deviceList = sqlSession.getMapper(ClassDTOImpl.class).divIdList(penBbsDTO.getSubject_idx());					
+					for (int i = 0; i < deviceList.size(); i++) {
+						System.out.println("디바이스 아이디리스트 "+deviceList.get(i));
+					}
+				}else {
+					
+					String divId  = sqlSession.getMapper(ClassDTOImpl.class).divID(req.getParameter("stu_id"));
+					System.out.println("sql="+divId);
+					deviceList.add(divId);
+				}
+				String ApiKey = "AAAAf7xN3L8:APA91bFZJxe0rqAa5gzTfndBsuJLzU-pj6lYed78fGYsCJgCfIGBh8hcV-gBfAiRPOsdVUa4B3Gsw5gw6PltELeEBKenpDxnmIOvt7Lyxb_vHCW4RuWaVR5g_BSNMIi2nxfSV7ruNw8p";
+				String fcmURL = "https://fcm.googleapis.com/fcm/send";
+				
+				response.setCharacterEncoding("UTF-8");
+				req.setCharacterEncoding("UTF-8");
+				String notiTitle = penBbsDTO.getBoard_title();
+				String notiBody = penBbsDTO.getBoard_content();
+				String message = req.getParameter("message");
+				System.out.println(notiTitle+"--"+message);
+
+				try{
+					
+	
+					//연결
+					URL url = new URL(fcmURL);
+					HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+					
+					conn.setUseCaches(false);
+					conn.setDoInput(true);
+					conn.setDoOutput(true);
+					
+					conn.setRequestMethod("POST");
+					conn.setRequestProperty("Authorization", "key="+ApiKey);
+					conn.setRequestProperty("Content-Type", "application/json");
+					
+					JSONObject json = new JSONObject();
+					
+					JSONObject noti = new JSONObject();
+					noti.put("title", notiTitle);
+					noti.put("body", notiBody);
+					
+					JSONObject data = new JSONObject();
+					data.put("message", message);
+					
+					//json.put("to", deviceId1);//한명한테 보낼때..
+					json.put("registration_ids", deviceList);//여러명한테 보낼때..
+					
+					json.put("notification", noti);
+					json.put("data", data);
+					
+					try{
+						OutputStreamWriter wr = new OutputStreamWriter(
+								conn.getOutputStream());
+						System.out.println("JSON="+ json.toString());
+						wr.write(json.toString());
+						wr.flush();
+						
+						BufferedReader br = new BufferedReader(
+								new InputStreamReader(conn.getInputStream()));
+						
+						String output;
+						System.out.println("Output from Server ... \n");
+						while((output = br.readLine()) != null){
+							System.out.println(output);
+						}
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+					
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+			}
 			model.addAttribute("nowPage", req.getParameter("nowPage"));
 			model.addAttribute("board_type", req.getParameter("board_type"));
 			return "redirect:penlist.do";
 		}	
 
-		//웹노티피케이션
-		@RequestMapping(value="/class/WebNoti.do",method=RequestMethod.GET)
-		public String webNoti() {
+		@RequestMapping(value="/professor/FCMSender.do")
+		public String fcmSender(Model model, HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+			String ApiKey = "AAAAf7xN3L8:APA91bFZJxe0rqAa5gzTfndBsuJLzU-pj6lYed78fGYsCJgCfIGBh8hcV-gBfAiRPOsdVUa4B3Gsw5gw6PltELeEBKenpDxnmIOvt7Lyxb_vHCW4RuWaVR5g_BSNMIi2nxfSV7ruNw8p";
+			String fcmURL = "https://fcm.googleapis.com/fcm/send";
 			
-			return "classRoom/WebNoti";
+			response.setCharacterEncoding("UTF-8");
+			request.setCharacterEncoding("UTF-8");
+
+			Map<String, Object> map = model.asMap();
+			HttpServletRequest req = (HttpServletRequest)map.get("req");
+			PenBbsDTO penBbsDTO = (PenBbsDTO)req.getAttribute("penBbsDTO");
+			
+			
+			String notiTitle = penBbsDTO.getBoard_title();
+			String notiBody = penBbsDTO.getBoard_content();
+			String message = request.getParameter("message");
+			System.out.println(notiTitle+"--"+message);
+
+			try{
+					//디바이스 아이디 담기
+				ArrayList deviceList = (ArrayList<String>)req.getAttribute("deviceList");
+				String board_type = (String)req.getAttribute("board_type");
+				String nowPage = (String)req.getAttribute("nowPage");
+				
+				
+				model.addAttribute("nowPage", nowPage);
+				model.addAttribute("board_type", board_type);
+				
+				//연결
+				URL url = new URL(fcmURL);
+				HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+				
+				conn.setUseCaches(false);
+				conn.setDoInput(true);
+				conn.setDoOutput(true);
+				
+				conn.setRequestMethod("POST");
+				conn.setRequestProperty("Authorization", "key="+ApiKey);
+				conn.setRequestProperty("Content-Type", "application/json");
+				
+				JSONObject json = new JSONObject();
+				
+				JSONObject noti = new JSONObject();
+				noti.put("title", notiTitle);
+				noti.put("body", notiBody);
+				
+				JSONObject data = new JSONObject();
+				data.put("message", message);
+				
+				//json.put("to", deviceId1);//한명한테 보낼때..
+				json.put("registration_ids", deviceList);//여러명한테 보낼때..
+				
+				json.put("notification", noti);
+				json.put("data", data);
+				
+				try{
+					OutputStreamWriter wr = new OutputStreamWriter(
+							conn.getOutputStream());
+					System.out.println("JSON="+ json.toString());
+					wr.write(json.toString());
+					wr.flush();
+					
+					BufferedReader br = new BufferedReader(
+							new InputStreamReader(conn.getInputStream()));
+					
+					String output;
+					System.out.println("Output from Server ... \n");
+					while((output = br.readLine()) != null){
+						System.out.println(output);
+					}
+				}
+				catch(Exception e){
+					e.printStackTrace();
+				}
+				
+				model.addAttribute("notiTitle", notiTitle);
+				model.addAttribute("notiBody", notiBody);
+				model.addAttribute("message", message);
+				model.addAttribute("result", "FCM 발송됨");
+			}
+			catch(Exception e){
+				e.printStackTrace();
+			}
+			model.addAttribute("nowPage", req.getParameter("nowPage"));
+			model.addAttribute("board_type", req.getParameter("board_type"));
+			return "redirect:penlist.do";	
 		}
 		
+	}
+		
 		
 		
 		
@@ -632,4 +883,3 @@ public class ClassRoomController {
 	
 	
 	
-}
