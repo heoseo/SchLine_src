@@ -28,6 +28,7 @@ function openSocket(){
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    //해당컴에 해당하는 경로로 변경해주기!
+<<<<<<< HEAD
    ws = new WebSocket("ws://localhost:8080/schline/echo.do/websocket");
    //ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
    //채팅창 open
@@ -39,6 +40,21 @@ function openSocket(){
       //메세지인풋 다시 null로 만들어줌
       $('#inputMessage').val('');
       $('#inputMessage').focus();
+=======
+   ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+    //ws = new WebSocket("ws://192.168.25.47:9999/schline/echo.do/websocket");
+    //ws = new WebSocket("ws://192.168.25.47/schline/echo.do/websocket","9999");
+   
+   //채팅창 open
+   
+   	ws.onopen = function(event){
+        //사용자가 입장했을때 다른사람들에게 뿌려줌
+        $('#inputMessage').val("admin|'${info_nick}'님 도서관 입장하셨습니다.");
+      	send();
+      	//메세지인풋 다시 null로 만들어줌
+      	$('#inputMessage').val('');
+      	$('#inputMessage').focus();
+>>>>>>> master
          
          if(event.data === undefined){
            return;
@@ -68,11 +84,16 @@ function send(){
     var msg = document.getElementById("inputMessage").value;
     var sender = document.getElementById("info_nick").value;
     var user_img = document.getElementById("info_img").value; //내 프로필
+<<<<<<< HEAD
    var time = nowTime();
+=======
+   	var time = nowTime();
+>>>>>>> master
    
-   //사용자 닉네임을 통해 프로필 이미지 불러오기
+   	//사용자 닉네임을 통해 프로필 이미지 불러오기
 //    $('.profile profile-img-a').attr("background", "url('"+user_img+") 0 0 no-repeat'");
    
+<<<<<<< HEAD
    //메세지가 없다면 작동하지 않음
    if(msg==""){
       return false;
@@ -89,6 +110,25 @@ function send(){
 //    ajax로 닉네임체크 후 프로필창 띄워주기
       ajaxPro(2, other_nick);
       return false;
+=======
+   	//메세지가 없다면 작동하지 않음
+   	if(msg==""){
+      	return false;
+   	}
+   	//관리자가보낸 메세지일때는 서버로 전송만 해주고 창에는 띄워주지 않는다
+   	if(msg.startsWith("admin")==true){
+      	ws.send(sender+'|'+ msg +'|'+user_img);
+      	return false;
+   	}
+   	//상대방 프로필보기
+   	else if(msg.startsWith("@")==true){
+      	var other = msg.split('@');
+      	var other_nick = other[1];
+//  	ajax로 닉네임체크 후 프로필창 띄워주기
+      	ajaxPro(2, other_nick);
+    	$('#inputMessage').val('');
+      	return false;
+>>>>>>> master
     }
    
     //서버로 메세지 전송
@@ -165,7 +205,7 @@ function send(){
 
 
 
-//닉네임 확인(닉네임확인, 프로필보기 동시진행)
+//닉네임 확인(닉네임확인, 프로필보기, 신고, 차단 동시진행)
 function ajaxPro(d, ot_nick) {
    $.ajax({
       url : "../class/checkUSer.do",
@@ -219,7 +259,11 @@ function closeSocket(){
 
 
 function blockPeople() {
+<<<<<<< HEAD
    
+=======
+	
+>>>>>>> master
 }
 
 
@@ -239,6 +283,7 @@ function writeResponse(text){
        return;
     }
     
+<<<<<<< HEAD
    //내가 차단한 상대일 경우 대화창을 띄우지 않는다.
    blockPeople(sender);
    
@@ -292,6 +337,61 @@ function writeResponse(text){
          msg = makeBalloon(sender, con, img);
          messages.innerHTML += "<br/>"+msg;
       }
+=======
+	//내가 차단한 상대일 경우 대화창을 띄우지 않는다.
+	blockPeople(sender);
+	
+	$.ajax({
+	   url : "../class/studyBlock.do",
+	   dataType : "json",
+	   type : "post",
+	   async: false, //동기방식으로 변경
+	   contentType : "application/x-www-form-urlencoded;charset:utf-8",
+	    data : {ot_nick : sender},
+	    beforeSend : function(xhr){
+	         xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+	        },
+	    success : function(r){
+	       if(r.check==1){//차단한 상대일때
+	          bl_check = 1;
+	          return false;//적용안됨
+	       }//차단유저가 아닐경우 그냥 진행
+	   },
+	   error : function(e){
+	      alert("메세지받아오기 차단부분 에러"+e);
+	   }
+	});
+	
+	//여기서 차단여부 구분해서 처리해줌
+	if(bl_check==1){//차단한상대일때 밖으로 나감
+	   return false;
+	}
+	
+	var tmep;
+	   //관리자가 보낸 메세지일때
+	   if(con.startsWith("admin")==true){
+	      $('#messageWindow').css("text-align", "center");
+	        messages.innerHTML += "<br/>"+img;//3번째영역이 대화내용이므로
+	       messages.scrollTop = messages.scrollHeight;
+	        return false;
+	   }
+	    if(con.startsWith("/")){
+	      if(con.startsWith("/${info_nick}/")==true){
+	         var x = con.split("/");
+	         var y = con[2];
+	          temp = con.replace("/${info_nick}/","[귓속말]");
+	          //메세지 UI적용
+	          msg = makeBalloon(sender, temp, img);
+	          messages.innerHTML += msg;
+	       }
+	      else return;
+	   }
+	   else{
+	       //명령어가 아닐시 모두에게 디스플레이
+	      msg = makeBalloon(sender, con, img);
+	      messages.innerHTML += "<br/>"+msg;
+	   }
+>>>>>>> master
     //스크롤바 항상 아래로
    messages.scrollTop = messages.scrollHeight;
 } 

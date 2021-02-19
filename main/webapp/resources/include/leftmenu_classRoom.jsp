@@ -28,24 +28,28 @@
 				<a href="/schline/main/class.do" class="list-group-item"> <i
 					class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i> <span
 					style="text-align: center;">코스</span>
+<<<<<<< HEAD
 				</a> <a href="time.do?subject_idx=${param.subject_idx }" class="list-group-item"> <i class="fab fa-youtube"
+=======
+				</a> <a href="/schline/class/time.do?subject_idx=${param.subject_idx }" class="list-group-item"> <i class="fab fa-youtube"
+>>>>>>> master
 					id="icon">&nbsp&nbsp</i> <span style="text-align: center;"
 					id="name">강의</span>
-				</a> <a href="teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
+				</a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
 					id="icon">&nbsp&nbsp</i> <span style="text-align: center;">협업</span>
 					
 				<!-- 성적페이지 들어가기 -->
-				<a href="grade.do?subject_idx=${param.subject_idx }" class="list-group-item">
+				<a href="/schline/class/grade.do?subject_idx=${param.subject_idx }" class="list-group-item">
 					<i class="fas fa-file-alt" id="icon">&nbsp&nbsp</i>
 					<span style="text-align: center;" id="name">출결/성적</span>
 					
 				<!-- 시험페이지로 이동하기 위해 링크 추가 -->
-				</a> <a href="examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
+				</a> <a href="/schline/class/examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
 					class="fas fa-clipboard-check" id="icon">&nbsp&nbsp</i> <span
 					style="text-align: center;" id="name">시험</span>
 				<!-- 과제페이지로 이동하기 위해 링크 추가 -->
 				</a> 
-				<a href="taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item"> <i class="fa fa-archive"
+				<a href="/schline/class/taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item"> <i class="fa fa-archive"
 					id="icon">&nbsp&nbsp</i> <span style="text-align: center;"
 					id="name">과제함</span>
 				</a>
@@ -56,8 +60,8 @@
 							style="text-align: center;" id="name">게시판</span>
 					</div>
 					<div class="dropdown-menu">
-						<a class="dropdown-item" href="/schline/penboard/list.do?board_type=red"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
-						<a class="dropdown-item" href="/schline/penboard/list.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
+						<a class="dropdown-item" href="/schline/penboard/list.do?subject_idx=${param.subject_idx }&board_type=red"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
+						<a class="dropdown-item" href="/schline/penboard/list.do?subject_idx=${param.subject_idx }&board_type=blue"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
 					</div>
 				</div>
 

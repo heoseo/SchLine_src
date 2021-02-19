@@ -22,6 +22,14 @@
 			order by A.video_idx asc   
 		) Tb
 	  </select>  
+	  <select id="listAttendance3" resultType="schline.AndroidattenDTO">
+	 	select Tb.*, rownum rNum from (
+		    select * from attendance_tb A
+			inner join video_tb V on A.video_idx=V.video_idx
+			where user_id = #{user_id} and subject_idx = #{subject_idx}
+			order by A.video_idx asc   
+		) Tb
+	  </select>  
 	  <select id="attenupdate" resultType="schline.AttendanceDTO">
 	 	update attendance_tb set attendance_flag = #{attendance_flag }
 		where user_id = #{user_id } and video_idx = #{video_idx }
@@ -42,6 +50,13 @@
 		where G.subject_idx = #{subject_idx} and user_id = #{user_id} and exam_scoring!=100
 		order by E.exam_idx asc 
 	  </select>
+	  
+	  <select id="listGrade2" resultType="schline.AndroidattenDTO">
+	 	select * from grade_tb G
+		inner join exam_tb E on G.exam_idx=E.exam_idx
+		where G.subject_idx = #{subject_idx} and user_id = #{user_id} and exam_scoring!=100
+		order by E.exam_idx asc 
+	  </select>
 	    
 	  <select id="Registrationgrade" resultType="schline.RegistrationDTO">
 	 	update registration_tb 
@@ -55,9 +70,15 @@
 		inner join organization_tb O on U.orga_id=O.orga_id
 		where user_id = #{user_id}
 	  </select>  
+	  <select id="listInfo_admin" resultType="schline.UserInfoDTO">
+	 	select U.*, orga_name, expiration_date
+		from user_tb U
+		inner join organization_tb O on U.orga_id=O.orga_id
+		where user_id = #{user_id}
+	  </select>  
 	  
 	  <select id="RegistrationInfo" resultType="schline.UserInfoDTO">
-	 	select U.user_id, U.subject_idx, U.user_name, regi_idx, grade_sub, subject_name, R.user_name, rownum rNum 
+	 	select U.user_id, U.subject_idx, U.user_name, regi_idx, grade_sub, subject_name, R.user_name as professor, rownum rNum 
 		from (select R.user_id, subject_idx, user_name, regi_idx, grade_sub
 		from user_tb U
 		inner join registration_tb R on U.user_id=R.user_id

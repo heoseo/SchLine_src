@@ -138,8 +138,13 @@ tr td:first-child {
             <div class="entry" class="image">
                <br />
                <b>온라인 도서관</b><br /><br />
+<<<<<<< HEAD
                          대학친구들과 함께 공부하는 느낌<br />
                          입장하시겠습니까 ?<br /><br />
+=======
+			                대학친구들과 함께 공부하는 느낌<br />
+			                입장하시겠습니까 ?<br /><br />
+>>>>>>> master
                <br />
                <div align="center">
                   <button>입장하기</button>
@@ -150,6 +155,7 @@ tr td:first-child {
             <input type="hidden" id="info_nick" name="info_nick" value="${info_nick }" />
             <input type="hidden" id="info_img" name="info_img" value="${info_img}" />
          </form:form>
+<<<<<<< HEAD
       </div>
 <%--       <form:form action="../class/FCMSender.do" method="post">
          <button>푸시보내기</button>
@@ -157,6 +163,19 @@ tr td:first-child {
              <textarea name="notiBody" rows="4" cols="50" placeholder="알림 타이틀" ></textarea> <br />
              <textarea name="message" rows="4" cols="50" placeholder="알림 메세지" ></textarea> <br />
              <input type="submit" value="보내기" />
+=======
+         
+<!--          	<button><a href="../android/class/Chat.do" class="button primary">안드로이드 채팅</a></button> -->
+         
+         
+      </div>
+<%--       <form:form action="../class/FCMSender.do" method="post">
+      	<button>푸시보내기</button>
+      	   	 <input type="text" name="notiTitle" placeholder="알림 타이틀" /> <br />
+		   	 <textarea name="notiBody" rows="4" cols="50" placeholder="알림 타이틀" ></textarea> <br />
+		   	 <textarea name="message" rows="4" cols="50" placeholder="알림 메세지" ></textarea> <br />
+		   	 <input type="submit" value="보내기" />
+>>>>>>> master
       </form:form> --%>
       
       <div class="col-sm-4">
