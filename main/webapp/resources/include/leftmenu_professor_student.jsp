@@ -36,7 +36,7 @@
 				
 				<!-- 기존 코스★★★★★ -->
 					<a href="professorinfo.do" class="list-group-item" >
-						<i class="fas fa-archive" id="icon">&nbsp&nbsp</i>
+						<i class="fas fa-arrow-alt-circle-left" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">뒤로 가기</span>
 					</a>
 					

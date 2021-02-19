@@ -13,7 +13,7 @@
 	<div id="main">
 	<br /><br />
 	<div style="text-align:center; font-weight:bold; font-size:25px">
-		<i class="fas fa-question-circle" style="padding-right:5px;"></i>
+		<i class="fas fa-check-circle" style="padding-right:5px;"></i>
 		공지사항</div>
 		<!-- ### 게시판의 body 부분 start ### -->
 		<div style="padding: 10px;">

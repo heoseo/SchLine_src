@@ -352,10 +352,10 @@ $('.profile-img').on('click', function () {
 
 <!-- 채팅 출력창 -->
 <div id="messageWindow" class="border border-primary"
-   style="height: 500px; overflow: auto; padding: 20px;">
+   style="height: 500px; overflow: auto; padding: 20px; border-radius: 5px; border-color: #145374">
 </div>
 
-<table class="table table-bordered"
+<table class="table table-bordered table-hover table-striped"
    style="min-width: 0; width: 100%; max-height: 100%">
    <!-- 히든폼으로 사용자정보 가져오기 -->
    <form:form id="peopleFrm">
@@ -370,7 +370,7 @@ $('.profile-img').on('click', function () {
          class="form-control float-left mr-1" placeholder="채팅내용을 입력하세요."
          onkeyup="enterkey();" style="min-width: 0; width: 78%;" />
          <button id="sendBtn" onclick="return send();"
-            style="min-width: 0; width: 20%; min-height: 0; height: 45px; font-size: 0.7em;">send</button>
+            style="min-width: 0; width: 20%; min-height: 0; height: 45px; font-size: 0.7em;"><i class="fas fa-paper-plane" style="font-size: 2em"></i></button>
          <!--          <input type="button" id="sendBtn" onclick="send();" value="전송" class="btn btn-info float-left" /> -->
       </td>
    </tr>

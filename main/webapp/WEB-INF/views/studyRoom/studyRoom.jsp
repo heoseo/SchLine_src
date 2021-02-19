@@ -126,18 +126,16 @@ tr td:first-child {
 <%--    <jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 --> --%>
 <div id="main" class="container-fluid" style="text-align: center;"> 
 
-   <hr />
-
    <!-- 페이지 레이아웃 구분 클래스 생성 -->
-   <br />
    <div class="container">
+   <br /><br />
    <div class="row">
       <div class="col-sm-5">
          <form:form action="../class/studyRoomChat.do" method="post" onsubmit="return btn1();">
             <!-- 사진안에 글씨작성 -->
             <div class="entry" class="image">
-               <br />
-               <b>온라인 도서관</b><br /><br />
+               
+               <b style="font-weight:bold; color: #145374; font-size: 1.2em">온라인 도서관</b><br /><br />
 			                대학친구들과 함께 공부하는 느낌<br />
 			                입장하시겠습니까 ?<br /><br />
                <br />
@@ -165,7 +163,7 @@ tr td:first-child {
       
       <div class="col-sm-4">
          <!-- 프로필 -->
-         <table style="font-size: 0.8em">
+		 <table class="table table-bordered table-hover table-striped" style="font-size: 0.8em">
             <tr>
                <!--          <td><b>프로필</b></td> -->
                <td style="font-weight: bold;" colspan="3">내 프로필</td>
@@ -242,10 +240,10 @@ tr td:first-child {
       
       
       <div class="col-sm-3">
-         <table style="font-size: 0.8em">
+	   <table class="table table-bordered table-hover table-striped" style="font-size: 0.8em">
             <tr>
 <%--                <td colspan="3"><%=month%>월 랭킹</td> --%>
-               <td colspan="3">랭킹</td>
+               <td colspan="3"><i class="fas fa-trophy">&nbsp;&nbsp;</i>랭킹</td>
             </tr>
             <tr style="font-weight: bold;">
                <td>등수</td>
