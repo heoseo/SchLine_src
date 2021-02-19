@@ -16,9 +16,9 @@
 <script>
 $(function () {
 	$('#datetimepicker1').datetimepicker({
-		format: 'L'}); 
+		dateFormat: 'yy-mm-dd'}); 
 		$('#datetimepicker2').datetimepicker({
-			format: 'L', useCurrent: false
+			dateFormat: 'yy-mm-dd', useCurrent: false
 	}); 
 	$("#datetimepicker1").on("change.datetimepicker", 
 		function (e) {

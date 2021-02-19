@@ -43,7 +43,7 @@
 
 	<!-- 시험정보 입력 -->
 	<update id="insertExam">
-		UPDATE exam_tb SET exam_content=#{1}, exam_date=to_date(#{2}, 'mm/dd/yyyy')
+		UPDATE exam_tb SET exam_content=#{1}, exam_date=to_date(#{2}, 'mm/dd/yyyy hh24:mi')
 		, exam_scoring=#{3} where subject_idx=#{0} AND exam_idx=#{4}
 	</update>
 	<!-- 문제정보 입력 -->
@@ -80,7 +80,7 @@
 	<!-- 과제 입력 -->
 	<insert id="insertTask">
 		INSERT INTO exam_tb (exam_idx, subject_idx, exam_name, exam_date, exam_type, exam_content, exam_scoring)
-		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy'), '1', #{3}, #{4})
+		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy hh24:mi'), '1', #{3}, #{4})
 	</insert>
 	<!-- 과제 및 시험 입력 후 해당 인덱스로.. 수강중인 학생들의 체크리스트 insert-->
 	<insert id="insertCheckList" parameterType="schline.ExamDTO">
