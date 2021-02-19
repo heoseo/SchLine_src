@@ -85,15 +85,37 @@
 		<!-- 4. 과제함 -->
 		<section id="homework" class="main special">
 			<header class="major">
-				<h2>과제함</h2>
-				<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-				posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
+				<h2 style="font-weight:bold; padding-top: 0px">과제함</h2>
 			</header>
-			<footer class="major">
-				<ul class="actions special">
-					<li><a href="generic.html" class="button primary">Get Started</a></li>
-					<li><a href="generic.html" class="button">Learn More</a></li>
-				</ul>
+		<div class="table-wrapper" style="height:400px; overflow:auto;">
+			<table class="alt" style="text-align:center">
+				<tr>
+					<td style="width:18%;">과제명</td>
+					<td>과제 내용</td>	
+					<td style="width:12%">마감일</td>
+					<td style="width:12%">제출여부</td>
+					<td style="width:10%">과제함이동</td>
+				</tr>
+			<c:forEach items="${examlist }" var="trow" varStatus="tloop">
+				<tr>
+					<td style="width:18%;" >${trow.exam_name }</td>
+					<td style="text-align:left; overflow:hidden;">${trow.exam_content }</td>	
+					<td style="width:12%">${trow.exam_date }</td>
+					<td style="width:12%">
+					<c:choose>
+					<c:when test="${trow.check_flag eq 0 }">미제출</c:when>
+					<c:otherwise>제출완료</c:otherwise>
+					</c:choose>					
+					</td>
+					<td style="width:10%">
+					<a href="/schline/class/taskList.do?subject_idx=${trow.subject_idx}&exam_type=1" class="button primary">
+					이동하기
+					</td>
+				</tr>
+				
+			</c:forEach>
+			</table>
+		</div>
 			</footer>
 		</section>
 		
