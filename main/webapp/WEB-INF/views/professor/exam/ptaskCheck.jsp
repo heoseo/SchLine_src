@@ -46,27 +46,27 @@ function taskscoring(){
 						<td style="width:15%">(제출일)<br/>${trow.board_postdate }</td>
 						<td style="width:5%">
 					<c:if test="${not empty trow.board_file }">
-						<a href="teamDownload.do?board_file=${trow.board_file }">
+						<a href="teamDownload.do?board_file=${trow.board_file }&downParam=task">
 						<img src="../resources/images/download.png" alt="download" style="max-width:100%; height:auto;"/>
 						</a>
 					</c:if>	
 						</td>
 					</tr>
 					<tr>
-					<td style="width:10%">내용</td>
-					<td colspan="4">
-					${trow.board_content }
-					</td>
+						<td style="width:10%">내용</td>
+						<td colspan="4">
+						${trow.board_content }
+						</td>
 					</tr>
 					<tr>
-					<form:form method="post" action="taskScoring.do" onsubmit="return taskscoring();">
-					<td colspan="6" style="width:10%">[${trow.user_name }] 학생의 과제점수 &ensp;:&ensp; 
-					<input type="number" name="score" style="width:100px;"/>&ensp;
-					<input type="submit" class="button small primary" style="margin-top:5px; font-size:0.8em" value="배점">
-					<input type="hidden" name="user_id" value="${trow.user_id }" />
-					<input type="hidden" name="exam_idx" value="${trow.exam_idx }" />
-					</td>
-					</form:form>
+						<form:form method="post" action="taskScoring.do" onsubmit="return taskscoring();">
+							<td colspan="6" style="width:10%">[${trow.user_name }] 학생의 과제점수 &ensp;:&ensp; 
+								<input type="number" name="score" style="width:100px;"/>&ensp;
+								<input type="submit" class="button small primary" style="margin-top:5px; font-size:0.8em" value="배점">
+								<input type="hidden" name="user_id" value="${trow.user_id }" />
+								<input type="hidden" name="exam_idx" value="${trow.exam_idx }" />
+							</td>
+						</form:form>
 					</tr>
 					<tr><td colspan="6"></td></tr>
 				</c:forEach>
@@ -74,17 +74,11 @@ function taskscoring(){
 		</c:choose>
 		</table>
 		<div>
-			<div class="row  mr-1">
-				<div class="col-10">
+			<div class="col-12">
 					<ul class='pagination justify-content-center'>
 						${pagingImg }
 					</ul>
-				</div>
-				<div class="col-2 text-right pr-3">					
-					<input type="button" class="button primary"
-				 onclick="location.href='teamWrite.do?subject_idx=${param.subject_idx}&team_num=${param.team_num }'" value="작성" style="min-width:0"/>
 				</div>	
-			</div>
 		</div>
 	</div>
 	</div>

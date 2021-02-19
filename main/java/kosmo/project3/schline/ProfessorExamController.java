@@ -46,11 +46,19 @@ public class ProfessorExamController {
 		
 		//아이디로 문제 리스트 가져오기(교수)
 		ArrayList<ExamDTO> pexamlist = sqlSession.getMapper(SchlineDAOImpl.class)
-				.pexamList(user_id);
+				.pexamlist(user_id);
+		
+		ArrayList<ExamDTO> pinexamList = sqlSession.getMapper(SchlineDAOImpl.class)
+				.pinexamList(user_id);
+		
+		if(req.getParameter("exam_idx")!=null) {
+			model.addAttribute("exam_idx", req.getParameter("exam_idx"));
+		}
+		
 		//시험타입(2)
 		String exam_type = "2";
 		ArrayList<ExamDTO> questionlist = null;
-		for(ExamDTO dto : pexamlist) {
+		for(ExamDTO dto : pinexamList) {
 			
 			String temp = dto.getQuestion_content().replace("\r\n", "<br/>");
 			dto.setQuestion_content(temp);
@@ -70,6 +78,7 @@ public class ProfessorExamController {
 		}
 		model.addAttribute("exam_type", exam_type);
 		model.addAttribute("questionlist", questionlist);
+		model.addAttribute("pinexamList", pinexamList);
 		model.addAttribute("pexamlist", pexamlist);
 		
 		return "/professor/exam/pexamlist";
@@ -80,26 +89,30 @@ public class ProfessorExamController {
 		
 		String user_id = principal.getName();
 
-		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(user_id);
-		String exam_name = req.getParameter("exam_name");
+		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(user_id).toString();
+		System.out.println(subject_idx);
+		String exam_idx = req.getParameter("exam_idx");
+		System.out.println(exam_idx);
+		String exam_content = req.getParameter("exam_content");
 		String exam_date = req.getParameter("exam_date");
 		int exam_scoring = Integer.parseInt(req.getParameter("exam_scoring"));
-		System.out.printf("시험이름:%s, 마감일:%s, 총배점:%s, 과목:%s", exam_name, exam_date, exam_scoring, subject_idx);
+		System.out.printf("시험이름:%s, 마감일:%s, 총배점:%s, 과목:%s", exam_content, exam_date, exam_scoring, subject_idx);
 		int result = sqlSession.getMapper(SchlineDAOImpl.class)
-				.insertExam(subject_idx, exam_name, exam_date, exam_scoring);
-		
-		if(result!=0) {
-		
-			String exam_idx = sqlSession.getMapper(SchlineDAOImpl.class).getExam_idx(subject_idx);
-			//insertCheckList 메소드 호출하여 학생 체크리스트 insert
-			insertCheckList(subject_idx, exam_idx);
-			
-			System.out.println("시험일련번호:"+exam_idx);
-			model.addAttribute("exam_idx", exam_idx);
-		}
-		else {
-			System.out.println("뭔가 실패");
-		}
+				.insertExam(subject_idx, exam_content, exam_date, exam_scoring, exam_idx);
+		System.out.println("시험일련번호:"+exam_idx);
+//		if(result!=0) {
+//		
+//			String exam_idx = sqlSession.getMapper(SchlineDAOImpl.class).getExam_idx(subject_idx);
+//			//insertCheckList 메소드 호출하여 학생 체크리스트 insert
+//			insertCheckList(subject_idx, exam_idx);
+//			
+//			
+//			model.addAttribute("exam_idx", exam_idx);
+//		}
+//		else {
+//			System.out.println("뭔가 실패");
+//		}
+		model.addAttribute("exam_idx", exam_idx);
 		
 		return "/professor/exam/pexamwrite";
 	}
@@ -188,16 +201,17 @@ public class ProfessorExamController {
 			String exam_idx = sqlSession.getMapper(SchlineDAOImpl.class).getExam_idx(subject_idx);
 			//insertCheckList 메소드 호출하여 학생 체크리스트 insert
 			insertCheckList(subject_idx, exam_idx);
-			
-			model.addAttribute("msg", "과제를 작성했습니다.");
-			model.addAttribute("url", "/schline/professor/ptaskList.do");
+			System.out.println("과제등록 성공");
+//			model.addAttribute("msg", "과제를 작성했습니다.");
+//			model.addAttribute("url", "/schline/professor/ptaskList.do");
 		}
 		else {
-			model.addAttribute("msg", "작성에 실패했습니다.");
-			model.addAttribute("url", "/schline/professor/ptaskList.do");
-		}
+			System.out.println("과제등록 실패");
+//			model.addAttribute("msg", "작성에 실패했습니다.");
+//			model.addAttribute("url", "/schline/professor/ptaskList.do");
+	}
 		
-		return "/professor/exam/alert";
+		return "redirect:/professor/ptaskList.do";
 	}
 	
 	@RequestMapping("/professor/ptaskDelete.do")
@@ -223,12 +237,12 @@ public class ProfessorExamController {
 			System.out.println(result);
 			
 			if(result==1) {
-				model.addAttribute("msg", "삭제에 성공했습니다.");
-				model.addAttribute("url", "/schline/professor/ptaskList.do");
+				System.out.println("과제 삭제성공");
+				return "redirect:/professor/ptaskList.do";
 			}
 			else {
-				model.addAttribute("msg", "삭제에 실패했습니다.");
-				model.addAttribute("url", "/schline/professor/ptaskList.do");
+				System.out.println("시험 삭제실패");
+				return "redirect:/professor/ptaskList.do";
 			}
 		}
 		else {
@@ -255,16 +269,16 @@ public class ProfessorExamController {
 			}
 
 			if(result==1) {
-				model.addAttribute("msg", "삭제에 성공했습니다.");
-				model.addAttribute("url", "/schline/professor/pexamlist.do");
+				System.out.println("시험 삭제성공");
+				return "redirect:/professor/pexamlist.do";
 			}
 			else {
-				model.addAttribute("msg", "삭제에 실패했습니다.");
-				model.addAttribute("url", "/schline/professor/pexamlist.do");
+				System.out.println("시험 삭제실패");
+				return "redirect:/professor/pexamlist.do";
 			}
 			
 		}
-		return "/professor/exam/alert";
+		
 	}
 	
 	@RequestMapping("/professor/ptaskEdit.do")
@@ -313,9 +327,52 @@ public class ProfessorExamController {
 	
 	////////////////////////////관리 선택///////////////////////////////////////
 	@RequestMapping("/professor/select.do")
-	public String pselect(Model model, HttpServletRequest req) {
+	public String pselect(Model model, HttpServletRequest req, Principal principal) {
+		
+		//유저아이디
+		String user_id = principal.getName();
+		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(user_id);
+		System.out.println("과목 인덱스 : "+subject_idx);
+		
+		ArrayList<UserVO> userlist =
+				sqlSession.getMapper(SchlineDAOImpl.class).getuserNames(subject_idx);
+		
+		model.addAttribute("userlist", userlist);
 		
 		return "/professor/team/pselect";
+	}
+	
+	@RequestMapping("/professor/teamChange.do")
+	@ResponseBody
+	public Map<String, Object> teamChange(HttpServletRequest req, Principal principal) {
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		//유저아이디
+		String user_id = principal.getName();
+		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(user_id);
+		System.out.println("과목 인덱스 : "+subject_idx);
+		//학생아이디
+		String stu_id="";
+		//팀번호
+		String team_num="";
+		
+		stu_id = req.getParameter("id");			
+		team_num = req.getParameter("team_num");
+		System.out.println(stu_id+' '+team_num);
+		//팀배정하기
+		if(req.getParameter("id")!=null&&req.getParameter("team_num")!=null) {
+			int result = sqlSession.getMapper(SchlineDAOImpl.class)
+					.changeTeam(stu_id, team_num, subject_idx);
+			map.put("result", result);
+			System.out.println("수정결과:"+result); 
+		}
+		else {
+			System.out.println("수정실패");
+			map.put("result", 0);
+		}
+
+		
+		return map;
 	}
 	////////////////////////////과제 관리///////////////////////////////////////
 	////////////////////////////협업쪽 관리///////////////////////////////////////
@@ -408,7 +465,14 @@ public class ProfessorExamController {
 	@RequestMapping("/professor/teamDownload.do")
 	public void teamDownload (HttpServletRequest req, HttpServletResponse resp) {
 		
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = "";
+		if(req.getParameter("downParam")!=null&&req.getParameter("downParam").equals("task")) {
+			path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/task");
+		}
+		else {
+			path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");			
+		}
+		
 		String file_name = req.getParameter("board_file");
 		
 		//다운로드 메소드 호출
@@ -437,16 +501,12 @@ public class ProfessorExamController {
 		return "/professor/team/pteamWrite";
 	}
 	
-	
-
-	
-	
 	@RequestMapping(value="/professor/teamWriteAction.do", method=RequestMethod.POST)
 	public String teamWriteAction(Model model, MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
 		String user_id = principal.getName();
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 		System.out.println(path);
 		 
 		//과목idx
@@ -559,7 +619,7 @@ public class ProfessorExamController {
 		int result = sqlSession.getMapper(SchlineDAOImpl.class).teamDelete(board_idx, user_id);
 		System.out.println("결과값:"+result);
 		if(!req.getParameter("board_file").equals("")) {
-			String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+			String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 			
 			deleteFile(path, board_file);
 		}
@@ -613,7 +673,7 @@ public class ProfessorExamController {
 	public String teamEditAction(Model model, MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 		System.out.println(path);
 		String team_num = req.getParameter("team_num");
 		System.out.println("수정용 팀번호:"+team_num);
@@ -920,10 +980,10 @@ public class ProfessorExamController {
 		System.out.println(user_id+" "+question_score+" "+exam_idx);
 	
 		//점수반영을 위한 인덱스 추출 및 점수 증가
-		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, "2");
-		String exam_idx_score = examidxs.get(0).toString();
-		System.out.println("주관식용 인덱스:"+exam_idx_score);
-		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(question_score, user_id, exam_idx_score);
+//		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class).getExamidx(subject_idx, "2");
+//		String exam_idx_score = examidxs.get(0).toString();
+//		System.out.println("주관식용 인덱스:"+exam_idx_score);
+		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(question_score, user_id, exam_idx);
 		System.out.println("점수반영 성공");
 
 		return "redirect:examCheck.do?id="+user_id;
@@ -932,17 +992,24 @@ public class ProfessorExamController {
 	@RequestMapping("/professor/taskScoring.do")
 	public String taskScoring(Model model, HttpServletRequest req, Principal principal) {
 		
+		//교수아이디로
+		String pro_id = principal.getName();
+		//과목을 얻어온 후
+		String subject_idx = sqlSession.getMapper(SchlineDAOImpl.class).getSubject_idx(pro_id);
+		String exam_type = "1";
 		String user_id = req.getParameter("user_id");
 		String grade_exam = req.getParameter("score");
 		String exam_idx = req.getParameter("exam_idx");
 		System.out.println("과제idx:"+exam_idx);
+		ArrayList<Integer> score_exam_idx = sqlSession.getMapper(SchlineDAOImpl.class)
+				.getExamidx(subject_idx, exam_type);
+		String examidxStr = score_exam_idx.get(0).toString();
+		System.out.println("반영할 idx는?:"+examidxStr);
 		
-		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(grade_exam, user_id, exam_idx);
+		sqlSession.getMapper(SchlineDAOImpl.class).gradeUp(grade_exam, user_id, examidxStr);
 		
 		return "redirect:taskCheck.do";
 	}
-	
-	
 	
 	//////기타 유틸 등....////////////
 	
