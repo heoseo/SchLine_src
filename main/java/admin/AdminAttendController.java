@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import admin.model.AttendListCommand;
 import admin.model.UserListCommand;
 import schline.util.JdbcTemplateConst;
 
@@ -45,10 +46,10 @@ public class AdminAttendController {
 		model.addAttribute("req", req);
 		
 
-		command = new UserListCommand();
+		command = new AttendListCommand();
 		command.execute(model);
 		
-		return "admin/user/userList";
+		return "admin/attend/attendList";
 	}
 	
 	
