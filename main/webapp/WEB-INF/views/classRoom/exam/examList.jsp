@@ -179,7 +179,7 @@ $(function(){
 	
 	<hr /><%-- 구분자 --%>
 	<p style="text-align:center; font-size:1.2em">${subject_name } 과제</p>
-		<div class="table-wrapper">
+		<div>
 			<table class="alt" style="text-align:center">
 				
 				<tr>

@@ -7,6 +7,7 @@
 <head>
 <title>알림</title>
 <!-- 상단 인클루드 -->
+<%@ include file="/resources/include/top_professor.jsp"%>
 
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -50,9 +51,19 @@
 
 <!-- body 시작 -->
 <body class="is-preload">	
+<br />
+<div style="background:white;">
 <!-- 페이지 제목 -->
 <br />
-	<h3 style="text-align:center; font-weight:bold;">공지사항</h3>
+	<h3 style="text-align:center; font-weight:bold; font-size:1.2em">
+	<i class="fas fa-check-circle" style="padding-right:5px;"></i>
+	공지사항</h3>
+	<div class="col text-left">
+		<button type="button" class="btn btn-default" style="font-weight:bold; color:#145374 "
+			onclick="location.href='notiBoardList.do?nowPage=${nowPage}';">
+			<i class="fas fa-arrow-alt-circle-left" id="icon">&nbsp&nbsp</i>
+			뒤로가기</button>
+	</div>
 	<!-- 읽은 공지사항 리스트 출력하기 -->
 	<c:forEach items="${getNotiView }" var="row">
 			<!-- 

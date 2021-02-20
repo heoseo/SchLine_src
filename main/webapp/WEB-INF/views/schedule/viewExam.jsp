@@ -6,6 +6,8 @@
 <html>
 <head>
 <title>과제/시험</title>
+<!-- 상단 인클루드 -->
+<%@ include file="/resources/include/top.jsp"%>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -25,7 +27,7 @@
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>	
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
-]			
+			
 	
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
@@ -86,26 +88,39 @@ jQuery(document).ready(function($) {
 
 <!-- body 시작 -->
 <body class="is-preload">
-
+	<!-- 왼쪽메뉴 include -->
+	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
+	<hr />
 <!-- 읽은 공지사항 리스트 출력하기 -->
 <c:forEach items="${viewList }" var="row">
 
 <!-- 페이지제목 -->
-<br />
+	<div id="row" class="col-lg-12">
+
 <c:choose>
 	<c:when test="${row.exam_type == 1}">
-	<h2 style="text-align:center; font-weight:bold; color:black;">과제</h2>
+	<h2 style="text-align:center; font-weight:bold;">
+	<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>과제</h2>
 	</c:when>
 	<c:otherwise>
+		<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>
 		<h2 style="text-align:center; font-weight:bold; color:black;">시험</h2>
  	</c:otherwise>
 </c:choose>	
-<br />
 <!-- 게시물 -->
-	<div id="row" class="col-lg-12">
+
 		<table class="table table-bordered table-hover table-striped">
+		<colgroup>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+			<col width="20%"/>
+		</colgroup>
+		<tr>
 			<tr>
-				<th class="text-center table-active align-middle">구분</th>
+				<th class="text-center table-hover align-middle">구분</th>
 			<c:choose>
 			  	<c:when test="${row.exam_type == 1}">
 					<td>과제</td>
@@ -114,25 +129,25 @@ jQuery(document).ready(function($) {
 		    		<td>시험</td>
 			   	</c:otherwise>
 			 </c:choose>	
-				<th class="text-center table-active align-middle" style="color:#DC143C">마감일</th>
+				<th class="text-center table-hover align-middle" style="color:#DC143C">마감일</th>
 				<td>${row.exam_date }</td>					
 			</tr>
 			<tr>
-				<th class="text-center table-active align-middle">작성자</th>
+				<th class="text-center table-hover align-middle">작성자</th>
 				<td>${row.user_name }</td>
-				<th class="text-center table-active align-middle">작성일</th>
+				<th class="text-center table-hover align-middle">작성일</th>
 				<td>${row.exam_postdate }</td>
 			</tr>
 			<tr>
-				<th class="text-center table-active align-middle">제목</th>
+				<th class="text-center table-hover align-middle">제목</th>
 				<td>
 					${row.exam_name }
 				</td>
-				<th class="text-center table-active align-middle">배점</th>
+				<th class="text-center table-hover align-middle">배점</th>
 				<td>${row.exam_scoring }</td>
 			</tr>
 			<tr>
-				<th class="text-center table-active align-middle">내용</th>
+				<th class="text-center table-hover align-middle">내용</th>
 				<td colspan="3" class="align-middle" style="height:200px;">
 					${row.exam_content }
 				</td>

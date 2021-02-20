@@ -355,5 +355,6 @@ document.oncontextmenu = function() {
    <jsp:include page="/resources/include/bottom.jsp" />
 </body>
 
-<jsp:include page="/resources/include/footer.jsp" />
+<br /><br />
+<br /><br />
 </html>

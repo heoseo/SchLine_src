@@ -72,7 +72,7 @@ function paging(nowPage){
 					</c:choose>
 					</td>
 					<td>
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}" target="_blank">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>
