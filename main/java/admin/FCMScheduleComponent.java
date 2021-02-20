@@ -27,7 +27,7 @@ public class FCMScheduleComponent {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Scheduled(cron = "0/40 * * * * *") //40초 마다 호출
+	@Scheduled(cron = "0/50 * * * * *") //50초 마다 호출
 	public void autoUpdate() throws UnsupportedEncodingException {
 		
 		// 날짜시간에 대한 포맷 지정
