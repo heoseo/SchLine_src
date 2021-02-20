@@ -20,18 +20,10 @@
 <!-- 왼쪽메뉴 include -->
 
 <jsp:include page="/resources/include/leftmenu_professor_student.jsp"/><!-- flag구분예정 -->
-<<<<<<< HEAD
-
-   <table>
-	<div style="text-align: center;">
-      <small>출결</small>
-    </div>
-=======
 <div>
 
    <hr /><!-- 구분자 -->
 	<table class="table table-bordered table-hover table-striped" style="font-size:15px;">	
->>>>>>> master
 		<c:choose>	
 			
 			<c:when test="${empty attenlists }">
