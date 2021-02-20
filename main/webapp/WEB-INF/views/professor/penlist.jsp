@@ -14,10 +14,23 @@
 
 <div style="background: white;">
    	
-   	<hr /><!-- 구분자 -->
+	<br /><br />
+   	<div style="text-align: center;"> <!-- ${viewRow.board_type  } -->
+      	<small style="font-size:1.2em; font-weight:bold;">
+		  <c:choose>
+		   <c:when test="${board_type eq 'red'}">
+		     <i class="fas fa-edit"></i>&nbsp;&nbsp;정정게시판
+		   </c:when>
+		   <c:otherwise>
+		     <i class="fas fa-question-circle"></i>&nbsp;&nbsp;질문게시판
+		   </c:otherwise>
+		  </c:choose>
+		</small><!-- flag구분예정-->
+      
+   	</div>
    
 
-   	<div class="row text-right" style="margin-bottom:10px; padding-right:50px;">
+   	<div class="row text-right" style="padding-right:50px;">
 <form:form class="form-inline ml-auto">	
 	<div class="form-group">
 		<select name="searchColumn" id="searchColumn" class="form-control" 
@@ -30,11 +43,12 @@
 		<input type="text" name="searchWord"  class="form-control" placeholder="검색어를 입력하세요"/>
 		<input type="hidden" value="${board_type }" name="board_type" />
 		<div class="input-group-btn">
-			<button type="submit" class="btn btn-info" style="background:#ADD8E6; font-weight:bold;"><i class="fas fa-search" style="font-size:20px"></i></button>
+			<button type="submit" class="btn btn-info" style="background:#ADD8E6; font-weight:bold;">
+			<i class="fas fa-search" style="font-size:20px"></i></button>
 		</div>
 	</div>
 </form:form>
-</div>
+	</div>
 
 	<div class="table-wrapper">
 		<table class="table table-bordered table-hover table-striped">

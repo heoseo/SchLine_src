@@ -30,7 +30,7 @@ function paging(nowPage){
 	<div><!-- mainDiv시작 -->
 		<hr />
 		<div style="text-align:center; font-size:1.2em">
-		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
+		<i class="fas fa-clock" style="padding-right:5px; text-align:center; font-size:1.2em"></i>
 		알림</div>
 		<div id="content"> 
 			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
@@ -71,7 +71,7 @@ function paging(nowPage){
 					</c:choose>
 					</td>
 					<td id="listTitle">
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}" target="_blank">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>

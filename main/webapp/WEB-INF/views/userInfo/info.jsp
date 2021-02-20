@@ -22,7 +22,7 @@
 
 	<table class="table table-bordered table-hover table-striped" style="text-align:center;">
 	<div style="text-align: center;">
-      <small style="font-size:1.2em">개인 정보</small>
+      <small style="font-size:1.2em"><i class="	fas fa-user-alt" id="icon">&nbsp&nbsp</i>개인 정보</small>
     </div>
     <hr />
     	<c:choose >	
