@@ -72,19 +72,14 @@ public class ExamController {
 		if(!exam_type.equals("1")) {
 			
 			
-			
 			//여기에 시험 인덱스에 맞는 리스트를 띄워야 합니다....!!
+			ArrayList<ExamDTO> getexamlist = sqlSession.getMapper(SchlineDAOImpl.class)
+					.getExamlist(subject_idx, exam_type);
 			
+			System.out.println(getexamlist.get(0).getExam_name());
+			System.out.println(getexamlist.size());
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
+			model.addAttribute("getexamlist", getexamlist);
 			
 			returnStr = "/classRoom/exam/examStart";
 		}
@@ -127,10 +122,11 @@ public class ExamController {
 		String user_id = principal.getName();
 		String exam_type = req.getParameter("exam_type");
 		System.out.println(exam_type);
-
+		String exam_idx = req.getParameter("exam_idx");
+		
 		//자바과목의 시험타입 idx들 가져오기..
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
-				.getExamidxs(subject_idx, exam_type);
+				.getExamidxs(subject_idx, exam_type, exam_idx);
 		
 		//플래그 자동입력 후 삭제요망
 		ArrayList<Integer> examidx = sqlSession.getMapper(SchlineDAOImpl.class)
@@ -153,7 +149,7 @@ public class ExamController {
 			Map<String, ArrayList<Integer>> map = new HashMap<String, ArrayList<Integer>>();
 			map.put("examidxs", examidxs);
 			
-			//문제 인덱스를 담은 맵을 매퍼로 전달하여 쿼리문 실행(난이도별 추출)
+			//문제 인덱스를 담은 맵을 매퍼로 전달하여 쿼리문 실행(배점별 추출)
 			ArrayList<ExamDTO> examlist = 
 					sqlSession.getMapper(SchlineDAOImpl.class).examlist(map);
 			ClassDTO classdto = sqlSession.getMapper(SchlineDAOImpl.class)
@@ -362,7 +358,7 @@ public class ExamController {
 	public Map<String, Object> taskWriteAction(MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/task");
 		System.out.println(path);
 		
 		//파일 insert 결과를 확인하기 위한 수
@@ -499,7 +495,5 @@ public class ExamController {
 		
 		return "/main/totalTask";
 	}
-	
-	
 
 }

@@ -36,8 +36,6 @@
 				
 			</c:forEach>
 			</table>
-			<%-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, --%>
-			<div id="taskWrite"></div>
 		</div>
 
  <jsp:include page="/resources/include/bottom.jsp" />

@@ -15,8 +15,9 @@ public interface SchlineDAOImpl {
 	public ExamDTO getExam(String subject_idx, String exam_idx);
 	public ExamBoardDTO getView(String board_idx);
 	public int getCheck(Integer exam_idx, String user_id);
+	public ArrayList<ExamDTO> getExamlist(String subject_idx, String exam_type);
 	public ArrayList<Integer> getExamidx(String subject_idx, String exam_type);
-	public ArrayList<Integer> getExamidxs(String subject_idx, String exam_type);
+	public ArrayList<Integer> getExamidxs(String subject_idx, String exam_type, String exam_idx);
 	
 	//시험타입으로 문제리스트 가져오기
 	public ArrayList<ExamDTO> examlist(Map examidxs);
@@ -25,6 +26,8 @@ public interface SchlineDAOImpl {
 	public ArrayList<ExamDTO> tasklist(String exam_case, String subject_idx, String user_id);
 	//종합과제함 가져오기
 	public ArrayList<ExamDTO> getAllTask(String subject_idx);
+	//메인 과제함
+	public ArrayList<ExamDTO> getMainTask(String User_id);
 	//팀번호 가져오기
 	public String getTeamNum(String user_id, String subject_idx);
 	//협업게시판 리스트 가져오기
@@ -78,12 +81,13 @@ public interface SchlineDAOImpl {
 	///////////////////// 교수페이지 처리 ////////////////////
 
 	//해당 아이디가 담당하는 과목의 문제리스트 가져오기...
-	public ArrayList<ExamDTO> pexamList(String user_id);
+	public ArrayList<ExamDTO> pexamlist(String user_id);
+	public ArrayList<ExamDTO> pinexamList(String user_id);
 	public ArrayList<ExamDTO> ptasklist(String exam_type, String subejct_idx);
 	//객관식
 	public ArrayList<ExamDTO> pquestionlist(String user_id);
 	//문제입력
-	public int insertExam(String subject_idx, String exam_name, String exam_date, int exam_scoring);
+	public int insertExam(String subject_idx, String exam_name, String exam_date, int exam_scoring, String exam_idx);
 	public String getSubject_idx(String user_id);
 	public String getExam_idx(String subject_idx);
 	public int insertQuestion(String exam_idx, String question_type, String answer, String question_score, String question_content);
@@ -110,5 +114,7 @@ public interface SchlineDAOImpl {
 	public ArrayList<ExamDTO> examCheckList(String subject_idx, String user_id);
 	//수강생리스트
 	public ArrayList<UserVO> getuserNames(String subject_idx);
+	//팀변경
+	public int changeTeam(String user_id, String team_num, String subject_idx);
 }
 
