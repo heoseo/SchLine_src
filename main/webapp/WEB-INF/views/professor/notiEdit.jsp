@@ -47,18 +47,12 @@
 </script>
 </head>
 
-<!-- 메인 로고 이미지 -->
-<div align="center">
-<br /> 
-	<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-		<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="200px" alt="스쿨라인 로고" />
-	</a>
-<br />
-</div>
 
 <!-- body 시작 -->
 <body class="is-preload">	
-
+<!-- 페이지 제목 -->
+<br />
+	<h3 style="text-align:center; font-weight:bold;">공지사항</h3>
 	<!-- 읽은 공지사항 리스트 출력하기 -->
 	<c:forEach items="${getNotiView }" var="row">
 			<!-- 
@@ -68,11 +62,11 @@
 			<form:form name="writeFrm" method="post" action="./notiEditAction.do?${_csrf.parameterName}=${_csrf.token}" 
 				onsubmit="return checkValidate(this);"
 				enctype="multipart/form-data">
-				<input type="hid-den" name="board_idx" value="${row.board_idx}" />
-			<table class="table table-bordered table-hover table-striped" style="font-weight:bold;">
+				<input type="hidden" name="board_idx" value="${row.board_idx}" />
+			<table class="table table-bordered table-hover table-striped">	
 				<tr>
-					<th class="text-center table-active align-middle" style="color:#145374">과목명</th>
-					<td>${row.subject_name }</td>
+					<th class="text-center table-active align-middle" style="color:#145374">작성자</th>
+					<td>${row.user_name }</td>
 					<th class="text-center table-active align-middle">작성일</th>
 					<td>${row.board_postdate }</td>
 				</tr>
@@ -102,10 +96,10 @@
 				</tr>
 			</table>
 			<div class="row mb-3">
-				<div class="col-6" style="text-align: right;"> 
-					<button type="submit" class="btn btn-danger" style="font-weight:bold;">전송하기</button>
-					<button type="reset" class="btn btn-dark" style="font-weight:bold;">Reset</button>
-					<button type="button" class="btn btn-warning" style="font-weight:bold;"
+				<div class="col-12" style="text-align:right; padding-right:30px;"> 
+					<button type="submit" class="btn btn-light" style="font-weight:bold;">전송하기</button>
+					<button type="reset" class="btn btn-light" style="font-weight:bold;">Reset</button>
+					<button type="button" class="btn btn-light" style="font-weight:bold;"
 						onclick="location.href='notiBoardList.do?nowPage=${param.nowPage }';">
 						리스트보기</button>
 				</div>	
@@ -115,9 +109,5 @@
 </c:forEach>
 <!-- 읽은 공지사항 리스트 끝.-->
 
-	<jsp:include page="/resources/include/bottom.jsp" />
 </body>
-
-<!-- 하단 인클루드 -->
-<jsp:include page="/resources/include/footer.jsp" />
 </html>

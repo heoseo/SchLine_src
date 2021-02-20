@@ -24,7 +24,8 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>	
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-						
+			<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.0/jquery-ui.min.js"></script>
+]			
 	
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
@@ -43,7 +44,44 @@ padding: 10px;
 align-content: center;
 border-radius: 5px;
 }
+#taskWrite{
+border-radius: 5px;
+margin: 50px;
+padding-top: 20px;
+}
 </style>
+<script>
+function taskWrite(subject_idx, exam_idx){
+	
+	$.ajax({
+		url : "/schline/class/examStart.do?subject_idx="+subject_idx+"&exam_idx="+exam_idx,
+		type : "post",
+		beforeSend : function(xhr){
+            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+           },
+		data : {"subject_idx" : subject_idx, "exam_type" : 1, "exam_idx" : exam_idx},
+		dataType : "html",
+		contentType : "application/x-www-form-urlencoded;chatset:utf-8",
+		success : function(Data){
+			$("#taskWrite").html(Data);
+		},
+		error : function(e){
+			alert("실패"+e);
+		}
+	});	
+}
+jQuery(document).ready(function($) {
+
+	$(".scroll").click(function(event){            
+
+	event.preventDefault();
+
+	$('html,body').animate({scrollTop:$(this.hash).offset().top}, 500);
+
+	});
+
+});
+</script>
 </head>
 
 <!-- body 시작 -->
@@ -65,7 +103,7 @@ border-radius: 5px;
 <br />
 <!-- 게시물 -->
 	<div id="row" class="col-lg-12">
-		<table class="table table-bordered table-hover table-striped" style="font-weight:bold">
+		<table class="table table-bordered table-hover table-striped">
 			<tr>
 				<th class="text-center table-active align-middle">구분</th>
 			<c:choose>
@@ -102,47 +140,23 @@ border-radius: 5px;
 		</table>
 		<div>
 <c:if  test="${row.exam_type == 1}">				
-			<div style="text-align:right">	
-				<button type="button" class="btn" onclick="taskWrite(${row.subject_idx }, ${row.exam_idx })">
-					제출하기</button>
+			<div style="text-align:right; padding-right:30px">	
+				<a href="#target1" class="scroll">
+				<button type="button" style="font-size:1em; font-weight:bold" class="btn btn-light"
+				 onclick="taskWrite(${row.subject_idx }, ${row.exam_idx })">
+					제출하기</button></a>
 			</div>	
-
 </c:if>				
-		</div>
-	</div><!-- main끝. -->
-	
-<!-- 히든값으로 taskWrite()함수에 메소드에 값넘겨줌. -->
-<%-- <input type="hidden" id="subject_idx">${row.subject_idx }</input> --%>
-<%-- <input type="hidden" id="exam_idx">${row.exam_idx }</input> --%>
-</c:forEach>
-<!-- 게시물 끝.-->
-
-<script>
-function taskWrite(subject_idx, exam_idx){
-	
-	$.ajax({
-		url : "/schline/class/examStart.do?subject_idx="+subject_idx+"&exam_idx="+exam_idx,
-		type : "post",
-		beforeSend : function(xhr){
-            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-           },
-		data : {"subject_idx" : subject_idx, "exam_type" : 1, "exam_idx" : exam_idx},
-		dataType : "html",
-		contentType : "application/x-www-form-urlencoded;chatset:utf-8",
-		success : function(Data){
-			alert(Data);
-			$("#taskWrite").html(Data);
-		},
-		error : function(e){
-			alert("실패"+e);
-		}
-	});	
-}
-</script>
-</head>
-
 <%-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, --%>
-	<div id="taskWrite"></div>
+			<div id="target1">
+				<div id="taskWrite" class="table table-hover table-striped" 
+				style="border-color:#145374; width:90%; padding:30px;">
+				</div>
+			</div>
+		</div>
+			</div><!-- main끝. -->
+<!-- 게시물 끝.-->
+</c:forEach>
 
 </body>
 </html>
