@@ -329,11 +329,11 @@ public class StudyRoomController {
 		
 		
 		//10초마다 정보저장해주는 함수 호출
-		int time = Integer.parseInt(req.getParameter("send_time").toString());
+		//int time = Integer.parseInt(req.getParameter("send_time").toString());
 		
-		int result= sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id, time);
+		int result= sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id);
 		if(result==1) {
-			System.out.println("시간저장 성공");
+			System.out.println(user_id+" 시간저장 성공");
 			map.put("setTime", 1);
 		}
 		return map;

@@ -212,8 +212,8 @@ function ajaxPro(d, ot_nick) {
 
 //채팅종료
 function closeSocket(){
-   send("admin|'${info_nick}'님이 퇴실하셨습니다.");
-      ws.close();
+	send("admin|'${info_nick}'님이 퇴실하셨습니다.");
+   	ws.close();
 }
 
 
