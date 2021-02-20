@@ -61,42 +61,44 @@
 		<div style="text-align: center;">
 	    	<small>사용자 설정</small>
 	    </div>
-	    
-<%-- 	    <form:form name="writeFrm" method="post"  --%>
-<%-- 			action="./notiSetting.do" > --%>
-<!-- 		<tr> -->
-<!-- 			<td>공지 알림 설정</td> -->
-<!-- 			<td> -->
-<!-- 				<input type="radio" name="user_set" value="on" checked/> -->
-<!-- 				<input type="radio" name="user_set" value="off" /> -->
-<!-- 			</td> -->
-<!-- 		</tr> -->
-<!-- 		<tr> -->
-<!-- 			<td colspan="2" align="center"> -->
-<!-- 			<ul class="actions"> -->
-<!-- 				<li><input type="submit" value="전송하기" class="primary" /></li> -->
-<!-- 			</ul> -->
-<!-- 			</td> -->
-<!-- 		</tr> -->
-<%-- 		</form:form> --%>
+
+	 <%--    
+	    <form:form name="writeFrm" method="post" 
+			action="./notiSetting.do" >
+		<tr>
+			<td>공지 알림 설정</td>
+			<td>
+				<input type="radio" name="user_set" value="on" checked/>
+				<input type="radio" name="user_set" value="off" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+			<ul class="actions">
+				<li><input type="submit" value="전송하기" class="primary" /></li>
+			</ul>
+			</td>
+		</tr>
+		</form:form>
 		
-<%-- 		<form:form name="writeFrm" method="post"  --%>
-<%-- 			action="./examSetting.do" > --%>
-<!-- 		<tr> -->
-<!-- 			<td>과제 알림 설정</td> -->
-<!-- 			<td> -->
-<!-- 				<input type="radio" name="user_set" value="on" checked/> -->
-<!-- 				<input type="radio" name="user_set" value="off" /> -->
-<!-- 			</td> -->
-<!-- 		</tr> -->
-<!-- 		<tr> -->
-<!-- 			<td colspan="2" align="center"> -->
-<!-- 			<ul class="actions"> -->
-<!-- 				<li><input type="submit" value="전송하기" class="primary" /></li> -->
-<!-- 			</ul> -->
-<!-- 			</td> -->
-<!-- 		</tr> -->
-<%-- 		</form:form> --%>
+		<form:form name="writeFrm" method="post" 
+			action="./examSetting.do" >
+		<tr>
+			<td>과제 알림 설정</td>
+			<td>
+				<input type="radio" name="user_set" value="on" checked/>
+				<input type="radio" name="user_set" value="off" />
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+			<ul class="actions">
+				<li><input type="submit" value="전송하기" class="primary" /></li>
+			</ul>
+			</td>
+		</tr>
+		</form:form> --%>
+
 		
 		<table class="alt" style="text-align:center">
 		<h5>차단 유저 관리</h5>

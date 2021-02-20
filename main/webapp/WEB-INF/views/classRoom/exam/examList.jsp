@@ -88,7 +88,7 @@ $(function(){
 	</head>
 	<div id="wrapper">
 		<div align="center">
-			<br /><img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" /><br />
+			<br /><img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" /><br />
 		</div>
 	<%-- body 시작 --%>
 		<body class="is-preload">
@@ -151,7 +151,7 @@ $(function(){
 					<br />
 					</form:form>   
 					
-	<%-- 시험 종료시 모달창.. 점수 확인 후 코스리스트로 보내기--%>
+	<%-- 시험 종료시 모달창.. 점수 확인 후 성적페이지로 보내기--%>
 	<div class="modal fade" id="examModal">
 	    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 	        <div class="modal-content" style="text-align:center">
@@ -161,7 +161,7 @@ $(function(){
 	            <div class="modal-body" id="modal_body"></div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-danger" data-dismiss="modal"
-	                onclick="location.href='../'">
+	                onclick="location.href='/schline/class/grade.do?subject_idx=${param.subject_idx}'">
 	                	확인</button>
 	            </div>
 	        </div>

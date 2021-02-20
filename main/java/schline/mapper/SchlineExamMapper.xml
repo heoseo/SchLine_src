@@ -19,7 +19,10 @@
 	</select>
 	<!-- 과목의 시험,과제 정보 가져오기 -->
 	<select id="getExamidxs" resultType="Integer">
-		SELECT exam_idx from exam_tb WHERE subject_idx = #{0} AND exam_type = #{1}
+		SELECT exam_idx from exam_tb WHERE subject_idx = #{0} AND exam_type = #{1} AND exam_idx = #{2}
+	</select>
+	<select id="getExamlist" resultType="schline.ExamDTO">
+		select * from exam_tb where subject_idx=#{0} AND exam_type=#{1} order by exam_idx asc
 	</select>
 	<!-- 과제,시험 플래그 -->
 	<select id="getCheck" resultType="int">
@@ -36,7 +39,7 @@
 	    	</foreach>
 	    	ORDER BY DBMS_RANDOM.RANDOM
 	    	) Tb
-	    WHERE ROWNUM <![CDATA[<=]]> 10 
+	    WHERE ROWNUM <![CDATA[<=]]> 6 
 		UNION
 		SELECT Tb.*, ROWNUM rNum FROM
 			(
@@ -46,7 +49,7 @@
 	    	</foreach>
 	    	ORDER BY DBMS_RANDOM.RANDOM
 	    	)Tb 
-	    WHERE ROWNUM <![CDATA[<=]]> 25) order by DBMS_RANDOM.RANDOM
+	    WHERE ROWNUM <![CDATA[<=]]> 6) order by DBMS_RANDOM.RANDOM
 	
 		<!-- SELECT * FROM(SELECT * FROM exam_tb E 
     		INNER JOIN question_tb Q ON E.exam_idx=Q.exam_idx
@@ -165,5 +168,14 @@
     		JOIN subject_tb S on E.subject_idx = S.subject_idx
 			WHERE exam_type=1 AND E.subject_idx IN (
    		SELECT subject_idx FROM registration_tb	WHERE user_id=#{0})
+	</select>
+	
+	<!-- 메인화면 과제함 리스트 가져오기 -->
+	<select  id="getMainTask" resultType="schline.ExamDTO">
+		select * from examcheck_tb C
+    	join exam_tb E on C.exam_idx = E.exam_idx
+		where C.exam_idx in(select exam_idx from exam_tb where subject_idx 
+		in(select subject_idx from registration_tb WHERE user_id=#{0}))
+		and user_id = #{0} and exam_type=1
 	</select>
 </mapper>

@@ -38,6 +38,8 @@
 	<form:form name="writeFrm" method="post" 
 		action="./replyAction.do" 
 		onsubmit="return checkValidate(this);">
+		
+		<input type="hidden" name="stu_id" value="${replyRow.user_id }" />
 		<input type="hidden" name="board_type" value="${replyRow.board_type }" />
 		<input type="hidden" name="pen_idx" value="${replyRow.pen_idx }" />
 		<input type="hidden" name="subject_idx" value="${replyRow.subject_idx }" />

@@ -4,34 +4,34 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 
-	매퍼의 namespace속성
-		: 해당 매퍼파일을 호출하기 위해 정의한 인터페이스의
-		패키지룰 포함한 풀경로를 기술한다. 해당 인터페이스는
-		컨트롤러와 Mapper(DAO)사이에서 중재자 역할을 하는
-		서비스 객체로 사용된다.
-	
-	id속성
-		: 실제 호출되는 함수명과 동일한 이름으로 기술한다.
-	resultType
-		: 쿼리 실행후 반환되는 값의 타입을 명시한다.
-		패키지명을 포함한 풀경로를 기술해야 한다.
-	parameterType
-		: 쿼리문에서 사용할 파라미터를 저장한 DTO 혹은 VO객체의
-		타입을 명시한다.
+   매퍼의 namespace속성
+      : 해당 매퍼파일을 호출하기 위해 정의한 인터페이스의
+      패키지룰 포함한 풀경로를 기술한다. 해당 인터페이스는
+      컨트롤러와 Mapper(DAO)사이에서 중재자 역할을 하는
+      서비스 객체로 사용된다.
+   
+   id속성
+      : 실제 호출되는 함수명과 동일한 이름으로 기술한다.
+   resultType
+      : 쿼리 실행후 반환되는 값의 타입을 명시한다.
+      패키지명을 포함한 풀경로를 기술해야 한다.
+   parameterType
+      : 쿼리문에서 사용할 파라미터를 저장한 DTO 혹은 VO객체의
+      타입을 명시한다.
  -->
  
 <!-- 
 select
-	: select문에 해당하는 결과를 반환한다. 아래와 같이
-	int인 경우는 정수값을, DTO객체인 경우에는 해당 레코드를
-	저장한 List계열의 컬렉션으로 반환된다.
+   : select문에 해당하는 결과를 반환한다. 아래와 같이
+   int인 경우는 정수값을, DTO객체인 경우에는 해당 레코드를
+   저장한 List계열의 컬렉션으로 반환된다.
 insert (☆여러개가 한번에 입력되는경우 xxx)
-	: 입력성공시 1, 실패시 0을 반환한다. 만약 insert가
-	여러번 되더라도 성공시에는 1을 반환한다.
+   : 입력성공시 1, 실패시 0을 반환한다. 만약 insert가
+   여러번 되더라도 성공시에는 1을 반환한다.
 update/delete (☆where절의 갯수에따라 여러개 반환될수있음!)
-	: 수정, 삭제에 성공한 행의 갯수가 반환된다. 조건에 따라
-	여러개의 레코드가 한꺼번에 적용될수 있으므로 0,1이 아닌
-	더 큰값이 반환될수도 있다. 실패의경우 0이 반환된다.
+   : 수정, 삭제에 성공한 행의 갯수가 반환된다. 조건에 따라
+   여러개의 레코드가 한꺼번에 적용될수 있으므로 0,1이 아닌
+   더 큰값이 반환될수도 있다. 실패의경우 0이 반환된다.
  -->
  
  
@@ -42,24 +42,24 @@ update/delete (☆where절의 갯수에따라 여러개 반환될수있음!)
 
 <!-- 접속한 아이디의 정보불러오기(닉네임 등) -->
 <select id="user_nick" resultType="studyroom.InfoVO">
-	SELECT * FROM chattinginfo_tb WHERE user_id = #{0}
+   SELECT * FROM chattinginfo_tb WHERE user_id = #{0}
 </select>
 
 <!-- 프로필보기 검색한 닉네임의 정보 -->
 <select id="other_profile" resultType="studyroom.InfoVO">
-	SELECT * FROM chattinginfo_tb WHERE info_nick = #{0}
+   SELECT * FROM chattinginfo_tb WHERE info_nick = #{0}
 </select>
 
 <!-- 전체 회원리스트 랭킹순서대로 불러오기 -->
 <select id="study_list" resultType="studyroom.InfoVO">
-	SELECT * FROM chattinginfo_tb ORDER BY info_time DESC
+   SELECT * FROM chattinginfo_tb ORDER BY info_time DESC
 </select>
 
 <!-- 공부시간 10등까지 랭킹순위 불러오기-->
 <select id="lank_list" resultType="studyroom.InfoVO">
 SELECT * FROM (
     SELECT Tb.*, ROWNUM rNum FROM (
-		SELECT * FROM chattinginfo_tb ORDER BY info_time DESC
+      SELECT * FROM chattinginfo_tb ORDER BY info_time DESC
     ) Tb
 )
 WHERE rNum BETWEEN 1 AND 10
@@ -69,31 +69,31 @@ WHERE rNum BETWEEN 1 AND 10
 
 <!-- 닉네임 중복확인 -->
 <select id="check_nick" resultType="int">
-	SELECT COUNT(*) FROM chattinginfo_tb WHERE info_nick = #{_nick}
+   SELECT COUNT(*) FROM chattinginfo_tb WHERE info_nick = #{_nick}
 </select>
 
 
 <!-- 기존 프로필 이미지 삭제 -->
 <!-- 아닌가 어차피 덮어쓰기되는거니까 여기서는 삭제를 안하고 실제파일만 삭제하면되나!? -->
 <update id="delete_profile">
-	UPDATE chattinginfo_tb 
-		SET info_img = ""
-	WHERE user_id = #{0}
+   UPDATE chattinginfo_tb 
+      SET info_img = ""
+   WHERE user_id = #{0}
 </update>
 
 
 <!-- 프로필 정보수정 -->
 <update id="edit_profile">
-	UPDATE chattinginfo_tb
-			SET info_nick = #{_info_nick}, info_img = #{_info_img}
-	WHERE user_id = #{_user_id}
+   UPDATE chattinginfo_tb
+         SET info_nick = #{_info_nick}, info_img = #{_info_img}
+   WHERE user_id = #{_user_id}
 </update>
 
 
 <!-- 공부시간 10초마다 업데이트 -->
 <update id="study_time">
-	UPDATE chattinginfo_tb 
-		SET info_time = info_time + #{_time} WHERE user_id = #{_id}
+   UPDATE chattinginfo_tb 
+      SET info_time = info_time + #{_time} WHERE user_id = #{_id}
 </update>
 
 <!-- 채팅내용 저장 -->
@@ -105,15 +105,21 @@ WHERE rNum BETWEEN 1 AND 10
 
 <!-- 신고횟수 업데이트 -->
 <update id="reported_people">
-	UPDATE chattinginfo_tb 
-		SET reported_count = reported_count+1 WHERE info_nick = #{0}
+   UPDATE chattinginfo_tb 
+      SET reported_count = reported_count+1 WHERE info_nick = #{0}
 </update>
 
 <!-- 차단 -->
 <insert id="block_people">
+
 	INSERT INTO chattingblock_tb (user_id, block_user) 
 		VALUES (#{user_id}, #{other_id})
+
 </insert>
+<!-- 차단해제 -->
+<delete id="unblock_people">
+	DELETE FROM chattingblock_tb WHERE user_id=#{0} AND block_user = #{1}
+</delete>
 
 <!-- 차단여부 확인 -->
 <!-- select에서 리스트 반환 원할때 dto하면 리스트 타입으로 자동반환 -->
@@ -124,10 +130,12 @@ WHERE rNum BETWEEN 1 AND 10
 </select>
 
 <!-- 출석조회 -->
-<select id="check_day" resultType="Integer">
-	SELECT * FROM chattinginfo_tb 
+<select id="check_day" resultType="int">
+	SELECT COUNT(*) FROM chattinginfo_tb 
 		WHERE atten_day=#{0} AND user_id = #{1}
 </select>
+
+
 
 <!-- 출석증가 -->
 <update id="atten_plus">
@@ -140,8 +148,10 @@ WHERE rNum BETWEEN 1 AND 10
 <!-- 커맨드 객체를 전달받아 진행 
 전달되는 파라미터와 반환타입 모두 InfoVO -->
 <select id="login_info" resultType="studyroom.InfoVO" parameterType="studyroom.InfoVO">
-	SELECT * FROM chattinginfo_tb WHERE user_id = #{user_id}
+   SELECT * FROM chattinginfo_tb WHERE user_id = #{user_id}
 </select>
+
+
 
 
 </mapper>

@@ -56,7 +56,7 @@
 												</select>
 											</c:if>
 											<c:if test="${row.attendance_flag!=2 }">
-												<select name="${row.rnum }">
+												<select name="${row.rnum }" style="font-size: 15px;">
 													<option value="2" >O</intput>
 													<option value="0" selected="selected">X</intput>
 												</select>
