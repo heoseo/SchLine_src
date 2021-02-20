@@ -20,12 +20,8 @@
 <!-- 왼쪽메뉴 include -->
 
 <jsp:include page="/resources/include/leftmenu_professor_student.jsp"/><!-- flag구분예정 -->
-   <div style="text-align: center;">
-      <small>교수페이지 계정 메인</small>
-   </div>
-   <hr /><!-- 구분자 -->
-   
-   <table class="table  table-hover table-striped" >
+
+   <table>
 	<div style="text-align: center;">
       <small>출결</small>
     </div>

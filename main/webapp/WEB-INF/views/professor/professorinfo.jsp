@@ -20,25 +20,22 @@
 <!-- 왼쪽메뉴 include -->
 
 <jsp:include page="/resources/include/leftmenu_professor.jsp"/><!-- flag구분예정 -->
-   <div style="text-align: center;">
-      <small>교수페이지 계정 메인</small>
-   </div>
    <hr /><!-- 구분자 -->
    
-   <table style="font-size: 15px;" >
+   <table style="font-size: 11px; text-align: center;" >
 	<div style="text-align: center;">
       <small>학생 정보</small>
     </div>
-    	<tr>
+    	<tr style="text-align: center;">
     		<td rowspan="2" width="10%"></td>
-    		<td rowspan="2" width="15%">학번</td>
+    		<td rowspan="2" width="15%">학생ID</td>
     		<td rowspan="2" width="10%">팀 번호</td>
     		<td colspan="${videoNum }">출결</td>
     		<td rowspan="2" width="10%">성적</td>
     	</tr>
     	<tr>
     		<c:forEach items="${lists2 }" var="row2">
-    			<td>${row2.video_idx }번</td>
+    			<td>${row2.video_idx }강</td>
     		</c:forEach>
     	</tr>
     	<c:forEach items="${lists }" var="row">
