@@ -87,7 +87,9 @@ if(session.getAttribute("user_id") != null){
 							</div>
 						</div>
 					</li>
+
 					<li><a href="/schline/professor/professorinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">&nbsp;</i>학생관리</a></li>
+
 					<li><a href="javascript:document.logout.submit()">
 					<i class="fas fa-sign-out-alt">&nbsp;</i>로그아웃</a></li>
 				</ul>
