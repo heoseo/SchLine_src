@@ -26,6 +26,8 @@ public interface SchlineDAOImpl {
 	public ArrayList<ExamDTO> tasklist(String exam_case, String subject_idx, String user_id);
 	//종합과제함 가져오기
 	public ArrayList<ExamDTO> getAllTask(String subject_idx);
+	//메인 과제함
+	public ArrayList<ExamDTO> getMainTask(String User_id);
 	//팀번호 가져오기
 	public String getTeamNum(String user_id, String subject_idx);
 	//협업게시판 리스트 가져오기

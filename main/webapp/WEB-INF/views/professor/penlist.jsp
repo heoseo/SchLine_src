@@ -12,14 +12,16 @@
 <!-- body 시작 -->
 <body class="is-preload">
 
-	
+<div style="background: white;">
    	
    	<hr /><!-- 구분자 -->
    
+
    	<div class="row text-right" style="margin-bottom:10px; padding-right:50px;">
 <form:form class="form-inline ml-auto">	
 	<div class="form-group">
-		<select name="searchColumn" id="searchColumn" class="form-control">
+		<select name="searchColumn" id="searchColumn" class="form-control" 
+		style="color:#145374; font-size:18px; padding-left:10px; padding-right:10px font-weight:bold;">
 			<option value="board_title">제목</option>
 			<option value="board_content">내용</option>
 		</select>
@@ -28,20 +30,20 @@
 		<input type="text" name="searchWord"  class="form-control" placeholder="검색어를 입력하세요"/>
 		<input type="hidden" value="${board_type }" name="board_type" />
 		<div class="input-group-btn">
-			<button type="submit" class="btn btn-default">검색<i class="glyphicon glyphicon-search"></i></button>
+			<button type="submit" class="btn btn-info" style="background:#ADD8E6; font-weight:bold;"><i class="fas fa-search" style="font-size:20px"></i></button>
 		</div>
 	</div>
 </form:form>
 </div>
 
 	<div class="table-wrapper">
-		<table class="alt">
+		<table class="table table-bordered table-hover table-striped">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th style="text-align:center;">번호</th>
 					<th>제목</th>
-					<th>조회수</th>
-					<th>작성일</th>
+					<th style="text-align:center;">조회수</th>
+					<th style="text-align:center;">작성일</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -80,7 +82,7 @@
 		</tr>
 	</table>
 	</div>
-   
+</div>   
             
    	<jsp:include page="/resources/include/bottom.jsp" />
 </body>
