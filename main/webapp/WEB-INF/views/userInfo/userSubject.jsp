@@ -23,16 +23,17 @@
 	<div id="main">
  
 		<div style="text-align: center;">
-	      <small>수강 과목</small>
+	      <small style="font-size:1.2em">수강 과목</small>
 	    </div>
-	    
+	    <hr />
 		<c:forEach items="${lists }" var="row">		
 			<div class="container">
 				<div class="container">
 					<div class="container">
-						<h4><a href="../class/grade.do?subject_idx=${row.subject_idx }">&emsp;과목명 :${row.subject_name }</a></h4>
+						<h5><a href="../class/grade.do?subject_idx=${row.subject_idx }">
+						<i class="fas fa-check-square"></i>&emsp;과목명 :${row.subject_name }</a></<h5>
 						<h6>출결 현황</h6>
-						<table style="font-size: 5px;">
+						<table class="table table-bordered table-hover table-striped" style="font-size:5px; text-align:center;">
 								<c:choose>	
 									<c:when test="${row.rnum==1 }">
 						 				<tr>
