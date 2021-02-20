@@ -30,16 +30,15 @@ int last_week = cDay.get(Calendar.DAY_OF_WEEK);//마지막일의 요일
 <!-- 캘린더CSS -->
 <style>
 .calendarTitle {
-	font-weight: normal;
-	color: black;
-	text-align: right;
-	font-size: 1em;
+	font-size:1.2em;
+	text-align:center;
+	padding-left: 410px;
 }
 #button {
 	font-size: 10px;
 	border: none;
 	text-align: right;
-	padding-left: 300px;
+	padding-left: 330px;
 }
 </style>
 <!-- style태그끝! -->
@@ -144,14 +143,12 @@ $(function() {
 <body class="is-preload">
 
 	<!-- 캘린더시작. -->
-	<hr />
 	
 	<div id="main" class="col-lg-12 sidenav">
 
 		<div class="contents_box">
-		
 			
-			<table>
+			<table class="table table-bordered table-hover table-striped">
 				<input type="hidden" id="hyear" name="hyear" value="<%=now_year%>" />
 				<input type="hidden" id="hmonth" name="hmonth" value="<%=now_month%>" />
 				

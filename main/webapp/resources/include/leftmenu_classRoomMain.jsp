@@ -24,11 +24,9 @@
 	background: #F7F7F7; 
 	text-decoration: underline;
 }
-
 </style>
-<br />
 <div id="main" class="container-fluid">
-	<br/>
+<br />
 	<div class="row content">
 	<br />
 		<div class="col-sm-2 sidenav">
@@ -47,9 +45,7 @@
 						<span style="text-align: center;">종합과제함</span>
 					</a>
 				</div>
-				<br />
 	</div>
-	<br/>
 <!-- 내용입력부분. 클래스속성 건드리지말것 -->
 <div class="col-lg-10">
 <div class="container">

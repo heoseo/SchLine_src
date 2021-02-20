@@ -9,17 +9,18 @@
 	<%@ include file="/resources/include/top.jsp"%>	   
 	<jsp:include page="/resources/include/leftmenu_classRoomMain.jsp"/>
 	
-	<hr /><%-- 구분자 --%>
 	<p style="text-align:center; font-size:1.2em">종합과제함</p>
+	<hr /><!-- 구분자 -->
 		<div class="table-wrapper">
-			<table class="alt" style="text-align:center">
+		
+			<table class="table table-bordered table-hover table-striped" style="text-align:center;">	
 				
 				<tr>
 					<td style="width:15%">과목</td>
 					<td style="width:20%;">과제명</td>
 					<td style="text-align:left;">과제 내용</td>	
 					<td style="width:15%">마감일</td>
-					<td style="width:10%">과제함이동</td>
+					<td style="width:10%">과제함</td>
 				</tr>
 			<c:forEach items="${examlist }" var="trow" varStatus="tloop">
 				<tr>
@@ -35,8 +36,6 @@
 				
 			</c:forEach>
 			</table>
-			<%-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, --%>
-			<div id="taskWrite"></div>
 		</div>
 
  <jsp:include page="/resources/include/bottom.jsp" />

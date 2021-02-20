@@ -495,7 +495,5 @@ public class ExamController {
 		
 		return "/main/totalTask";
 	}
-	
-	
 
 }

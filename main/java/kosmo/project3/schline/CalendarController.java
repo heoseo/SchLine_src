@@ -37,47 +37,47 @@ public class CalendarController {
 	}
 	
 	//일정>알림>왼쪽바 캘린더 클릭시 이동.
-		@RequestMapping("/schedule/calendar.do")
-		public String calendarLeft() {
-			
-			System.out.println("■ [Calendar컨트롤러 > calendarLeft.do 요청 들어옴.]■");
-
-			return "/schedule/calendar";
-		}
-		//캘린더 에이젝스.
-		@RequestMapping("/schedule/ajaxCalendar.do")
-		public String ajaxCalendar(Model model, HttpServletRequest req, HttpSession session) {
-			
-			System.out.println("■[Calendar컨트롤러 > ajaxCalendar.do 요청 들어옴.]■");
-			
-			String user_id = (String) session.getAttribute("user_id");
-			System.out.println("세션저장아이디체크>>>>>: " + user_id); 
-			
-			//파라미터 저장을 위한 DTO객체 생성.
-			String year = req.getParameter("year").toString();
-			int month = Integer.parseInt(req.getParameter("month"));
-			String monthStr = "";
-			
-			if(month < 10)
-				monthStr = "0"+ Integer.toString(month);
-			else
-				monthStr = Integer.toString(month);
-			
-			String YearAndMonth = year +  monthStr;
-			//디버깅용
-			//System.out.println("ScheduleController > YearAndMonth : " + YearAndMonth);
-			
-			//Mybatis로 한것..
-			ArrayList<ExamDTO> lists =
-				sqlSession.getMapper(ScheduleDAOImpl.class)
-					.calendarList(user_id, YearAndMonth);
-			
-			model.addAttribute("lists", lists);
+	@RequestMapping("/schedule/calendar.do")
+	public String calendarLeft() {
 		
-			
-			System.out.println("■ [Calendar컨트롤러 > ajaxCalendar.do 요청 들어옴.]■");
+		System.out.println("■ [Calendar컨트롤러 > calendarLeft.do 요청 들어옴.]■");
 
-			return "/schedule/ajaxCalendar";
-		}
+		return "/schedule/calendar";
+	}
+	//캘린더 에이젝스.
+	@RequestMapping("/schedule/ajaxCalendar.do")
+	public String ajaxCalendar(Model model, HttpServletRequest req, HttpSession session) {
+		
+		System.out.println("■[Calendar컨트롤러 > ajaxCalendar.do 요청 들어옴.]■");
+		
+		String user_id = (String) session.getAttribute("user_id");
+		System.out.println("세션저장아이디체크>>>>>: " + user_id); 
+		
+		//파라미터 저장을 위한 DTO객체 생성.
+		String year = req.getParameter("year").toString();
+		int month = Integer.parseInt(req.getParameter("month"));
+		String monthStr = "";
+		
+		if(month < 10)
+			monthStr = "0"+ Integer.toString(month);
+		else
+			monthStr = Integer.toString(month);
+		
+		String YearAndMonth = year +  monthStr;
+		//디버깅용
+		//System.out.println("ScheduleController > YearAndMonth : " + YearAndMonth);
+		
+		//Mybatis로 한것..
+		ArrayList<ExamDTO> lists =
+			sqlSession.getMapper(ScheduleDAOImpl.class)
+				.calendarList(user_id, YearAndMonth);
+		
+		model.addAttribute("lists", lists);
+	
+		
+		System.out.println("■ [Calendar컨트롤러 > ajaxCalendar.do 요청 들어옴.]■");
+
+		return "/schedule/ajaxCalendar";
+	}
 	
 }

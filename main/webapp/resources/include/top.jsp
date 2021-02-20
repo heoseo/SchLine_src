@@ -22,6 +22,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>	
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+			<link rel="icon"  href="<%=request.getContextPath() %>/resources/images/minicon.png"  type="image">
 						
 	
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
@@ -34,18 +35,9 @@
 	<!-- Wrapper -->
 		<div id="wrapper">
 		<!-- 상단영역 줄이기 위해 헤더속성 제거 -->
-			<!-- Header -->
-			<!-- he -->
-	<!-- 			<header id="header" class="alt"> -->
-	<!-- 			<span class="logo"><img src="images/logo.svg" alt="" /></span> -->
-					<!-- 메인 로고 이미지 -->
-<!-- 					<div align="center"> -->
-<!-- 					<br />  -->
-<!-- 						<a href="/schline/">★★이미지클릭시 home으로 가기. home요청명 적기 -->
-<%-- 							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" /> --%>
-<!-- 						</a> -->
-<!-- 					<br /> -->
-<!-- 					</div> -->
+
+
+
 <%
 
 if(session.getAttribute("user_id") != null){
@@ -65,10 +57,10 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-		<nav id="nav" font-weight:bold;">
+		<nav id="nav">
 
 			<ul>
-				<li  class="nav-item" style="margin-right: 50px;">
+				<li  class="nav-item" style="margin-right:50px;">
 					<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
 						<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="200px" alt="스쿨라인 로고" />
 					</a>
@@ -85,7 +77,8 @@ if(session.getAttribute("user_id") != null){
 				</li>
 				
 					<li><a href="<%=request.getContextPath() %>/class/studyRoom.do">공부방</a></li>
-					<li><a href="/schline/user/userinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">&nbsp;</i><%=session.getAttribute("user_name") %></a></li>
+					<li><a href="/schline/user/userinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">
+						&nbsp;</i><%=session.getAttribute("user_name") %></a></li>
 					<li><a href="javascript:document.logout.submit()">
 					<i class="fas fa-sign-out-alt" style="font-size:25px;">&nbsp;</i>로그아웃</a></li>
 			</ul>
@@ -96,7 +89,7 @@ if(session.getAttribute("user_id") != null){
 		</form:form>
 			</ul>
 		</nav>
-		<br />
+		<br /><br />
 			
 <%
 	}

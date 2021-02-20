@@ -21,7 +21,9 @@
 <%--  <%@ include file="/resources/include/search.jsp"%> --%>
  
  <div style="text-align:center">
-    <h2><b>과목 : ${map.subject_name }</b></h2>
+
+ <table><tr><td>
+    <h2><b style="color:#145374">과목 : ${map.subject_name }</b></h2>
     <!-- 과목 및 시험 인덱스 -->
     
  <table class="alt">

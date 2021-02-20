@@ -16,9 +16,9 @@
 <script>
 $(function () {
 	$('#datetimepicker1').datetimepicker({
-		format: 'L'}); 
+		dateFormat: 'yy-mm-dd'}); 
 		$('#datetimepicker2').datetimepicker({
-			format: 'L', useCurrent: false
+			dateFormat: 'yy-mm-dd', useCurrent: false
 	}); 
 	$("#datetimepicker1").on("change.datetimepicker", 
 		function (e) {
@@ -92,8 +92,7 @@ function onDelete(idx, type){
 	}
 	else{
 		var c = confirm("문제를 삭제하시겠습니까?");
-		if(c){
-			alert(exam_idx);	
+		if(c){	
 			location.href='ptaskDelete.do?question_idx='+exam_idx+'&exam_type='+type;			
 		}
 	}

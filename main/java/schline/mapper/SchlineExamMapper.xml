@@ -169,4 +169,13 @@
 			WHERE exam_type=1 AND E.subject_idx IN (
    		SELECT subject_idx FROM registration_tb	WHERE user_id=#{0})
 	</select>
+	
+	<!-- 메인화면 과제함 리스트 가져오기 -->
+	<select  id="getMainTask" resultType="schline.ExamDTO">
+		select * from examcheck_tb C
+    	join exam_tb E on C.exam_idx = E.exam_idx
+		where C.exam_idx in(select exam_idx from exam_tb where subject_idx 
+		in(select subject_idx from registration_tb WHERE user_id=#{0}))
+		and user_id = #{0} and exam_type=1
+	</select>
 </mapper>
