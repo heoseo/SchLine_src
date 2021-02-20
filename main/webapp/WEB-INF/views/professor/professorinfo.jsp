@@ -20,6 +20,7 @@
 <!-- 왼쪽메뉴 include -->
 
 <jsp:include page="/resources/include/leftmenu_professor.jsp"/><!-- flag구분예정 -->
+
 <div><hr /><!-- 구분자 -->
   	<div style="text-align: center;">
       <small style="font-size:1.2em;">학생 정보</small>
@@ -35,7 +36,7 @@
     	</tr>
     	<tr>
     		<c:forEach items="${lists2 }" var="row2">
-    			<td>${row2.video_idx }번</td>
+    			<td>${row2.video_idx }강</td>
     		</c:forEach>
     	</tr>
     	<c:forEach items="${lists }" var="row">
