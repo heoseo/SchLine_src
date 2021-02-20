@@ -31,16 +31,16 @@
 				</a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
 					id="icon">&nbsp&nbsp</i> <span style="text-align: center;">협업</span>
 					
-				성적페이지 들어가기
+<!-- 				성적페이지 들어가기 -->
 				<a href="/schline/class/grade.do?subject_idx=${param.subject_idx }" class="list-group-item">
 					<i class="fas fa-file-alt" id="icon">&nbsp&nbsp</i>
 					<span style="text-align: center;" id="name">성적</span>
 					
-				시험페이지로 이동하기 위해 링크 추가
+<!-- 				시험페이지로 이동하기 위해 링크 추가 -->
 				</a> <a href="/schline/class/examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
 					class="fas fa-clipboard-check" id="icon">&nbsp&nbsp</i> <span
 					style="text-align: center;" id="name">시험</span>
-				과제페이지로 이동하기 위해 링크 추가
+<!-- 				과제페이지로 이동하기 위해 링크 추가 -->
 				</a> 
 				<a href="/schline/class/taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item"> <i class="fa fa-archive"
 					id="icon">&nbsp&nbsp</i> <span style="text-align: center;"
