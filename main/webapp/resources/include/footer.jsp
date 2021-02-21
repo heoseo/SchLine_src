@@ -8,7 +8,7 @@
 			<br />
 				<section style="color:white;">
 					<dl>
-						<dd style="font-weight:bold; font-size: 2em">(주)스쿨라인</dd>
+						<dd style="font-weight:bold; font-size: 1.5em">(주)스쿨라인</dd>
 						<dd style="font-weight:bold;">Address : (153-759)서울시&nbsp;금천구&nbsp;가산동&nbsp;426-5&nbsp;월드메르디앙&nbsp;</dd>
 						<dd style="font-weight:bold;">TEL : (02) 111 -1004 - 0000</dd>
 						<dd style="font-weight:bold;">Email : <a href="#">schline@schoolonline.com</a></dd>
