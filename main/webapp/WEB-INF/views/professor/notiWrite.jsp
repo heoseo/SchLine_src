@@ -40,8 +40,19 @@
 	}
 </script>
 <body class="is-preload" >
-	<div id="main">
-	<br /><br />
+<br />
+<div style="background:white;">
+<!-- 페이지 제목 -->
+<br />
+	<h3 style="text-align:center; font-weight:bold; font-size:1.2em">
+	<i class="fas fa-plus" style="padding-right:5px;"></i>
+	공지사항</h3>
+	<div class="col text-left">
+		<button type="button" class="btn btn-light" style="font-weight:bold; color:#145374 "
+			onclick="location.href='notiBoardList.do?nowPage=${nowPage}';">
+			<i class="fas fa-arrow-alt-circle-left" id="icon">&nbsp&nbsp</i>
+			뒤로가기</button>
+	</div>
 		<!-- 
 		파일 업로드를 위해서는 반드시 enctype을 선언해야 한다. 해당 
 		선언문장이 없으면 파일은 서버로 전송되지 않는다.
@@ -49,9 +60,6 @@
 	<form:form name="writeFrm" method="post" action="notiWriteAction.do?${_csrf.parameterName}=${_csrf.token}" 
 		onsubmit="return checkValidate(this);"
 		enctype="multipart/form-data">
-		<div style="text-align:center; font-weight:bold; font-size: 30px">
-		<i class="fas fa-plus" style="padding-right:5px;"></i>
-		공지사항 글쓰기</div><hr />
 		<!-- ### 게시판의 body 부분 start ### -->
 		<div style="padding: 10px;">
 				<table class="table table-bordered table-striped">	
@@ -63,28 +71,25 @@
 					<tr>
 					<!-- 저장된변수 getProfessor -->
 					<c:forEach items="${getProfessor }" var="row"></c:forEach>
-						<th class="text-center align-middle">작성자</th>
-						<td>${user_id}</td>
+						<th class="text-center table-hover align-middle">작성자</th>
+						<td>${user_name}</td>
 					</tr>
 					<tr>
-						<th class="text-center" 
-							style="vertical-align:middle;">제목</th>
+						<th class="text-center table-hover align-middle">제목</th>
 						<td>
 							<input type="text" class="form-control" 
 								name="board_title" />
 						</td>
 					</tr>
 					<tr>
-						<th class="text-center"
-							style="vertical-align:middle;">내용</th>
+						<th class="text-center table-hover align-middle">내용</th>
 						<td>
 							<textarea rows="10" 
 								class="form-control" name="board_content"></textarea>
 						</td>
 					</tr>
 					<tr>
-						<th class="text-center"
-							style="vertical-align:middle;">첨부파일</th>
+						<th class="text-center table-hover align-middle">첨부파일</th>
 						<td>
 							<input type="file" class="form-control" 
 								name="board_file" />
@@ -95,9 +100,9 @@
 				</table>
 			</div>
 			<div class="col text-right">
-				<button type="submit" class="btn btn-danger" style="font-weight:bold;">전송하기</button>
-				<button type="reset" class="btn btn-dark" style="font-weight:bold;">Reset</button>
-				<button type="button" class="btn btn-warning"  style="font-weight:bold;"
+				<button type="submit" class="btn btn-light" style="font-weight:bold;">전송하기</button>
+				<button type="reset" class="btn btn-light" style="font-weight:bold;">Reset</button>
+				<button type="button" class="btn btn-light"  style="font-weight:bold;"
 					onclick="location.href='notiBoardList.do?nowPage=${nowPage }';">
 					리스트보기</button>
 			</div><br />

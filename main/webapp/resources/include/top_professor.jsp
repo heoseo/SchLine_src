@@ -81,13 +81,15 @@ if(session.getAttribute("user_id") != null){
 							<span style="text-align: center;" id="name">게시판</span>
 							</div> 
 							<div class="dropdown-menu nav-item">
-								<a class="dropdown-item" href="/schline/professor/notiBoardList.do?"><i class="fas fa-question-circle"></i>&nbsp&nbsp공지사항</a> 
-								<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=red"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
-								<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
+								<a class="dropdown-item" href="/schline/professor/notiBoardList.do?"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;공지사항</a> 
+								<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=red"><i class="fas fa-edit"></i>&nbsp;&nbsp;정정게시판</a> 
+								<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp;&nbsp;질문게시판</a> 
 							</div>
 						</div>
 					</li>
+
 					<li><a href="/schline/professor/professorinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">&nbsp;</i>학생관리</a></li>
+
 					<li><a href="javascript:document.logout.submit()">
 					<i class="fas fa-sign-out-alt">&nbsp;</i>로그아웃</a></li>
 				</ul>
@@ -98,8 +100,7 @@ if(session.getAttribute("user_id") != null){
 			</form:form>
 				</ul>
 			</nav>
-		<hr />
-			
+			<br />
 <%
 	}
 }

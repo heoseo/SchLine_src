@@ -21,7 +21,7 @@
 	    <form:form name="fileFrm" method="post" action="videoupload.do?${_csrf.parameterName}=${_csrf.token}" 
                enctype="multipart/form-data">
    	
-    <table class="table table-bordered" >
+	<table class="table table-bordered table-hover table-striped">	
    	 <colgroup>
    		 <col width="40%" />
    		 <col width="*" />   		 

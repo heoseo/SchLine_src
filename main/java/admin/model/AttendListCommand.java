@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 
 import admin.AdminCommandImpl;
 import admin.model.AdminUserTemplateDAO;
+import schline.AttendanceDTO;
 import schline.ClassDTO;
 import schline.GradeDTOImpl;
 import schline.UserVO;
@@ -40,6 +41,7 @@ public class AttendListCommand implements AdminCommandImpl{
 		String searchUser = req.getParameter("searchUser");
 		
 		
+		
 		paramMap.put("searchSubject",searchSubject);
 		paramMap.put("searchUser",searchUser);
 				
@@ -50,7 +52,13 @@ public class AttendListCommand implements AdminCommandImpl{
 		ArrayList<ClassDTO> subjectLists = classDAO.listPage(paramMap);
 		
 		// 출석 나열
-		ArrayList<AttendanceDTO> userLists = attendDAO.userList(paramMap);
+		//해당과목 듣는 학생 리스트
+		ArrayList<Admin_UserVO> userLists = attendDAO.userList(paramMap);
+//		ArrayList<ArrayList<AttendanceDTO>>
+		
+		for(Admin_UserVO user : userLists) {
+			
+		}
 		
 		
 		model.addAttribute("subjectLists", subjectLists);

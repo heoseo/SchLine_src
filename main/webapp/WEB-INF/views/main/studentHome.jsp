@@ -51,9 +51,6 @@
   
     </ul>
 </div>
-
-
-
                <ul class="actions">
                   <li><a href="generic.html" class="button">Learn More</a></li>
                </ul>
@@ -94,7 +91,7 @@
 
 		<section id="calendar" class="main special">
 			<header class="major">
-				<h2 style="font-weight:bold; padding-top: 0px">캘린더</h2>
+				<h2 style="padding-top: 0px">캘린더</h2>
 			<%@ include file="../schedule/calendarMain.jsp" %>
 			</header>
 		</section>
@@ -141,17 +138,26 @@
 		
 		<!-- 5. 공부방 -->
 		<section id="studyroom" class="main special">
-				<header class="major">
-				<h2>공부방</h2>
-				<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-					posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
-			</header>
-			<footer class="major">
-				<ul class="actions special">
-					<li><a href="generic.html" class="button primary">Get Started</a></li>
-					<li><a href="generic.html" class="button">Learn More</a></li>
-				</ul>
-			</footer>
+			<div class="spotlight">
+				<div class="content">
+					<header class="major">
+						<h2>공부방</h2>
+					</header>
+					<footer class="major">
+					
+	<!-- 					<input type="image" src="" alt="" /> -->
+						<span class="image">
+							<a href="./class/studyRoom.do">
+								<img src="<%=request.getContextPath() %>/resources/images/study3.jpg" alt="공부방 이동"
+								style="min-height:0; min-width:0; width: 400px; height: 400px;" />
+							</a>
+						</span>
+					<ul class="actions">
+<!-- 						<li><a href="generic.html" class="button">입장하기</a></li> -->
+					</ul>
+				</footer>
+			</div>
+		</div>
 		</section>
 	</div>
 		

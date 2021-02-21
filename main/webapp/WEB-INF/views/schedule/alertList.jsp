@@ -22,18 +22,17 @@ function paging(nowPage){
 }
 </style>
 </head>
-
 <!-- body 시작 -->
 <body class="is-preload">
 	<!-- 왼쪽메뉴 include -->
 	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
 	
-	<div id="main"><!-- mainDiv시작 -->
-	<hr />
-		<div style="text-align:center; font-weight:bold; font-size:30px">
-		<i class="fas fa-clock" style="padding-right:5px; text-align: center;"></i>
+	<div><!-- mainDiv시작 -->
+		<hr />
+		<div style="text-align:center; font-size:1.2em">
+		<i class="fas fa-clock" style="padding-right:5px; text-align:center; font-size:1.2em"></i>
 		알림</div>
-		<div class="row" id="content"> 
+		<div id="content"> 
 			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
 				<option value="allBoard" ${param.type eq 'allBoard' ? 'selected' : '' }>전부</option>
 				<option value="allNoti" ${param.type eq 'allNoti' ? 'selected' : '' }>공지</option>
@@ -41,7 +40,7 @@ function paging(nowPage){
 				<option value="notiRead" ${param.type eq 'notiRead' ? 'selected' : '' }>읽은 공지</option>
 				<option value="notiNotRead" ${param.type eq 'notiNotRead' ? 'selected' : '' }>읽지않은 공지</option>
 			</select>
-			<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:#808080">
+			<table class="table table-bordered table-hover table-striped">
 			<colgroup>
 				<col width="40px"/>
 				<col width="40px"/>
@@ -72,7 +71,7 @@ function paging(nowPage){
 					</c:choose>
 					</td>
 					<td id="listTitle">
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}" target="_blank">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>
@@ -81,7 +80,7 @@ function paging(nowPage){
 </c:forEach>
 			</tbody>
 			</table>
-			<div style="padding-left: 400px;">
+			<div style="text-align:center;">
 				<!-- 방명록 반복 부분 e -->
 				<ul class="pagination justify-content-center">
 					${pagingImg }
