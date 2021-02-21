@@ -6,8 +6,7 @@
 <html>
 <head>
 <title>공지사항</title>
-<!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -38,34 +37,41 @@ function paging(nowPage){
 }
 </script>
 <style type="text/css">
-#row {font-weight: bold; padding: 20px;}
+#content {
+color: #145374;
+padding: 10px;
+display:inline-block;
+align-content: center;
+}
 </style>
 </head>
 
 <!-- body 시작 -->
 <body class="is-preload">	
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
-	<hr />
+
 	<!-- 읽은 공지사항 리스트 출력하기 -->
 	<c:forEach items="${viewList }" var="row">
 	
-	<!-- 페이지제목 -->
-	<div style="text-align:center; font-weight:bold; font-size:1.2em">
-	<i class="fas fa-check-circle" style="padding-right:5px;"></i>
-	공지사항</div>
-	<!-- 게시물 -->
-	<div id="row" class="col-lg-12">
-
-		<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:black">
-			<colgroup>
-				<col width="20%"/>
-				<col width="20%"/>
-				<col width="20%"/>
-				<col width="20%"/>
-				<col width="20%"/>
-				<col width="20%"/>
-			</colgroup>
+	<div id="content">
+	
+		<!-- 페이지제목 -->
+		<div style="text-align:center; font-weight:bold; font-size:1.2em">
+		<i class="fas fa-check-circle" style="padding-right:5px;"></i>
+		공지사항</div>
+			<div class="col text-right">
+			<button type="button" class="btn btn-default" style="font-weight:bold; color:#145374 "
+				onclick="location.href='alertList.do?nowPage=${nowPage}';">
+				<i class="fas fa-arrow-alt-circle-left" id="icon">&nbsp&nbsp</i>
+				뒤로가기</button>
+		</div>
+		<!-- 게시물 -->
+		<table class="table table-bordered table-hover table-striped">
+		<colgroup>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+		</colgroup>
 			<tr>
 				<th class="text-center table-hover align-middle">작성자</th>
 				<td class="text-center table-hover align-middle">${row.user_name }</td>
@@ -74,7 +80,7 @@ function paging(nowPage){
 			</tr>
 			<tr>
 				<th class="text-center table-hover align-middle">제목</th>
-				<td colspan="3" class="align-middle">
+				<td colspan="3" class="lign-middle">
 					${row.board_title }
 				</td>
 			</tr>
@@ -88,17 +94,17 @@ function paging(nowPage){
 			<tr>
 				<th class="text-center table-hover align-middle">첨부파일</th>
 				<td colspan="3">
-					<span>파일명 : </span>${row.board_file }
-					<a href="download.do?board_file=${row.board_file }&board_idx=${row.board_idx}">
-						&nbsp&nbsp<i class="fas fa-download" style="font-size:30px">&nbsp[다운로드]</i>
-					</a>		
+					<div><i class="fas fa-folder">&nbsp;[홈페이지에서 다운이 가능합니다.]</i></div>
+				</td>
+<%-- 					<a href="download.do?board_file=${row.board_file }&board_idx=${row.board_idx}"> --%>
+<!-- 						&nbsp&nbsp<i class="fas fa-download" style="font-size:30px">&nbsp[다운로드]</i> -->
+<!-- 					</a>		 -->
 				</td>
 			</tr>
 </c:if>		
 		</table>
-	</div><!-- main끝. -->
-	<br /><br />		
 </c:forEach>
+	</div><!-- main끝. -->
 <!-- 읽은 공지사항 리스트 끝.-->
 
 </body>

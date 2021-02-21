@@ -297,7 +297,6 @@ function snap() {
 }
 //캔버스 이미지로 변환후 에이젝스로 데이터 보내기
 function sreenShot() {
-	
 	  var $canvas = document.createElement('canvas');
 	   var myImg = $canvas.toDataURL('image/png');
 			var myImg = canvas.toDataURL("image/png");

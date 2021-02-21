@@ -21,7 +21,9 @@
 
 	<div class="table-wrapper">
 		<div style="text-align:center;">
-	      <small style="font-size:1.2em; padding-left: 30px;">제출 파일</small>
+	      <small style="font-size:1.2em; padding-left: 30px;">
+	      <i class="fas fa-folder" id="icon">&nbsp&nbsp</i>
+	      제출 파일</small>
 	    </div>
 	    <hr />
 		<table class="table table-bordered table-hover table-striped">
@@ -42,10 +44,10 @@
 						</a>
 						</td>
 						<td style="width:15%; text-align:center;">${row.user_name }</td>
-						<td style="width:5%">
+						<td style="width:10%; text-align:center;">
 					<c:if test="${not empty row.board_file }">
-						<a href="userDownload.do?board_file=${row.board_file }"><!-- 다운로드 추가 필요 -->
-						<i class="fas fa-download" ></i>
+						<a href="userDownload.do?board_file=${row.board_file }"  style="text-align: center;"><!-- 다운로드 추가 필요 -->
+							<i class="fas fa-download"></i>
 						</a>
 					</c:if>	
 						</td>

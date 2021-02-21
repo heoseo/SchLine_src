@@ -7,8 +7,31 @@
 <html>
 <head>
 <title>알림</title>
-<!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+			<!-- JS파일이 부트스트랩보다 위에 있어야 min.js에러가 안남 -->
+			
+			<!-- Scripts -->
+			<script src='<c:url value="/resources/assets/js/jquery.min.js"/>'></script>
+			<script src='<c:url value="/resources/assets/js/jquery.scrollex.min.js"/>'></script>
+			<script src='<c:url value="/resources/assets/js/jquery.scrolly.min.js"/>'></script>
+			<script src='<c:url value="/resources/assets/js/browser.min.js"/>'></script>
+			<script src='<c:url value="/resources/assets/js/breakpoints.min.js"/>'></script>
+			<script src='<c:url value="/resources/assets/js/util.js"/>'></script>
+			<script src='<c:url value="/resources/assets/js/main.js"/>'></script>
+			
+			<!-- 드롭다운용 부트 -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>	
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+						
+	
+		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
+
+
 <script>
 function paging(nowPage){
 	var numSelect = document.getElementById("selectBoard");
@@ -18,6 +41,12 @@ function paging(nowPage){
 }
 </script>
 <style type="text/css">
+body {
+	margin: 0 auto;
+	padding-left: 10px;
+	padding-right: 10px;
+  	height: 51em
+}
 #selectBoard{
 	margin-bottom: 15px;
 }
@@ -26,29 +55,30 @@ function paging(nowPage){
 
 <!-- body 시작 -->
 <body class="is-preload">
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
 	
 	<div><!-- mainDiv시작 -->
-		<hr />
-		<div style="text-align:center; font-size:1.2em">
-		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
+		<br />
+		<div style="text-align:center; font-size:2em">
+		<i class="fas fa-clock" style="padding-right:5px; text-align:center; 
+		font-size:1.2em; font-weight: bold;"></i>
 		알림</div>
+		<br />
 		<div id="content"> 
 			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
-				<option value="allBoard" ${param.type eq 'allBoard' ? 'selected' : '' }>전부</option>
-				<option value="allNoti" ${param.type eq 'allNoti' ? 'selected' : '' }>공지</option>
-				<option value="taskAndExam" ${param.type eq 'taskAndExam' ? 'selected' : '' }>과제/시험</option>
-				<option value="notiRead" ${param.type eq 'notiRead' ? 'selected' : '' }>읽은 공지</option>
-				<option value="notiNotRead" ${param.type eq 'notiNotRead' ? 'selected' : '' }>읽지않은 공지</option>
+				<option value="allBoardApp" ${param.type eq 'allBoardApp' ? 'selected' : '' }>전부</option>
+				<option value="allNotiApp" ${param.type eq 'allNotiApp' ? 'selected' : '' }>공지</option>
+				<option value="taskAndExamApp" ${param.type eq 'taskAndExamApp' ? 'selected' : '' }>과제/시험</option>
+				<option value="notiReadApp" ${param.type eq 'notiReadApp' ? 'selected' : '' }>읽은 공지</option>
+				<option value="notiNotReadApp" ${param.type eq 'notiNotReadApp' ? 'selected' : '' }>읽지않은 공지</option>
 			</select>
 			<table class="table table-bordered table-hover table-striped">
 			<colgroup>
-				<col width="20px"/>
-				<col width="20px"/>
-				<col width="300px"/>
-				<col width="80px"/>
-				<col width="80px"/>
+				<col width="10%"/>
+				<col width="10%"/>
+				<col width="30%"/>
+				<col width="20%"/>
+				<col width="20%"/>
+				<col width="20%"/>
 			</colgroup>	
 			<thead>
 				<tr>
@@ -85,7 +115,7 @@ function paging(nowPage){
 					</c:choose>
 					</td>
 					<td>
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}" target="_blank">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}&nowPage=${nowPage}&type=taskAndExamApp&user_id=${user_id}">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>
@@ -97,7 +127,7 @@ function paging(nowPage){
 </c:choose>
 			</tbody>
 			</table>
-			<div style="text-align:center;">
+			<div style="text-align:center; font-size: 2em; font-weight:bold;">
 				<!-- 방명록 반복 부분 e -->
 				<ul class="pagination justify-content-center">
 					${pagingImg }
@@ -106,14 +136,7 @@ function paging(nowPage){
 		</div>
 		<!-- 공지사항 리스트 끝.-->
 
-	
-	
 	</div><!-- mainDiv끝 -->
 
-	<jsp:include page="/resources/include/bottom.jsp" />
 </body>
-
-
-<!-- 하단 인클루드 -->
-<jsp:include page="/resources/include/footer.jsp" />
 </html>

@@ -19,10 +19,12 @@
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_userInfo.jsp"/><!-- flag구분예정 -->
     
-    <div id="main">
+    <div>
  		
  		<div style="text-align: center;">
-	      <small style="font-size:1.2em">학기 성적</small>
+	      <small style="font-size:1.2em">
+	      <i class="fas fa-lightbulb" id="icon">&nbsp&nbsp</i>
+	      학기 성적</small>
 	    </div>
 	    <hr />
 		<table class="table table-bordered table-hover table-striped" 
@@ -59,13 +61,15 @@
 		
 		<table class="table table-hover table-striped" style="font-size:1.2em">
 		<tr><td colspan="5" style="font-size:0.9em; text-align:left; padding-left: 20px;
-		background:d3e0ea;">
+		background:d3e0ea;"><i class="fas fa-graduation-cap" id="icon">&nbsp&nbsp</i>
 		평균 성적 : ${gradeChar } (${gradeNum })</td></tr>
 		</table>
  		
  		
 		<div style="text-align: center;">
-	      <small style="font-size:1.2em">과목별 성적표</small>
+	      <small style="font-size:1.2em">
+	      <i class="fas fa-lightbulb" id="icon">&nbsp&nbsp</i>
+	      과목별 성적표</small>
 	    </div>
 	    
 		<c:forEach items="${lists }" var="row">		

@@ -6,8 +6,7 @@
 <html>
 <head>
 <title>과제/시험</title>
-<!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -39,12 +38,9 @@ function paging(nowPage){
 </script>
 <style type="text/css">
 #row {
-font-weight: bold;
-background: white;
 color: #145374;
 padding: 10px;
 align-content: center;
-border-radius: 5px;
 }
 #taskWrite{
 border-radius: 5px;
@@ -56,7 +52,7 @@ padding-top: 20px;
 function taskWrite(subject_idx, exam_idx){
 	
 	$.ajax({
-		url : "/schline/class/examStart.do?subject_idx="+subject_idx+"&exam_idx="+exam_idx,
+		url : "<%=request.getContextPath() %>/class/examStart.do?subject_idx="+subject_idx+"&exam_idx="+exam_idx,
 		type : "post",
 		beforeSend : function(xhr){
             xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
@@ -88,9 +84,7 @@ jQuery(document).ready(function($) {
 
 <!-- body 시작 -->
 <body class="is-preload">
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
-	<hr />
+
 <!-- 읽은 공지사항 리스트 출력하기 -->
 <c:forEach items="${viewList }" var="row">
 
@@ -107,6 +101,12 @@ jQuery(document).ready(function($) {
 		<h2 style="text-align:center; font-weight:bold; color:black;">시험</h2>
  	</c:otherwise>
 </c:choose>	
+		<div class="col text-right">
+		<button type="button" class="btn btn-default" style="font-weight:bold; color:#145374 "
+			onclick="location.href='alertList.do?nowPage=${nowPage}&type=taskAndExamApp';">
+			<i class="fas fa-arrow-alt-circle-left" id="icon">&nbsp&nbsp</i>
+			뒤로가기</button>
+		</div>
 <!-- 게시물 -->
 
 		<table class="table table-bordered table-hover table-striped">
@@ -118,7 +118,6 @@ jQuery(document).ready(function($) {
 			<col width="20%"/>
 			<col width="20%"/>
 		</colgroup>
-		<tr>
 			<tr>
 				<th class="text-center table-hover align-middle">구분</th>
 			<c:choose>
@@ -146,7 +145,7 @@ jQuery(document).ready(function($) {
 				<th class="text-center table-hover align-middle">배점</th>
 				<td class="text-center table-hover align-middle">${row.exam_scoring }</td>
 			</tr>
-			<tr>
+			<tr style="color: red;">
 				<th class="text-center table-hover align-middle">내용</th>
 				<td colspan="3" class="text-center table-hover align-middle" style="height:200px;">
 					${row.exam_content }
@@ -157,19 +156,21 @@ jQuery(document).ready(function($) {
 <c:if  test="${row.exam_type == 1}">				
 			<div style="text-align:right; padding-right:30px">	
 				<a href="#target1" class="scroll">
-				<button type="button" style="font-size:1em; font-weight:bold" class="btn btn-light"
-				 onclick="taskWrite(${row.subject_idx }, ${row.exam_idx })">
-					제출하기</button></a>
-			</div>	
+					<button type="button" 
+					style="font-size:1em;font-weight:bold" class="btn btn-light"
+					 onclick="taskWrite(${row.subject_idx }, ${row.exam_idx })">
+						제출하기</button>
+				</a>
+			</div>	 
 </c:if>				
-<%-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, --%>
+<!-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, -->
 			<div id="target1">
 				<div id="taskWrite" class="table table-hover table-striped" 
 				style="border-color:#145374; width:90%; padding:30px;">
 				</div>
 			</div>
 		</div>
-			</div><!-- main끝. -->
+	</div><!-- main끝. -->
 <!-- 게시물 끝.-->
 </c:forEach>
 
