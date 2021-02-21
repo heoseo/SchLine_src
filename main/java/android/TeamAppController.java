@@ -2,6 +2,7 @@ package android;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -213,4 +214,43 @@ public class TeamAppController {
 		기존 View를 호출하는 부분에서 JSON데이터를 반환하는 형태로
 		변경한다.
 	*/
+	
+	@RequestMapping("/android/teamDelete.do")
+	@ResponseBody
+	public Map<String, Object> teamDelete(HttpServletRequest req) {
+		System.out.println("삭제요청들어옴");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		String user_id = req.getParameter("user_id"); //아이디
+		String board_idx = req.getParameter("board_idx");
+		String board_file = req.getParameter("board_file");
+		System.out.println("파일:"+board_file);
+		System.out.println(user_id+"  "+board_idx);
+		int result = sqlSession.getMapper(SchlineDAOImpl.class).teamDelete(board_idx, user_id);
+		System.out.println("결과값:"+result);
+		if(board_file!=null||!board_file.equals("")) {
+			String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
+			
+			deleteFile(path, board_file);
+		}
+		
+		if(result==1) {
+			map.put("success", result);	
+		}
+		else {
+			map.put("success", 0);
+		}
+		
+		return map;
+	}
+	
+	//파일삭제 메소드
+	public static void deleteFile(String directory, String filename) {
+		 
+		System.out.println(directory+"   "+filename);
+		//경로 + 파일명
+		File f = new File(directory+File.separator+filename);
+		//파일이 존재한다면 삭제
+		if(f.exists()) {f.delete();}
+	}
 }
