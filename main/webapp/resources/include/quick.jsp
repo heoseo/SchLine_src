@@ -28,7 +28,7 @@ color:#145374;
 			    </li><br />
 			    <li>
 			    <a href="#attend" class="list-group-item-action" style="font-weight:bold; color:#495464;">
-			    	&nbsp;출&nbsp;&nbsp;&nbsp;결&nbsp;</a>
+			    	출<span style="opacity:0">결</span>결</a>
 			    </li><br />
 			    <li>
 			    <a href="#calendar" class="list-group-item-action" style="font-weight:bold; color:#495464;">
