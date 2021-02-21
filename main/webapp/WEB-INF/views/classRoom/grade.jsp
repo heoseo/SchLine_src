@@ -16,10 +16,8 @@
    <hr /><!-- 구분자 -->
 	
 	<!-- 출결 테이블 -->
-	<table class="table  table-hover table-striped" >
-	<div style="text-align: center;">
-      <small>출결</small>
-    </div>
+	<table class="table table-bordered table-hover table-striped" style="font-size:15px;">	
+
 		<c:choose>	
 			
 			<c:when test="${empty attenlists }">
@@ -31,7 +29,7 @@
 			</c:when>
 			<c:otherwise>
 						<tr>
-							<td colspan="10">출결 현황</td>
+							<td colspan="10" style="text-align:center; font-size:1.2em">출결 현황</td>
 						</tr>
 						<tr align="center" align="center">
 							<c:forEach items="${attenlists }" var="row">
@@ -56,10 +54,8 @@
 		</c:choose>
     </table>
     <!-- 과제 테이블 -->
-    <table class="table  table-hover table-striped" >
-	<div style="text-align: center;">
-      <small>과제</small>
-    </div>
+	<table class="table table-bordered table-hover table-striped" style="font-size:15px;">	
+
 		<c:choose>	
 			
 			<c:when test="${empty gradelists }">
@@ -71,7 +67,7 @@
 			</c:when>
 			<c:otherwise>
 						<tr>
-							<td colspan="10">과제 현황</td>
+							<td colspan="10" style="text-align:center; font-size:1.2em">과제 현황</td>
 						</tr>
 						<tr align="center" align="center">
 							<c:forEach items="${gradelists }" var="row">

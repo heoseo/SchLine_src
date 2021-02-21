@@ -4,26 +4,17 @@
 <!-- 하단 인클루드 -->
 
 	<!-- Footer -->
-			<footer id="footer">
-<!-- 				<section> -->
-<!-- 					<h2>Aliquam sed mauris</h2> -->
-<!-- 					<p>Sed lorem ipsum dolor sit amet et nullam consequat feugiat consequat magna adipiscing tempus etiam dolore veroeros. eget dapibus mauris. Cras aliquet, nisl ut viverra sollicitudin, ligula erat egestas velit, vitae tincidunt odio.</p> -->
-<!-- 					<ul class="actions"> -->
-<!-- 						<li><a href="generic.html" class="button">Learn More</a></li> -->
-<!-- 					</ul> -->
-<!-- 				</section> -->
-					<h2 style="font-weight:bold;">(주)스쿨라인</h2>
-				<section  style="color:white;">
-					<dl class="alt">
-						<dt>Address</dt>
-						<dd>(153-759)서울시&nbsp;금천구&nbsp;가산동&nbsp;426-5&nbsp;월드메르디앙&nbsp;</dd>
-						<dt>TEL</dt>
-						<dd>(02) 111 -1004 - 0000</dd>
-						<dt>Email</dt>
-						<dd><a href="#">schline@schoolonline.com</a></dd>
+			<footer id="footer" style="text-align:left;">
+			<br />
+				<section style="color:white;">
+					<dl>
+						<dd style="font-weight:bold; font-size: 1.5em">(주)스쿨라인</dd>
+						<dd style="font-weight:bold;">Address : (153-759)서울시&nbsp;금천구&nbsp;가산동&nbsp;426-5&nbsp;월드메르디앙&nbsp;</dd>
+						<dd style="font-weight:bold;">TEL : (02) 111 -1004 - 0000</dd>
+						<dd style="font-weight:bold;">Email : <a href="#">schline@schoolonline.com</a></dd>
+						<p>COPYRIGHT &copy; School & Online</a>.</p>
 					</dl>
 				</section>
-				<p class="copyright">&copy; School & Online</a>.</p>
 			</footer>
 			
 

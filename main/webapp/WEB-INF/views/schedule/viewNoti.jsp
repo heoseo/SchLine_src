@@ -7,7 +7,8 @@
 <head>
 <title>공지사항</title>
 <!-- 상단 인클루드 -->
-
+<!-- 상단 인클루드 -->
+<%@ include file="/resources/include/top.jsp"%>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -44,37 +45,40 @@ function paging(nowPage){
 
 <!-- body 시작 -->
 <body class="is-preload">	
-
+	<!-- 왼쪽메뉴 include -->
+	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
+	<hr />
 	<!-- 읽은 공지사항 리스트 출력하기 -->
 	<c:forEach items="${viewList }" var="row">
 	
 	<!-- 페이지제목 -->
-	<br />
-	<h3 style="text-align:center; font-weight:bold;">공지사항</h3>
+	<div style="text-align:center; font-weight:bold; font-size:1.2em">
+	<i class="fas fa-check-circle" style="padding-right:5px;"></i>
+	공지사항</div>
 	<!-- 게시물 -->
 	<div id="row" class="col-lg-12">
 		<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:black">
 			<tr>
-				<th class="text-center table-active align-middle">작성자</th>
+				<th class="text-center table-hover align-middle">작성자</th>
 				<td>${row.user_name }</td>
-				<th class="text-center table-active align-middle">작성일</th>
+				<th class="text-center table-hover align-middle">작성일</th>
 				<td>${row.board_postdate }</td>
 			</tr>
 			<tr>
-				<th class="text-center table-active align-middle">제목</th>
+				<th class="text-center table-hover align-middle">제목</th>
 				<td colspan="3">
 					${row.board_title }
 				</td>
 			</tr>
 			<tr>
-				<th class="text-center table-active align-middle">내용</th>
+				<th class="text-center table-hover align-middle">내용</th>
 				<td colspan="3" class="align-middle" style="height:200px;">
 					${row.board_content }
 				</td>
 			</tr>
 <c:if test="${not empty row.board_file }">
 			<tr>
-				<th class="text-center table-active align-middle">첨부파일</th>
+				<th class="text-center table-hover align-middle">첨부파일</th>
 				<td colspan="3">
 					<span>파일명 : </span>${row.board_file }
 					<a href="download.do?board_file=${row.board_file }&board_idx=${row.board_idx}">
