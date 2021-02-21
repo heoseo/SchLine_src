@@ -12,31 +12,30 @@
 <body class="is-preload" >
 	<div id="main">
 	<br /><br />
-	<div style="text-align:center; font-weight:bold; font-size:25px">
+	<div style="text-align:center; font-weight:bold; font-size:1.2em">
 		<i class="fas fa-check-circle" style="padding-right:5px;"></i>
 		공지사항</div>
 		<!-- ### 게시판의 body 부분 start ### -->
 		<div style="padding: 10px;">
-			<div class="col text-right">
+			<div class="text-right">
 				<button type="button" class="btn btn-default" style="font-weight:bold; color:#145374 "
 					onclick="location.href='notiWrite.do?nowPage=${nowPage}';">
 					<i class="fas fa-plus" style="padding-right:5px;"></i>
 					공지사항</button>
 			</div>
-			<br />
 			<!-- 게시판리스트부분 -->
 			<table class="table table-bordered table-hover table-striped">	
 				<colgroup>
-					<col width="100px"/>
+					<col width="10%"/>
 					<col width="*"/>
-					<col width="120px"/>
-					<col width="120px"/>
-					<col width="120px"/>
-					<col width="120px"/>
+					<col width="10%"/>
+					<col width="10%"/>
+					<col width="10%"/>
+					<col width="10%"/>
 				</colgroup>				
 				<thead>
-				<tr class="text-center text-white">
-					<th class="text-center">번호</th>
+				<tr class="text-center" style="font-size:1.1em">
+					<th class="text-center" style="font-weight: bold;">번호</th>
 					<th class="text-center">제목</th>
 					<th class="text-center">작성자</th>
 					<th class="text-center">작성일</th>

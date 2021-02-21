@@ -51,8 +51,9 @@
 </div>
  <jsp:include page="/resources/include/bottom.jsp" />
 </body>
-
+<br /><br />
+<br /><br />
 
 <!-- 하단 인클루드 -->
-<jsp:include page="/resources/include/footer.jsp" />
+<%-- <jsp:include page="/resources/include/footer.jsp" /> --%>
 </html>

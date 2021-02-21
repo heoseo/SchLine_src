@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,11 +26,9 @@ function paging(nowPage){
 
 <!-- body 시작 -->
 <body class="is-preload">
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
 	
 	<div><!-- mainDiv시작 -->
-		<hr />
+
 		<div style="text-align:center; font-size:1.2em">
 		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
 		알림</div>
@@ -43,10 +42,11 @@ function paging(nowPage){
 			</select>
 			<table class="table table-bordered table-hover table-striped">
 			<colgroup>
-				<col width="40px"/>
-				<col width="40px"/>
+				<col width="20px"/>
+				<col width="20px"/>
 				<col width="300"/>
-				<col width="100px"/>
+				<col width="80px"/>
+				<col width="80px"/>
 			</colgroup>	
 			<thead>
 				<tr>
@@ -54,11 +54,13 @@ function paging(nowPage){
 					<th class="text-center" style="font-weight:bold;">확인</th>
 					<th style="font-weight:bold;">제목</th>
 					<th class="text-center" style="font-weight:bold;">작성일</th>
+					<th class="text-center" style="font-weight:bold; color:#DC143C">마감일</th>
 				</tr>
 			</thead>
 			<tbody>
 <!-- 읽은 공지사항 리스트 출력하기 -->
 <c:forEach items="${List }" var="row">
+<%-- <input hid-den="SUB_IDX" value="${row.SUB_IDX}"></input> --%>
 				<tr>
 					<td class="text-center" >${row.RNUM}</td>
 					<td class="text-center" >
@@ -72,21 +74,22 @@ function paging(nowPage){
 					</c:choose>
 					</td>
 					<td>
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}" target="_blank">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>
 					<td class="text-center" >${row.POSTDATE }</td>
+					<td class="text-center" style="color:#DC143C" >${row.exam_date }</td>
 				</tr>
 </c:forEach>
-				</tbody>
-				</table>
-				<div style="text-align:center;">
-					<!-- 방명록 반복 부분 e -->
-					<ul class="pagination justify-content-center">
-						${pagingImg }
-					</ul>
-				</div>
+			</tbody>
+			</table>
+			<div style="text-align:center;">
+				<!-- 방명록 반복 부분 e -->
+				<ul class="pagination justify-content-center">
+					${pagingImg }
+				</ul>
+			</div>
 		</div>
 		<!-- 공지사항 리스트 끝.-->
 

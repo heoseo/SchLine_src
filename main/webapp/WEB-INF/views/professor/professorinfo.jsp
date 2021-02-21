@@ -23,7 +23,7 @@
 
 <div><hr /><!-- 구분자 -->
   	<div style="text-align: center;">
-      <small style="font-size:1.5em;">학생 정보</small>
+      <small style="font-size:1.2em;">학생 정보</small>
     </div>
     <br />
 	<table class="table table-bordered table-hover table-striped" style="font-size:15px; text-align:center;">	

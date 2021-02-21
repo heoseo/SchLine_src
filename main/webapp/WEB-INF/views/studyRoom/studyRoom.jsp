@@ -120,7 +120,7 @@ tr td:first-child {
 <body class="is-preload">
    <!-- 왼쪽메뉴 include -->
 <%--    <jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 --> --%>
-<div id="main" class="container-fluid" style="text-align: center;"> 
+<div style="text-align: center; background: white;"> 
 
    <!-- 페이지 레이아웃 구분 클래스 생성 -->
    <div class="container">
@@ -136,7 +136,8 @@ tr td:first-child {
                          입장하시겠습니까 ?<br /><br />
                <br />
                <div align="center">
-                  <button>입장하기</button>
+                   <button class="btn btn-light" 
+                  style="padding-left: 4em; padding-right:4em; font-weight: bold; background:#ADD8E6 ">입장하기</button>
                   <!--              <a href="../class/studyRoomChat.do"><button>입장하기</button></a> -->
                </div>
             </div>
@@ -279,8 +280,5 @@ tr td:first-child {
 <!-- </div> -->
 <%--    <jsp:include page="/resources/include/bottom.jsp" /> --%>
 </body>
-
-
-<!-- 하단 인클루드 -->
-<jsp:include page="/resources/include/footer.jsp" />
+<br />
 </html>

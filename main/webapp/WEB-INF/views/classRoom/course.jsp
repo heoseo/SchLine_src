@@ -14,7 +14,9 @@
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoomMain.jsp"/><!-- flag구분예정 -->
    <div style="text-align:center;">
-      <small style="font-size:1.2em">코스</small><!-- flag구분예정-->
+      <small style="font-size:1.2em">
+      <i class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i>
+      코스</small><!-- flag구분예정-->
    </div>
    <hr /><!-- 구분자 -->
    

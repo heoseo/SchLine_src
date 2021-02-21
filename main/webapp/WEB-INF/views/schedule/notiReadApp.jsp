@@ -25,11 +25,9 @@ function paging(nowPage){
 
 <!-- body 시작 -->
 <body class="is-preload">
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
 	
 	<div><!-- mainDiv시작 -->
-		<hr />
+
 		<div style="text-align:center; font-size:1.2em">
 		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
 		알림</div>
@@ -72,26 +70,25 @@ function paging(nowPage){
 					</c:choose>
 					</td>
 					<td>
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}" target="_blank">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>
 					<td class="text-center" >${row.POSTDATE }</td>
 				</tr>
 </c:forEach>
-				</tbody>
-				</table>
-				<div style="text-align:center;">
-					<!-- 방명록 반복 부분 e -->
-					<ul class="pagination justify-content-center">
-						${pagingImg }
-					</ul>
-				</div>
+			</tbody>
+			</table>
+			<div style="text-align:center;">
+				<!-- 방명록 반복 부분 e -->
+				<ul class="pagination justify-content-center">
+					${pagingImg }
+				</ul>
+			</div>
 		</div>
 		<!-- 공지사항 리스트 끝.-->
 
-	
-	
+
 	</div><!-- mainDiv끝 -->
 
 	<jsp:include page="/resources/include/bottom.jsp" />

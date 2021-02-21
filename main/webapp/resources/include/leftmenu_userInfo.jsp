@@ -40,12 +40,12 @@
 					</a>
 					
 					<a href="SubjectAtten.do" class="list-group-item">
-						<i class="fas fa-list-alt" id="icon">&nbsp&nbsp</i>
+						<i class="fas fa-book-reader" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">수강 목록</span>
 					</a>
 					
 					<a href="SubjectGrade.do" class="list-group-item">
-						<i class="fas fa-star" id="icon">&nbsp&nbsp</i>
+						<i class="fas fa-lightbulb" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">성적 조회</span>
 					</a>
 					
