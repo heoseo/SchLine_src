@@ -159,7 +159,7 @@ public class StudyController {
 	//프로필 수정
 	@RequestMapping(value = "/android/class/editProfile.do", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> editInfo(Principal principal, Model model, MultipartHttpServletRequest req) {
+	public Map<String, Object> editInfo(Model model, MultipartHttpServletRequest req) {
 		System.out.println("▶ 안드 프로필 수정 시작");
 		// 결과값 반환을 위한 Map 생성
 		Map<String, Object> checkMap = new HashMap<String, Object>();
@@ -198,6 +198,7 @@ public class StudyController {
 			// 서버의 풀리적 경로 얻어오기
 			String path = req.getSession().getServletContext().getRealPath("/resources/profile_image");
 			System.out.println("path=" + path);
+			
 
 			Iterator<String> itr = req.getFileNames();// 변경한 이미지
 			while (itr.hasNext()) {
@@ -298,21 +299,12 @@ public class StudyController {
 	@ResponseBody
 	public Map<String, Object> studyTime(HttpServletRequest req, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
-
-		/*
-		 * 일반적인 클래스에서 사용자 정보 얻어오기 : 스프링 컨테이너의 전역변수로 선언된 SecurityContextHolder 객체를 통해 사용자
-		 * 아이디를 얻어올수 있다.
-		 */
-		// Object object =
-		// SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		// UserDetails sch = (UserDetails)object;
-		// String user_id = sch.getUsername();
-		String user_id = session.getAttribute("user_id").toString();
-
+		System.out.println("시간저장 호출");
+		String user_id = req.getParameter("user_id");
 		// 10초마다 정보저장해주는 함수 호출
-		int time = Integer.parseInt(req.getParameter("send_time").toString());
+		//int time = Integer.parseInt(req.getParameter("send_time").toString());
 
-		int result = sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id, time);
+		int result = sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id);
 		if (result == 1) {
 			System.out.println("시간저장 성공");
 			map.put("setTime", 1);
@@ -425,7 +417,8 @@ public class StudyController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("출석증가 컨트롤러");
 		// String user_id = principal.getName();
-		String user_id = session.getAttribute("user_id").toString();
+		//String user_id = session.getAttribute("user_id").toString();
+		String user_id = req.getParameter("user_id");
 		String today = req.getParameter("today");
 		System.out.println("today=" + today);
 		int count = sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id);
