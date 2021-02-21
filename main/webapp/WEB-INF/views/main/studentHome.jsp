@@ -20,45 +20,6 @@
 
 <!-- /////////////////////Main시작////////////////////// -->
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
-<<<<<<< HEAD
-   <div id="main">
-   
-      
-   <!-- 1. 강의실 -->
-      <section id="class" class="main special">
-         <div class="spotlight">
-            <div class="content">
-               <header class="major">
-                  <h2>강의실</h2>
-               </header>
-               
-<div id="pattern" class="pattern">
-
-    <ul class="list img-list">
-      <c:forEach items="${course }" var="row">   
-       <li>   
-      <a href="/schline/class/time.do?subject_idx=${row.subject_idx }"  class="inner">               
-         <div class="li-img">
-          <c:set var="ran"><%= java.lang.Math.round(java.lang.Math.random() * 50) %></c:set>
-             <img src="https://picsum.photos/200/150/?image=${ran}" alt="sample image">
-            </div>
-             <div class="li-text">
-                <h4 class="li-head">${row.subject_name }</h4>
-                <p class="li-sub">${row.user_name }&emsp;</p>      
-         </div>
-        </a>
-         </li>
-   </c:forEach>
-  
-    </ul>
-</div>
-               <ul class="actions">
-                  <li><a href="generic.html" class="button">Learn More</a></li>
-               </ul>
-            </div>
-         </div>
-      </section>
-=======
 	<div id="main">
 	
 		
@@ -90,16 +51,9 @@
   
     </ul>
 </div>
-
-
-
-					<ul class="actions">
-						<li><a href="generic.html" class="button">Learn More</a></li>
-					</ul>
 				</div>
 			</div>
 		</section>
->>>>>>> daeun
 		
 		<!-- 2. 출결 -->
 		<section id="attend" class="main special">
