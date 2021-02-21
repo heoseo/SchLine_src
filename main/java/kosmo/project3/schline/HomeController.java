@@ -21,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import schline.ClassDTO;
+import schline.ClassDTOImpl;
 import schline.ExamDTO;
 import schline.GradeDTOImpl;
 import schline.SchlineDAOImpl;
@@ -64,7 +66,13 @@ public class HomeController {
 			session.setAttribute("user_name", user_name);
 			
 			if(user_auth.toString().contains("ROLE_STUDENT")) {
-				
+				ClassDTO classdto = new ClassDTO();
+	               classdto.setUser_id(session.getAttribute("user_id").toString());
+	               ArrayList<ClassDTO> course =  sqlSession.getMapper(ClassDTOImpl.class).listCourse(classdto);
+	               model.addAttribute("course", course);
+	               String sql = sqlSession.getConfiguration().getMappedStatement("listCourse")
+	                     .getBoundSql(classdto).getSql();
+	               System.out.println("sql="+sql);
 				//메인 과제리스트 뿌리기 시작
 				ArrayList<ExamDTO> examlist = sqlSession.getMapper(SchlineDAOImpl.class)
 						.getMainTask(user_id);
