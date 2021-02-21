@@ -25,11 +25,9 @@ function paging(nowPage){
 
 <!-- body 시작 -->
 <body class="is-preload">
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
 	
 	<div><!-- mainDiv시작 -->
-		<hr />
+
 		<div style="text-align:center; font-size:1.2em">
 		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
 		알림</div>

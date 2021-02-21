@@ -88,9 +88,7 @@ jQuery(document).ready(function($) {
 
 <!-- body 시작 -->
 <body class="is-preload">
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
-	<hr />
+
 <!-- 읽은 공지사항 리스트 출력하기 -->
 <c:forEach items="${viewList }" var="row">
 

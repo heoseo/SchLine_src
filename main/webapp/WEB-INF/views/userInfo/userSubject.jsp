@@ -23,7 +23,9 @@
 	<div id="main">
  
 		<div style="text-align: center;">
-	      <small style="font-size:1.2em">수강 과목</small>
+	      <small style="font-size:1.2em">
+	      <i class="fas fa-book-reader" id="icon">&nbsp&nbsp</i>
+	      수강 과목</small>
 	    </div>
 	    <hr />
 		<c:forEach items="${lists }" var="row">		

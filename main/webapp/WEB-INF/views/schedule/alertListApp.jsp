@@ -22,16 +22,13 @@ function paging(nowPage){
 }
 </style>
 </head>
-
 <!-- body 시작 -->
 <body class="is-preload">
-	<!-- 왼쪽메뉴 include -->
-	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
 	
 	<div><!-- mainDiv시작 -->
-		<hr />
+
 		<div style="text-align:center; font-size:1.2em">
-		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
+		<i class="fas fa-clock" style="padding-right:5px; text-align:center; font-size:1.2em"></i>
 		알림</div>
 		<div id="content"> 
 			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
@@ -61,7 +58,7 @@ function paging(nowPage){
 <c:forEach items="${List }" var="row">
 				<tr>
 					<td class="text-center" >${row.RNUM}</td>
-					<td class="text-center" >
+					<td id="checkFlagIcon" class="text-center" >
 					<c:choose>
 						<c:when test="${row.CHECK_FLAG == 1 }">
 							<i class="far fa-envelope-open fa-lg" style="color:#808080"></i>
@@ -71,7 +68,7 @@ function paging(nowPage){
 						</c:otherwise>
 					</c:choose>
 					</td>
-					<td>
+					<td id="listTitle">
 						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}">
 							제목 : ${row.TITLE } 
 						</a>
@@ -79,14 +76,14 @@ function paging(nowPage){
 					<td class="text-center" >${row.POSTDATE }</td>
 				</tr>
 </c:forEach>
-				</tbody>
-				</table>
-				<div style="text-align:center;">
-					<!-- 방명록 반복 부분 e -->
-					<ul class="pagination justify-content-center">
-						${pagingImg }
-					</ul>
-				</div>
+			</tbody>
+			</table>
+			<div style="text-align:center;">
+				<!-- 방명록 반복 부분 e -->
+				<ul class="pagination justify-content-center">
+					${pagingImg }
+				</ul>
+			</div>
 		</div>
 		<!-- 공지사항 리스트 끝.-->
 
