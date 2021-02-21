@@ -7,7 +7,6 @@
 <head>
 <title>공지사항</title>
 <!-- 상단 인클루드 -->
-<!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -57,16 +56,25 @@ function paging(nowPage){
 	공지사항</div>
 	<!-- 게시물 -->
 	<div id="row" class="col-lg-12">
+
 		<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:black">
+			<colgroup>
+				<col width="20%"/>
+				<col width="20%"/>
+				<col width="20%"/>
+				<col width="20%"/>
+				<col width="20%"/>
+				<col width="20%"/>
+			</colgroup>
 			<tr>
 				<th class="text-center table-hover align-middle">작성자</th>
-				<td>${row.user_name }</td>
+				<td class="text-center table-hover align-middle">${row.user_name }</td>
 				<th class="text-center table-hover align-middle">작성일</th>
-				<td>${row.board_postdate }</td>
+				<td class="text-center table-hover align-middle">${row.board_postdate }</td>
 			</tr>
 			<tr>
 				<th class="text-center table-hover align-middle">제목</th>
-				<td colspan="3">
+				<td colspan="3" class="align-middle">
 					${row.board_title }
 				</td>
 			</tr>
@@ -89,7 +97,7 @@ function paging(nowPage){
 </c:if>		
 		</table>
 	</div><!-- main끝. -->
-		
+	<br /><br />		
 </c:forEach>
 <!-- 읽은 공지사항 리스트 끝.-->
 
