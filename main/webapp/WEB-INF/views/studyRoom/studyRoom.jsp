@@ -180,7 +180,8 @@ tr td:first-child {
                </span> <br /> <span style="font-weight: lighter;">닉네임 :&nbsp; ${info_nick } <!--             <input type="hidden" name="info_img" /> -->
                      <!--             <input type="text" id="user_id" value="lave"/> --> <!--             <input type="text" id="info_nick" value="라부" /> -->
                </span> <br />
-                  <button id="editGo" style="margin-top: 10px;" data-toggle="modal"
+                  <button class="btn btn-light" id="editGo" 
+                  style="font-weight: bold; margin-top: 10px;" data-toggle="modal"
                      data-target="#myModal">수정</button> <!-- Modal 시작 -->
                   <div class="modal fade" id="myModal">
                      <div

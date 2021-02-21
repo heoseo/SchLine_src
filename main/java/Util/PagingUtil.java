@@ -27,12 +27,12 @@ public class PagingUtil {
 			//두번째 페이지 블럭부터 출력됨.
 			pagingStr += ""
 				+ "<a href='"+page+"nowPage=1'>"
-				+ "<i class='fas fa-angle-double-left'></i></a>";
+				+ "<i class='fas fa-angle-double-left'></i>&nbsp;</a>";
 			pagingStr += "&nbsp;";
 			pagingStr += ""
 				+ "<a href='"+page+"nowPage="+
 								(intTemp-blockPage)+"'>"
-				+ "<i class='fas fa-angle-left'></i></a>";
+				+ "<i class='fas fa-angle-left'></i>&nbsp;</a>";
 		}
 		
 		//페이지표시 제어를 위한 변수
@@ -60,11 +60,11 @@ public class PagingUtil {
 		if(intTemp <= totalPage) {
 			pagingStr += "<a href='"+page+"nowPage="+
 											intTemp+"'>"
-				+ "<i class='fas fa-angle-right'></i></a>";
+				+ "&nbsp;<i class='fas fa-angle-right'></i></a>";
 			pagingStr += "&nbsp;";
 			pagingStr += "<a href='"+page+"nowPage="+
 											totalPage+"'>"
-				+ "<i class='fas fa-angle-double-right'></i></a>";
+				+ "&nbsp;<i class='fas fa-angle-double-right'></i></a>";
 		}		
 				
 		return pagingStr;
@@ -95,11 +95,11 @@ public class PagingUtil {
 				//두번째 페이지 블럭부터 출력됨.
 				pagingStr += ""
 					+ "<a href='javascript:paging(1);'>"
-					+ "<i class='fas fa-angle-double-left'></i></a>";
+					+ "<i class='fas fa-angle-double-left'></i>&nbsp;</a>";
 				pagingStr += "&nbsp;";
 				pagingStr += ""
 					+ "<a href='javascript:paging("+(intTemp-blockPage)+");'>"
-					+ "<i class='fas fa-angle-left'></i></a>";
+					+ "<i class='fas fa-angle-left'></i>&nbsp;</a>";
 			}	
 
 			//페이지표시 제어를 위한 변수
@@ -123,11 +123,11 @@ public class PagingUtil {
 			//5.다음페이지블럭 & 마지막페이지 바로가기
 			if(intTemp <= totalPage) {
 				pagingStr += "<a href='javascript:paging("+intTemp+");'>"
-					+ "<i class='fas fa-angle-right'></i></a>";
+					+ "&nbsp;<i class='fas fa-angle-right'></i></a>";
 				pagingStr += "&nbsp;";
 				pagingStr += "<a href='javascript:paging("+totalPage+");'>"
 
-						+ "<i class='fas fa-angle-double-right'></i></a>";
+						+ "&nbsp;<i class='fas fa-angle-double-right'></i></a>";
 			} 		
 
 			return pagingStr;
