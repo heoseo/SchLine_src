@@ -60,6 +60,8 @@
 				</div>	
 			</div>
 		</div>
+		<br /><br />
+		<br /><br />
 	</div>
  <jsp:include page="/resources/include/bottom.jsp" />
 </body>

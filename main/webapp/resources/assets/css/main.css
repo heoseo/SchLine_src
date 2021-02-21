@@ -2080,7 +2080,7 @@ input, select, textarea {
 
 		input[type="checkbox"] + label,
 		input[type="radio"] + label {
-			text-decoration: none;
+/* 			text-decoration: none; */
 			cursor: pointer;
 			display: inline-block;
 			font-size: 1em;
@@ -2123,14 +2123,17 @@ input, select, textarea {
 		input[type="checkbox"]:checked + label:before,
 		input[type="radio"]:checked + label:before {
 			content: '\f00c';
+			color:#145374;
 		}
 
 	input[type="checkbox"] + label:before {
 		border-radius: 8px;
+		color:#145374;
 	}
 
 	input[type="radio"] + label:before {
 		border-radius: 100%;
+		color:#145374;
 	}
 
 /* 	::-webkit-input-placeholder { */
@@ -2150,7 +2153,7 @@ input, select, textarea {
 /* 	} */
 
 	label {
-		color: #ffffff;
+		color:#145374;
 	}
 
 	input[type="text"],
@@ -2184,25 +2187,33 @@ input, select, textarea {
 
 	input[type="checkbox"] + label,
 	input[type="radio"] + label {
-		color: rgba(255, 255, 255, 0.65);
+/* 		color: rgba(255, 255, 255, 0.65); */
+		color: c0c0c0;
+		font-weight:bold;
 	}
 
 		input[type="checkbox"] + label:before,
 		input[type="radio"] + label:before {
 			background: rgba(255, 255, 255, 0.075);
-			border-color: rgba(255, 255, 255, 0.35);
+			border-color: c0c0c0;
+			color: c0c0c0;
+			font-weight:bold;
 		}
 
 	input[type="checkbox"]:checked + label:before,
 	input[type="radio"]:checked + label:before {
-		background-color: #ffffff;
-		border-color: #ffffff;
-		color: #935d8c;
+/* 		background-color: #ffffff; */
+/* 		border-color: #ffffff; */
+		background: rgba(255, 255, 255, 0.075);
+		border-color: #145374;;
+		color: #145374;
 	}
 
 	input[type="checkbox"]:focus + label:before,
 	input[type="radio"]:focus + label:before {
-		border-color: #ffffff;
+
+		border-color: #145374;
+		color: #145374;
 		box-shadow: 0 0 0 0 #8cc9f0;
 	}
 
@@ -2463,45 +2474,45 @@ input, select, textarea {
 					padding-top: 0;
 				}
 
-	dl {
-		margin: 0 0 2em 0;
-	}
+/* 	dl { */
+/* 		margin: 0 0 2em 0; */
+/* 	} */
 
-		dl dt {
-			display: block;
-			font-weight: 400;
-			margin: 0 0 1em 0;
-		}
+/* 		dl dt { */
+/* 			display: block; */
+/* /* 			font-weight: 400; */ */
+/* 			margin: 0 0 1em 0; */
+/* 		} */
 
-		dl dd {
-			margin-left: 2em;
-		}
+/* 		dl dd { */
+/* 			margin-left: 2em; */
+/* 		} */
 
-		dl.alt dt {
-			display: block;
-			width: 3em;
-			margin: 0;
-			clear: left;
-			float: left;
-		}
+/* 		dl.alt dt { */
+/* 			display: block; */
+/* 			width: 3em; */
+/* 			margin: 0; */
+/* 			clear: left; */
+/* 			float: left; */
+/* 		} */
 
-		dl.alt dd {
-			margin: 0 0 0.85em 5.5em;
-		}
+/* 		dl.alt dd { */
+/* 			margin: 0 0 0.85em 5.5em; */
+/* 		} */
 
-		dl.alt:after {
-			content: '';
-			display: block;
-			clear: both;
+/* 		dl.alt:after { */
+/* 			content: ''; */
+/* 			display: block; */
+/* 			clear: both; */
 		}
 
 	ul.alt li {
 		border-top-color: rgba(255, 255, 255, 0.35);
 	}
 
-	dl dt {
-		color: ##145374;
-	}
+/* 	dl dt { */
+/* 		color: ##145374; */
+/* 	} */
 
 /* Actions */
 
@@ -3587,12 +3598,12 @@ input, select, textarea {
 		#main input[type="radio"]:checked + label:before {
 			background-color: #636363;
 			border-color: #636363;
-			color: #ffffff;
+			color: #145374;
 		}
 
 		#main input[type="checkbox"]:focus + label:before,
 		#main input[type="radio"]:focus + label:before {
-			border-color: #8cc9f0;
+			border-color: #c0c0c0;
 			box-shadow: 0 0 0 1px #8cc9f0;
 		}
 
@@ -3784,31 +3795,35 @@ input, select, textarea {
 /* Footer */
 
 	#footer {
-		display: -moz-flex;
-		display: -webkit-flex;
-		display: -ms-flex;
-		display: flex;
-		-moz-flex-wrap: wrap;
-		-webkit-flex-wrap: wrap;
-		-ms-flex-wrap: wrap;
-		flex-wrap: wrap;
-		padding: 5em 5em 3em 5em ;
+/* 		display: -moz-flex; */
+/* 		display: -webkit-flex; */
+/* 		display: -ms-flex; */
+/* 		display: flex; */
+/* 		-moz-flex-wrap: wrap; */
+/* 		-webkit-flex-wrap: wrap; */
+/* 		-ms-flex-wrap: wrap; */
+/* 		flex-wrap: wrap; */
+/* 		padding: 4em 2em 0em 2em ; */
 /* 		width: calc(100% + 2em); */
-/* 		margin: 0 0 3em -2em; */
+/* 		margin: 0em 0 em -2em; */
 		font-family: sans-serif;
 		border-radius: 5px;
+		text-align:left;
 	}
 
 		#footer > * {
 /* 			width: calc(50% - 2em); */
 			margin-left: 2em;
+			font-size: 0.7em;
+			font-weight:bold;
 		}
 
 		#footer .copyright {
 			width: 100%;
 			margin: 2.5em 0 2em 0;
-			font-size: 0.8em;
+			font-size: 0.5em;
 			text-align: center;
+			font-weight:bold;
 		}
 
 		@media screen and (max-width: 1280px) {

@@ -30,7 +30,7 @@ function paging(nowPage){
 	<div><!-- mainDiv시작 -->
 		<hr />
 		<div style="text-align:center; font-size:1.2em">
-		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
+		<i class="fas fa-clock" style="padding-right:5px; text-align:center; font-size:1.2em"></i>
 		알림</div>
 		<div id="content"> 
 			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
@@ -56,8 +56,17 @@ function paging(nowPage){
 				</tr>
 			</thead>
 			<tbody>
-<!-- 읽은 공지사항 리스트 출력하기 -->
-<c:forEach items="${List }" var="row">
+<c:choose>	
+	<c:when test="${empty List }">
+ 				<tr>
+ 					<td colspan="6" align="center" height="100">
+ 						등록된 게시물이 없습니다. 
+ 					</td>
+ 				</tr>
+	</c:when>
+	<c:otherwise>
+		<!-- 읽은 공지사항 리스트 출력하기 -->
+		<c:forEach items="${List }" var="row">
 				<tr>
 					<td class="text-center" >${row.RNUM}</td>
 					<td id="checkFlagIcon" class="text-center" >
@@ -71,13 +80,15 @@ function paging(nowPage){
 					</c:choose>
 					</td>
 					<td id="listTitle">
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}" target="_blank">
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>
 					<td class="text-center" >${row.POSTDATE }</td>
 				</tr>
-</c:forEach>
+		</c:forEach>		
+	</c:otherwise>	
+</c:choose>
 			</tbody>
 			</table>
 			<div style="text-align:center;">
