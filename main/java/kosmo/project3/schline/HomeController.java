@@ -67,16 +67,18 @@ public class HomeController {
 			
 			if(user_auth.toString().contains("ROLE_STUDENT")) {
 				ClassDTO classdto = new ClassDTO();
-	            classdto.setUser_id(session.getAttribute("user_id").toString());
-	            ArrayList<ClassDTO> course =  sqlSession.getMapper(ClassDTOImpl.class).listCourse(classdto);
-	            model.addAttribute("course", course);
-	            
-	             //메인 과제리스트 뿌리기 시작
-	             ArrayList<ExamDTO> examlist =
-	             sqlSession.getMapper(SchlineDAOImpl.class) .getMainTask(user_id);
-	              model.addAttribute("examlist", examlist); 
-	              //메인 과제리스트 뿌리기 종료
-	                   
+	               classdto.setUser_id(session.getAttribute("user_id").toString());
+	               ArrayList<ClassDTO> course =  sqlSession.getMapper(ClassDTOImpl.class).listCourse(classdto);
+	               model.addAttribute("course", course);
+	               String sql = sqlSession.getConfiguration().getMappedStatement("listCourse")
+	                     .getBoundSql(classdto).getSql();
+	               System.out.println("sql="+sql);
+				//메인 과제리스트 뿌리기 시작
+				ArrayList<ExamDTO> examlist = sqlSession.getMapper(SchlineDAOImpl.class)
+						.getMainTask(user_id);
+				model.addAttribute("examlist", examlist);
+				//메인 과제리스트 뿌리기 종료
+				
 				return "main/studentHome";
 			}
 			else if(user_auth.toString().contains("ROLE_PROFESSOR")) {
