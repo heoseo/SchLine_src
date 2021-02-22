@@ -15,6 +15,8 @@
 		<title>스쿨라인 메인</title>
 
 <%@ include file="/resources/include/top.jsp" %>
+<!-- 메인에 코스 리스트를 위한 style임-->
+<%@ include file="/resources/include/HomeClasslist.jsp" %>
 
 <!-- /////////////////////Main시작////////////////////// -->
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
@@ -28,14 +30,27 @@
 					<header class="major">
 						<h2>강의실</h2>
 					</header>
-					<span class="image"><img src="<%=request.getContextPath() %>/resources/images/pic01.jpg" alt="" /></span>
-					<p>
-					Sed lorem ipsum dolor sit amet nullam consequat feugiat consequat magna
-					adipiscing magna etiam amet veroeros. Lorem ipsum dolor tempus sit cursus.
-					Tempus nisl et nullam lorem ipsum dolor sit amet aliquam.</p>
-					<ul class="actions">
-						<li><a href="generic.html" class="button">Learn More</a></li>
-					</ul>
+					
+<div id="pattern" class="pattern">
+
+    <ul class="list img-list">
+      <c:forEach items="${course }" var="row">	
+       <li>	
+		<a href="./class/time.do?subject_idx=${row.subject_idx }"  class="inner">					
+			<div class="li-img">
+			 <c:set var="ran"><%= java.lang.Math.round(java.lang.Math.random() *40)+1 %></c:set>
+         	 <img src="https://picsum.photos/200/150/?image=${ran}" alt="sample image">
+            </div>
+             <div class="li-text">
+                <h4 class="li-head">${row.subject_name }</h4>
+                <p class="li-sub">${row.user_name }&emsp;</p>		
+			</div>
+     	</a>
+     	 </li>
+	</c:forEach>
+  
+    </ul>
+</div>
 				</div>
 			</div>
 		</section>

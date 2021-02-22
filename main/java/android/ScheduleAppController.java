@@ -7,20 +7,15 @@ import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import Util.PagingUtil;
 import schedule.NoticeDTO;
 import schedule.ScheduleDAOImpl;
@@ -41,6 +36,7 @@ public class ScheduleAppController {
     }
     
 	String user_id = null;
+	String type = null;
 
     
 	//핸드폰에서 하단 일정클릭시 페이지 전달. 아이디값도 받아야함.
@@ -49,41 +45,26 @@ public class ScheduleAppController {
 	{
    
 		System.out.println("■[안드로이드컨트롤러 > appConnection.do 요청 들어옴.]■");
-		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		//CalendarDTO
-		//NoticeDTO
-		//ScheduleDAOImpl
-		
-		
-		//String user_id = (String) session.getAttribute("user_id");
 
 		if(user_id == null) {
 			user_id = req.getParameter("user_id");
 			session.setAttribute("user_id", user_id);
 		}
-
-		
-		
-		//String user_id_test = (String) session.getAttribute("user_id");
-		//System.out.println("안드에서들어온 세션아이디값: " + user_id_test); 
-		
-		
-		//System.out.println("안드에서들어온 리퀘스트아이디값: " + user_id); 
-		
 		if(user_id == null) {
-			
 			user_id = (String) session.getAttribute("user_id");
 		}
+		//String user_id_test = (String) session.getAttribute("user_id");
+		//System.out.println("안드에서들어온 세션아이디값: " + user_id_test); 
+		//System.out.println("안드에서들어온 리퀘스트아이디값: " + user_id); 
+		
+
 		
 		String type = req.getParameter("type");
 		if(type == null) {
-			type = "allBoard";
+			type = "allBoardApp";
 		}
-		
-		 
-		System.out.println("타입뭐들어왓니: " + type); 
+				 
+		System.out.println("alertListApp타입: " + type); 
 
 		/////////게시물의 갯수를 카운트.//////////////////////////////////////////////
 		/*
@@ -103,8 +84,11 @@ public class ScheduleAppController {
 		int totalPage =
 			(int)Math.ceil((double)totalRecordCount/pageSize);
 		
+		
 		//현재페이지 번호 가져오기. 삼항연산자사용.
 		int nowPage = req.getParameter("nowPage")==null ? 1 : Integer.parseInt(req.getParameter("nowPage"));
+		
+
 		
 		//select할 게시물의 구간을 계산.
 		int start = (nowPage-1) * pageSize + 1;
@@ -142,7 +126,7 @@ public class ScheduleAppController {
 		//셀렉트체인지마다 페이지반환하여이동.
 		ArrayList<NoticeDTO> List = null;
 		switch(type) {
-			case "allBoard":
+			case "allBoardApp":
 				List = sqlSession.getMapper(ScheduleDAOImpl.class)
 						.allBoard(user_id, start, end);
 				
@@ -184,7 +168,7 @@ public class ScheduleAppController {
 				view = "/schedule/alertListApp";
 	
 				break;
-			case "allNoti":
+			case "allNotiApp":
 				List =	sqlSession.getMapper(ScheduleDAOImpl.class)
 						.allNoti(user_id, start, end);
 				
@@ -226,7 +210,7 @@ public class ScheduleAppController {
 				view = "/schedule/allNotiApp";
 					
 				break;
-			case "taskAndExam":
+			case "taskAndExamApp":
 				List = sqlSession.getMapper(ScheduleDAOImpl.class)
 						.taskAndExam(user_id, start, end);
 				
@@ -270,7 +254,7 @@ public class ScheduleAppController {
 					view = "/schedule/taskAndExamApp";
 				
 				break;
-			case "notiRead":
+			case "notiReadApp":
 				List = sqlSession.getMapper(ScheduleDAOImpl.class)
 						.notiRead(user_id, start, end);
 				
@@ -312,7 +296,7 @@ public class ScheduleAppController {
 				view = "/schedule/notiReadApp";
 				
 				break;
-			case "notiNotRead":
+			case "notiNotReadApp":
 				List = sqlSession.getMapper(ScheduleDAOImpl.class)
 					.notiNotRead(user_id, start, end);
 				
@@ -364,6 +348,7 @@ public class ScheduleAppController {
 		return view;
 	}
 	
+	
 	//일정>알림>게시물제목클릭시.상세보기.
 	@RequestMapping("/android/viewPop.do")
 	public String viewList(Model model, HttpServletRequest req, HttpSession session) {
@@ -373,6 +358,19 @@ public class ScheduleAppController {
 		String user_id = (String) session.getAttribute("user_id");
 		System.out.println("안드로이드상세보기세션저장아이디>>>: " + user_id); 
 		
+		
+		if(user_id == null) {
+			user_id = req.getParameter("user_id");
+			session.setAttribute("user_id", user_id);
+			System.out.println("상세보기>리퀘스트저장아이디>>>: " + user_id); 
+		}
+		
+		if(user_id == null) {
+			user_id = (String) session.getAttribute("user_id");
+		}
+	
+		
+		
 		String nowPage = req.getParameter("nowPage");
 		
 		String IDX = req.getParameter("IDX");
@@ -380,7 +378,7 @@ public class ScheduleAppController {
 		String noti_or_exam = req.getParameter("noti_or_exam");
 		
 		System.out.println("IDX > " + IDX);
-		System.out.println("상세보기입장커트롤러subject_idx >> " + subject_idx);
+		System.out.println("안드상세보기 컨트롤>> subject_idx >> " + subject_idx);
 		System.out.println("noti_or_exam > " + noti_or_exam);
 
 		String view = "";
@@ -393,14 +391,22 @@ public class ScheduleAppController {
 			sqlSession.getMapper(ScheduleDAOImpl.class)
 					.checkNoti(user_id, IDX);
 			
+			type = req.getParameter("type");
+			if(type == null) {
+				type = "allBoard";
+			}
+			System.out.println("상세보기>노티> 타입뭐들어왓낭: " + type); 
+			
 			model.addAttribute("user_id", user_id);
 			model.addAttribute("board_idx", IDX);
 			model.addAttribute("subject_idx", subject_idx);
 			//System.out.println("과제상세보기 서브젝트idx잘나왔나요"+SUB_IDX);
 			model.addAttribute("nowPage", nowPage);
+			model.addAttribute("type", type);
 			
 			view = "/schedule/viewNotiApp";
 			break;
+			
 		case "exam":
 		
 
@@ -409,12 +415,18 @@ public class ScheduleAppController {
 			sqlSession.getMapper(ScheduleDAOImpl.class)
 					.checkExam(user_id, IDX);
 			
+			type = req.getParameter("type");
+			if(type == null) {
+				type = "taskAndExam";
+			}
+			System.out.println("상세보기>이그잼>타입뭐들어왓낭: " + type); 
 			
 			model.addAttribute("user_id", user_id);
 			model.addAttribute("exam_idx", IDX);
 			model.addAttribute("subject_idx", subject_idx);
 			//System.out.println("과제상세보기 서브젝트idx잘나왔나요"+SUB_IDX);
 			model.addAttribute("nowPage", nowPage);
+			model.addAttribute("type", type);
 			
 		
 			view = "/schedule/viewExamApp";
@@ -428,6 +440,15 @@ public class ScheduleAppController {
 		
 		return view;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//공지게시물 파일 다운로드.

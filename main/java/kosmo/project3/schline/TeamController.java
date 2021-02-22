@@ -195,6 +195,7 @@ public class TeamController {
 				fileName = (String)itr.next();
 				mfile = req.getFile(fileName);
 				System.out.println("mfile="+mfile);
+				System.out.println("파일명:"+fileName);
 				//한글깨짐방지 처리후 전송된 파일명을 가져옴
 				String originalName = new String(mfile.getOriginalFilename().getBytes(), "UTF-8");
 
