@@ -92,8 +92,8 @@ WHERE rNum BETWEEN 1 AND 10
 
 <!-- 공부시간 10초마다 업데이트 -->
 <update id="study_time">
-   UPDATE chattinginfo_tb 
-      SET info_time = info_time + #{_time} WHERE user_id = #{_id}
+	UPDATE chattinginfo_tb 
+		SET info_time = info_time + 10 WHERE user_id = #{_id}
 </update>
 
 <!-- 채팅내용 저장 -->

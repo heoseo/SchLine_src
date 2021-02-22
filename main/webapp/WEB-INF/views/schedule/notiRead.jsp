@@ -28,25 +28,24 @@ function paging(nowPage){
 	<!-- 왼쪽메뉴 include -->
 	<jsp:include page="/resources/include/leftmenu_schedule.jsp" />
 	
-	<div id="main"><!-- mainDiv시작 -->
-	<hr />
-		<div style="text-align:center; font-weight:bold; font-size: 30px">
-		<i class="fas fa-clock" style="padding-right:5px; text-align: center;"></i>
+	<div><!-- mainDiv시작 -->
+		<hr />
+		<div style="text-align:center; font-size:1.2em">
+		<i class="fas fa-clock" style="padding-right:5px; text-align:center;"></i>
 		알림</div>
-		<div class="row" id="content">
-			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight: bold;">
+		<div id="content"> 
+			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
 				<option value="allBoard" ${param.type eq 'allBoard' ? 'selected' : '' }>전부</option>
 				<option value="allNoti" ${param.type eq 'allNoti' ? 'selected' : '' }>공지</option>
 				<option value="taskAndExam" ${param.type eq 'taskAndExam' ? 'selected' : '' }>과제/시험</option>
 				<option value="notiRead" ${param.type eq 'notiRead' ? 'selected' : '' }>읽은 공지</option>
 				<option value="notiNotRead" ${param.type eq 'notiNotRead' ? 'selected' : '' }>읽지않은 공지</option>
 			</select>
-			<br /><br />
-			<table class="table table-bordered table-hover table-striped" style="font-weight:bold; color:#808080">
+			<table class="table table-bordered table-hover table-striped">
 			<colgroup>
 				<col width="40px"/>
 				<col width="40px"/>
-				<col width="300"/>
+				<col width="300px"/>
 				<col width="100px"/>
 			</colgroup>	
 			<thead>
@@ -58,8 +57,17 @@ function paging(nowPage){
 				</tr>
 			</thead>
 			<tbody>
-<!-- 읽은 공지사항 리스트 출력하기 -->
-<c:forEach items="${List }" var="row">
+<c:choose>	
+	<c:when test="${empty List }">
+ 				<tr>
+ 					<td colspan="6" align="center" height="100">
+ 						등록된 게시물이 없습니다. 
+ 					</td>
+ 				</tr>
+	</c:when>
+<c:otherwise>
+		<!-- 읽은 공지사항 리스트 출력하기 -->
+		<c:forEach items="${List }" var="row">
 				<tr>
 					<td class="text-center" >${row.RNUM}</td>
 					<td class="text-center" >
@@ -79,10 +87,12 @@ function paging(nowPage){
 					</td>
 					<td class="text-center" >${row.POSTDATE }</td>
 				</tr>
-</c:forEach>
+		</c:forEach>		
+	</c:otherwise>	
+</c:choose>
 			</tbody>
 			</table>
-			<div style="padding-left: 400px;">
+			<div style="text-align:center;">
 				<!-- 방명록 반복 부분 e -->
 				<ul class="pagination justify-content-center">
 					${pagingImg }

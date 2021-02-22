@@ -8,9 +8,9 @@
 	padding-left: 5px;
 }
 </style>
-			<br />
 <!-- 강의실 왼쪽메뉴 선택바 -->
 <div id="main" class="container-fluid">
+
 	<div class="row content">
 		<br />
 		<div class="col-sm-2 sidenav" style="font-weight: bold;">
@@ -27,7 +27,7 @@
 				</a>
 			</div>
 			<br />
-		</div><br />
+		</div>
 <!-- 내용입력부분. 클래스속성 건드리지말것 -->
 <div class="col-lg-10">
 <div class="container">

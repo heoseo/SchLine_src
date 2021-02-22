@@ -36,7 +36,7 @@ public interface StudyDAOImpl {
 	public ArrayList<InfoVO> lank_list();
 	
 	//공부시간 업데이트해주는 함수
-	public int study_time(@Param("_id") String user_id,@Param("_time") int time);
+	public int study_time(@Param("_id") String user_id);
 	
 	//채팅 기록 담기
 	public int chat_history(String user_id, String cont);
