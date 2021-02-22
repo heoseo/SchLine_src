@@ -147,7 +147,7 @@ public class TeamController {
 	public String teamWriteAction(Model model, MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 		System.out.println(path);
 		 
 		//과목idx
@@ -195,6 +195,7 @@ public class TeamController {
 				fileName = (String)itr.next();
 				mfile = req.getFile(fileName);
 				System.out.println("mfile="+mfile);
+				System.out.println("파일명:"+fileName);
 				//한글깨짐방지 처리후 전송된 파일명을 가져옴
 				String originalName = new String(mfile.getOriginalFilename().getBytes(), "UTF-8");
 
@@ -303,7 +304,7 @@ public class TeamController {
 	public String teamEditAction(Model model, MultipartHttpServletRequest req, Principal principal) {
 		
 		//경로 받아오기
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 		System.out.println(path);
 		 
 		//과목idx
@@ -386,7 +387,7 @@ public class TeamController {
 	@RequestMapping("/class/teamDownload.do")
 	public void teamDownload (HttpServletRequest req, HttpServletResponse resp) {
 		
-		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 		System.out.println("서버경로확인:"+path);
 		String file_name = req.getParameter("board_file");
 		
@@ -406,7 +407,7 @@ public class TeamController {
 		int result = sqlSession.getMapper(SchlineDAOImpl.class).teamDelete(board_idx, user_id);
 		System.out.println("결과값:"+result);
 		if(!req.getParameter("board_file").equals("")) {
-			String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile");
+			String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
 			
 			deleteFile(path, board_file);
 		}

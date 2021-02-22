@@ -4,11 +4,21 @@
    xmlns:beans="http://www.springframework.org/schema/beans"
    xmlns:context="http://www.springframework.org/schema/context"
    xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xmlns:task="http://www.springframework.org/schema/task"
    xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
       http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-      http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+      http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
+      http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+      
 
+<!-- 
+스케줄러를 위한 xmlns 추가
+xmlns:task="http://www.springframework.org/schema/task"
+
+task 스키마 - xsi:schemaLocation에 추가
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+ -->
    <!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
    
    <!-- Enables the Spring MVC @Controller programming model -->
@@ -27,8 +37,6 @@
    <context:component-scan base-package="android" />
    <context:component-scan base-package="admin" />
    
-   <!-- 공부방 컨트롤을 위해 스캔추가 -->
-<!--    <context:component-scan base-package="studyroom.chat" /> -->
    
    
    
@@ -88,11 +96,6 @@
     </beans:bean>
 
 	
-
-	
-	
-	
-	
 	
 	<!-- 스레드 사용을 위한 빈 생성 -->
 	<beans:bean id="threadExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
@@ -101,6 +104,12 @@
 	    <beans:property name="queueCapacity" value="10" />
 	    <beans:property name="waitForTasksToCompleteOnShutdown" value="true" />
     </beans:bean>
+	
+		<!-- 스케쥴러파일이 존재하는 패키지 설정 -->	
+	<context:component-scan base-package="admin.FCMScheduleComponent" />
+	
+	<task:scheduler id="jobScheduler" pool-size="10" />
+	<task:annotation-driven scheduler="jobScheduler" />
 	
 
    

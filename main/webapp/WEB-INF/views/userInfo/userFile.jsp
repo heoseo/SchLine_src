@@ -18,12 +18,15 @@
 <body class="is-preload">
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_userInfo.jsp"/><!-- flag구분예정 -->
- <hr /><!-- 구분자 -->
+
 	<div class="table-wrapper">
-		<div style="text-align: center;">
-	      <small>제출 파일</small>
+		<div style="text-align:center;">
+	      <small style="font-size:1.2em; padding-left: 30px;">
+	      <i class="fas fa-folder" id="icon">&nbsp&nbsp</i>
+	      제출 파일</small>
 	    </div>
-		<table class="alt" style="text-align:center">
+	    <hr />
+		<table class="table table-bordered table-hover table-striped">
 		<c:choose>	
 			<c:when test="${empty lists }">
  				<tr>
@@ -35,16 +38,16 @@
 			<c:otherwise>
 				<c:forEach items="${lists }" var="row">
 					<tr>
-						<td style="text-align:left;">
+						<td style="text-align:left; padding-left: 20px;">
 						<a href="teamView.do?board_idx=${row.board_idx }&subject_idx=${row.subject_idx}">
 						${row.board_title }
 						</a>
 						</td>
-						<td style="width:15%">${row.user_name }</td>
-						<td style="width:5%">
+						<td style="width:15%; text-align:center;">${row.user_name }</td>
+						<td style="width:10%; text-align:center;">
 					<c:if test="${not empty row.board_file }">
-						<a href="userDownload.do?board_file=${row.board_file }"><!-- 다운로드 추가 필요 -->
-						<img src="../resources/images/download.png" alt="download" style="max-width:100%; height:auto;"/>
+						<a href="userDownload.do?board_file=${row.board_file }"  style="text-align: center;"><!-- 다운로드 추가 필요 -->
+							<i class="fas fa-download"></i>
 						</a>
 					</c:if>	
 						</td>

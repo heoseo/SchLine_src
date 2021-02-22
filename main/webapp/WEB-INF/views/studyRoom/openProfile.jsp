@@ -14,13 +14,10 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/assets/css/main.css" />
-<noscript>
 	<link rel="stylesheet"
 		href="<%=request.getContextPath()%>/resources/assets/css/noscript.css" />
-</noscript>
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/assets/css/main.css" />
 </head>
 
 <style>
@@ -60,18 +57,20 @@
 		           },
 			 	data : {
 			 		flag : '0',
-			 		ot_nick : "${ot.info_nick }"
+			 		ot_nick : "${ot.info_nick }",
+			 		block_check : "${block_check}"
 			 		},
 			 	success : function(r){
 				 	if(r.check==0){//차단하기 성공시
 				 		alert("차단성공");
 				 	}
-				 	else{alert("차단실패");}
+				 	else{alert("차단해제");}
 				},
 				error : function(e){
 					alert("에러"+e);
 				}
 			});
+			location.reload();
 		}
 // 	});
 </script>
@@ -82,14 +81,13 @@
 	<!-- 메인 로고 이미지 -->
 	<div align="center">
 	<br />
+	<h1><u>프로필 보기</u></h1>
 		<a href="#"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-			<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
+<%-- 			<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" /> --%>
 		</a>
-	<br />
 	</div>
-	<!-- 메인 로고 이미지 -->
+	
 	<div align="center">
-		<br />
 		<table>
 			<tr >
 				<td  style="text-align: center;">
@@ -113,9 +111,16 @@
 				</tr>
 				<tr style="text-align: center;">
 					<td>
+					<c:if test="${block_check eq 0}">
 						<button class="primary ml-auto" onclick="ajaxPro2();" >
-						차단하기
+							차단하기
 						</button>
+					</c:if>
+					<c:if test="${block_check eq 1}">
+						<button class="primary ml-auto" onclick="ajaxPro2();" >
+							차단해제
+						</button>
+					</c:if>
 						&nbsp;&nbsp;
 					</td>
 				</tr>
@@ -131,6 +136,7 @@
 			<input type="hidden" name="ot_nick" value="${ot.info_nick }" />
 			<input type="hidden" name="ot_id" value="${ot.user_id }" /><!-- 프로필 보여줄 아이디 -->
 			<input type="hidden" name="user_id" value="${sessionScope.user_id }" /><!-- 로그인 회원 아이디 -->
+			<input type="hidden" name="block_check" value="${block_check }"/><!-- 차단여부 확인 -->
 		</form:form>
 		
 	

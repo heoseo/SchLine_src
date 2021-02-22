@@ -28,7 +28,6 @@
 </style>
 <br />
 <div id="main" class="container-fluid">
-	<br/>
 	<div class="row content">
 	<br />
 		<div class="col-sm-2 sidenav">
@@ -37,14 +36,12 @@
 				
 				<!-- 기존 코스★★★★★ -->
 					<a href="professorinfo.do" class="list-group-item" >
-						<i class="fas fa-archive" id="icon">&nbsp&nbsp</i>
+						<i class="fas fa-vector-square" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">전체 보기</span>
 					</a>
 					
 				</div>
-				<br />
 	</div>
-	<br/>
 <!-- 내용입력부분. 클래스속성 건드리지말것 -->
 <div class="col-lg-10">
 <div class="container">

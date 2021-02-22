@@ -5,7 +5,13 @@
 
 <mapper namespace="schline.SchlineDAOImpl">
 	<!-- 해당 아이디의 과목으로 출제한 문제리스트 가져오기 -->
-	<select id="pexamList" resultType="schline.ExamDTO">
+	<select id="pexamlist" resultType="schline.ExamDTO">
+		select * from exam_tb where subject_idx = 
+		(select subject_idx from subject_tb where user_id=#{0} ) 
+		AND exam_type='2' AND exam_idx!=0
+	</select>
+	
+	<select id="pinexamList" resultType="schline.ExamDTO">
 		SELECT * FROM exam_tb E
     	JOIN question_tb Q ON E.exam_idx= Q.exam_idx  WHERE Q.exam_idx in
 		(SELECT exam_idx FROM exam_tb WHERE subject_idx =
@@ -36,10 +42,10 @@
 	</select>
 
 	<!-- 시험정보 입력 -->
-	<insert id="insertExam">
-		INSERT INTO exam_tb (exam_idx, subject_idx, exam_name, exam_date, exam_type, exam_content, exam_scoring)
-		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy'), 2, #{1}, #{3})
-	</insert>
+	<update id="insertExam">
+		UPDATE exam_tb SET exam_content=#{1}, exam_date=to_date(#{2}, 'mm/dd/yyyy hh24:mi')
+		, exam_scoring=#{3} where subject_idx=#{0} AND exam_idx=#{4}
+	</update>
 	<!-- 문제정보 입력 -->
 	<insert id="insertQuestion">
 		INSERT INTO question_tb (question_idx, exam_idx, question_type, answer, question_score, question_content)
@@ -74,7 +80,7 @@
 	<!-- 과제 입력 -->
 	<insert id="insertTask">
 		INSERT INTO exam_tb (exam_idx, subject_idx, exam_name, exam_date, exam_type, exam_content, exam_scoring)
-		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy'), '1', #{3}, #{4})
+		VALUES (seq_exam_idx.NEXTVAL, #{0}, #{1}, to_date(#{2}, 'mm/dd/yyyy hh24:mi'), '1', #{3}, #{4})
 	</insert>
 	<!-- 과제 및 시험 입력 후 해당 인덱스로.. 수강중인 학생들의 체크리스트 insert-->
 	<insert id="insertCheckList" parameterType="schline.ExamDTO">
@@ -111,17 +117,21 @@
 		WHERE rNum<![CDATA[>=]]>#{1} AND rNum<![CDATA[<=]]>#{2}	
 	</select>
 	
-	<!-- 주관식 답 데이터가 많아 20개만 우선 추출 -->
+	<!-- 주관식 추출 -->
 	<select id="examCheckList" resultType="schline.ExamDTO">
 		select subject_idx, E.exam_idx, question_content, question_score, Q.question_idx, question_type, user_id, questionanswer_content
 			from exam_tb E join question_tb Q on E.exam_idx=Q.exam_idx
 	    	join questionanswer_tb A on Q.question_idx=A.question_idx 
-	    where subject_idx=#{0} and A.user_id=#{1} and rownum<![CDATA[<=]]>200
+	    where subject_idx=#{0} and A.user_id=#{1}
 	</select>
 	
 	<update id="gradeUp">
 		UPDATE grade_tb SET grade_exam=grade_exam + #{0}
 		WHERE user_id =#{1} AND exam_idx=#{2}
+	</update>
+	
+	<update id="changeTeam">
+		UPDATE teamproject_tb SET team_idx=#{1} WHERE user_id=#{0} AND subject_idx=#{2}
 	</update>
 	
 </mapper>

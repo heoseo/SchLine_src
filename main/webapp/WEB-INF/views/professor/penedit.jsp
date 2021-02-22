@@ -35,12 +35,34 @@
 </script>
 <div class="container">
 	
+
+	<hr />
+   	<div style="text-align: center;"> <!-- ${viewRow.board_type  } -->
+   		${viewRow.board_type}
+      	<small style="font-size:1.2em; font-weight:bold;">
+		  <c:choose>
+		   <c:when test="${viewRow.board_type eq 'red'}">
+		     <i class="fas fa-edit"></i>&nbsp;&nbsp;정정게시판
+		   </c:when>
+		   <c:otherwise>
+		     <i class="fas fa-question-circle"></i>&nbsp;&nbsp;질문게시판
+		   </c:otherwise>
+		  </c:choose>
+		</small><!-- flag구분예정-->
+      
+   	</div>
+   	<hr /><!-- 구분자 -->
+	
+	
 	<form:form name="writeFrm" method="post" 
 		action="./editAction.do" 
 		onsubmit="return checkValidate(this);">
 		<input type="hidden" name="pen_idx" value="${viewRow.pen_idx }" />
+		<input type="hidden" name="board_type" value="${viewRow.board_type }" />
+			<input type="hidden" name="subject_idx" value="${viewRow.subject_idx }" />
 		<input type="hidden" name="nowPage" value="${nowPage }" />
-	<table border=1 width=800>
+		<input type="hidden" name="bgroup" value="${viewRow.bgroup }" />
+	<table border=1 width=800 class="table table-bordered table-hover table-striped" style="border-radius:5px;">
 	<colgroup>
 		<col width="25%"/>
 		<col width="*"/>
@@ -57,6 +79,22 @@
 				style="width:90%;" id="demo-message" placeholder="내용을 입력하세요" rows="6">${viewRow.board_content }</textarea>
 		</td>
 	</tr>
+		<c:if test="${viewRow.board_type eq 'red'}">
+	<tr>
+		<td colspan="2" style="padding-left: 20px;">위 내용을 정정 하시겠습니까?
+		<br /><br />
+		
+<!-- 		<div class="col-4 col-12-small"> -->
+			<input type="radio" id="demo-priority-low" name="yorn" value="yes" <c:if test="${viewRow.yorn eq 'yes' }">checked</c:if>/>
+			<label for="demo-priority-low">예</label>
+<!-- 		</div> -->
+<!-- 		<div class="col-4 col-12-small"> -->
+			<input type="radio" id="demo-priority-normal" value="no" name="yorn" <c:if test="${viewRow.yorn eq 'no' }">checked</c:if>/>
+			<label for="demo-priority-normal">아니요</label>
+<!-- 		</div> -->
+		</td>
+	</tr>
+	</c:if>
 	<tr>
 		<td colspan="2" align="center">
 		<ul class="actions">

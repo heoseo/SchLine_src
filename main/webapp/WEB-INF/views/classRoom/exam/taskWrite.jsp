@@ -62,7 +62,7 @@ $(function(){
 	});
 });
 </script>
-	<span style="display:block; text-align:center; font-size:1.3em;"><b>[제출 양식]</b></span><br />
+	<span style="display:block; text-align:center; font-size:1.3em; color:#145374"><b>[제출 양식]</b></span><br />
 	<form:form name="taskFrm" method="post"  enctype="multipart/form-data">
 		 
 		<table class="alt" style="text-align:center;">

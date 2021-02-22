@@ -15,14 +15,13 @@
 		<title>스쿨라인 메인</title>
 
 <%@ include file="/resources/include/top.jsp" %>
+<!-- 메인에 코스 리스트를 위한 style임-->
+<%@ include file="/resources/include/HomeClasslist.jsp" %>
 
 <!-- /////////////////////Main시작////////////////////// -->
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
-	
 	<div id="main">
-
-	<button><a href="./elements.do" class="button primary">elements.jsp</a></button>
-	<br />
+	
 		
 	<!-- 1. 강의실 -->
 		<section id="class" class="main special">
@@ -31,14 +30,27 @@
 					<header class="major">
 						<h2>강의실</h2>
 					</header>
-					<span class="image"><img src="<%=request.getContextPath() %>/resources/images/pic01.jpg" alt="" /></span>
-					<p>
-					Sed lorem ipsum dolor sit amet nullam consequat feugiat consequat magna
-					adipiscing magna etiam amet veroeros. Lorem ipsum dolor tempus sit cursus.
-					Tempus nisl et nullam lorem ipsum dolor sit amet aliquam.</p>
-					<ul class="actions">
-						<li><a href="generic.html" class="button">Learn More</a></li>
-					</ul>
+					
+<div id="pattern" class="pattern">
+
+    <ul class="list img-list">
+      <c:forEach items="${course }" var="row">	
+       <li>	
+		<a href="./class/time.do?subject_idx=${row.subject_idx }"  class="inner">					
+			<div class="li-img">
+			 <c:set var="ran"><%= java.lang.Math.round(java.lang.Math.random() *40)+1 %></c:set>
+         	 <img src="https://picsum.photos/200/150/?image=${ran}" alt="sample image">
+            </div>
+             <div class="li-text">
+                <h4 class="li-head">${row.subject_name }</h4>
+                <p class="li-sub">${row.user_name }&emsp;</p>		
+			</div>
+     	</a>
+     	 </li>
+	</c:forEach>
+  
+    </ul>
+</div>
 				</div>
 			</div>
 		</section>
@@ -52,84 +64,77 @@
 			
 		</section>
 
-<!-- 3.캘린더시작.######################################################################################### -->		
-		<!-- 3. 캘린더  -->
-<!-- 		<section id="calendar" class="main special"> -->
-<!-- 			<header class="major"> -->
-<!-- 				<h2>캘린더</h2> -->
-<!-- 				<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br /> -->
-<!-- 				posuere. Nulla massa urna, fermentum eget quam aliquet.</p> -->
-<!-- 			</header> -->
-<!-- 			<ul class="statistics"> -->
-<!-- 				<li class="style1"> -->
-<!-- 					<span class="icon solid fa-code-branch"></span> -->
-<!-- 					<strong>5,120</strong> Etiam -->
-<!-- 				</li> -->
-<!-- 				<li class="style2"> -->
-<!-- 					<span class="icon fa-folder-open"></span> -->
-<!-- 					<strong>8,192</strong> Magna -->
-<!-- 				</li> -->
-<!-- 				<li class="style3"> -->
-<!-- 					<span class="icon solid fa-signal"></span> -->
-<!-- 					<strong>2,048</strong> Tempus -->
-<!-- 				</li> -->
-<!-- 				<li class="style4"> -->
-<!-- 					<span class="icon solid fa-laptop"></span> -->
-<!-- 					<strong>4,096</strong> Aliquam -->
-<!-- 				</li> -->
-<!-- 				<li class="style5"> -->
-<!-- 					<span class="icon fa-gem"></span> -->
-<!-- 					<strong>1,024</strong> Nullam -->
-<!-- 				</li> -->
-<!-- 			</ul> -->
-<!-- 			<p class="content">Nam elementum nisl et mi a commodo porttitor. Morbi sit amet nisl eu arcu faucibus hendrerit vel a risus. Nam a orci mi, elementum ac arcu sit amet, fermentum pellentesque et purus. Integer maximus varius lorem, sed convallis diam accumsan sed. Etiam porttitor placerat sapien, sed eleifend a enim pulvinar faucibus semper quis ut arcu. Ut non nisl a mollis est efficitur vestibulum. Integer eget purus nec nulla mattis et accumsan ut magna libero. Morbi auctor iaculis porttitor. Sed ut magna ac risus et hendrerit scelerisque. Praesent eleifend lacus in lectus aliquam porta. Cras eu ornare dui curabitur lacinia.</p> -->
-<!-- 			<footer class="major"> -->
-<!-- 				<ul class="actions special"> -->
-<!-- 					<li><a href="generic.html" class="button">Learn More</a></li> -->
-<!-- 				</ul> -->
-<!-- 			</footer> -->
-<!-- 		</section> -->
+<!-- 3.캘린더시작 -->		
 
 		<section id="calendar" class="main special">
 			<header class="major">
-				<h2>캘린더</h2>
+				<h2 style="padding-top: 0px">캘린더</h2>
+			<%@ include file="../schedule/calendarMain.jsp" %>
 			</header>
 		</section>
-
-
 		
-		
-<!-- 3.캘린더끝.######################################################################################### -->		
+<!-- 3.캘린더끝. -->		
 		
 		
 		<!-- 4. 과제함 -->
 		<section id="homework" class="main special">
 			<header class="major">
-				<h2>과제함</h2>
-				<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-				posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
+				<h2 style="font-weight:bold; padding-top: 0px">과제함</h2>
 			</header>
-			<footer class="major">
-				<ul class="actions special">
-					<li><a href="generic.html" class="button primary">Get Started</a></li>
-					<li><a href="generic.html" class="button">Learn More</a></li>
-				</ul>
+		<div class="table-wrapper" style="height:400px; overflow:auto;">
+			<table class="alt" style="text-align:center">
+				<tr>
+					<td style="width:18%;">과제명</td>
+					<td>과제 내용</td>	
+					<td style="width:12%">마감일</td>
+					<td style="width:12%">제출여부</td>
+					<td style="width:10%">과제함이동</td>
+				</tr>
+			<c:forEach items="${examlist }" var="trow" varStatus="tloop">
+				<tr>
+					<td style="width:18%;" >${trow.exam_name }</td>
+					<td style="text-align:left; overflow:hidden;">${trow.exam_content }</td>	
+					<td style="width:12%">${trow.exam_date }</td>
+					<td style="width:12%">
+					<c:choose>
+					<c:when test="${trow.check_flag eq 0 }">미제출</c:when>
+					<c:otherwise>제출완료</c:otherwise>
+					</c:choose>					
+					</td>
+					<td style="width:10%">
+					<a href="/schline/class/taskList.do?subject_idx=${trow.subject_idx}&exam_type=1" class="button primary">
+					이동하기
+					</td>
+				</tr>
+				
+			</c:forEach>
+			</table>
+		</div>
 			</footer>
 		</section>
 		
 		<!-- 5. 공부방 -->
 		<section id="studyroom" class="main special">
-				<header class="major">
-				<h2>공부방</h2>
-				<p>Donec imperdiet consequat consequat. Suspendisse feugiat congue<br />
-					posuere. Nulla massa urna, fermentum eget quam aliquet.</p>
-			</header>
-			<footer class="major">
-				<ul class="actions special">
-					<li><a href="generic.html" class="button primary">Get Started</a></li>
-					<li><a href="generic.html" class="button">Learn More</a></li>
-				</ul>
-			</footer>
+			<div class="spotlight">
+				<div class="content">
+					<header class="major">
+						<h2>공부방</h2>
+					</header>
+					<footer class="major">
+					
+	<!-- 					<input type="image" src="" alt="" /> -->
+						<span class="image">
+							<a href="./class/studyRoom.do">
+								<img src="<%=request.getContextPath() %>/resources/images/study3.jpg" alt="공부방 이동"
+								style="min-height:0; min-width:0; width: 400px; height: 400px;" />
+							</a>
+						</span>
+					<ul class="actions">
+<!-- 						<li><a href="generic.html" class="button">입장하기</a></li> -->
+					</ul>
+				</footer>
+			</div>
+		</div>
 		</section>
 	</div>
 		

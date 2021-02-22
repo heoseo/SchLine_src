@@ -29,15 +29,18 @@ function openSocket(){
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    //해당컴에 해당하는 경로로 변경해주기!
    ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+
+    //ws = new WebSocket("ws://192.168.25.47:9999/schline/echo.do/websocket");
+   
    //채팅창 open
    
-   	ws.onopen = function(event){
+      ws.onopen = function(event){
         //사용자가 입장했을때 다른사람들에게 뿌려줌
         $('#inputMessage').val("admin|'${info_nick}'님 도서관 입장하셨습니다.");
-      	send();
-      	//메세지인풋 다시 null로 만들어줌
-      	$('#inputMessage').val('');
-      	$('#inputMessage').focus();
+         send();
+         //메세지인풋 다시 null로 만들어줌
+         $('#inputMessage').val('');
+         $('#inputMessage').focus();
          
          if(event.data === undefined){
            return;
@@ -54,7 +57,7 @@ function openSocket(){
    };
    //채팅 종료
    ws.onclose = function(event){
-      writeResponse("대화 종료");
+      send("admin|'${info_nick}'님이 퇴실하셨습니다.");
    };
 }
 
@@ -67,28 +70,28 @@ function send(){
     var msg = document.getElementById("inputMessage").value;
     var sender = document.getElementById("info_nick").value;
     var user_img = document.getElementById("info_img").value; //내 프로필
-   	var time = nowTime();
+      var time = nowTime();
    
-   	//사용자 닉네임을 통해 프로필 이미지 불러오기
+      //사용자 닉네임을 통해 프로필 이미지 불러오기
 //    $('.profile profile-img-a').attr("background", "url('"+user_img+") 0 0 no-repeat'");
    
-   	//메세지가 없다면 작동하지 않음
-   	if(msg==""){
-      	return false;
-   	}
-   	//관리자가보낸 메세지일때는 서버로 전송만 해주고 창에는 띄워주지 않는다
-   	if(msg.startsWith("admin")==true){
-      	ws.send(sender+'|'+ msg +'|'+user_img);
-      	return false;
-   	}
-   	//상대방 프로필보기
-   	else if(msg.startsWith("@")==true){
-      	var other = msg.split('@');
-      	var other_nick = other[1];
-//  	ajax로 닉네임체크 후 프로필창 띄워주기
-      	ajaxPro(2, other_nick);
-    	$('#inputMessage').val('');
-      	return false;
+      //메세지가 없다면 작동하지 않음
+      if(msg==""){
+         return false;
+      }
+      //관리자가보낸 메세지일때는 서버로 전송만 해주고 창에는 띄워주지 않는다
+      if(msg.startsWith("admin")==true){
+         ws.send(sender+'|'+ msg +'|'+user_img);
+         return false;
+      }
+      //상대방 프로필보기
+      else if(msg.startsWith("@")==true){
+         var other = msg.split('@');
+         var other_nick = other[1];
+//     ajax로 닉네임체크 후 프로필창 띄워주기
+         ajaxPro(2, other_nick);
+       $('#inputMessage').val('');
+         return false;
     }
    
     //서버로 메세지 전송
@@ -209,7 +212,8 @@ function ajaxPro(d, ot_nick) {
 
 //채팅종료
 function closeSocket(){
-   ws.close();
+	send("admin|'${info_nick}'님이 퇴실하셨습니다.");
+   	ws.close();
 }
 
 
@@ -219,7 +223,7 @@ function closeSocket(){
 
 
 function blockPeople() {
-	
+   
 }
 
 
@@ -239,59 +243,59 @@ function writeResponse(text){
        return;
     }
     
-	//내가 차단한 상대일 경우 대화창을 띄우지 않는다.
-	blockPeople(sender);
-	
-	$.ajax({
-	   url : "../class/studyBlock.do",
-	   dataType : "json",
-	   type : "post",
-	   async: false, //동기방식으로 변경
-	   contentType : "application/x-www-form-urlencoded;charset:utf-8",
-	    data : {ot_nick : sender},
-	    beforeSend : function(xhr){
-	         xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-	        },
-	    success : function(r){
-	       if(r.check==1){//차단한 상대일때
-	          bl_check = 1;
-	          return false;//적용안됨
-	       }//차단유저가 아닐경우 그냥 진행
-	   },
-	   error : function(e){
-	      alert("메세지받아오기 차단부분 에러"+e);
-	   }
-	});
-	
-	//여기서 차단여부 구분해서 처리해줌
-	if(bl_check==1){//차단한상대일때 밖으로 나감
-	   return false;
-	}
-	
-	var tmep;
-	   //관리자가 보낸 메세지일때
-	   if(con.startsWith("admin")==true){
-	      $('#messageWindow').css("text-align", "center");
-	        messages.innerHTML += "<br/>"+img;//3번째영역이 대화내용이므로
-	       messages.scrollTop = messages.scrollHeight;
-	        return false;
-	   }
-	    if(con.startsWith("/")){
-	      if(con.startsWith("/${info_nick}/")==true){
-	         var x = con.split("/");
-	         var y = con[2];
-	          temp = con.replace("/${info_nick}/","[귓속말]");
-	          //메세지 UI적용
-	          msg = makeBalloon(sender, temp, img);
-	          messages.innerHTML += msg;
-	       }
-	      else return;
-	   }
-	   else{
-	       //명령어가 아닐시 모두에게 디스플레이
-	      msg = makeBalloon(sender, con, img);
-	      messages.innerHTML += "<br/>"+msg;
-	   }
+   //내가 차단한 상대일 경우 대화창을 띄우지 않는다.
+   blockPeople(sender);
+   
+   $.ajax({
+      url : "../class/studyBlock.do",
+      dataType : "json",
+      type : "post",
+      async: false, //동기방식으로 변경
+      contentType : "application/x-www-form-urlencoded;charset:utf-8",
+       data : {ot_nick : sender},
+       beforeSend : function(xhr){
+            xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+           },
+       success : function(r){
+          if(r.check==1){//차단한 상대일때
+             bl_check = 1;
+             return false;//적용안됨
+          }//차단유저가 아닐경우 그냥 진행
+      },
+      error : function(e){
+         alert("메세지받아오기 차단부분 에러"+e);
+      }
+   });
+   
+   //여기서 차단여부 구분해서 처리해줌
+   if(bl_check==1){//차단한상대일때 밖으로 나감
+      return false;
+   }
+   
+   var tmep;
+      //관리자가 보낸 메세지일때
+      if(con.startsWith("admin")==true){
+         $('#messageWindow').css("text-align", "center");
+           messages.innerHTML += "<br/>"+img;//3번째영역이 대화내용이므로
+          messages.scrollTop = messages.scrollHeight;
+           return false;
+      }
+       if(con.startsWith("/")){
+         if(con.startsWith("/${info_nick}/")==true){
+            var x = con.split("/");
+            var y = con[2];
+             temp = con.replace("/${info_nick}/","[귓속말]");
+             //메세지 UI적용
+             msg = makeBalloon(sender, temp, img);
+             messages.innerHTML += msg;
+          }
+         else return;
+      }
+      else{
+          //명령어가 아닐시 모두에게 디스플레이
+         msg = makeBalloon(sender, con, img);
+         messages.innerHTML += "<br/>"+msg;
+      }
     //스크롤바 항상 아래로
    messages.scrollTop = messages.scrollHeight;
 } 
@@ -351,12 +355,13 @@ $('.profile-img').on('click', function () {
 </script>
 
 <!-- 채팅 출력창 -->
-<div id="messageWindow" class="border border-primary"
-   style="height: 500px; overflow: auto; padding: 20px;">
+<div id="messageWindow" class="border"
+   style="height: 500px; overflow: auto; padding: 20px; 
+   border-radius: 5px; bo border-color: #145374; border: solid 2px #145374;">
 </div>
 
-<table class="table table-bordered"
-   style="min-width: 0; width: 100%; max-height: 100%">
+<table class="table table-bordered table-hover table-striped"
+   style="min-width: 0; width: 100%; max-height: 100%;">
    <!-- 히든폼으로 사용자정보 가져오기 -->
    <form:form id="peopleFrm">
       <input type="hidden" id="chat_id" value="${user_id }"/>
@@ -370,7 +375,9 @@ $('.profile-img').on('click', function () {
          class="form-control float-left mr-1" placeholder="채팅내용을 입력하세요."
          onkeyup="enterkey();" style="min-width: 0; width: 78%;" />
          <button id="sendBtn" onclick="return send();"
-            style="min-width: 0; width: 20%; min-height: 0; height: 45px; font-size: 0.7em;">send</button>
+            style="min-width: 0; width: 20%; min-height: 0; height: 45px; font-size: 0.7em; background:#ADD8E6">
+            <i class="fas fa-paper-plane" style="font-size: 2em"></i>
+         </button>
          <!--          <input type="button" id="sendBtn" onclick="send();" value="전송" class="btn btn-info float-left" /> -->
       </td>
    </tr>
