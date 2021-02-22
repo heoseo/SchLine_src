@@ -15,6 +15,18 @@
 <!-- 시간저장은 안드에서? -->
 
 <%-- <%@ include file="/resources/include/top.jsp"%> --%>
+<style>
+body {
+   margin: 0 auto;
+   padding-left: 10px;
+   padding-right: 10px;
+   height: 51em
+}
+#inputMessage{
+   margin-bottom: 15px;
+}
+</style>
+
 
 <body class="is-preload" >
 <div id="main">
@@ -440,9 +452,10 @@ function nowTime(){
    </form>
    <tr>
       <td>
-         <!-- 엔터키 입력시 전송 설정 --> <input type="text" id="inputMessage"
+         <!-- 엔터키 입력시 전송 설정 --> 
+         <input type="text" id="inputMessage"
          class="form-control float-left mr-1" placeholder="채팅내용을 입력하세요."
-         onkeyup="enterkey();" style="min-width: 0; width: 78%;" />
+         onkeyup="enterkey();" />
          <button id="sendBtn" onclick="return send();"
             style="min-width: 0; width: 20%; min-height: 0; height: 45px; font-size: 0.7em;">send</button>
          <!--          <input type="button" id="sendBtn" onclick="send();" value="전송" class="btn btn-info float-left" /> -->
