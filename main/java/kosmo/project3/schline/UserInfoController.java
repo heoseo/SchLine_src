@@ -112,6 +112,64 @@ public class UserInfoController {
 		return "userInfo/userSubject";
 	}
 	
+	@RequestMapping("/user/InfoAtten.do")
+	public String infoAtten(Model model, HttpSession session, HttpServletRequest req) {
+	
+		String user_id = (String) session.getAttribute("user_id");
+		
+		//과목+수강 리스트 (학생이 수강하는 과목 subject_idx)
+		UserInfoDTO userInfoDTO = new UserInfoDTO();
+		userInfoDTO.setUser_id(user_id);
+		ArrayList<UserInfoDTO> lists =  sqlSession.getMapper(GradeDTOImpl.class).RegistrationInfo(userInfoDTO);
+		System.out.println(lists);
+		System.out.println(lists.get(0));
+		System.out.println(lists.get(0).getSubject_idx());
+		//lists 객체 배열 (subject_idx)
+		model.addAttribute("lists", lists);
+		
+		ArrayList<String> list = new ArrayList<String>();
+		for (int i =0; i<lists.size(); i++) {
+		list.add(lists.get(i).getSubject_idx());
+		}
+		System.out.println(list);
+		
+		//subject_idx가 1
+		AttendanceDTO attendanceDTO = new AttendanceDTO();
+		attendanceDTO.setSubject_idx(list.get(0));
+		attendanceDTO.setUser_id(user_id);
+		ArrayList<AttendanceDTO> atten1 = sqlSession.getMapper(GradeDTOImpl.class).AttenInfo(attendanceDTO);
+		model.addAttribute("atten1", atten1);
+		
+		//subject_idx가 2
+		AttendanceDTO attendanceDTO2 = new AttendanceDTO();
+		attendanceDTO2.setSubject_idx(list.get(1));
+		attendanceDTO2.setUser_id(user_id);
+		ArrayList<AttendanceDTO> atten2 = sqlSession.getMapper(GradeDTOImpl.class).AttenInfo(attendanceDTO2);
+		model.addAttribute("atten2", atten2);
+		
+		//subject_idx가 3
+		AttendanceDTO attendanceDTO3 = new AttendanceDTO();
+		attendanceDTO3.setSubject_idx(list.get(2));
+		attendanceDTO3.setUser_id(user_id);
+		ArrayList<AttendanceDTO> atten3 = sqlSession.getMapper(GradeDTOImpl.class).AttenInfo(attendanceDTO3);
+		model.addAttribute("atten3", atten3);
+		
+		//subject_idx가 4
+		AttendanceDTO attendanceDTO4 = new AttendanceDTO();
+		attendanceDTO4.setSubject_idx(list.get(3));
+		attendanceDTO4.setUser_id(user_id);
+		ArrayList<AttendanceDTO> atten4 = sqlSession.getMapper(GradeDTOImpl.class).AttenInfo(attendanceDTO4);
+		model.addAttribute("atten4", atten4);
+		
+		//subject_idx가 5
+		AttendanceDTO attendanceDTO5 = new AttendanceDTO();
+		attendanceDTO5.setSubject_idx(list.get(4));
+		attendanceDTO5.setUser_id(user_id);
+		ArrayList<AttendanceDTO> atten5 = sqlSession.getMapper(GradeDTOImpl.class).AttenInfo(attendanceDTO5);
+		model.addAttribute("atten5", atten5);
+		
+		return "userInfo/userAtten";
+	}
 	
 	
 	
