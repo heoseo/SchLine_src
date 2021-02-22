@@ -15,10 +15,12 @@ public interface GradeDTOImpl {
 	public ArrayList<GradeDTO> listGrade(GradeDTO gradeDTO);
 	public ArrayList<AndroidattenDTO> listGrade2(AndroidattenDTO androidattenDTO);
 	public ArrayList<RegistrationDTO> Registrationgrade(RegistrationDTO registrationDTO);	
+	public ArrayList<AndroidattenDTO> Registrationgrade2(AndroidattenDTO androidattenDTO);	
 	public ArrayList<AttendanceDTO> AttenInfo(AttendanceDTO attendanceDTO);	
-	public ArrayList<UserInfoDTO> listInfo(UserInfoDTO userInfoDTO);	
+	public ArrayList<UserInfoDTO> listInfo(UserInfoDTO userInfoDTO);		
 	public UserInfoDTO listInfo_admin(UserInfoDTO userInfoDTO);	
 	public ArrayList<UserInfoDTO> RegistrationInfo(UserInfoDTO userInfoDTO);	
+	public ArrayList<AndroidattenDTO> RegistrationInfo2(AndroidattenDTO androidattenDTO);	
 	public ArrayList<UserInfoDTO> blockuser(UserInfoDTO userInfoDTO);	
 	public ArrayList<UserInfoDTO> blockdelete(UserInfoDTO userInfoDTO);	
 	public ArrayList<ExamBoardDTO> boardInfo(ExamBoardDTO examBoardDTO);	
