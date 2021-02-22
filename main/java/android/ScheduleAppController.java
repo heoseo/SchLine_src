@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import Util.PagingUtil;
 import schedule.NoticeDTO;
@@ -530,32 +531,16 @@ public class ScheduleAppController {
 	
 	
 	//#################################캘린더##########################################
-	
-	//상단고정바 일정>드롭다운 캘린더 클릭시 이동.
-	@RequestMapping("/android/calendarTop.do")
-	public String calendarTop() {
-		
-		System.out.println("■ [CalendarApp컨트롤러 > calendarTop.do 요청 들어옴.]■");
-
-		return "/schedule/calendarApp";
-	}
-	
-	//일정>알림>왼쪽바 캘린더 클릭시 이동.
-	@RequestMapping("/android/calendar.do")
-	public String calendarLeft() {
-		
-		System.out.println("■ [CalendarApp컨트롤러 > calendarLeft.do 요청 들어옴.]■");
-
-		return "/schedule/calendarApp";
-	}
 	//캘린더 에이젝스.
-	@RequestMapping("/android/ajaxCalendar.do")
-	public String ajaxCalendar(Model model, HttpServletRequest req, HttpSession session) {
+	//@RequestMapping("/android/ajaxCalendar.do")
+	@RequestMapping("/android/examList.do")
+	@ResponseBody
+	public ArrayList<ExamDTO> ajaxCalendar(Model model, HttpServletRequest req, HttpSession session) {
 		
 		System.out.println("■[CalendarApp컨트롤러 > ajaxCalendar.do 요청 들어옴.]■");
-		
-		String user_id = (String) session.getAttribute("user_id");
-		System.out.println("세션저장아이디체크>>>>>: " + user_id); 
+				
+		String user_id = req.getParameter("user_id");
+		System.out.println("안드로이드 저장아이디체크>>>>>: " + user_id); 
 		
 		//파라미터 저장을 위한 DTO객체 생성.
 		String year = req.getParameter("year").toString();
@@ -567,23 +552,18 @@ public class ScheduleAppController {
 		else
 			monthStr = Integer.toString(month);
 		
-		String YearAndMonth = year +  monthStr;
-		//디버깅용
-		//System.out.println("ScheduleController > YearAndMonth : " + YearAndMonth);
+		String YearAndMonth = year + monthStr;
 		
-		//Mybatis로 한것..
+		System.out.println("ScheduleController > YearAndMonth : " + YearAndMonth);
+		
+		//시험리스트 불러오기
 		ArrayList<ExamDTO> lists =
-			sqlSession.getMapper(ScheduleDAOImpl.class)
-				.calendarList(user_id, YearAndMonth);
+			sqlSession.getMapper(ScheduleDAOImpl.class).calendarList(user_id, YearAndMonth);
 		
-		model.addAttribute("lists", lists);
-	
+		for(ExamDTO list : lists) {
+			list.getExam_date();
+		}
 		
-		System.out.println("■ [CalendarApp컨트롤러 > ajaxCalendar.do 요청 들어옴.]■");
-
-		return "/schedule/ajaxCalendarApp";
+		return lists;
 	}
-	
-	
-
 }
