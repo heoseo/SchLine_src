@@ -266,6 +266,7 @@ function writeResponse(text){
       dataType : "json",
       type : "post",
       contentType : "application/x-www-form-urlencoded;charset:utf-8",
+      async: false, //동기방식으로 변경
        data : {ot_nick : sender},
        beforeSend : function(xhr){
             xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
