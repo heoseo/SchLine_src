@@ -123,6 +123,7 @@ public class ExamController {
 		String exam_type = req.getParameter("exam_type");
 		System.out.println(exam_type);
 		String exam_idx = req.getParameter("exam_idx");
+		System.out.println("엥?:"+exam_idx);
 		
 		//자바과목의 시험타입 idx들 가져오기..
 		ArrayList<Integer> examidxs = sqlSession.getMapper(SchlineDAOImpl.class)
@@ -133,7 +134,7 @@ public class ExamController {
 				.getExamidx(subject_idx, exam_type);
 		
 		//시험진행여부를 확인하는 플래그
-		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(examidx.get(0), user_id);
+		int check_flag = sqlSession.getMapper(SchlineDAOImpl.class).getCheck(exam_idx, user_id);
 		//int check_flag = edto.getCheck_flag();
 		System.out.println("플래그:"+check_flag);
 		
