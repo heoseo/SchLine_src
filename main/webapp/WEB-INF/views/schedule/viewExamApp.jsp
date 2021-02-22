@@ -88,17 +88,17 @@ jQuery(document).ready(function($) {
 <!-- 읽은 공지사항 리스트 출력하기 -->
 <c:forEach items="${viewList }" var="row">
 
-<!-- 페이지제목 -->
+	<br />
 	<div id="row" class="col-lg-12">
-
+<!-- 페이지제목 -->
 <c:choose>
 	<c:when test="${row.exam_type == 1}">
 	<h2 style="text-align:center; font-weight:bold;">
 	<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>과제</h2>
 	</c:when>
 	<c:otherwise>
-		<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>
-		<h2 style="text-align:center; font-weight:bold; color:black;">시험</h2>
+	<h2 style="text-align:center; font-weight:bold;">
+	<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>시험</h2>
  	</c:otherwise>
 </c:choose>	
 		<div class="col text-right">
@@ -153,16 +153,16 @@ jQuery(document).ready(function($) {
 			</tr>
 		</table>
 		<div>
-<c:if  test="${row.exam_type == 1}">				
-			<div style="text-align:right; padding-right:30px">	
-				<a href="#target1" class="scroll">
-					<button type="button" 
-					style="font-size:1em;font-weight:bold" class="btn btn-light"
-					 onclick="taskWrite(${row.subject_idx }, ${row.exam_idx })">
-						제출하기</button>
-				</a>
-			</div>	 
-</c:if>				
+<%-- <c:if  test="${row.exam_type == 1}">				 --%>
+<!-- 			<div style="text-align:right; padding-right:30px">	 -->
+<!-- 				<a href="#target1" class="scroll"> -->
+<!-- 					<button type="button"  -->
+<!-- 					style="font-size:1em;font-weight:bold" class="btn btn-light" -->
+<%-- 					 onclick="taskWrite(${row.subject_idx }, ${row.exam_idx })"> --%>
+<!-- 						제출하기</button> -->
+<!-- 				</a> -->
+<!-- 			</div>	  -->
+<%-- </c:if>				 --%>
 <!-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, -->
 			<div id="target1">
 				<div id="taskWrite" class="table table-hover table-striped" 
