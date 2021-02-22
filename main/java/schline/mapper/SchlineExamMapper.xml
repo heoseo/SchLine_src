@@ -139,6 +139,16 @@
 			 'Y', #{_board_content}, #{_board_file}, #{_team_num}) 
 	</insert>
 	
+	<!-- 안드로이드용 일반게시물 업로드..내공부족 -->
+	<insert id="teamWrite2">
+	INSERT INTO board_tb
+		(board_idx, subject_idx, board_type, user_id, board_title,
+		 board_flag_te, board_content, team_num)
+	VALUES
+		(seq_board_idx.NEXTVAL, #{_subject_idx}, 'team', #{_user_id}, #{_board_title},
+		 'Y', #{_board_content}, #{_team_num}) 
+	</insert>
+	
 	<!-- 협업게시판 게시물 수정 -->
 	<update id="teamEdit">
 		UPDATE board_tb SET board_title=#{1}, board_content=#{2}

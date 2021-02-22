@@ -43,8 +43,17 @@
 				</tr>
 				</thead>				
 				<tbody>	
-<!-- 공지사항 리스트 출력하기 -->
-<c:forEach items="${notiList }" var="row">			
+<c:choose>	
+	<c:when test="${empty notiList }">
+ 				<tr>
+ 					<td colspan="6" align="center" height="100">
+ 						등록된 게시물이 없습니다. 
+ 					</td>
+ 				</tr>
+	</c:when>
+	<c:otherwise>
+		<!-- 공지사항 리스트 출력하기 -->
+		<c:forEach items="${notiList }" var="row">			
 				<tr>
 				<td class="text-center">${row.RNUM}</td>
 					<td class="text-left">
@@ -60,7 +69,9 @@
 </c:if>
 					</td>
 				</tr>
-</c:forEach>
+		</c:forEach>		
+	</c:otherwise>	
+</c:choose>
 				</tbody>
 			</table>
 		</div>

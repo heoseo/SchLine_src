@@ -59,6 +59,12 @@ public interface SchlineDAOImpl {
 					@Param("_board_file") String board_file,
 					@Param("_team_num") String team_num);
 	
+	public int teamWrite2(@Param("_subject_idx") String subject_idx,
+			@Param("_user_id") String user_id,
+			@Param("_board_title") String board_title,
+			@Param("_board_content") String board_content,
+			@Param("_team_num") String team_num);
+	
 	//파일 수정하여 게시물 업로드
 	public int teamFileEdit(@Param("_board_idx") String _board_idx,
 					@Param("_board_title") String board_title,

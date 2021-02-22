@@ -123,32 +123,32 @@ jQuery(document).ready(function($) {
 				<th class="text-center table-hover align-middle">구분</th>
 			<c:choose>
 			  	<c:when test="${row.exam_type == 1}">
-					<td>과제</td>
+					<td class="text-center table-hover align-middle">과제</td>
 						</c:when>
 						<c:otherwise>
-		    		<td>시험</td>
+		    		<td class="text-center table-hover align-middle">시험</td>
 			   	</c:otherwise>
 			 </c:choose>	
 				<th class="text-center table-hover align-middle" style="color:#DC143C">마감일</th>
-				<td>${row.exam_date }</td>					
+				<td class="text-center table-hover align-middle">${row.exam_date }</td>					
 			</tr>
 			<tr>
 				<th class="text-center table-hover align-middle">작성자</th>
-				<td>${row.user_name }</td>
+				<td class="text-center table-hover align-middle">${row.user_name }</td>
 				<th class="text-center table-hover align-middle">작성일</th>
-				<td>${row.exam_postdate }</td>
+				<td class="text-center table-hover align-middle">${row.exam_postdate }</td>
 			</tr>
 			<tr>
 				<th class="text-center table-hover align-middle">제목</th>
-				<td>
+				<td class="text-center table-hover align-middle">
 					${row.exam_name }
 				</td>
 				<th class="text-center table-hover align-middle">배점</th>
-				<td>${row.exam_scoring }</td>
+				<td class="text-center table-hover align-middle">${row.exam_scoring }</td>
 			</tr>
 			<tr>
 				<th class="text-center table-hover align-middle">내용</th>
-				<td colspan="3" class="align-middle" style="height:200px;">
+				<td colspan="3" class="text-center table-hover align-middle" style="height:200px;">
 					${row.exam_content }
 				</td>
 			</tr>

@@ -56,8 +56,17 @@ function paging(nowPage){
 				</tr>
 			</thead>
 			<tbody>
-<!-- 읽은 공지사항 리스트 출력하기 -->
-<c:forEach items="${List }" var="row">
+<c:choose>	
+	<c:when test="${empty List }">
+ 				<tr>
+ 					<td colspan="6" align="center" height="100">
+ 						등록된 게시물이 없습니다. 
+ 					</td>
+ 				</tr>
+	</c:when>
+	<c:otherwise>
+		<!-- 읽은 공지사항 리스트 출력하기 -->
+		<c:forEach items="${List }" var="row">
 				<tr>
 					<td class="text-center" >${row.RNUM}</td>
 					<td id="checkFlagIcon" class="text-center" >
@@ -77,7 +86,9 @@ function paging(nowPage){
 					</td>
 					<td class="text-center" >${row.POSTDATE }</td>
 				</tr>
-</c:forEach>
+		</c:forEach>		
+	</c:otherwise>	
+</c:choose>
 			</tbody>
 			</table>
 			<div style="text-align:center;">
