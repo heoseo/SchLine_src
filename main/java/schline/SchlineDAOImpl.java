@@ -14,7 +14,7 @@ public interface SchlineDAOImpl {
 	public UserVO getuserName(String user_id);
 	public ExamDTO getExam(String subject_idx, String exam_idx);
 	public ExamBoardDTO getView(String board_idx);
-	public int getCheck(Integer exam_idx, String user_id);
+	public int getCheck(String exam_idx, String user_id);
 	public ArrayList<ExamDTO> getExamlist(String subject_idx, String exam_type);
 	public ArrayList<Integer> getExamidx(String subject_idx, String exam_type);
 	public ArrayList<Integer> getExamidxs(String subject_idx, String exam_type, String exam_idx);
