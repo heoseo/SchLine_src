@@ -53,7 +53,7 @@ align-content: center;
 	<c:forEach items="${viewList }" var="row">
 	
 	<div id="content">
-	
+		<br />
 		<!-- 페이지제목 -->
 		<div style="text-align:center; font-weight:bold; font-size:1.2em">
 		<i class="fas fa-check-circle" style="padding-right:5px;"></i>
