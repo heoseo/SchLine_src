@@ -117,9 +117,11 @@
 	  </select>  
 	 
 	  <select id="boardInfo" resultType="schline.ExamBoardDTO">
-	 	select user_name, board_idx, subject_idx, board_title, board_file from board_tb B
-	 	inner join user_tb U on B.user_id = U.user_id
+	 	select U.*,S.subject_name from (
+        select user_name, board_idx, subject_idx, board_title, board_file from board_tb B
+	 	inner join user_tb U on B.user_id = U.user_id 
 		where B.user_id = #{user_id} and board_file is not null
+        ) U inner join subject_tb S on U.subject_idx = S.subject_idx
 	  </select>  
 	 
 	  <select id="notiset" resultType="schline.UserSettingDTO">

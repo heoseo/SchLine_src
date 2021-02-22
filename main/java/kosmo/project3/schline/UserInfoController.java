@@ -453,7 +453,7 @@ public class UserInfoController {
 		ExamBoardDTO examBoardDTO = new ExamBoardDTO();
 		examBoardDTO.setUser_id(user_id);
 		ArrayList<ExamBoardDTO> lists =  sqlSession.getMapper(GradeDTOImpl.class).boardInfo(examBoardDTO);
-		
+		System.out.println("name="+lists.get(0).getSubject_name());
 		
 		model.addAttribute("lists", lists);
 		
