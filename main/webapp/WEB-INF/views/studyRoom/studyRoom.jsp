@@ -158,7 +158,7 @@ tr td:first-child {
              <input type="submit" value="보내기" />
       </form:form> --%>
       
-      <div class="col-sm-4">
+      <div class="col-sm-3">
          <!-- 프로필 -->
          <table class="table table-bordered table-hover table-striped" style="font-size: 0.8em">
             <tr>
@@ -277,8 +277,8 @@ tr td:first-child {
 
 </div>
 </div>
-<!-- </div> -->
-<!-- </div> -->
+</div>
+</div>
 <%--    <jsp:include page="/resources/include/bottom.jsp" /> --%>
 </body>
 <br />

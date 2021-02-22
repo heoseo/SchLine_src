@@ -59,29 +59,9 @@
 		<section id="attend" class="main special">
 			<header class="major">
 				<h2>출결</h2>
+				<%@ include file="../userInfo/infoMain.jsp" %>
 			</header>
-			<ul class="features">
-				<li>
-					<span class="icon solid major style1 fa-code"></span>
-					<h3>Ipsum consequat</h3>
-					<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
-				</li>
-				<li>
-					<span class="icon major style3 fa-copy"></span>
-					<h3>Amed sed feugiat</h3>
-					<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
-				</li>
-				<li>
-					<span class="icon major style5 fa-gem"></span>
-					<h3>Dolor nullam</h3>
-					<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
-				</li>
-			</ul>
-			<footer class="major">
-				<ul class="actions special">
-					<li><a href="generic.html" class="button">Learn More</a></li>
-				</ul>
-			</footer>
+			
 		</section>
 
 <!-- 3.캘린더시작 -->		
@@ -139,6 +119,8 @@
 				<div class="content">
 					<header class="major">
 						<h2>공부방</h2>
+					대학친구들과 함께 공부하는 온라인 도서관
+						
 					</header>
 					<footer class="major">
 					
@@ -146,8 +128,9 @@
 						<span class="image">
 							<a href="./class/studyRoom.do">
 								<img src="<%=request.getContextPath() %>/resources/images/study3.jpg" alt="공부방 이동"
-								style="min-height:0; min-width:0; width: 400px; height: 400px;" />
-							</a>
+<%-- 								<img src="<%=request.getContextPath() %>/resources/images/harry2.JPG" alt="공부방 이동" --%>
+<%-- 								<img src="<%=request.getContextPath() %>/resources/images/harry.png" alt="공부방 이동" --%>
+								style="min-height:0; min-width:0; width: 400px; height: 400px;" />							</a>
 						</span>
 					<ul class="actions">
 <!-- 						<li><a href="generic.html" class="button">입장하기</a></li> -->

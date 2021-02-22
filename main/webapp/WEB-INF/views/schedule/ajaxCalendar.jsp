@@ -111,7 +111,7 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 					String exam_date = dto.getExam_date().toString();
 					
 					//디버깅용.
-					//System.out.println("exam_date : " + exam_date);
+					System.out.println("exam_date : " + exam_date);
 					if(exam_date.equals(nowDate)) {
 						//디버깅용
 						//System.out.println("들어옴");

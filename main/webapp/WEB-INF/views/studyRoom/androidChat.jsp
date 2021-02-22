@@ -145,7 +145,6 @@ function openSocket(){
    };
    //채팅 종료
    ws.onclose = function(event){
-		writeResponse("admin|'${info_nick}'님이 퇴실하셨습니다.");
    };
 }
 

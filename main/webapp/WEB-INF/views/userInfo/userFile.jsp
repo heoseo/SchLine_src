@@ -38,6 +38,7 @@
 			<c:otherwise>
 				<c:forEach items="${lists }" var="row">
 					<tr>
+						<td>${row.subject_name }</td>
 						<td style="text-align:left; padding-left: 20px;">
 						<a href="teamView.do?board_idx=${row.board_idx }&subject_idx=${row.subject_idx}">
 						${row.board_title }
