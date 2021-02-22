@@ -64,7 +64,6 @@ function openSocket(){
 	};
 }
 
-
 function wsError(event) {
 	writeResponse("에러 발생");
 	writeResponse(event.data);
@@ -104,7 +103,22 @@ function send(){
        $('#inputMessage').val('');
          return false;
     }
-   
+      //신고할때
+      else if(msg.startsWith("#")==true){
+         var a = msg.split("#");
+         var b = a[1];//닉네임
+         $('#messageWindow').css("text-align", "center");
+         //닉네임 체크 및 신고
+         ajaxPro("1", b);//1은 신고, 0은 차단, 2는 프로필확인
+         messages.scrollTop = messages.scrollHeight;
+         $('#inputMessage').val("");
+         return false;
+      }
+
+       
+       
+    //서버로 메세지 전송
+    ws.send(sender+'|'+ msg + '|' + user_img);
 
     //귓속말할때
     if(msg.startsWith("/")==true){
@@ -124,28 +138,8 @@ function send(){
         return false;
       }
     }
-   //신고할때
-   else if(msg.startsWith("#")==true){
-      var a = msg.split("#");
-      var b = a[1];//닉네임
-      $('#messageWindow').css("text-align", "center");
-      //닉네임 체크 및 신고
-      ajaxPro("1", b);//1은 신고, 0은 차단, 2는 프로필확인
-      messages.scrollTop = messages.scrollHeight;
-      $('#inputMessage').val("");
-      return false;//여기서 리턴 안됨
-   }
 
-    
-    //서버로 메세지 전송
-    ws.send(sender+'|'+ msg + '|' + user_img);
    
-    
-   
-/*    if(msg.startsWith("#")==true){
-	 return false; //여기서 리턴해주기
-   } */
-
    
    var text = '';
        text += '<div class="chat chat-right">';
