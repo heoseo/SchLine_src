@@ -30,7 +30,7 @@ public class UserListCommand implements AdminCommandImpl{
 		HttpServletRequest req = (HttpServletRequest)paramMap.get("req");
 		
 		// DAO객체 생성
-		AdminAttendTemplateDAO dao = new AdminAttendTemplateDAO();
+		AdminUserTemplateDAO dao = new AdminUserTemplateDAO();
 		
 		// 검색어 관련 폼값 처리
 		String addQueryString = "";
@@ -82,16 +82,17 @@ public class UserListCommand implements AdminCommandImpl{
 		
 		
 		
-		ArrayList<AttendanceDTO> listRows = dao.listPage(paramMap);
+		ArrayList<Admin_UserVO> listRows = dao.listPage(paramMap);
 		
 		// 가상번호 계산하여 부여하기
 		int virtualNum = 0;
 		int countNum = 0;
 		
 		System.out.println("UserListCommand > totalRecordCount = " + totalRecordCount );
-		for(AttendanceDTO row : listRows)
+		for(Admin_UserVO row : listRows)
 		{
 			virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
+			row.setVirtualNum(virtualNum);
 		}
 		 
 		// 리스트에 출력한 list컬렉션을 model객체에 저장한 후 뷰로 전달한다.

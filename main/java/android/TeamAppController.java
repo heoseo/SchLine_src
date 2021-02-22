@@ -214,8 +214,7 @@ public class TeamAppController {
 		기존 View를 호출하는 부분에서 JSON데이터를 반환하는 형태로
 		변경한다.
 	*/
-	
-	
+		
 	@RequestMapping(value="/android/teamEditAction.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> teamEditAction(MultipartHttpServletRequest req) {
@@ -304,7 +303,6 @@ public class TeamAppController {
 		
 		return map;
 	}
-	
 	
 	
 	@RequestMapping("/android/teamDelete.do")

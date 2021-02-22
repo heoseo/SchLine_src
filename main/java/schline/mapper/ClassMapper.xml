@@ -88,4 +88,8 @@
 	(seq_attendance_idx.nextval,#{user_id}, #{video_idx}, 0, 0, 0)
 
   </insert>
+  <select id="FcmSchedule" resultType="admin.FcmDTO">
+ 	 select subject_idx, exam_name , TO_CHAR(exam_date + (interval '-3' hour),'hh24:mi') endtime from exam_tb where 
+	TO_CHAR(exam_date,'yyyy/mm/dd') =  TO_CHAR(SYSDATE,'YYYY/mm/dd') AND  exam_type =1
+  </select>
   </mapper>

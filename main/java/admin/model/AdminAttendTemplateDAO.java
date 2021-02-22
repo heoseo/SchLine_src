@@ -12,6 +12,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
+import schline.AttendanceDTO;
 import schline.ClassDTO;
 import schline.UserVO;
 import schline.util.JdbcTemplateConst;
@@ -46,102 +47,63 @@ public class AdminAttendTemplateDAO {
 		return result;
 	}
 	
-	public ArrayList<AttendanceDTO> userList(
+	//searchSubject를 듣는 과목의 학생 리스트
+	public ArrayList<Admin_UserVO> userList(
 			Map<String, Object> map){
 		
-		boolean flag = false;
-		int start = 0, end = 0;
-		if(map.get("start")!= null && map.get("end")!= null) {
-			start = Integer.parseInt(map.get("start").toString());
-			end = Integer.parseInt(map.get("end").toString());
-			flag = true;
-		}
 		
-		String searchColumn = (String) map.get("searchColumn");
 		
 		String sql = "	SELECT * "
 				+ "		FROM ( "
 				+ "			SELECT Tb.*, rownum rNum "
 				+ "			FROM ( "
-				+ "				SELECT subject_idx, subject_name, U.* "
-				+ "				FROM user_tb U, subject_tb S "
-				+ "				WHERE U.user_id = S.user_id "
-				+ "					AND authority = '"+map.get("searchColumn")+"' ";
+				+ "				SELECT S.subject_idx, S.subject_name, U.* "
+				+ "				FROM user_tb U, registration_tb R, subject_tb S"
+				+ "				WHERE U.user_id = R.user_id "
+				+ "					AND R.subject_idx = S.subject_idx";
 		
-		if(map.get("searchWord")!=null)
-		sql += " 					AND user_name LIKE '%"+map.get("searchWord")+"%' ";				
+		if(map.get("searchSubject")!=null)
+			sql += "				AND subject_name LIKE '%"+map.get("searchSubject")+"%' ";
+		else
+			sql += "				AND S.subject_idx = 1 ";
+			
 		sql += " 			ORDER BY U.user_id ASC"
 		+"    				) Tb"
 		+"				)";
-		if(flag ==true)
-			sql +=" 	WHERE rNum BETWEEN "+start+" and "+end;
 		
 		
 		
 		
-//		if(map.get("subject_idx") != null) {
-//			sql = "		SELECT * "
-//			+ "			FROM ("
-//				+ "			SELECT Tb.*, rownum rNum "
-//				+ "			FROM ("
-//				+ "				SELECT U.* "
-//				+ "				FROM registration_tb R, user_tb U "
-//				+ "				WHERE R.user_id = U.user_id "
-//				+ "   				AND subject_idx = 1 "
-//				+ "				ORDER BY U.user_id ASC"
-//				+ "				) Tb "
-//				+ "			) ";
-//			if(flag ==true)
-//				sql +=" WHERE rNum BETWEEN "+start+" and "+end;
-//			
-//					
-//		}
+		
+		return (ArrayList<Admin_UserVO>)
+				template.query(sql, 
+				new BeanPropertyRowMapper<Admin_UserVO>(
+						Admin_UserVO.class));
+	}
+	
+	
+	public ArrayList<AttendanceDTO> attendList(
+			Map<String, Object> map){
+		
+		
+		
+		String sql = " 	SELECT Tb.*, rownum rNum "
+				+ "		FROM ( "
+			    + " 			SELECT * "
+			    + "				FROM attendance_tb A "
+				+ " 			INNER JOIN video_tb V ON A.video_idx=V.video_idx "
+				+ " 			WHERE subject_idx = "+ map.get("subject_idx")+" AND user_id = " + map.get("subject_idx") 
+				+ " 			ORDER BY A.video_idx asc   "
+				+ "			 ) Tb ";
+		
+		
+		
+		
 		
 		return (ArrayList<AttendanceDTO>)
 				template.query(sql, 
 				new BeanPropertyRowMapper<AttendanceDTO>(
 						AttendanceDTO.class));
-	}
-	
-	
-	public ArrayList<ClassDTO> subjectList(
-			Map<String, Object> map){
-		
-		boolean flag = false;
-		int start = 0, end = 0;
-		if(map.get("start")!= null && map.get("end")!= null) {
-			start = Integer.parseInt(map.get("start").toString());
-			end = Integer.parseInt(map.get("end").toString());
-			flag = true;
-		}
-		
-		String searchColumn = (String) map.get("searchColumn");
-		
-		String sql = "	SELECT * "
-				+ "		FROM ( "
-				+ "			SELECT Tb.*, rownum rNum "
-				+ "			FROM ( "
-				+ "				SELECT subject_idx, subject_name, U.* "
-				+ "				FROM user_tb U, subject_tb S "
-				+ "				WHERE U.user_id = S.user_id "
-				+ "					AND authority = '"+map.get("searchColumn")+"' ";
-		
-		if(map.get("searchWord")!=null)
-		sql += " 					AND user_name LIKE '%"+map.get("searchWord")+"%' ";				
-		sql += " 			ORDER BY U.user_id ASC"
-		+"    				) Tb"
-		+"				)";
-		if(flag ==true)
-			sql +=" 	WHERE rNum BETWEEN "+start+" and "+end;
-		
-		
-		
-		
-		
-		return (ArrayList<ClassDTO>)
-				template.query(sql, 
-				new BeanPropertyRowMapper<ClassDTO>(
-						ClassDTO.class));
 	}
 
 }

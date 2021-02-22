@@ -30,10 +30,8 @@ int last_week = cDay.get(Calendar.DAY_OF_WEEK);//마지막일의 요일
 <!-- 캘린더CSS -->
 <style>
 .calendarTitle {
-	font-weight: normal;
-	color: black;
-	text-align: right;
-	font-size: 1em;
+	text-align:right;
+	font-size: 1.2em;
 }
 #button {
 	font-size: 10px;
@@ -156,8 +154,7 @@ $(function() {
 
 		<div class="contents_box">
 		
-			
-			<table>
+			<table class="table table-bordered table-hover table-striped">
 				<input type="hidden" id="hyear" name="hyear" value="<%=now_year%>" />
 				<input type="hidden" id="hmonth" name="hmonth" value="<%=now_month%>" />
 				
