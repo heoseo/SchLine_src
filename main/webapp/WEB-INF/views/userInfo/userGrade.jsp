@@ -19,12 +19,16 @@
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_userInfo.jsp"/><!-- flag구분예정 -->
     
-    <div id="main">
+    <div>
  		
  		<div style="text-align: center;">
-	      <small>학기 성적</small>
+	      <small style="font-size:1.2em">
+	      <i class="fas fa-lightbulb" id="icon">&nbsp&nbsp</i>
+	      학기 성적</small>
 	    </div>
-	    <table style="font-size: 5px;">
+	    <hr />
+		<table class="table table-bordered table-hover table-striped" 
+		style="font-size:5px; margin-top:0px; padding-top: 0px">
 	    <c:choose>	
 			<c:when test="${empty lists }">
 		 				<tr>
@@ -51,24 +55,30 @@
 						</tr>
 			</c:otherwise>	
 		</c:choose>
+
 		</table>
 		
 		
-		<h2 align="left">
-	    	평균 성적 : ${gradeChar } (${gradeNum })
-	    </h2>
+		<table class="table table-hover table-striped" style="font-size:1.2em">
+		<tr><td colspan="5" style="font-size:0.9em; text-align:left; padding-left: 20px;
+		background:d3e0ea;"><i class="fas fa-graduation-cap" id="icon">&nbsp&nbsp</i>
+		평균 성적 : ${gradeChar } (${gradeNum })</td></tr>
+		</table>
  		
  		
 		<div style="text-align: center;">
-	      <small>과목별 성적표</small>
+	      <small style="font-size:1.2em">
+	      <i class="fas fa-lightbulb" id="icon">&nbsp&nbsp</i>
+	      과목별 성적표</small>
 	    </div>
 	    
 		<c:forEach items="${lists }" var="row">		
 			<div class="container">
 				<div class="container">
 					<div class="container">
-						<h4><a href="../class/grade.do?subject_idx=${row.subject_idx }">&emsp;과목명 :${row.subject_name }</a></h4>						
-						<table style="font-size: 5px;">
+						<h4><a href="../class/grade.do?subject_idx=${row.subject_idx }">
+						<i class="fas fa-check-square"></i>&emsp;과목명 :${row.subject_name }</a></h4>						
+							<table class="table table-bordered table-hover table-striped" style="font-size:5px">
 				 				<tr>
 									<td colspan="10">과제 점수</td>
 								</tr>

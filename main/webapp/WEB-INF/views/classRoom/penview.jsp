@@ -16,13 +16,16 @@
 <body class="is-preload">
 <!-- 왼쪽메뉴 include -->
 <jsp:include page="/resources/include/leftmenu_classRoom.jsp"/><!-- flag구분예정 -->
-
+<c:if test="${viewRow.board_type eq 'red'  } "> <c:set value="정정" var="title"/></c:if>
+<c:if test="${viewRow.board_type eq 'blue'}"> <c:set value="질문" var="title"/></c:if>
 	<hr />
    	<div style="text-align: center;">
-      	<small>${viewRow.board_type  } 게시판</small><!-- flag구분예정-->
+      	<small>${title } 게시판</small>
    	</div>
    	<hr /><!-- 구분자 -->
    
+   
+   <c:if test="${viewRow.board_type eq 'red'  } "><small>정정 게시판</small></c:if>
 
 <div class="container">
 	
@@ -74,7 +77,7 @@
 			onclick="location.href='./editOrdel.do?pen_idx=${viewRow.pen_idx}&mode=delete&nowPage=${nowPage }&board_type=${viewRow.board_type }';">
 			삭제하기</button>			
 		</c:if>
-         <c:if test="${p_user ne s_user and replyRow.board_type ne 'red'}">
+         <c:if test="${p_user ne s_user and viewRow.board_type eq 'blue'}">
       		<button type="button" 
 			onclick="location.href='./reply.do?pen_idx=${viewRow.pen_idx}&nowPage=${nowPage }';">
 			답변글달기</button>

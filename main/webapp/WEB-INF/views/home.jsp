@@ -7,7 +7,7 @@
 2021.02.02
 1) ★★★인클루드 메뉴바 링크는 각자 넣어주세요!!!★★
 2) ★★★각 view페이지 smail태그 안에있는 타이틀 일단 주석처리 해주세요(깔끔하게 스타일 변경)
- -->``
+ -->
 
 <!DOCTYPE html>
 <html>
@@ -15,17 +15,36 @@
 		<title>스쿨라인 메인</title>
 
 <%@ include file="/resources/include/top.jsp" %>
+<br />
 <%-- <form:form method="post" action="${pageContext.request.contextPath }" > --%>
 <%-- 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" /> --%>
 <!-- 	<input type="submit" value="로그아웃" /> -->
 <%-- </form:form> --%>
+<style type="text/css">
+#loginButton{
+	width: 100%;
+	text-align: center;
+	border-radius:5px;
 
+}
+#loginButton:active {
+ 	background-color: white;
+}
+#loginButton:hover {
+ 	background-color: white;
+
+}
+</style>
 <!-- /////////////////////Main시작////////////////////// -->
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
-	
-	<div id="main">
-	
 
+
+	<div id="main" style=" font-weight:bold; padding:30px">
+
+	<div style="text-align: center;" >
+		<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="550px" alt="스쿨라인 로고" />
+	</div>
+	<br /><br /><br /><br />
 	<c:choose>
 		<c:when test="${not empty user_id }">
 			${user_id}님, 하이룽~^^*
@@ -52,29 +71,23 @@
 				
 				<!-- 아이디, 패스워드의 name은 security-context2의 어쩌구와 같아야한다. -->
 				<p>
-					아이디 : <input type="text" name="id" value="201701700" />
+					아이디 <input type="text" name="id" value="201701700" />
 				</p>
 				<p>
-					패스워드 : <input type="password" name="pass" value="qwer1234"/>
+					패스워드 <input type="password" name="pass" value="qwer1234"/>
 				</p>
-				
-				<button type="submit" class="btn btn-danger" >
-					로그인하기</button>
+				<div style="border-radius:5px;">				
+					<button type="submit" id="loginButton" class="hover"  style="font-weight:bold; 	background-color:#ADD8E6;">
+						로그인</button>
+				</div>
 			</form:form>
 		</c:otherwise>
 	</c:choose>
-
-
-
-
+	
+	<br />
 	</div>
 		
-	<!-- 메인 퀵바 -->
-	<%@ include file="/resources/include/quick.jsp"%>
 	<!-- /////////////////////메인끝////////////////////// -->
 		</body>
-		
-	<!-- 하단 인클루드 -->
-	<jsp:include page="/resources/include/footer.jsp"/>
 
 </html>

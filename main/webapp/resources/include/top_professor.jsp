@@ -36,16 +36,7 @@
 		<!-- 상단영역 줄이기 위해 헤더속성 제거 -->
 			<!-- Header -->
 			<!-- he -->
-	<!-- 			<header id="header" class="alt"> -->
-	<!-- 			<span class="logo"><img src="images/logo.svg" alt="" /></span> -->
-					<!-- 메인 로고 이미지 -->
-					<div align="center">
-					<br /> 
-						<a href="/schline/professor/video.do"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-							<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
-						</a>
-					<br />
-					</div>
+
 <%
 
 if(session.getAttribute("user_id") != null){
@@ -65,8 +56,13 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav">
+			<nav id="nav" style="background-color: #ADD8E6; color:#145374; font-weight:bold;">
 				<ul>
+    				<li class="nav-item">
+						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
+ 							<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="200px" alt="스쿨라인 로고" />
+ 						</a>
+					</li>
     				<li class="nav-item">
 						<a href="/schline/professor/video.do">
 						강의
@@ -80,22 +76,22 @@ if(session.getAttribute("user_id") != null){
 				
 					<li><a href="/schline/professor/pexamlist.do">시험</a></li>
 					<li>
-					<div class="dropdown" >
-						<div class="list-group-item dropdown-toggle" data-toggle="dropdown">
-							<i class="fas fa-table" id="icon">&nbsp&nbsp</i> <span
-								style="text-align: center;" id="name">게시판</span>
+						<div class="dropdown nav-item" >
+							<div class="nav-item dropdown-toggle" data-toggle="dropdown" style="font-weight:bold;">
+							<span style="text-align: center;" id="name">게시판</span>
+							</div> 
+							<div class="dropdown-menu nav-item">
+								<a class="dropdown-item" href="/schline/professor/notiBoardList.do?"><i class="fas fa-check-circle"></i>&nbsp;&nbsp;공지사항</a> 
+								<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=red"><i class="fas fa-edit"></i>&nbsp;&nbsp;정정게시판</a> 
+								<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp;&nbsp;질문게시판</a> 
+							</div>
 						</div>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="/schline/professor/"><i class="fas fa-question-circle"></i>&nbsp&nbsp공지사항</a> 
-							<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=red"><i class="fas fa-edit"></i>&nbsp&nbsp정정게시판</a> 
-							<a class="dropdown-item" href="/schline/professor/penlist.do?board_type=blue"><i class="fas fa-question-circle"></i>&nbsp&nbsp질문게시판</a> 
-						</div>
-					</div>
 					</li>
-					<li><a href="/schline/professor/">출석</a></li>
-					<li><a href="/schline/professor/">성적</a></li>
-					<li><a href="/schline/professor/professorinfo.do">계정</a></li>
-					<li><a href="javascript:document.logout.submit()">로그아웃</a></li>
+
+					<li><a href="/schline/professor/professorinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">&nbsp;</i>학생관리</a></li>
+
+					<li><a href="javascript:document.logout.submit()">
+					<i class="fas fa-sign-out-alt">&nbsp;</i>로그아웃</a></li>
 				</ul>
 			</nav>
 			
@@ -104,18 +100,7 @@ if(session.getAttribute("user_id") != null){
 			</form:form>
 				</ul>
 			</nav>
-			
-			<!-- 기존 네비 -->
-<!-- 			<nav id="nav"> -->
-<!-- 				<ul> -->
-<!-- 					<li><a href="/schline/main/class.do"><h3>강의실</h3></a></li> -->
-<%-- 					<li><a href="<%=request.getContextPath() %>/schedule/alertList.do"><h3>일정</h3></a></li> --%>
-<%-- 					<li><a href="<%=request.getContextPath() %>/class/studyRoom.do"><h3>공부방</h3></a></li> --%>
-<!-- 					<li><a href=""><h3>계정</h3></a></li> -->
-<!-- 				</ul> -->
-<!-- 			</nav> -->
-			<br />	
-			
+			<br />
 <%
 	}
 }

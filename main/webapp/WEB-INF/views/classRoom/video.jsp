@@ -49,7 +49,7 @@ input[type='range']::-webkit-slider-thumb{
     <br />
       	<div align="center">
 					<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-						<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
+ 						<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" />
 					</a>
 				</div>
     </header>  
@@ -297,7 +297,6 @@ function snap() {
 }
 //캔버스 이미지로 변환후 에이젝스로 데이터 보내기
 function sreenShot() {
-	
 	  var $canvas = document.createElement('canvas');
 	   var myImg = $canvas.toDataURL('image/png');
 			var myImg = canvas.toDataURL("image/png");

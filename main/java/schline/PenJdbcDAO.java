@@ -138,20 +138,38 @@ public class PenJdbcDAO {
 	public void edit(final PenBbsDTO dto)
 	{		 
 		System.out.println("PenJDBCDAO > edit : " + dto.toString());
-		String sql = "UPDATE penboard "
-			+ " SET  board_title=?, board_content=?"
-			+ " WHERE pen_idx=? ";
-				 
-		template.update(sql, new PreparedStatementSetter() {
-			@Override
-			public void setValues(PreparedStatement ps) 
-					throws SQLException {
-				ps.setString(1, dto.getBoard_title());
-				ps.setString(2, dto.getBoard_content());
-				ps.setString(3, dto.getPen_idx());
-				
-			}			
-		});			 
+		if(dto.getYorn() != null){
+			String sql = "UPDATE penboard "
+					+ " SET  board_title=?, board_content=?, yorn=? "
+					+ " WHERE pen_idx=? ";
+						 
+				template.update(sql, new PreparedStatementSetter() {
+					@Override
+					public void setValues(PreparedStatement ps) 
+							throws SQLException {
+						ps.setString(1, dto.getBoard_title());
+						ps.setString(2, dto.getBoard_content());
+						ps.setString(3, dto.getYorn());
+						ps.setString(4, dto.getPen_idx());
+						
+					}			
+				});	
+		}else{
+			String sql = "UPDATE penboard "
+					+ " SET  board_title=?, board_content=?"
+					+ " WHERE pen_idx=? ";
+						 
+				template.update(sql, new PreparedStatementSetter() {
+					@Override
+					public void setValues(PreparedStatement ps) 
+							throws SQLException {
+						ps.setString(1, dto.getBoard_title());
+						ps.setString(2, dto.getBoard_content());
+						ps.setString(3, dto.getPen_idx());
+						
+					}			
+				});	
+		}
 	}
 	//삭제처리
 	public void delete(final String pen_idx){

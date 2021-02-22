@@ -1,9 +1,6 @@
 package kosmo.project3.schline;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,8 +9,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.sound.midi.MidiDevice.Info;
-import javax.websocket.Session;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import oracle.net.aso.b;
-import studyroom.BlockDTO;
-import studyroom.InfoCommand;
 import studyroom.InfoVO;
 import studyroom.StudyCommandImpl;
 import studyroom.StudyDAOImpl;
@@ -337,11 +329,11 @@ public class StudyRoomController {
 		
 		
 		//10초마다 정보저장해주는 함수 호출
-		int time = Integer.parseInt(req.getParameter("send_time").toString());
+		//int time = Integer.parseInt(req.getParameter("send_time").toString());
 		
-		int result= sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id, time);
+		int result= sqlSession.getMapper(StudyDAOImpl.class).study_time(user_id);
 		if(result==1) {
-			System.out.println("시간저장 성공");
+			System.out.println(user_id+" 시간저장 성공");
 			map.put("setTime", 1);
 		}
 		return map;

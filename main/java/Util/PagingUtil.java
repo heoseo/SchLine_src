@@ -20,19 +20,19 @@ public class PagingUtil {
 		*/
 		int intTemp = 
 			(((nowPage-1) / blockPage) * blockPage) + 1;
-		
+		 
 		//3.처음페이지 바로가기 & 이전페이지블럭 바로가기
 		if(intTemp != 1) {
 			//첫번째 페이지 블럭에서는 출력되지 않음
 			//두번째 페이지 블럭부터 출력됨.
 			pagingStr += ""
 				+ "<a href='"+page+"nowPage=1'>"
-				+ "<img src='../images/paging1.gif'></a>";
+				+ "<i class='fas fa-angle-double-left'></i>&nbsp;</a>";
 			pagingStr += "&nbsp;";
 			pagingStr += ""
 				+ "<a href='"+page+"nowPage="+
 								(intTemp-blockPage)+"'>"
-				+ "<img src='../images/paging2.gif'></a>";
+				+ "<i class='fas fa-angle-left'></i>&nbsp;</a>";
 		}
 		
 		//페이지표시 제어를 위한 변수
@@ -50,6 +50,7 @@ public class PagingUtil {
 				pagingStr += "&nbsp;<a href='"+page
 					+"nowPage="+intTemp+"'>"+
 					intTemp+"</a>&nbsp;";
+				System.out.println("페이지확인"+pagingStr);
 			}
 			intTemp++;
 			blockCount++;
@@ -59,11 +60,11 @@ public class PagingUtil {
 		if(intTemp <= totalPage) {
 			pagingStr += "<a href='"+page+"nowPage="+
 											intTemp+"'>"
-				+ "<i class='fas fa-angle-right'></i></a>";
+				+ "&nbsp;<i class='fas fa-angle-right'></i></a>";
 			pagingStr += "&nbsp;";
 			pagingStr += "<a href='"+page+"nowPage="+
 											totalPage+"'>"
-				+ "<img src='../images/paging4.gif'></a>";
+				+ "&nbsp;<i class='fas fa-angle-double-right'></i></a>";
 		}		
 				
 		return pagingStr;
@@ -94,13 +95,13 @@ public class PagingUtil {
 				//두번째 페이지 블럭부터 출력됨.
 				pagingStr += ""
 					+ "<a href='javascript:paging(1);'>"
-					+ "<img src='../images/paging1.gif'></a>";
+					+ "<i class='fas fa-angle-double-left'></i>&nbsp;</a>";
 				pagingStr += "&nbsp;";
 				pagingStr += ""
 					+ "<a href='javascript:paging("+(intTemp-blockPage)+");'>"
-					+ "<img src='../images/paging2.gif'></a>";
-			}
-			
+					+ "<i class='fas fa-angle-left'></i>&nbsp;</a>";
+			}	
+
 			//페이지표시 제어를 위한 변수
 			int blockCount = 1;
 			/*
@@ -122,11 +123,13 @@ public class PagingUtil {
 			//5.다음페이지블럭 & 마지막페이지 바로가기
 			if(intTemp <= totalPage) {
 				pagingStr += "<a href='javascript:paging("+intTemp+");'>"
-					+ "<img src='../images/paging3.gif'></a>";
+					+ "&nbsp;<i class='fas fa-angle-right'></i></a>";
 				pagingStr += "&nbsp;";
 				pagingStr += "<a href='javascript:paging("+totalPage+");'>"
-					+ "<img src='../images/paging4.gif'></a>";
-			} 
+
+						+ "&nbsp;<i class='fas fa-angle-double-right'></i></a>";
+			} 		
+
 			return pagingStr;
 		} 
 
