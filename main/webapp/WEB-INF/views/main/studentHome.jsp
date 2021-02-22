@@ -119,6 +119,8 @@
 				<div class="content">
 					<header class="major">
 						<h2>공부방</h2>
+					대학친구들과 함께 공부하는 온라인 도서관
+						
 					</header>
 					<footer class="major">
 					
@@ -126,8 +128,9 @@
 						<span class="image">
 							<a href="./class/studyRoom.do">
 								<img src="<%=request.getContextPath() %>/resources/images/study3.jpg" alt="공부방 이동"
-								style="min-height:0; min-width:0; width: 400px; height: 400px;" />
-							</a>
+<%-- 								<img src="<%=request.getContextPath() %>/resources/images/harry2.JPG" alt="공부방 이동" --%>
+<%-- 								<img src="<%=request.getContextPath() %>/resources/images/harry.png" alt="공부방 이동" --%>
+								style="min-height:0; min-width:0; width: 400px; height: 400px;" />							</a>
 						</span>
 					<ul class="actions">
 <!-- 						<li><a href="generic.html" class="button">입장하기</a></li> -->
