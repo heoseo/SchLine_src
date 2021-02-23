@@ -15,6 +15,18 @@
 <!-- 시간저장은 안드에서? -->
 
 <%-- <%@ include file="/resources/include/top.jsp"%> --%>
+<style>
+body {
+   margin: 0 auto;
+   padding-left: 10px;
+   padding-right: 10px;
+   height: 51em
+}
+#inputMessage{
+   margin-bottom: 15px;
+}
+</style>
+
 
 <body class="is-preload" >
 <div id="main">
@@ -44,7 +56,7 @@ $(document).ready(function() {
    	//타이머 스타트
    	setTimeout(function() { start();}, 1000);
    	//10초에 한번씩 db업데이트
-   	setInterval(function () { dbup();}, 10000);
+   	//setInterval(function () { dbup();}, 10000);
 
 
    	messages = document.getElementById("messageWindow");
@@ -116,12 +128,11 @@ function openSocket(){
    
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
-   //해당컴에 해당하는 경로로 변경해주기!
-   	ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
-    //ws = new WebSocket("ws://192.168.25.47:9999/schline/echo.do/websocket");
+   	//ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+    ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜집
+
 
    //채팅창 open
-   
       ws.onopen = function(event){
         //사용자가 입장했을때 다른사람들에게 뿌려줌
         $('#inputMessage').val("admin|'${info_nick}'님 도서관 입장하셨습니다.");
@@ -145,7 +156,6 @@ function openSocket(){
    };
    //채팅 종료
    ws.onclose = function(event){
-		writeResponse("admin|'${info_nick}'님이 퇴실하셨습니다.");
    };
 }
 
@@ -181,8 +191,7 @@ function send(){
       return false;
     }
    
-    //서버로 메세지 전송
-    ws.send(sender+'|'+ msg + '|' + user_img);
+
    
     //귓속말할때
     if(msg.startsWith("/")==true){
@@ -211,8 +220,12 @@ function send(){
       //닉네임 체크 및 신고
       ajaxPro("1", b);//1은 신고, 0은 차단, 2는 프로필확인
       messages.scrollTop = messages.scrollHeight;
-       return;
+       return false;
    }
+    
+    //서버로 메세지 전송
+    ws.send(sender+'|'+ msg + '|' + user_img);
+    
    
    var text = '';
        text += '<div class="chat chat-right">';
@@ -439,9 +452,10 @@ function nowTime(){
    </form>
    <tr>
       <td>
-         <!-- 엔터키 입력시 전송 설정 --> <input type="text" id="inputMessage"
+         <!-- 엔터키 입력시 전송 설정 --> 
+         <input type="text" id="inputMessage"
          class="form-control float-left mr-1" placeholder="채팅내용을 입력하세요."
-         onkeyup="enterkey();" style="min-width: 0; width: 78%;" />
+         onkeyup="enterkey();" style="min-width: 0; width: 50%;" />
          <button id="sendBtn" onclick="return send();"
             style="min-width: 0; width: 20%; min-height: 0; height: 45px; font-size: 0.7em;">send</button>
          <!--          <input type="button" id="sendBtn" onclick="send();" value="전송" class="btn btn-info float-left" /> -->
