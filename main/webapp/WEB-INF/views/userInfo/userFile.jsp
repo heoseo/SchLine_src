@@ -26,36 +26,45 @@
 	      제출 파일</small>
 	    </div>
 	    <hr />
-		<table class="table table-bordered table-hover table-striped">
-		<c:choose>	
-			<c:when test="${empty lists }">
- 				<tr>
- 					<td colspan="6" align="center" height="100">
- 						등록된 게시물이 없습니다. 
- 					</td>
- 				</tr>
-			</c:when>
-			<c:otherwise>
-				<c:forEach items="${lists }" var="row">
-					<tr>
-						<td>${row.subject_name }</td>
-						<td style="text-align:left; padding-left: 20px;">
-						<a href="teamView.do?board_idx=${row.board_idx }&subject_idx=${row.subject_idx}">
-						${row.board_title }
-						</a>
-						</td>
-						<td style="width:15%; text-align:center;">${row.user_name }</td>
-						<td style="width:10%; text-align:center;">
-					<c:if test="${not empty row.board_file }">
-						<a href="userDownload.do?board_file=${row.board_file }"  style="text-align: center;"><!-- 다운로드 추가 필요 -->
-							<i class="fas fa-download"></i>
-						</a>
-					</c:if>	
-						</td>
-					</tr>
-				</c:forEach>
-			</c:otherwise>	
-		</c:choose>
+		<table class="table table-bordered table-hover table-striped"
+		style="font-size:18px;">
+			<tr>
+				<td style="text-align:center;">번호</td>
+				<td style="text-align:center;">과목명</td>
+				<td style="text-align:center;">제목</td>
+				<td style="text-align:center;">작성자</td>
+				<td style="text-align:center;">다운로드</td>
+			</tr>
+			<c:choose>	
+				<c:when test="${empty lists }">
+	 				<tr>
+	 					<td colspan="6" align="center" height="100">
+	 						등록된 게시물이 없습니다. 
+	 					</td>
+	 				</tr>
+				</c:when>
+				<c:otherwise>
+					<c:forEach items="${lists }" var="row">
+						<tr>
+							<td style="width:8%; text-align:center;"></td>
+							<td style="width:8%; text-align:center;">${row.subject_name }</td>
+							<td style="text-align:left; padding-left: 20px;">
+							<a href="taskList.do?board_idx=${row.board_idx }&subject_idx=${row.subject_idx}">
+							${row.board_title }
+							</a>
+							</td>
+							<td style="width:15%; text-align:center;">${row.user_name }</td>
+							<td style="width:10%; text-align:center;">
+						<c:if test="${not empty row.board_file }">
+							<a href="userDownload.do?board_file=${row.board_file }"  style="text-align: center;"><!-- 다운로드 추가 필요 -->
+								<i class="fas fa-download"></i>
+							</a>
+						</c:if>	
+							</td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>	
+			</c:choose>
 		</table>
 		
 	</div>
