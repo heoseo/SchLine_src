@@ -103,8 +103,8 @@ jQuery(document).ready(function($) {
 	<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>과제</h2>
 	</c:when>
 	<c:otherwise>
-		<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>
-		<h2 style="text-align:center; font-weight:bold; color:black;">시험</h2>
+	<h2 style="text-align:center; font-weight:bold;">
+	<i class="fas fa-thumbtack" id="icon">&nbsp&nbsp</i>시험</h2>
  	</c:otherwise>
 </c:choose>	
 <!-- 게시물 -->

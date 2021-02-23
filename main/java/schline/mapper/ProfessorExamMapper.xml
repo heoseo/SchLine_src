@@ -89,7 +89,7 @@
 	</insert>
 	<!-- 과제 수정 -->
 	<update id="updateTask">
-		UPDATE exam_tb SET exam_name=#{0}, exam_date = to_date(#{1}, 'mm/dd/yyyy'), exam_content=#{2}, exam_scoring=#{3} WHERE exam_idx=#{4}  
+		UPDATE exam_tb SET exam_name=#{0}, exam_date = to_date(#{1}, 'mm/dd/yyyy hh24:mi'), exam_content=#{2}, exam_scoring=#{3} WHERE exam_idx=#{4}  
 	</update>
 	<!-- 과제 삭제 -->
 	<!-- 체크리스트와 제출된 과제 게시판을 먼저 삭제해야함... -->

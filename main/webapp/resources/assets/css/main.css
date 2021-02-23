@@ -103,10 +103,12 @@ input, select, textarea {
 
 	body {
 		background-color: #ADD8E6;
-		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		 background-image: url("images/overlay.png"), linear-gradient(45deg, #FFFFFF 15%, #eff8ff 85%);	}
+/* 		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
+/* 		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
+/* 		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
+		background-image: url("images/overlay.png"), linear-gradient(45deg, #FFFFFF 0%, #eff8ff 0%);	
+		
+	}
 
 /* 		body.is-preload *, body.is-preload *:before, body.is-preload *:after { */
 /* 			-moz-animation: none !important; */
@@ -3423,7 +3425,7 @@ input, select, textarea {
 			#main button:hover,
 			#main .button:hover {
 /* 				background-color: rgba(222, 222, 222, 0.5); */
-				background-color:#e8e8e8;
+				background-color:#5588a3;
 			}
 
 			#main input[type="submit"]:active,
@@ -3665,11 +3667,11 @@ input, select, textarea {
 		}
 
 		#main table tbody tr {
-			border-color: #dddddd;
+/* 			border-color: #dddddd; */
 		}
 
 		#main table tbody tr:nth-child(2n + 1) {
-			background-color: rgba(222, 222, 222, 0.25);
+/* 			background-color: rgba(222, 222, 222, 0.25); */
 		}
 
 		#main table th {

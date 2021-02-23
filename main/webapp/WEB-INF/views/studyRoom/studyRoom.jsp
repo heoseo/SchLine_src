@@ -277,8 +277,8 @@ tr td:first-child {
 
 </div>
 </div>
-<!-- </div> -->
-<!-- </div> -->
+</div>
+</div>
 <%--    <jsp:include page="/resources/include/bottom.jsp" /> --%>
 </body>
 <br />

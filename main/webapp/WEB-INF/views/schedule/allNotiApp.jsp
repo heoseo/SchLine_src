@@ -57,11 +57,10 @@ body {
 	
 	<div><!-- mainDiv시작 -->
 		<br />
-		<div style="text-align:center; font-size:2em">
+		<div style="text-align:center; font-size:1.2em; font-weight:bold;">
 		<i class="fas fa-clock" style="padding-right:5px; text-align:center;
 		font-size:1.2em; font-weight: bold;"></i>
 		알림</div>
-		<br />
 		<div id="content"> 
 			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
 				<option value="allBoardApp" ${param.type eq 'allBoardApp' ? 'selected' : '' }>전부</option>

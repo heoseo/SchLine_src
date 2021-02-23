@@ -32,13 +32,7 @@ legend {
 /************End Reset**************/
 
 /************Global**************/
-body {
-  background: #fff;
-  color: #000;
-  font: 100%/1.4 "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-  padding: 0;
-  -webkit-text-size-adjust: none;
-}
+
 a {
   color: #808080;
   text-decoration: none;
@@ -196,7 +190,4 @@ input[type=search] {
   }
 }</style>
 
-<body>
-
-</body>
 </html>

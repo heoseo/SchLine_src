@@ -56,11 +56,10 @@ body {
 	
 	<div><!-- mainDiv시작 -->
 		<br />
-		<div style="text-align:center; font-size:2em">
+		<div style="text-align:center; font-size:1.2em; font-weight:bold;">
 		<i class="fas fa-clock" style="padding-right:5px; text-align:center; 
 		font-size:1.2em; font-weight: bold;"></i>
 		알림</div>
-		<br />
 		<div id="content"> 
 			<div style="text-align:right;">
 				<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
@@ -114,7 +113,6 @@ body {
 						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}&nowPage=${nowPage}&type=allBoard&user_id=${user_id}">
 							제목 : ${row.TITLE } 
 						</a>
-						${row.subject_idx}
 					</td>
 					<td class="text-center" >${row.POSTDATE }</td>
 				</tr>

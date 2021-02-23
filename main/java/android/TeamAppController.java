@@ -214,6 +214,96 @@ public class TeamAppController {
 		기존 View를 호출하는 부분에서 JSON데이터를 반환하는 형태로
 		변경한다.
 	*/
+		
+	@RequestMapping(value="/android/teamEditAction.do", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> teamEditAction(MultipartHttpServletRequest req) {
+		System.out.println("수정페이지 진입");
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		//경로 받아오기
+		String path = req.getSession().getServletContext().getRealPath("/resources/uploadsFile/team");
+		System.out.println(path);
+		 
+		//과목idx
+		String board_idx = req.getParameter("board_idx");
+		System.out.println("게시물idx:"+board_idx);
+		ExamBoardDTO dto = sqlSession.getMapper(SchlineDAOImpl.class).getView(board_idx);
+		
+		String board_file = dto.getBoard_file();
+		System.out.println("db파일명:"+board_file+" 과목인덱스:"+dto.getSubject_idx());
+		int subject_idx = dto.getSubject_idx();
+
+		int fileUp = 0;
+		try {
+			
+			String user_id = req.getParameter("user_id"); //아이디
+			String board_title = req.getParameter("board_title"); //제목
+			String board_content = req.getParameter("board_content"); //내용
+				
+			MultipartFile mfile = req.getFile("filename");
+			System.out.println("mfile="+mfile);
+			
+			//한글깨짐방지 처리후 전송된 파일명을 가져옴
+			if(mfile!=null) {
+				
+				String originalName = new String(mfile.getOriginalFilename().getBytes(), "UTF-8");
+				System.out.println("originalfile="+originalName);
+			
+				System.out.println("파일수정");
+				//폼값 출력 테스트
+				System.out.printf("user_id=%s, board_title=%s,"
+						+ "board_content=%s, board_file=%s, new_file=%s"
+						, user_id, board_title, board_content, board_file, originalName);
+				
+				String saveFileName = null;
+				//파일명에서 확장자를 가져옴.
+				String ext = originalName.substring(originalName.lastIndexOf("."));
+				//확장자를 제외한 파일명(학생이 제출한 파일명)
+				String userFileName = originalName.substring(0, originalName.lastIndexOf("."));
+				
+				//과제이름+학번+제출명으로 합치기(팀명으로 변경필요)
+				saveFileName = "("+user_id+")"+userFileName + ext;
+				System.out.println("파일명 : "+saveFileName);
+				
+				//물리적 경로에 새롭게 생성된 파일명으로 파일저장
+				File serverFullName = new File(path + File.separator + saveFileName);
+				
+				mfile.transferTo(serverFullName);
+				
+				//DB에 update하기...
+				fileUp = sqlSession.getMapper(SchlineDAOImpl.class)
+						.teamFileEdit(board_idx, board_title, board_content, saveFileName);
+				
+				//기존파일 삭제처리
+				deleteFile(path, board_file);
+					
+			}
+			else {
+				System.out.println("수정파일없음");
+				fileUp = sqlSession.getMapper(SchlineDAOImpl.class)
+						.teamEdit(board_idx, board_title, board_content);
+			}
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("수정여부:"+fileUp);
+		
+		if(fileUp!=0) {
+			map.put("success", fileUp);
+		}
+		else {
+			map.put("success", 0);
+		}
+		
+		return map;
+	}
+	
 	
 	@RequestMapping("/android/teamDelete.do")
 	@ResponseBody
