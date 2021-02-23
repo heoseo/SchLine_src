@@ -29,7 +29,7 @@
 
 <div class="container">
 	
-	<table border=1 width=800>
+	<table border=1 width=800 class="table table-bordered table-hover table-striped">
 	<colgroup>
 		<col width="10%"/>
 		<col width="10%"/>

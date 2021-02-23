@@ -26,7 +26,7 @@
 			<!-- 게시판리스트부분 -->
 			<table class="table table-bordered table-hover table-striped">	
 				<colgroup>
-					<col width="10%"/>
+					<col width="7%"/>
 					<col width="*"/>
 					<col width="10%"/>
 					<col width="10%"/>
@@ -35,7 +35,7 @@
 				</colgroup>				
 				<thead>
 				<tr class="text-center" style="font-size:1.1em">
-					<th class="text-center" style="font-weight: bold;">번호</th>
+					<th class="text-center">No</th>
 					<th class="text-center">제목</th>
 					<th class="text-center">작성자</th>
 					<th class="text-center">작성일</th>

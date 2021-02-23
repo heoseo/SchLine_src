@@ -45,12 +45,6 @@
 	<h3 style="text-align:center; font-weight:bold; font-size:1.2em">
 	<i class="fas fa-check-circle" style="padding-right:5px;"></i>
 	공지사항</h3>
-	<div class="col text-left">
-		<button type="button" class="btn btn-light" style="font-weight:bold; color:#145374 "
-			onclick="location.href='notiBoardList.do?nowPage=${nowPage}';">
-			<i class="fas fa-arrow-alt-circle-left" id="icon">&nbsp&nbsp</i>
-			뒤로가기</button>
-	</div>
 	<br />
 <!-- 게시물 -->
 	<div id="row" class="col-lg-12">
@@ -103,6 +97,7 @@
 					</div>	
 				</div>	
 </c:forEach>
+<br />
 	</div><!-- 리스트끝 -->
 </div>
 </body>

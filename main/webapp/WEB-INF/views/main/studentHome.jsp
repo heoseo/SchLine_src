@@ -14,12 +14,11 @@
 	<head>
 		<title>스쿨라인 메인</title>
 
+<!-- /////////////////////Main시작////////////////////// -->
+<body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
 <%@ include file="/resources/include/top.jsp" %>
 <!-- 메인에 코스 리스트를 위한 style임-->
 <%@ include file="/resources/include/HomeClasslist.jsp" %>
-
-<!-- /////////////////////Main시작////////////////////// -->
-<body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
 	<div id="main">
 	
 		

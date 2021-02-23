@@ -73,6 +73,7 @@ input, select, textarea {
 /* 	-webkit-appearance: none; */
 /* 	-ms-appearance: none; */
 /* 	appearance: none; */
+border: #e8e8e8;
 }
 
 /* Basic */
@@ -3256,6 +3257,7 @@ input, select, textarea {
 		border-top-right-radius: 0.25em;
 		cursor: pointer;
 /* 		text-align: center; */
+		text-align: left;
 	}
 
 		#nav input, #nav select, #nav textarea {
@@ -3424,8 +3426,7 @@ input, select, textarea {
 			#main input[type="button"]:hover,
 			#main button:hover,
 			#main .button:hover {
-/* 				background-color: rgba(222, 222, 222, 0.5); */
-				background-color:#5588a3;
+				background-color:white;
 			}
 
 			#main input[type="submit"]:active,

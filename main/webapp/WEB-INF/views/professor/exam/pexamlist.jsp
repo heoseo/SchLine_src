@@ -126,18 +126,18 @@ textarea { height : 200px; }
  	onclick="makequestion();" style="min-width:0;">문제 등록</button></td></tr>
  	<tr>
  	<td>
- 	<select name="exam_idx" id="exam_name">
+ 	<select name="exam_idx" id="exam_name" style="font-size: 15px">
  	<!-- 추후에 과목별 인덱스와 시험제목을 파라미터로 받아야함 -->
  	<c:forEach items="${pexamlist }" var="erow" varStatus="eloop">
  		<option value="${erow.exam_idx }">${erow.exam_name }</option>
  	</c:forEach>
  	</select>
  	</td>
- 	<td><input type="text" name="exam_content" id="exam_content"/></td>
+ 	<td><input type="text" name="exam_content" id="exam_content"  style="font-size: 15px"/></td>
  	<td>
  	
  	<div class="input-group date" id="datetimepicker1" data-target-input="nearest">
- 	<input type="text" id="exam_date" class="form-control datetimepicker-input" data-target="#datetimepicker1">
+ 	<input type="text" id="exam_date" class="form-control datetimepicker-input" data-target="#datetimepicker1"  style="font-size: 15px">
  	<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker"> 
  	<div class="input-group-text"><i class="fa fa-calendar"></i></div> </div> </div>
  	
@@ -151,7 +151,7 @@ textarea { height : 200px; }
  <div class="text-center"><h3 style="display:inline; margin-left:150px;">시험 문제 리스트</h3>
  <input type="button" class="button primary small" value="주관식 채점" style="float:right" onclick="location.href='examCheck.do';"/></div>
  <br />
- <select name="id" style="width:200px; display:inline" onchange="moveurl(this.value);">
+ <select name="id" style="width:200px; display:inline; font-size: 15px" onchange="moveurl(this.value);">
 		<option value="" selected>시험을 선택하세요</option>
 	<c:forEach items="${pexamlist }" var="urow" varStatus="loop">
 		<option value="pexamlist.do?exam_idx=${urow.exam_idx }">${urow.exam_name }</option>

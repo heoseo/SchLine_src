@@ -54,7 +54,7 @@
 		<table class="table table-bordered table-hover table-striped">
 			<thead>
 				<tr>
-					<th style="text-align:center;">번호</th>
+					<th style="text-align:center;">No</th>
 					<th>제목</th>
 					<th style="text-align:center;">조회수</th>
 					<th style="text-align:center;">작성일</th>

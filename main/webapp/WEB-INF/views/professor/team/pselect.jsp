@@ -52,7 +52,7 @@ function changeteam(){
 	
 <div class="table-wrapper">
 	<table>
-	<tr><td colspan="4" style="text-align:center"><b>과제</b></td></tr>
+	<tr><td colspan="4" style="text-align:center; font-size: 1.2em" ><b>과제</b></td></tr>
 		<tr>
 			<td colspan="2"><a href="ptaskList.do" class="button primary fit">과제등록</a></td>
 			<td colspan="2"><a href="taskCheck.do" class="button primary fit">과제확인</a></td>
@@ -92,6 +92,7 @@ function changeteam(){
 		</tr>
 	</table>
 </div>
+	<br />
 	</div>
 </body>
 <!-- 하단 인클루드 -->

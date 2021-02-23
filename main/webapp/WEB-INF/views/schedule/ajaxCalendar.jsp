@@ -1,3 +1,6 @@
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.time.LocalDate"%>
 <%@page import="schline.ExamDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
@@ -32,7 +35,6 @@ int last_week = tDay.get(Calendar.DAY_OF_WEEK);//마지막일의 요일
 // 예를 들어 2020년 12월 일정을 가져온다고 가정...
 ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 
-
 %>
 <style>
 #title {
@@ -58,7 +60,29 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 	color: 	#00334e;
 }
 </style>
+<script type="text/javascript">
 
+
+// window.onload = function(){
+	
+
+// 	/* 오늘날짜구하기. */
+// 	var date = new Date();
+// 	/* 오늘날짜의 숫자(일). */
+// 	var getDay = new String(date.getDate());
+	
+// 	var choicDay = document.getElementsByClassName("choicDay");
+	
+// 	alert("getDay의내용="+ getDay);
+	
+// 	choicDay.style.color = "red"
+
+// }
+
+
+
+
+</script>
 <table id="calTable" class="calendar">
 		<colgroup>
 			<col width="14%" />
@@ -91,9 +115,11 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 
 		//요일채우기(일1, 토7)
 		int day;
-		for(day=1 ; day<=last_day ; day++){ 
+		for(day=1 ; day<=last_day ; day++){ 			
 		%>
-			<td id="td"><%=day %>
+		
+			<td id="td" class="choicDay">
+				<%=day %>
 				<%
 				for(ExamDTO dto : lists) { 
 					String yearStr = Integer.toString(year);
@@ -109,7 +135,7 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 					String nowDate = yearStr +"-"+ monthStr+"-" + dayStr;
 							
 					String exam_date = dto.getExam_date().toString();
-					
+
 					//디버깅용.
 					System.out.println("exam_date : " + exam_date);
 					if(exam_date.equals(nowDate)) {
@@ -123,7 +149,8 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 <!-- 			private int exam_type;		//과제(1), 시험(2) -->
 
 					<div class="Task">&nbsp;&nbsp;<i class="fas fa-thumbtack"></i>
-					&nbsp;&nbsp; [ <%=dto.getExam_name() %> ] </div>
+					&nbsp;&nbsp; [ <%=dto.getExam_name() %> ] 
+					</div>
 				<%	}
 			  	}
 				%>
