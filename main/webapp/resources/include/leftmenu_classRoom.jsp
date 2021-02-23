@@ -38,9 +38,6 @@
 				</a> <a href="/schline/class/examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
 					class="fas fa-clipboard-check" id="icon">&nbsp&nbsp</i> <span
 					style="text-align: center;" id="name">시험</span>
-				</a> <a href="/schline/class/examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
-					class="fas fa-clipboard-check" id="icon">&nbsp&nbsp</i> <span
-					style="text-align: center;" id="name">시험</span>
 				</a> 
 				
 				<a href="/schline/class/taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item"> <i class="fa fa-archive"

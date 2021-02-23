@@ -72,18 +72,19 @@ public class AdminClassTemplateDAO {
 				+"				WHERE U.user_id = S.user_id ";
 		
 		if(map.get("searchWord")!=null)
-		sql += " 					AND "+map.get("searchColumn")+" LIKE '%"+map.get("searchWord")+"%' ";				
-		sql += " 			ORDER BY subject_idx ASC"
-		+"    				) Tb"
-		+"				)";
+		sql += " 					AND "+map.get("searchColumn")+" LIKE '%"+map.get("searchWord")+"%' "				
+			+ " 			ORDER BY subject_idx ASC";
+		
 		
 		if(map.get("searchSubject")!=null)
-			sql += " 					AND subject_name LIKE '%"+map.get("searchSubject")+"%' ";				
-			sql += " 			ORDER BY subject_idx ASC"
-			+"    				) Tb"
-			+"				)";
-		if(flag ==true)
-			sql +=" 	WHERE rNum BETWEEN "+start+" and "+end;
+			sql += " 				AND subject_name LIKE '%"+map.get("searchSubject")+"%' "				
+			+ " 			ORDER BY subject_idx ASC";
+		
+		sql +="    				) Tb"
+				+"			)";
+		
+//		if(flag ==true)
+//			sql +=" 	WHERE rNum BETWEEN "+start+" and "+end;
 		
 	
 			
