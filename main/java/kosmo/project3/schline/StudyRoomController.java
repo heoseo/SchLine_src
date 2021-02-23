@@ -9,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -388,11 +389,16 @@ public class StudyRoomController {
 		else if(flag.equals("0")) {//차단하기 일 경우
 			//사용자 닉네임으로 아이디값을 받아와서 그 아이디를 차단해줌
 			String other_id = other_pro.getUser_id();
-			//차단한 유저가 중복되지않게 처리해주는게 좋은데...시간되면 하자
-			int block = sqlSession.getMapper(StudyDAOImpl.class).block_people(user_id, other_id);
-			if (block==1) {
-				System.out.println("차단성공");
-				map.put("check", 0);//성공시 반환값 1을 담아줌
+			String block_check = req.getParameter("block_check");//차단여부 받아와서
+			if(block_check.equals("0")) {				
+				int block = sqlSession.getMapper(StudyDAOImpl.class).block_people(user_id, other_id);
+				if (block==1) {
+					System.out.println("차단성공");
+					map.put("check", 0);//성공시 반환값 1을 담아줌
+				}
+			}
+			else {//차단해제
+				sqlSession.getMapper(StudyDAOImpl.class).unblock_people(user_id, other_id);
 			}
 		}
 		return map;
@@ -400,19 +406,34 @@ public class StudyRoomController {
 	
 	//프로필보기 링크로 이동
 	@RequestMapping("/class/openProfile.do")
-	public String openProfile(HttpServletRequest req, Model model) {
+	public String openProfile(HttpServletRequest req, Model model, HttpSession session) {
 		System.out.println("프로필 새창열기");
 		String ot_nick = req.getParameter("ot_nick");//프로필보기 사용자아이디
 		String user_id = req.getParameter("user_id");//로그인된 사용자아아디
+		//String user_id = session.getAttribute("user_id").toString();
+		
 		System.out.println("ot_nick"+ot_nick);
+		System.out.println("새창user_id"+user_id);
 		
 		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
-		
 		if(other_pro.getInfo_nick()!=null) {
 			model.addAttribute("ot", other_pro);//배열에 담아주기
 		}
+		//차단여부 확인
+//		Integer blockCheck = 
+		//		blockList.contains("ot_nick");
+		//null에러 방지를 위해 전체를 if문에 넣어줌
+		if(sqlSession.getMapper(StudyDAOImpl.class).check_bolck(other_pro.getUser_id(), user_id)==null) {
+			//차단유저 아님
+			model.addAttribute("block_check", 0);
+		}
+		else {//차단유저
+			model.addAttribute("block_check", 1);
+		}
 		return "studyRoom/openProfile";
 	}
+	
+	
 	
 //	//신고와 차단
 	@RequestMapping("/class/studyBlock.do")
@@ -452,11 +473,12 @@ public class StudyRoomController {
 		
 		//날짜가 동일하면 insert하지않고, 다른날이면 insert
 		//널에러방지 Integer타입
-		if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)!=null) {
-			if(sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id)==1){
-				//동일날짜있음. 출석 증가하지 않음
+		int count = sqlSession.getMapper(StudyDAOImpl.class).check_day(today, user_id);
+		System.out.println("count="+count);
+		//날짜가 동일하면 insert하지않고, 다른날이면 insert
+		//널에러방지 Integer타입
+		if(count==1) {//동일날짜있음. 출석 증가하지 않음
 				map.put("result", 0);
-			}
 		}
 		else {//동일날짜없음 출석증가
 			int attenPlus = sqlSession.getMapper(StudyDAOImpl.class).atten_plus(today, user_id);
