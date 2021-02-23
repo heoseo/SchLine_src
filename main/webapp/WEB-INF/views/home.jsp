@@ -27,11 +27,10 @@
 	border-radius:5px;
 
 }
-#loginButton:active {
- 	background-color: white;
-}
-#loginButton:hover {
- 	background-color: white;
+#loginButton button:hover {
+background:e8e8e8;
+	opacity: 0.8;
+  	
 
 }
 </style>
@@ -76,8 +75,8 @@
 				<p>
 					패스워드 <input type="password" name="pass" value="qwer1234"/>
 				</p>
-				<div style="border-radius:5px;">				
-					<button type="submit" id="loginButton" class="hover"  style="font-weight:bold; 	background-color:#ADD8E6;">
+				<div style="border-radius:5px; background:#ADD8E6;" class="loginButton">				
+					<button type="submit" id="loginButton" style="font-weight:bold;">
 						로그인</button>
 				</div>
 			</form:form>
