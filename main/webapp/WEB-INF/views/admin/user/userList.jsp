@@ -7,7 +7,14 @@
 
 <!DOCTYPE html>
 <html>
-
+<script type="text/javascript">
+$(function(){
+	$('#searchColumn').change(function(){
+		var searchColumn = this.value;
+		location.href="/schline/admin/userList?searchColumn="+searchColumn;
+	});
+});
+</script>
 
 <head>
 	<%@ include file="/resources/adminRes/include/head.jsp" %>

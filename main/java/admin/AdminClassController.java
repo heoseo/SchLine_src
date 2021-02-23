@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import admin.model.ClassListCommand;
+import admin.model.UserListCommand;
 import schline.util.JdbcTemplateConst;
 
 
@@ -42,5 +43,15 @@ public class AdminClassController {
 		command.execute(model);
 		
 		return "admin/class/subjectList";
+	}
+	
+	@RequestMapping("/admin/class/userList")
+	public String userList(Model model, HttpServletRequest req) {
+		
+		model.addAttribute("req", req);
+		command = new UserListCommand();
+		command.execute(model);
+		
+		return "admin/class/userList";
 	}
 }
