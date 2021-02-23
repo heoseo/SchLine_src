@@ -7,7 +7,8 @@
 <html>
 <head>
 <title>공부방</title>
-
+<!-- 상단 인클루드 -->
+<%@ include file="/resources/include/top.jsp"%>
 
 
 <%
@@ -117,8 +118,7 @@ tr td:first-child {
 </script>
 <!-- body 시작 -->
 <body class="is-preload">
-<!-- 상단 인클루드 -->
-<%@ include file="/resources/include/top.jsp"%>
+
    <!-- 왼쪽메뉴 include -->
 <%--    <jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 --> --%>
 <div style="text-align: center; background: white;"> 
