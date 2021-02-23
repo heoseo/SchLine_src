@@ -30,7 +30,7 @@
 <div id="wrapper">
 	<div align="center">
 	<br /> 
-	<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" />
+	<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" />
 
 	</div>
 
@@ -94,10 +94,11 @@ function maketask(){
 	       	dataType : "json",
 	       	success : function(d){
 	       		if(d.result==1){
-		       		alert('수정되었습니다');
-					self.close();
+		       		console.log(d.result);
+					window.close();
 	       		}
 	       		else{
+	       			console.log(d.result);
 	       			alert('수정에 실패했습니다.');
 	       		}
 				
@@ -110,9 +111,6 @@ function maketask(){
 	}
 }
 </script>
-<style>
-textarea { height : 200px; }
-</style>
 <!-- body 시작 -->
 <body class="is-preload">
 <div class="table-wrapper">
@@ -143,7 +141,7 @@ textarea { height : 200px; }
  	</tr>
  	<tr>
  	<td style="vertical-align:middle;">과제<br/>내용</td>
- 	<td colspan="3"><textarea name="exam_content" id="task_content" style="height:200px;">${dto.exam_content }</textarea></td>
+ 	<td colspan="3"><textarea name="exam_content" id="task_content" style="height:300px;">${dto.exam_content }</textarea></td>
  	</tr>
  	</table>
 	<input type="hidden" name="exam_idx" value="${dto.exam_idx }" />
