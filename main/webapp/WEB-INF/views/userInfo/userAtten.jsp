@@ -18,7 +18,7 @@
     border:solid 0.5px white;  
  }
  #no{
- 	background: #ff4646;
+  	background: #e8e8e8;
    	opacity: 0.9;
    	color: white;
    	font-weight:bold;  
@@ -31,16 +31,17 @@
 	padding: 2px;
 }
 #yes:hover{
-	background: #d9ecf2;
+
+	background: #145374;
+	color:white;
     opacity: 0.5;
     font-weight:bold;
     border-radius: 15px; 
     border:solid 0.5px white; 
 }
 #no:hover{
-	background: #ff4646;
+	background: black;
    	opacity: 0.5;
-   	color: white;
    	font-weight:bold;  
     border-radius: 15px; 
    	border: solid 0.5px white;

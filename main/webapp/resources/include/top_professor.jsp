@@ -26,6 +26,18 @@
 	
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
+<style>
+header{
+  height: 75px;
+  padding: 1rem;
+  color: white;
+  background: teal;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
 	</head>
 	
 	<!-- 기존 바디 위치 -->

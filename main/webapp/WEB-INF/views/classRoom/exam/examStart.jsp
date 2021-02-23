@@ -22,8 +22,8 @@
  
  <div style="text-align:center">
 
- <table><tr><td>
-    <h2><b style="color:#145374">과목 : ${map.subject_name }</b></h2>
+
+    <h2><b style="color:#145374; font-size: 0.8em">과목 : ${map.subject_name }</b></h2>
     <!-- 과목 및 시험 인덱스 -->
     
  <table class="alt">
