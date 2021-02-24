@@ -70,7 +70,7 @@
 		<td></td>
 		<td class="table-hover align-middle" 
 		style="font-size: 1em; color:#145374; padding-left:20px; height:5%">
-		<i class="	fas fa-exclamation-triangle"></i>&nbsp;&nbsp;위 내용을 정정 하시겠습니까?
+		<i class="	fas fa-exclamation-triangle"></i>&nbsp;&nbsp;위 정정 내용을 모든 학생들에게 알리시겠습니까?
 		<br></br>
 		<div class="col-4 col-12-small" style="font-size: 0.8em;">
 			<input type="radio" style="color:#145374 " id="demo-priority-low" name="yorn" value="yes" checked/>
