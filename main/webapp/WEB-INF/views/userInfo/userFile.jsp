@@ -47,7 +47,12 @@
 					<c:forEach items="${lists }" var="row">
 						<tr>
 							<td style="width:8%; text-align:center;">${row.virtualNum }</td>
-							<td style="width:10%; text-align:center;">${row.subject_name }</td>
+							<c:if test="${row.board_type eq 'team'}">
+							<td style="width:12%; text-align:center;">${row.subject_name }(협업)</td>
+							</c:if>
+							<c:if test="${row.board_type eq 'exam'}">
+							<td style="width:10%; text-align:center;">${row.subject_name }(과제)</td>
+							</c:if>
 							<td style="text-align:left; padding-left: 20px;">
 							<c:if test="${row.board_type eq 'team'}">
 							<a href="/schline/class/teamTask.do?subject_idx=${row.subject_idx}">
