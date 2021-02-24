@@ -19,7 +19,7 @@
 				<!-- fas fa-clock, fas fa-bell -->
 				<a href="<%=request.getContextPath() %>/schedule/alertList.do?type=allBoard" class="list-group-item">
 					<i class="fas fa-clock" id="icon">&nbsp&nbsp</i>
-					<span>알림</span>
+					<span>공지사항</span>
 				</a>
 				<a href="<%=request.getContextPath() %>/schedule/calendar.do" class="list-group-item">
 					<i class="far fa-calendar-alt" id="icon">&nbsp&nbsp</i>

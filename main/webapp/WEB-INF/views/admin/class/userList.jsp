@@ -7,14 +7,7 @@
 
 <!DOCTYPE html>
 <html>
-<script type="text/javascript">
-$(function(){
-	$('#searchColumn').change(function(){
-		var searchColumn = this.value;
-		location.href="/schline/admin/userList?searchColumn="+searchColumn;
-	});
-});
-</script>
+
 
 <head>
 	<%@ include file="/resources/adminRes/include/head.jsp" %>
@@ -22,16 +15,7 @@ $(function(){
 
 <body>
     <!-- Preloader -->
-    <div class="preloader">
-        <div class="cssload-speeding-wheel"></div>
-    </div>
     <div id="wrapper">
-        <!-- 상단 네비 바 -->
-        <%@ include file="/resources/adminRes/include/top_nav.jsp" %>
-        
-        <!-- 왼쪽 메뉴 -->
-        <%@ include file="/resources/adminRes/include/leftMenu.jsp" %>
-        
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
@@ -41,23 +25,12 @@ $(function(){
                     </div>
                 </div>
                 
-                
-                
 				
                 <div class="row">
 	                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
 	                    <li>
 	               			<form:form role="search" class="app-search hidden-xs">
-	                
-								<select name="searchColumn" class="form-control" style="width:120px; margin-bottom:15px;">
-									<c:if test="${ not empty paramMap}">
-									    <option value="PROFESSOR" <c:if test="${paramMap.searchColumn == 'PROFESSOR'}">selected</c:if>>교수</option>
-									    <option value="STUDENT" <c:if test="${paramMap.searchColumn == 'STUDENT'}">selected</c:if>>학생</option>
-									    <option value="ADMIN" <c:if test="${paramMap.searchColumn == 'ADMIN'}">selected</c:if>>관리자</option>
-									</c:if>
-								</select>
-		                            <input name="searchWord" type="text" placeholder="Search..." class="form-control">
-		                            	 <a href="/schline/admin/userList"><i class="fa fa-search"></i></a>
+								<input type="hidden" value=${subject_idx }/>		                            
 	                        </form:form>
                          </li>
 	                </ul>
@@ -114,8 +87,6 @@ $(function(){
                 </div>
             </div>
             <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2020 &copy; Pixel Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -125,19 +96,6 @@ $(function(){
     <!-- Bootstrap Core JavaScript -->
     
     <%@ include file="/resources/adminRes/include/bottom_script.jsp" %>
-     <script type="text/javascript">
-//         $(document).ready(function () {
-//             $.toast({
-//                 heading: 'Welcome to Pixel admin',
-//                 text: 'Use the predefined ones, or specify a custom position object.',
-//                 position: 'top-right',
-//                 loaderBg: '#ff6849',
-//                 icon: 'info',
-//                 hideAfter: 3500,
-//                 stack: 6
-//             })
-//         });
-    </script>
 </body>
 
 </html>

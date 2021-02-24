@@ -391,7 +391,7 @@ function startConverting ()
 //빨간펜 파란펜
 function penboard(target){
 	 var url = "../penboard/write.do?flag="+target+"&time="+$('#curtimetext').text()+"&vid_title="+"${name }&sub_idx="+${sub_idx};
-	 var win = window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=600,height=600");
+	 var win = window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=300,left=300,width=1000,height=600");
 
 	 
 }
