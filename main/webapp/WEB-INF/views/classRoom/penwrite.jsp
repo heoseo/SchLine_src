@@ -17,7 +17,11 @@
 
 	<hr />
    	<div style="text-align: center;">
-      	<small>${flag } 게시판</small><!-- flag구분예정-->
+      	<small>
+	      	<c:if test="${flag eq 'red' }">정정 </c:if>
+	      	<c:if test="${flag eq 'blue' }">질문 </c:if>
+      		게시판
+      	</small>
    	</div>
    	<hr /><!-- 구분자 -->
    
