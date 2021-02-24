@@ -139,10 +139,12 @@
 	  </select>  
 	
 	  <select id="blockuser" resultType="schline.UserInfoDTO">
-	 	select * from user_tb U
+	 	select U.*, c.info_nick block_nick from (
+        select U.*, c.block_user from user_tb U
 		inner join chattingblock_tb C
 		on U.user_id = C.user_id
-		where U.user_id = #{user_id }
+		where U.user_id = 201701700
+        ) U inner join chattinginfo_tb C on u.block_user=c.user_id
 	  </select>  
 	  
 	  <select id="blockdelete" resultType="schline.UserInfoDTO">
