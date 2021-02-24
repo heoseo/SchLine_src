@@ -117,10 +117,14 @@
 	  </select>  
 	 
 	  <select id="boardInfo" resultType="schline.ExamBoardDTO">
-	 	select U.*,S.subject_name from (
-        select user_name, board_idx, subject_idx, board_title, board_file from board_tb B
+	 	select U.*,S.subject_name, rownum virtualNum from (
+        select U.*, E.exam_type from (
+        select user_name, board_idx, subject_idx, board_title, board_file, board_type from board_tb B
 	 	inner join user_tb U on B.user_id = U.user_id 
 		where B.user_id = #{user_id} and board_file is not null
+        ) U 
+        inner join exam_tb E on U.subject_idx = E.subject_idx
+        where exam_type =1
         ) U inner join subject_tb S on U.subject_idx = S.subject_idx
 	  </select>  
 	 

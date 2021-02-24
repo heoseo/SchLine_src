@@ -20,7 +20,7 @@
  #no{
   	background: #e8e8e8;
    	opacity: 0.9;
-   	color: white;
+   	color: black;
    	font-weight:bold;  
     border-radius: 15px; 
    	border: solid 0.5px white;
@@ -60,7 +60,7 @@
 					<div class="container">
 						<h5><a href="../class/grade.do?subject_idx=${row.subject_idx }">
 						<i class="fas fa-check" id="sub"></i>${row.subject_name }</a></h5>
-						<table class="table table-hover" style="font-size:5px; text-align:center;">
+						<table class="table table-hover" style="font-size:6px; text-align:center;">
 								<c:choose>	
 									<c:when test="${row.rnum==1 }">
 						 			

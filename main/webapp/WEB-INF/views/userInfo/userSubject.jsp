@@ -25,7 +25,7 @@
 		<div style="text-align: center;">
 	      <small style="font-size:1.2em">
 	      <i class="fas fa-book-reader" id="icon">&nbsp&nbsp</i>
-	      수강 과목</small>
+	      출결 현황</small>
 	    </div>
 	    <hr />
 		<c:forEach items="${lists }" var="row">		
