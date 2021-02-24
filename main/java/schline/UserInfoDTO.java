@@ -25,7 +25,6 @@ public class UserInfoDTO {
 	private String block_user;
 	private String block_nick;
 
-	
 	public String getBlock_nick() {
 		return block_nick;
 	}
