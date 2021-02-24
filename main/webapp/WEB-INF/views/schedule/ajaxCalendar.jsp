@@ -61,21 +61,28 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 <script type="text/javascript">
 
 
-// window.onload = function(){
+$(function() {
+// 	해당날짜정보 새로가져오기.
+	var today = new Date();
+	var getFullDate = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate(); 
+	
+	console.log(today);
+	console.log(getFullDate);
+	
+	var getYear = today.getFullYear();
+	var getMonth = (today.getMonth()+1);
+	var getDay = today.getDate();
+	
+	console.log(getYear);
+	console.log(getMonth);
+	console.log(getDay);
+	
+	
+	$('.choicDay').css("color","red");
+	
 	
 
-// 	/* 오늘날짜구하기. */
-// 	var date = new Date();
-// 	/* 오늘날짜의 숫자(일). */
-// 	var getDay = new String(date.getDate());
-	
-// 	var choicDay = document.getElementsByClassName("choicDay");
-	
-// 	alert("getDay의내용="+ getDay);
-	
-// 	choicDay.style.color = "red"
-
-// }
+});
 
 
 
