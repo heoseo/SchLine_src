@@ -160,9 +160,9 @@ textarea { height : 200px; }
 
 <div class="table-wrapper mt-1">
 	<table class="alt text-center">
-			<tr>
+			<tr style="background-color:lightgray;">
 				<td style="width:10%">시험명</td>
-				<td>시험내용</td>
+				<td style="width:12%">시험내용</td>
 				<td>문제내용</td>
 				<td>정답</td>
 				<td style="width:8%">배점</td>
@@ -190,7 +190,7 @@ textarea { height : 200px; }
 			<%-- 객관식 문제일 경우.... --%>
 			<c:if test="${exam.question_type eq 1 }">
 			<tr>
-			<td style="vertical-align:middle">문항</td>
+			<td colspan="2" style="vertical-align:middle">문항<br />(객관식)</td>
 			<td class="text-left" colspan="5">
 			<%-- 문항을 추출한다 --%>
 			<c:forEach items="${questionlist }" var="question" varStatus="qloop">
