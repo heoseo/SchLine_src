@@ -60,9 +60,15 @@
 		
 		
 		<table class="table table-hover table-striped" style="font-size:1.2em">
-		<tr><td colspan="5" style="font-size:0.9em; text-align:left; padding-left: 20px;
+		<tr>
+			<c:if test="${gradeChar!=null }">
+				<c:if test="${gradeNum!=0.0 }">
+		<td colspan="5" style="font-size:0.9em; text-align:left; padding-left: 20px;
 		background:d3e0ea;"><i class="fas fa-graduation-cap" id="icon">&nbsp&nbsp</i>
-		평균 성적 : ${gradeChar } (${gradeNum })</td></tr>
+					평균 성적 : ${gradeChar } (${gradeNum })</td>
+				</c:if>
+			</c:if>
+		</tr>
 		</table>
  		
  		
@@ -99,7 +105,14 @@
 										</c:forEach>		
 									</tr>
 									<tr>
-									    	성적 : ${gradeChar1 }
+										<c:choose>
+									    	<c:when test="${empty gradeChar1 }">
+											
+									    	</c:when>
+									    	<c:otherwise>
+								   				<td>성적 : ${gradeChar1 }</td>
+									    	</c:otherwise>
+							    		</c:choose>
 								    </tr>
 								</c:when>
 								<c:when test="${row.rnum==2 }">
@@ -118,7 +131,14 @@
 										</c:forEach>		
 									</tr>
 									<tr>
-									    	성적 : ${gradeChar2 }
+									    <c:choose>
+									    	<c:when test="${empty gradeChar2 }">
+											
+									    	</c:when>
+									    	<c:otherwise>
+								   				<td>성적 : ${gradeChar2 }</td>
+									    	</c:otherwise>
+							    		</c:choose>
 								    </tr>
 								</c:when>
 								<c:when test="${row.rnum==3 }">
@@ -137,7 +157,14 @@
 										</c:forEach>		
 									</tr>
 									<tr>
-									    	성적 : ${gradeChar3 }
+									    <c:choose>
+									    	<c:when test="${empty gradeChar3 }">
+											
+									    	</c:when>
+									    	<c:otherwise>
+								   				<td>성적 : ${gradeChar3 }</td>
+									    	</c:otherwise>
+							    		</c:choose>
 								    </tr>
 								</c:when>
 								<c:when test="${row.rnum==4 }">
@@ -156,11 +183,17 @@
 										</c:forEach>		
 									</tr>
 									<tr>
-									    	성적 : ${gradeChar4 }
+									    <c:choose>
+									    	<c:when test="${empty gradeChar4 }">
+											
+									    	</c:when>
+									    	<c:otherwise>
+								   				<td>성적 : ${gradeChar4 }</td>
+									    	</c:otherwise>
+							    		</c:choose>
 								    </tr>
 								</c:when>
 								<c:otherwise>
-								<div>
 									<tr align="center" align="center">
 										<c:forEach items="${gradelists5 }" var="row5">
 											<td class="text-center"><!-- 가상번호 -->
@@ -176,7 +209,14 @@
 										</c:forEach>		
 									</tr>
 									<tr>
-									    	성적 : ${gradeChar5 }
+									    <c:choose>
+									    	<c:when test="${empty gradeChar5 }">
+											
+									    	</c:when>
+									    	<c:otherwise>
+								   				<td>성적 : ${gradeChar5 }</td>
+									    	</c:otherwise>
+							    		</c:choose>
 								    </tr>
 								</c:otherwise>
 							</c:choose>
