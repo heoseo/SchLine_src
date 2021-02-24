@@ -212,6 +212,8 @@ public class UserInfoController {
 			ArrayList<GradeDTO> gradelists = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO);
 //			model.addAttribute("gradelists", gradelists);
 			
+
+			
 			for(int i =0 ; i<attenlists.size() ; i++) {
 				if(attenlists.get(i).getAttendance_flag().equals("2")) {
 					gradeNum += 1;
@@ -264,72 +266,84 @@ public class UserInfoController {
 		
 		while(iterator2.hasNext()){
 			String value = (String)iterator2.next();
-			System.out.println(value);
-			if(value=="A+") {
-				gradeNum += 4.5;
-			}
-			else if(value=="A") {
-				gradeNum += 4.0;
-			}
-			else if(value=="B+") {
-				gradeNum += 3.5;
-			}
-			else if(value=="B") {
-				gradeNum += 3.0;
-			}
-			else if(value=="C+") {
-				gradeNum += 2.5;
-			}
-			else if(value=="C") {
-				gradeNum += 2.0;
-			}
-			else if(value=="D+") {
-				gradeNum += 1.5;
-			}
-			else if(value=="D") {
-				gradeNum += 1.0;
+			if (value!=null) {
+				System.out.println(value);
+				if(value=="A+") {
+					gradeNum += 4.5;
+				}
+				else if(value=="A") {
+					gradeNum += 4.0;
+				}
+				else if(value=="B+") {
+					gradeNum += 3.5;
+				}
+				else if(value=="B") {
+					gradeNum += 3.0;
+				}
+				else if(value=="C+") {
+					gradeNum += 2.5;
+				}
+				else if(value=="C") {
+					gradeNum += 2.0;
+				}
+				else if(value=="D+") {
+					gradeNum += 1.5;
+				}
+				else if(value=="D") {
+					gradeNum += 1.0;
+				}
+				else {
+					gradeNum += 0.0;
+				}
 			}
 			else {
-				gradeNum += 0.0;
+				gradeNum = 0.0;
+				break;
 			}
 			
 		}
 		System.out.println(gradeNum);
-		gradeNum = gradeNum/lists.size();
-		
-		System.out.println(gradeNum);
-		model.addAttribute("listgrade2", listgrade2);
-		model.addAttribute("gradeNum", gradeNum);
-		
 		String gradeChar;
-		if(gradeNum>=4.5) {
-			gradeChar = "A+";
-		}
-		else if(gradeNum>=4.0) {
-			gradeChar = "A";
-		}
-		else if(gradeNum>=3.5) {
-			gradeChar = "B+";
-		}
-		else if(gradeNum>=3.0) {
-			gradeChar = "B";
-		}
-		else if(gradeNum>=2.5) {
-			gradeChar = "C+";
-		}
-		else if(gradeNum>=2.0) {
-			gradeChar = "C";
-		}
-		else if(gradeNum>=1.5) {
-			gradeChar = "D+";
-		}
-		else if(gradeNum>=1.0) {
-			gradeChar = "D";
+		if (gradeNum!=0.0) {
+			gradeNum = gradeNum/lists.size();
+			
+			System.out.println(gradeNum);
+			model.addAttribute("listgrade2", listgrade2);
+			model.addAttribute("gradeNum", gradeNum);
+			
+			if(gradeNum>=4.5) {
+				gradeChar = "A+";
+			}
+			else if(gradeNum>=4.0) {
+				gradeChar = "A";
+			}
+			else if(gradeNum>=3.5) {
+				gradeChar = "B+";
+			}
+			else if(gradeNum>=3.0) {
+				gradeChar = "B";
+			}
+			else if(gradeNum>=2.5) {
+				gradeChar = "C+";
+			}
+			else if(gradeNum>=2.0) {
+				gradeChar = "C";
+			}
+			else if(gradeNum>=1.5) {
+				gradeChar = "D+";
+			}
+			else if(gradeNum>=1.0) {
+				gradeChar = "D";
+			}
+			else {
+				gradeChar = "F";
+			}
+			model.addAttribute("gradeChar", gradeChar);
 		}
 		else {
-			gradeChar = "F";
+			gradeChar = "-";
+			model.addAttribute("gradeChar", gradeChar);
 		}
-		model.addAttribute("gradeChar", gradeChar);
 		ArrayList<String> list = new ArrayList<String>();
 		for (int i =0; i<lists.size(); i++) {
 		list.add(lists.get(i).getSubject_idx());
@@ -345,7 +359,9 @@ public class UserInfoController {
 		gradeDTO1.setUser_id(user_id);
 		ArrayList<GradeDTO> gradelists1 = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO1);
 		model.addAttribute("gradelists1", gradelists1);
-		String gradeChar1=graderesult(attenlists1,gradelists1);
+		int Jgrade = gradelists1.get(0).getGrade_exam();
+		int Ggrade = gradelists1.get(1).getGrade_exam();
+		String gradeChar1=graderesult(Jgrade,Ggrade,attenlists1,gradelists1);
 		model.addAttribute("gradeChar1", gradeChar1);
 		
 		AttendanceDTO attendanceDTO2 = new AttendanceDTO();
@@ -357,7 +373,9 @@ public class UserInfoController {
 		gradeDTO2.setUser_id(user_id);
 		ArrayList<GradeDTO> gradelists2 = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO2);
 		model.addAttribute("gradelists2", gradelists2);
-		String gradeChar2=graderesult(attenlists2,gradelists2);
+		Jgrade = gradelists2.get(0).getGrade_exam();
+		Ggrade = gradelists2.get(1).getGrade_exam();
+		String gradeChar2=graderesult(Jgrade,Ggrade,attenlists2,gradelists2);
 		model.addAttribute("gradeChar2", gradeChar2);
 		
 		AttendanceDTO attendanceDTO3 = new AttendanceDTO();
@@ -369,7 +387,9 @@ public class UserInfoController {
 		gradeDTO3.setUser_id(user_id);
 		ArrayList<GradeDTO> gradelists3 = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO3);
 		model.addAttribute("gradelists3", gradelists3);
-		String gradeChar3=graderesult(attenlists3,gradelists3);
+		Jgrade = gradelists3.get(0).getGrade_exam();
+		Ggrade = gradelists3.get(1).getGrade_exam();
+		String gradeChar3=graderesult(Jgrade,Ggrade,attenlists3,gradelists3);
 		model.addAttribute("gradeChar3", gradeChar3);
 		
 		AttendanceDTO attendanceDTO4 = new AttendanceDTO();
@@ -381,7 +401,9 @@ public class UserInfoController {
 		gradeDTO4.setUser_id(user_id);
 		ArrayList<GradeDTO> gradelists4 = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO4);
 		model.addAttribute("gradelists4", gradelists4);
-		String gradeChar4=graderesult(attenlists4,gradelists4);
+		Jgrade = gradelists4.get(0).getGrade_exam();
+		Ggrade = gradelists4.get(1).getGrade_exam();
+		String gradeChar4=graderesult(Jgrade,Ggrade,attenlists4,gradelists4);
 		model.addAttribute("gradeChar4", gradeChar4);
 		
 		AttendanceDTO attendanceDTO5 = new AttendanceDTO();
@@ -393,50 +415,53 @@ public class UserInfoController {
 		gradeDTO5.setUser_id(user_id);
 		ArrayList<GradeDTO> gradelists5 = sqlSession.getMapper(GradeDTOImpl.class).listGrade(gradeDTO5);
 		model.addAttribute("gradelists5", gradelists5);
-		String gradeChar5=graderesult(attenlists5,gradelists5);
+		Jgrade = gradelists5.get(0).getGrade_exam();
+		Ggrade = gradelists5.get(1).getGrade_exam();
+		String gradeChar5=graderesult(Jgrade,Ggrade,attenlists5,gradelists5);
 		model.addAttribute("gradeChar5", gradeChar5);
 		
 		return "userInfo/userGrade";
 	}
-	public static String graderesult (ArrayList<AttendanceDTO> atten, ArrayList<GradeDTO> grade) {
+	public static String graderesult (int Jgrade, int Ggrade, ArrayList<AttendanceDTO> atten, ArrayList<GradeDTO> grade) {
 		
 		int gradeNum = 0;
-		
-		for(int i =0 ; i<atten.size() ; i++) {
-			if(atten.get(i).getAttendance_flag().equals("2")) {
-				gradeNum += 1;
+		String gradeChar = null;
+		if(Jgrade!=0 && Ggrade!=0) {
+			for(int i =0 ; i<atten.size() ; i++) {
+				if(atten.get(i).getAttendance_flag().equals("2")) {
+					gradeNum += 1;
+				}
 			}
-		}
-		for(int j =0 ; j<grade.size() ; j++) {
-			gradeNum += grade.get(j).getGrade_exam();
-		}
-		String gradeChar;
-		if(gradeNum>=95) {
-			gradeChar = "A+";
-		}
-		else if(gradeNum>=90) {
-			gradeChar = "A";
-		}
-		else if(gradeNum>=85) {
-			gradeChar = "B+";
-		}
-		else if(gradeNum>=80) {
-			gradeChar = "B";
-		}
-		else if(gradeNum>=75) {
-			gradeChar = "C+";
-		}
-		else if(gradeNum>=70) {
-			gradeChar = "C";
-		}
-		else if(gradeNum>=65) {
-			gradeChar = "D+";
-		}
-		else if(gradeNum>=60) {
-			gradeChar = "D";
-		}
-		else {
-			gradeChar = "F";
+			for(int j =0 ; j<grade.size() ; j++) {
+				gradeNum += grade.get(j).getGrade_exam();
+			}
+			if(gradeNum>=95) {
+				gradeChar = "A+";
+			}
+			else if(gradeNum>=90) {
+				gradeChar = "A";
+			}
+			else if(gradeNum>=85) {
+				gradeChar = "B+";
+			}
+			else if(gradeNum>=80) {
+				gradeChar = "B";
+			}
+			else if(gradeNum>=75) {
+				gradeChar = "C+";
+			}
+			else if(gradeNum>=70) {
+				gradeChar = "C";
+			}
+			else if(gradeNum>=65) {
+				gradeChar = "D+";
+			}
+			else if(gradeNum>=60) {
+				gradeChar = "D";
+			}
+			else {
+				gradeChar = "F";
+			}
 		}
 		return gradeChar;
 	}
