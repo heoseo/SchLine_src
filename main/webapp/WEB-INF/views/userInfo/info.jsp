@@ -113,7 +113,7 @@
 			<c:otherwise>
 				<c:forEach items="${lists2 }" var="row">
 					<tr>
-						<td>${row.block_user }</td>
+						<td>${row.block_nick }</td>
 						<td style="width:5%">
 						<a href="blockDelete.do?block_user=${row.block_user }">
 						<i class="fas fa-times"></i>
