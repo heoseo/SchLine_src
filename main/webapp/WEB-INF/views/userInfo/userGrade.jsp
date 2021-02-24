@@ -59,17 +59,17 @@
 		</table>
 		
 		
-		<table class="table table-hover table-striped" style="font-size:1.2em">
-		<tr>
-			<c:if test="${gradeChar!=null }">
-				<c:if test="${gradeNum!=0.0 }">
-		<td colspan="5" style="font-size:0.9em; text-align:left; padding-left: 20px;
-		background:d3e0ea;"><i class="fas fa-graduation-cap" id="icon">&nbsp&nbsp</i>
-					평균 성적 : ${gradeChar } (${gradeNum })</td>
-				</c:if>
+		<c:if test="${gradeChar!=null }">
+			<c:if test="${gradeNum!=0.0 }">
+				<table class="table table-hover table-striped" style="font-size:1.2em">
+				<tr>
+				<td colspan="5" style="font-size:0.9em; text-align:left; padding-left: 20px;
+				background:d3e0ea;"><i class="fas fa-graduation-cap" id="icon">&nbsp&nbsp</i>
+							평균 성적 : ${gradeChar } (${gradeNum })</td>
+				</tr>
+				</table>
 			</c:if>
-		</tr>
-		</table>
+		</c:if>
  		
  		
 		<div style="text-align: center;">
