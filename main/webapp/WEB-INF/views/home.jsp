@@ -70,10 +70,10 @@ background:e8e8e8;
 				
 				<!-- 아이디, 패스워드의 name은 security-context2의 어쩌구와 같아야한다. -->
 				<p>
-					아이디 <input type="text" name="id" value="201701700" />
+					아이디 <input type="text" name="id" value="" />
 				</p>
 				<p>
-					패스워드 <input type="password" name="pass" value="qwer1234"/>
+					패스워드 <input type="password" name="pass" value=""/>
 				</p>
 				<div style="border-radius:5px; background:#ADD8E6;" class="loginButton">				
 					<button type="submit" id="loginButton" style="font-weight:bold;">
