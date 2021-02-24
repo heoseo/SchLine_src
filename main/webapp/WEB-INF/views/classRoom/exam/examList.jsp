@@ -68,7 +68,7 @@ $(function(){
 				}
 				else{
 					//성공시
-					alert('시험완료');
+// 					alert('시험완료');
 					var score = d.score;
 					var user_name = d.user_name;
 					var subject_name = d.subject_name;
