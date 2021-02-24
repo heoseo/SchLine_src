@@ -22,8 +22,15 @@ public class ExamBoardDTO {
 	private java.sql.Date exam_date;
 	//가상번호
 	private int virtualNum;
+	private String exam_type;
 	
 	
+	public String getExam_type() {
+		return exam_type;
+	}
+	public void setExam_type(String exam_type) {
+		this.exam_type = exam_type;
+	}
 	public int getVirtualNum() {
 		return virtualNum;
 	}
