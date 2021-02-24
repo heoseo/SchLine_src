@@ -89,7 +89,14 @@
     </table>
     <table class="table  table-hover table-striped" >
 	    <tr>
-	    	<td>성적 : ${gradeChar }</td>
+	    	<c:choose>
+	    	<c:when test="${empty gradeChar }">
+			
+	    	</c:when>
+	    	<c:otherwise>
+   				<td>성적 : ${gradeChar }</td>
+	    	</c:otherwise>
+    		</c:choose>
 	    </tr>
     </table>
             
