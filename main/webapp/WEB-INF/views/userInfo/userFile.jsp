@@ -27,9 +27,9 @@
 	    </div>
 	    <hr />
 		<table class="table table-bordered table-hover table-striped"
-		style="font-size:18px;">
+		style="font-size:15px;">
 			<tr>
-				<td style="text-align:center;">번호</td>
+				<td style="text-align:center;">No</td>
 				<td style="text-align:center;">과목명</td>
 				<td style="text-align:center;">제목</td>
 				<td style="text-align:center;">작성자</td>
@@ -39,22 +39,34 @@
 				<c:when test="${empty lists }">
 	 				<tr>
 	 					<td colspan="6" align="center" height="100">
-	 						등록된 게시물이 없습니다. 
+	 						제출한 파일이 없습니다. 
 	 					</td>
 	 				</tr>
-				</c:when>
+				</c:when> 
 				<c:otherwise>
 					<c:forEach items="${lists }" var="row">
 						<tr>
-							<td style="width:8%; text-align:center;"></td>
-							<td style="width:8%; text-align:center;">${row.subject_name }</td>
+							<td style="width:8%; text-align:center;">${row.virtualNum }</td>
+							<c:if test="${row.board_type eq 'team'}">
+							<td style="width:12%; text-align:center;">${row.subject_name }(협업)</td>
+							</c:if>
+							<c:if test="${row.board_type eq 'exam'}">
+							<td style="width:10%; text-align:center;">${row.subject_name }(과제)</td>
+							</c:if>
 							<td style="text-align:left; padding-left: 20px;">
-							<a href="taskList.do?board_idx=${row.board_idx }&subject_idx=${row.subject_idx}">
+							<c:if test="${row.board_type eq 'team'}">
+							<a href="/schline/class/teamTask.do?subject_idx=${row.subject_idx}">
 							${row.board_title }
 							</a>
+							</c:if>
+							<c:if test="${row.board_type eq 'exam'}">
+							<a href="/schline/class/taskList.do?subject_idx=${row.subject_idx}&exam_type=${row.exam_type}">
+							${row.board_title }
+							</a>
+							</c:if>
 							</td>
 							<td style="width:15%; text-align:center;">${row.user_name }</td>
-							<td style="width:10%; text-align:center;">
+							<td style="width:15%; text-align:center;">
 						<c:if test="${not empty row.board_file }">
 							<a href="userDownload.do?board_file=${row.board_file }"  style="text-align: center;"><!-- 다운로드 추가 필요 -->
 								<i class="fas fa-download"></i>
