@@ -176,7 +176,14 @@ $(function(){
 	<title>과제</title>
 	<%@ include file="/resources/include/top.jsp"%>	   
 	<jsp:include page="/resources/include/leftmenu_classRoom.jsp"/>
-	
+<script>
+$(document).ready(function(){
+	$('#scroll').click(function(){
+		var offset = $('#taskWrite').offset(); //선택한 태그의 위치를 반환
+		  $('html').animate({scrollTop : offset.top}, 400);
+	});
+});
+</script>
 	<hr /><%-- 구분자 --%>
 	<p style="text-align:center; font-size:1.2em">${subject_name } 과제</p>
 		<div>
@@ -200,9 +207,12 @@ $(function(){
 					<c:otherwise>제출완료</c:otherwise>
 					</c:choose>					
 					</td>
-					<td style="width:10%"><input type="button" class="button primary"
+					<td style="width:10%">
+					<a href="#target1" class="scroll">
+					<input type="button" class="button primary" id="scroll"
 					 onclick="location.href='javascript:taskWrite(${param.subject_idx}, ${trow.exam_idx });'"
 					value="제출하기" style="min-width:0">
+					
 					</td>
 				</tr>
 				
