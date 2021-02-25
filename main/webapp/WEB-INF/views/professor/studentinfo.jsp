@@ -14,7 +14,6 @@
 -->
 <%@ include file="/resources/include/top_professor.jsp"%>
 
-
 <!-- body 시작 -->
 <body class="is-preload">
 <!-- 왼쪽메뉴 include -->
@@ -46,19 +45,19 @@
 						</tr>
 						<form:form name="attenFrm" method="post" 
 						action="./professorSetting.do?user_id=${student_id }" >
-						<tr align="center" >
+						<tr>
 							<c:forEach items="${attenlists }" var="row">
-										<td class="text-center">
+										<td>
 											<c:if test="${row.attendance_flag==2 }">
-												<select name="${row.rnum }">
-													<option value="2" selected="selected">O</intput>
+												<select name="${row.rnum }"  style="font-size: 15px;">
+													<option value="2" selected="selected">O</option>
 													<option value="0">X</intput>
 												</select>
 											</c:if>
 											<c:if test="${row.attendance_flag!=2 }">
-												<select name="${row.rnum }" style="font-size: 15px;">
+												<select name="${row.rnum }"  style="font-size: 15px;">
 													<option value="2" >O</intput>
-													<option value="0" selected="selected">X</intput>
+													<option value="0" selected="selected">X</option>
 												</select>
 											</c:if>											
 										</td>
@@ -112,7 +111,14 @@
     </table>
     <table class="table  table-hover table-striped" >
 	    <tr>
-	    	<td>성적 : ${gradeChar }</td>
+	    	<c:choose>
+		    	<c:when test="${empty gradeChar }">
+				
+		    	</c:when>
+		    	<c:otherwise>
+	   				<td>성적 : ${gradeChar }</td>
+		    	</c:otherwise>
+	   		</c:choose>
 	    </tr>
     </table>
 </div>  

@@ -32,8 +32,8 @@ function taskWrite(subject_idx, exam_idx){
 <c:choose>
 
 	<%-- 타입이 시험(2)일 경우.. (상단 및 좌측 메뉴를 제거한다..뒤로가기는 어떻게 막을까) --%>
-<c:when test="${examlist[0].exam_type ne '1' }">
-	<title>시험</title>
+<c:when test="${param.exam_type eq '2' }">
+	<title>시험${examlist[0].exam_type}</title>
 		<script src='<c:url value="/resources/assets/js/jquery.min.js"/>'></script>		
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>	
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -68,7 +68,7 @@ $(function(){
 				}
 				else{
 					//성공시
-					alert('시험완료');
+// 					alert('시험완료');
 					var score = d.score;
 					var user_name = d.user_name;
 					var subject_name = d.subject_name;
@@ -88,7 +88,8 @@ $(function(){
 	</head>
 	<div id="wrapper">
 		<div align="center">
-			<br /><img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" /><br />
+			<br /><img src="<%=request.getContextPath() %>/resources/images/logo.png" width="200px" alt="스쿨라인 로고" /><br />
+			<br />
 		</div>
 	<%-- body 시작 --%>
 		<body class="is-preload">
@@ -102,7 +103,7 @@ $(function(){
 					<form:form name="examFrm">
 					<%-- 시험문제 반복 --%>
 					<c:forEach items="${examlist }" var="row" varStatus="loop">
-						<table>
+						<table class="table table-bordered table-hover table-striped">
 							<tr>
 								<%-- 순차적으로 문제번호 부여 --%>
 								<td><b>문제 ${loop.count }</b> : ${row.question_content } &nbsp;
@@ -176,7 +177,14 @@ $(function(){
 	<title>과제</title>
 	<%@ include file="/resources/include/top.jsp"%>	   
 	<jsp:include page="/resources/include/leftmenu_classRoom.jsp"/>
-	
+<script>
+$(document).ready(function(){
+	$('#scroll').click(function(){
+		var offset = $('#taskWrite').offset(); //선택한 태그의 위치를 반환
+		  $('html').animate({scrollTop : offset.top}, 400);
+	});
+});
+</script>
 	<hr /><%-- 구분자 --%>
 	<p style="text-align:center; font-size:1.2em">${subject_name } 과제</p>
 		<div>
@@ -200,9 +208,12 @@ $(function(){
 					<c:otherwise>제출완료</c:otherwise>
 					</c:choose>					
 					</td>
-					<td style="width:10%"><input type="button" class="button primary"
+					<td style="width:10%">
+					<a href="#target1" class="scroll">
+					<input type="button" class="button primary" id="scroll"
 					 onclick="location.href='javascript:taskWrite(${param.subject_idx}, ${trow.exam_idx });'"
 					value="제출하기" style="min-width:0">
+					
 					</td>
 				</tr>
 				
@@ -210,13 +221,11 @@ $(function(){
 			</table>
 			<%-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, --%>
 			<div id="taskWrite"></div>
+			<br />
 		</div>
+		<br />
 	</c:otherwise>
 </c:choose>
-
- <jsp:include page="/resources/include/bottom.jsp" />
+<br />
 </body>
-
-<!-- 하단 인클루트 -->
-<jsp:include page="/resources/include/footer.jsp" />
 </html>

@@ -16,9 +16,10 @@ Calendar cal = Calendar.getInstance();
 int month = cal.get(Calendar.MONTH) + 1;//현재월 불러오기
 %>
 <style>
+/*
 * {
    text-align: center;
-}
+}*/
 /* 프로필 이미지 사진 사이즈 및 모양 설정 */
 .image {
    width: 200px;
@@ -40,14 +41,13 @@ tr td:first-child {
 .entry {
    width: 100%;
    height: 450px;
-<%--    background-image: url('<%=request.getContextPath()%>/resources/images/pic01.jpg'); background-size : 100% auto; --%>
    padding: 40px;
 /*    padding-left : 80px; */
    padding-top : 60px;
    text-align: center;
 }
 </style>
-
+<%--    background-image: url('<%=request.getContextPath()%>/resources/images/pic01.jpg'); background-size : 100% auto; --%>
 <script>
    function btn1() {//웹소켓
       //히든폼에 입력된 사용자 정보를 가져오기위해 DOM객체 생성
@@ -118,6 +118,7 @@ tr td:first-child {
 </script>
 <!-- body 시작 -->
 <body class="is-preload">
+
    <!-- 왼쪽메뉴 include -->
 <%--    <jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 --> --%>
 <div style="text-align: center; background: white;"> 

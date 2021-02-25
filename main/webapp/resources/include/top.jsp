@@ -31,13 +31,6 @@
 	
 	<!-- 기존 바디 위치 -->
 
-
-	<!-- Wrapper -->
-		<div id="wrapper">
-		<!-- 상단영역 줄이기 위해 헤더속성 제거 -->
-
-
-
 <%
 
 if(session.getAttribute("user_id") != null){
@@ -50,12 +43,21 @@ if(session.getAttribute("user_id") != null){
 <!-- 						built by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a>.</p> -->
 <!-- 					</header> -->
 
+
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+	<!-- 상단영역 줄이기 위해 헤더속성 제거 -->
 <!-- 네비바 드롭다운 hover 적용 -->
 <style>
 /* 	nav ul li.dropdown:hover > ul.dropdown-menu {display:block; margin:0;} */
 	nav ul li.dropdown:hover > div.dropdown-menu {display:block; margin:0;}
 </style>
 
+
+<%
+// 	if(!request.getRequestURI().contains("accessDenied")){
+%>
 		<!-- Nav -->
 		<nav id="nav">
 

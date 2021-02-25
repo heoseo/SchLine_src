@@ -46,50 +46,60 @@ public class GradeController {
 		model.addAttribute("gradelists", gradelists);
 		System.out.println("gradelists "+gradelists); 
 		
+		int Jgrade = gradelists.get(0).getGrade_exam();
+		int Ggrade = gradelists.get(1).getGrade_exam();
+		System.out.println("중간"+Jgrade);
+		System.out.println("기말"+Ggrade);
+		model.addAttribute("Jgrade", Jgrade);
+		model.addAttribute("Ggrade", Ggrade);
 		//성적 종합
 		//계산식 넣는 부분
 		//예시) 총합
-		for(int i =0 ; i<attenlists.size() ; i++) {
-			if(attenlists.get(i).getAttendance_flag().equals("2")) {
-				gradeNum += 1;
+		String gradeChar =null;
+		if(Jgrade!=0 && Ggrade!=0) {
+			for(int i =0 ; i<attenlists.size() ; i++) {
+				if(attenlists.get(i).getAttendance_flag().equals("2")) {
+					gradeNum += 1;
+				}
 			}
-		}
-		System.out.println(gradeNum);
-		for(int j =0 ; j<gradelists.size() ; j++) {
-			gradeNum += gradelists.get(j).getGrade_exam();
-		}
-		System.out.println(gradeNum);
-		
-		String gradeChar;
-		if(gradeNum>=95) {
-			gradeChar = "A+";
-		}
-		else if(gradeNum>=90) {
-			gradeChar = "A";
-		}
-		else if(gradeNum>=85) {
-			gradeChar = "B+";
-		}
-		else if(gradeNum>=80) {
-			gradeChar = "B";
-		}
-		else if(gradeNum>=75) {
-			gradeChar = "C+";
-		}
-		else if(gradeNum>=70) {
-			gradeChar = "C";
-		}
-		else if(gradeNum>=65) {
-			gradeChar = "D+";
-		}
-		else if(gradeNum>=60) {
-			gradeChar = "D";
+			System.out.println(gradeNum);
+			for(int j =0 ; j<gradelists.size() ; j++) {
+				gradeNum += gradelists.get(j).getGrade_exam();
+			}
+			System.out.println(gradeNum);
+			
+			if(gradeNum>=95) {
+				gradeChar = "A+";
+			}
+			else if(gradeNum>=90) {
+				gradeChar = "A";
+			}
+			else if(gradeNum>=85) {
+				gradeChar = "B+";
+			}
+			else if(gradeNum>=80) {
+				gradeChar = "B";
+			}
+			else if(gradeNum>=75) {
+				gradeChar = "C+";
+			}
+			else if(gradeNum>=70) {
+				gradeChar = "C";
+			}
+			else if(gradeNum>=65) {
+				gradeChar = "D+";
+			}
+			else if(gradeNum>=60) {
+				gradeChar = "D";
+			}
+			else {
+				gradeChar = "F";
+			}
+			model.addAttribute("gradeChar", gradeChar);
 		}
 		else {
-			gradeChar = "F";
+			model.addAttribute("gradeChar", gradeChar);
 		}
-		
-		model.addAttribute("gradeChar", gradeChar);
 		
 		RegistrationDTO registrationDTO = new RegistrationDTO();
 		registrationDTO.setSubject_idx(req.getParameter("subject_idx"));

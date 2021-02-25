@@ -114,10 +114,12 @@ $(function(){
 				</tr>
 			</tfoot>
 		</table>
+
 		<input type="hidden" name="exam_idx" value="${map.exam_idx }" />
 		<input type="hidden" name="subject_idx" value="${map.subject_idx }" />
 		<!-- 유저 아이디는 추후 세션(?)에서 가져올것 -->
 		<input type="hidden" name="user_id" value="${map.user_id }" />
 		<input type="hidden" name="exam_name" value="${map.exam_name }" />
 	</form:form>
+
 </div>
