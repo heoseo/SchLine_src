@@ -28,7 +28,7 @@ button {min-width: 0;width: 30%;cursor: pointer;padding: 3px;min-height: 0;
 <%--    <jsp:include page="/resources/include/leftmenu_classRoom.jsp" /> --%>
 <div id="main" class="container-fluid" style="text-align: center;"> 
 <!-- <div class="container"> -->
-
+<br />
 <script type="text/javascript">
 $(function () {
     window.onload = function () {
