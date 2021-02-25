@@ -43,8 +43,7 @@
 <br />
    <div style="text-align: center;">
       <small><span id="opne_btn" style="cursor:pointer; font-size:1.2em">강의 <i class="fas fa-info-circle"></i></span></small><!-- flag구분예정-->
-   </div>
-   <hr /><!-- 구분자 -->
+   </div><br />
 
 <div id="modal">
     <div class="modal_content">
@@ -57,6 +56,21 @@
     </div>
 </div>
 	<table class="table table-hover table-striped">
+				<colgroup>
+				<col width="40px"/>
+				<col width="40px"/>
+				<col width="300"/>
+				<col width="100px"/>
+			</colgroup>	
+			<thead>
+				<tr>
+					<th class="text-center" style="font-weight:bold;">No</th>
+					<th class="text-center" style="font-weight:bold;"></th>
+					<th style="font-weight:bold; text-align: left;">제목</th>
+					<th class="text-center" style="font-weight:bold;">출석인정일</th>
+				</tr>
+			</thead>
+			<tbody>
 	<c:choose>	
 	<c:when test="${empty lists }">
  				<tr>
@@ -73,15 +87,16 @@
 					</td>
 					<td class="text-right">
 					<img src="../resources/images/lecture_thumbnail.png" class="media-object" style="width:40px;margin-bottom:-5px">
-					</td>
+	
 					<td class="text-left">
 					<a href="../class/play.do?title=${row.server_saved }&sub_idx=${row.subject_idx }&name=${row.video_title }&idx=${row.video_idx}"  target="_blank">${row.video_title }</a>
 					</td>
-					<td class="text-center">출석 인정일:${row.video_end }</td>
+					<td class="text-center">${row.video_end }</td>
 				</tr>
 		</c:forEach>		
 	</c:otherwise>	
 </c:choose>
+			</tbody>
     </table>
             
             

@@ -78,7 +78,7 @@ body {
 			</colgroup>	
 			<thead>
 				<tr>
-					<th class="text-center" style="font-weight:bold;">번호</th>
+					<th class="text-center" style="font-weight:bold;">No</th>
 					<th class="text-center" style="font-weight:bold;">확인</th>
 					<th style="font-weight:bold;">제목</th>
 					<th class="text-center" style="font-weight:bold;">작성일</th>

@@ -31,7 +31,7 @@ function paging(nowPage){
 		<hr />
 		<div style="text-align:center; font-size:1.2em">
 		<i class="fas fa-clock" style="padding-right:5px; text-align:center; font-size:1.2em"></i>
-		알림</div>
+		공지사항</div>
 		<div id="content"> 
 			<select name="selectBoard" id="selectBoard" onchange="paging(1);" class="col-sm-3" style="font-weight:bold;">
 				<option value="allBoard" ${param.type eq 'allBoard' ? 'selected' : '' }>전부</option>
@@ -49,7 +49,7 @@ function paging(nowPage){
 			</colgroup>	
 			<thead>
 				<tr>
-					<th class="text-center" style="font-weight:bold;">번호</th>
+					<th class="text-center" style="font-weight:bold;">No</th>
 					<th class="text-center" style="font-weight:bold;">확인</th>
 					<th style="font-weight:bold;">제목</th>
 					<th class="text-center" style="font-weight:bold;">작성일</th>

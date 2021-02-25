@@ -180,6 +180,7 @@ $(function() {
 			<div id="calBody">
 				달력Display
 			</div>	
+			<span style="clear:both;"></span>
 		</div><!-- contents_box끝 -->
 		
 	</div><!-- main div끝 <-->

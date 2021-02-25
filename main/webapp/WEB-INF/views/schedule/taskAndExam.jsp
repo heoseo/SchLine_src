@@ -52,7 +52,7 @@ function paging(nowPage){
 			</colgroup>	
 			<thead>
 				<tr>
-					<th class="text-center" style="font-weight:bold;">번호</th>
+					<th class="text-center" style="font-weight:bold;">No</th>
 					<th class="text-center" style="font-weight:bold;">확인</th>
 					<th style="font-weight:bold;">제목</th>
 					<th class="text-center" style="font-weight:bold;">작성일</th>
@@ -84,8 +84,8 @@ function paging(nowPage){
 						</c:otherwise>
 					</c:choose>
 					</td>
-					<td>
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}" target="_blank">
+					<td><!--  target="_blank" -->
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>
