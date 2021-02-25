@@ -122,7 +122,7 @@ tr td:first-child {
    <!-- 왼쪽메뉴 include -->
 <%--    <jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 --> --%>
 <div style="text-align: center; background: white;"> 
-
+<br />
    <!-- 페이지 레이아웃 구분 클래스 생성 -->
    <div class="container">
    <br /><br />
