@@ -88,7 +88,8 @@ $(function(){
 	</head>
 	<div id="wrapper">
 		<div align="center">
-			<br /><img src="<%=request.getContextPath() %>/resources/images/logo.png" width="400px" alt="스쿨라인 로고" /><br />
+			<br /><img src="<%=request.getContextPath() %>/resources/images/logo.png" width="200px" alt="스쿨라인 로고" /><br />
+			<br />
 		</div>
 	<%-- body 시작 --%>
 		<body class="is-preload">
@@ -102,7 +103,7 @@ $(function(){
 					<form:form name="examFrm">
 					<%-- 시험문제 반복 --%>
 					<c:forEach items="${examlist }" var="row" varStatus="loop">
-						<table>
+						<table class="table table-bordered table-hover table-striped">
 							<tr>
 								<%-- 순차적으로 문제번호 부여 --%>
 								<td><b>문제 ${loop.count }</b> : ${row.question_content } &nbsp;
@@ -210,13 +211,11 @@ $(function(){
 			</table>
 			<%-- Ajax로 과제 제출이 붙는 영역 학생정보와, 과제정보, --%>
 			<div id="taskWrite"></div>
+			<br />
 		</div>
+		<br />
 	</c:otherwise>
 </c:choose>
-
- <jsp:include page="/resources/include/bottom.jsp" />
+<br />
 </body>
-
-<!-- 하단 인클루트 -->
-<jsp:include page="/resources/include/footer.jsp" />
 </html>
