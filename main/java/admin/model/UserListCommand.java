@@ -50,6 +50,7 @@ public class UserListCommand implements AdminCommandImpl{
 			addQueryString += String.format("searchWord=%s", searchWord);
 			paramMap.put("searchUser", searchWord);
 		}
+		paramMap.put("subject_idx", req.getParameter("subject_idx"));
 		
 		// paramMap : list_flag, table, Word 
 		

@@ -1,4 +1,4 @@
-<%@page import="schline.ExamDTO"%> 
+<%@page import="schline.ExamDTO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
