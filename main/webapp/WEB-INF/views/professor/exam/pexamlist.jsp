@@ -13,7 +13,10 @@
 
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
 <style type="text/css">
-input[type=number]{opacity: 1}
+/* input[type=number]{opacity: 1} */
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: initial !important;
+}
 </style>
 <script>
 $(function () {
