@@ -23,32 +23,34 @@
 			<br />
 			<div class="list-group">
 				<a href="/schline/main/class.do" class="list-group-item"> <i
-					class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i> <span
+					class="fas fa-chalkboard" id="icon"></i>&emsp;<span
 					style="text-align: center;">코스</span>
-				</a> <a href="/schline/class/time.do?subject_idx=${param.subject_idx }" class="list-group-item"> <i class="fab fa-youtube"
-					id="icon">&nbsp&nbsp</i> <span style="text-align: center;"
-					id="`">강의</span>
+				</a> <a href="/schline/class/time.do?subject_idx=${param.subject_idx }" class="list-group-item"> 
+				<i class="fab fa-youtube"
+					id="icon"></i>&emsp;<span style="text-align: center;"
+					id="name">강의</span>
+
 				</a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
-					id="icon">&nbsp&nbsp</i> <span style="text-align: center;">협업</span>
+					id="icon"></i>&emsp;<span style="text-align: center;">협업</span>
 					
 				<a href="/schline/class/grade.do?subject_idx=${param.subject_idx }" class="list-group-item">
-					<i class="fas fa-file-alt" id="icon">&nbsp&nbsp</i>
+					<i class="fas fa-file-alt" id="icon"></i>&emsp;
 					<span style="text-align: center;" id="name">성적</span>
 					
 				</a> <a href="/schline/class/examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
-					class="fas fa-clipboard-check" id="icon">&nbsp&nbsp</i> <span
+					class="fas fa-clipboard-check" id="icon"></i>&emsp;<span
 					style="text-align: center;" id="name">시험</span>
 				</a> 
 				
 				<a href="/schline/class/taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item"> <i class="fa fa-archive"
-					id="icon">&nbsp&nbsp</i> <span style="text-align: center;"
+					id="icon"></i>&emsp;<span style="text-align: center;"
 					id="name">과제함</span>
 				</a>
 
 
             <div class="dropdown dropright">
                <div class="list-group-item dropdown-toggle" data-toggle="dropdown">
-                  <i class="fas fa-table" id="icon">&nbsp&nbsp</i> <span
+                  <i class="fas fa-table" id="icon"></i>&emsp;<span
                      style="text-align: center;" id="name">게시판</span>
                </div>
                <div class="dropdown-menu">
