@@ -80,7 +80,7 @@ body{
 						<span style="font-size: 16px;">로그인</span>
 						<br />
 						<span style="font-size: 0.8em; color: gray;" width="25px">아이디</span> 
-						<input type="text" name="id" value="201701704">
+						<input type="text" name="id" value="201701700">
 						<span style="padding-bottom: 10px; font-size: 0.8em; color: gray; ">비밀번호</span> 
 						<input type="password" name="pass" value="qwer1234">
 					<div style="border-radius:5px; background:#ADD8E6;" class="loginButton">				
