@@ -357,14 +357,20 @@ public class StudyController {
 				System.out.println("신고성공");
 				map.put("check", 1);// 성공시 반환값 1을 담아줌
 			}
-		} else if (flag.equals("0")) {// 차단하기 일 경우
-			// 사용자 닉네임으로 아이디값을 받아와서 그 아이디를 차단해줌
+		} 		
+		else if(flag.equals("0")) {//차단하기 일 경우
+			//사용자 닉네임으로 아이디값을 받아와서 그 아이디를 차단해줌
 			String other_id = other_pro.getUser_id();
-			// 차단한 유저가 중복되지않게 처리해주는게 좋은데...시간되면 하자
-			int block = sqlSession.getMapper(StudyDAOImpl.class).block_people(user_id, other_id);
-			if (block == 1) {
-				System.out.println("차단성공");
-				map.put("check", 0);// 성공시 반환값 1을 담아줌
+			String block_check = req.getParameter("block_check");//차단여부 받아와서
+			if(block_check.equals("0")) {				
+				int block = sqlSession.getMapper(StudyDAOImpl.class).block_people(user_id, other_id);
+				if (block==1) {
+					System.out.println("차단성공");
+					map.put("check", 0);//성공시 반환값 1을 담아줌
+				}
+			}
+			else {//차단해제
+				sqlSession.getMapper(StudyDAOImpl.class).unblock_people(user_id, other_id);
 			}
 		}
 		return map;
@@ -393,7 +399,8 @@ public class StudyController {
 		System.out.println("차단리스트 불러오기");
 		Map<String, Object> map = new HashMap<String, Object>();
 		String ot_nick = req.getParameter("ot_nick");
-		String user_id = session.getAttribute("user_id").toString();
+		//String user_id = session.getAttribute("user_id").toString();
+		String user_id = req.getParameter("user_id");
 
 		// 닉네임으로 정보체크
 		InfoVO other_pro = sqlSession.getMapper(StudyDAOImpl.class).other_profile(ot_nick);
@@ -415,7 +422,7 @@ public class StudyController {
 	@ResponseBody
 	public Map<String, Object> attenPlus(HttpServletRequest req, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("출석증가 컨트롤러");
+		System.out.println("안드 출석증가 컨트롤러");
 		// String user_id = principal.getName();
 		//String user_id = session.getAttribute("user_id").toString();
 		String user_id = req.getParameter("user_id");
@@ -427,13 +434,14 @@ public class StudyController {
 		// 널에러방지 Integer타입
 		if (count == 1) {// 동일날짜있음. 출석 증가하지 않음
 			map.put("result", 0);
+			System.out.println("안드 출석증가 안함");
 		} else if (count == 0) {// 동일날짜없음 출석증가
 			int attenPlus = sqlSession.getMapper(StudyDAOImpl.class).atten_plus(today, user_id);
 			if (attenPlus == 1) {// 출석증가 성공
 				map.put("result", 1);
+				System.out.println("안드 출석증가 성공");
 			}
 		}
 		return map;
 	}
-
 }

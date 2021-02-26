@@ -16,15 +16,8 @@
 
 <%-- <%@ include file="/resources/include/top.jsp"%> --%>
 <style>
-body {
-   margin: 0 auto;
-   padding-left: 10px;
-   padding-right: 10px;
-   height: 51em
-}
-#inputMessage{
-   margin-bottom: 15px;
-}
+
+
 </style>
 
 
@@ -129,8 +122,8 @@ function openSocket(){
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    	//ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
-//    ws = new WebSocket("ws://192.168.0.4:9999/schline/EchoServer.do");//다혜집
-    ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
+    ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜집
+    //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
 
 
    //채팅창 open
@@ -213,7 +206,7 @@ function send(){
       }
     }
    //신고할때
-   else if(msg.startsWith("#")==true){//수정필요
+   else if(msg.startsWith("#")==true){
       var a = msg.split("#");
       var b = a[1];//닉네임
       $('#messageWindow').css("text-align", "center");
@@ -222,6 +215,15 @@ function send(){
       ajaxPro("1", b);//1은 신고, 0은 차단, 2는 프로필확인
       messages.scrollTop = messages.scrollHeight;
        return false;
+   }
+    //차단할때
+   else if(msg.startsWith("&")==true){
+	      var a = msg.split("&");
+	      var b = a[1];//닉네임
+	      $('#messageWindow').css("text-align", "center");
+	      //닉네임 체크 및 차단
+	      ajaxPro("0", b);//1은 신고, 0은 차단, 2는 프로필확인
+	      return false;
    }
     
     //서버로 메세지 전송
@@ -288,11 +290,19 @@ function ajaxPro(d, ot_nick) {
                   messages.scrollTop = messages.scrollHeight;
                  $('#inputMessage').val("");
              }
-             else if(r.check==0){//차단하기 성공시
-                  messages.innerHTML += "[알림]'"+ot_nick+"차단 완료";
-                  messages.scrollTop = messages.scrollHeight;
-                 $('#inputMessage').val("");
-             }
+
+         }
+         else if(d==0){
+            if(r.check==0){//차단하기 성공시
+                 messages.innerHTML += "[알림]'"+ot_nick+"차단 완료";
+                 messages.scrollTop = messages.scrollHeight;
+                $('#inputMessage').val("");
+            }
+            else{
+                messages.innerHTML += "[알림]'"+ot_nick+"차단 해제";
+                messages.scrollTop = messages.scrollHeight;
+                $('#inputMessage').val("");
+            } 
          }
          else{//나머지
             alert("존재하지않는 사용자입니다.");
@@ -438,11 +448,11 @@ function nowTime(){
 
 <!-- 채팅 출력창 -->
 <div id="messageWindow" class="border border-primary"
-   style="height: 1000px; width:auto; overflow: auto; background-image: url('../resources/images/pic07.jpg'); font-size: 2em;">
+   style="height: 500px; width:auto; overflow: auto; 
+   background-image: url('../resources/images/pic07.jpg'); font-size: 2em;">
 </div>
-
-<table class="table table-bordered"
-   style="min-width: 0; width: 100%; max-height: 100%">
+<!--  style="min-width: 0; width: 100%; max-height: 100%" -->
+<table class="table table-bordered">
    <!-- 히든폼으로 사용자정보 가져오기 -->
    <form id="peopleFrm">
       <input type="hidden" id="chat_id" value="${user_id }"/>
@@ -452,13 +462,13 @@ function nowTime(){
       <input type="hidden" id="info_img" name="info_img" value="<c:url value='/resources/profile_image/${info_img}'/>" />
    </form>
    <tr>
-      <td>
+      <td style="text-align: center;">
          <!-- 엔터키 입력시 전송 설정 --> 
          <input type="text" id="inputMessage"
          class="form-control float-left mr-1" placeholder="채팅내용을 입력하세요."
-         onkeyup="enterkey();" style="min-width: 0; width: 50%;" />
+         onkeyup="enterkey();" style="min-width: 0; width: 75%;" />
          <button id="sendBtn" onclick="return send();"
-            style="min-width: 0; width: 20%; min-height: 0; height: 45px; font-size: 0.7em;">send</button>
+            style="min-width: 0; width: 20%; min-height: 0; height: 40px;">send</button>
          <!--          <input type="button" id="sendBtn" onclick="send();" value="전송" class="btn btn-info float-left" /> -->
       </td>
    </tr>
