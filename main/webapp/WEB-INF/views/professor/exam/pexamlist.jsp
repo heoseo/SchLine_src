@@ -12,7 +12,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
 
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.css" />
-
+<style type="text/css">
+input[type=number]{opacity: 1}
+</style>
 <script>
 $(function () {
 	$('#datetimepicker1').datetimepicker({
@@ -111,19 +113,24 @@ textarea { height : 200px; }
 <div class="container">
  <hr /><!-- 구분자 -->
  <c:if test="${exam_type eq 2 }">
- <h3 style="text-align:center;">시험 등록하기</h3>
+ <h3 style="text-align:center; font-size: 1.2em">시험 등록하기</h3>
  <div id="setquestion">
  	<form:form id="examlistFrm">
  	<div>
- 	<table class="alt text-center">
+	<table class="table table-bordered table-hover table-striped" style="text-align: center; font-size: 0.8em">
  	<tr>
  	<td rowspan="2" style="vertical-align:middle; width:8%;">시험<br />등록</td>
  	<td>시험명</td>
  	<td>시험내용</td>
  	<td style="width:20%">종료일</td>
- 	<td style="width:15%">총 배점</td>
- 	<td rowspan="2" style="vertical-align:middle; width:10%"><button class="btn btn-primary" 
- 	onclick="makequestion();" style="min-width:0;">문제 등록</button></td></tr>
+ 	<td style="width:10%; vertical-align:middle;">총 배점</td>
+ 	<td rowspan="2" style="margin: 0px; vertical-align:middle;">
+	 	<button class="button primary" onclick="makequestion();" 
+	 	style="min-width:0;font-size: 1.2em; padding-bottom: 60px; padding-top: 10px">
+	 	문제 등록<br />
+	 	</button>
+ 	</td>
+ 	</tr>
  	<tr>
  	<td>
  	<select name="exam_idx" id="exam_name" style="font-size: 15px">
@@ -142,13 +149,15 @@ textarea { height : 200px; }
  	<div class="input-group-text"><i class="fa fa-calendar"></i></div> </div> </div>
  	
  	</td>
- 	<td style="width:10%"><input type="number" name="exam_scoring" id="exam_scoring" style="width:100%"/></td>
+ 	<td style="width:10%; text-decoration: none"><input type="number" name="exam_scoring" id="exam_scoring" style="width:100%; 
+ 	border: solid 1px #cdd0cb; border-radius: 5px;"/></td>
  	</tr>
+
  	</table>
  	</div>
  	</form:form>
  </div>
- <div class="text-center"><h3 style="display:inline; margin-left:150px;">시험 문제 리스트</h3>
+ <div class="text-center"><h3 style="display:inline; margin-left:150px; font-size: 1.2em">시험 문제 리스트</h3>
  <input type="button" class="button primary small" value="주관식 채점" style="float:right" onclick="location.href='examCheck.do';"/></div>
  <br />
  <select name="id" style="width:200px; display:inline; font-size: 15px" onchange="moveurl(this.value);">
@@ -159,15 +168,27 @@ textarea { height : 200px; }
 </select>
 
 <div class="table-wrapper mt-1">
-	<table class="alt text-center">
-			<tr>
-				<td style="width:10%">시험명</td>
-				<td>시험내용</td>
-				<td>문제내용</td>
-				<td>정답</td>
-				<td style="width:8%">배점</td>
-				<td style="width:8%">삭제</td>
-			</tr>
+	<table class="table table-bordered table-hover table-striped" 
+	style="text-align: center; font-size: 0.8em">
+		<colgroup>
+			<col width="20%"/>
+			<col width="15%"/>
+			<col width="15%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+			<col width="10%"/>
+		</colgroup>	
+		<thead>
+		<tr>
+			<td>시험명</td>
+			<td>시험내용</td>
+			<td>문제내용</td>
+			<td>정답</td>
+			<td>배점</td>
+			<td>삭제</td>
+		</tr>
+		</thead>
+		<tbody>
 	<c:choose>
 	<c:when test="${empty param.exam_idx }">
 		<tr><td colspan="6">시험을 선택하세요</td></tr>
@@ -176,14 +197,14 @@ textarea { height : 200px; }
 		<c:forEach items="${pinexamList}" var="exam" varStatus="eloop">
 		<c:if test="${exam.exam_idx eq param.exam_idx }">
 			<tr>
-				<td>${exam.exam_name }</td>
-				<td>${exam.exam_content }</td>
-				<td>${exam.question_content }</td>
-				<td>${exam.answer }</td>
-				<td>${exam.question_score }</td>
-				<td>
-				<button type="button" class="btn btn-danger" onclick="onDelete(${exam.question_idx}, 2)" 
-					style="min-width:0; font-size:0.7em">
+				<td style=" vertical-align:middle">${exam.exam_name }</td>
+				<td style=" vertical-align:middle">${exam.exam_content }</td>
+				<td style=" vertical-align:middle">${exam.question_content }</td>
+				<td style=" vertical-align:middle">${exam.answer }</td>
+				<td style=" vertical-align:middle">${exam.question_score }</td>
+				<td style=" vertical-align:middle;">
+				<button type="button" class="btn btn-light" onclick="onDelete(${exam.question_idx}, 2)" 
+					style="min-width:0; font-size: 14px;  border: solid 1px #B90000;">
 					삭제</button>
 				</td>
 			</tr>
@@ -206,6 +227,7 @@ textarea { height : 200px; }
 		</c:forEach>
 		</c:otherwise>
 		</c:choose>
+		</tbody>
 	</table>
 </c:if>
 
