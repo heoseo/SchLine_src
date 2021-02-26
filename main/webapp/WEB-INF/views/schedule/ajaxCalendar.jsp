@@ -1,7 +1,5 @@
-<%@page import="java.util.Date"%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.time.LocalDate"%>
-<%@page import="schline.ExamDTO"%>
+
+<%@page import="schline.ExamDTO"%> 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -60,36 +58,6 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 	color: 	#00334e;
 }
 </style>
-<script type="text/javascript">
-
-
-// $(function() {
-// // 	해당날짜정보 새로가져오기.
-// 	var today = new Date();
-// 	var getFullDate = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate(); 
-	
-// 	console.log(today);
-// 	console.log(getFullDate);
-	
-// 	var getYear = today.getFullYear();
-// 	var getMonth = (today.getMonth()+1);
-// 	var getDay = today.getDate();
-	
-// 	console.log(getYear);
-// 	console.log(getMonth);
-// 	console.log(getDay);
-	
-	
-// 	$('.choicDay').css("color","red");
-	
-	
-
-// });
-
-
-
-
-</script>
 <table id="calTable" class="calendar">
 		<colgroup>
 			<col width="14%" />
