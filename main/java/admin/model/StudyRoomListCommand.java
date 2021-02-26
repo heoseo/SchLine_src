@@ -8,20 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 
 import admin.AdminCommandImpl;
-import admin.model.AdminUserTemplateDAO;
+import schline.ClassDTO;
 import schline.UserVO;
 import schline.util.PagingUtil;
 import schline.util.PagingUtil_admin;
+import studyroom.InfoVO;
 
 /*
 - BbsCommandImpl 인터페이스를 구현했으므로 execute()는 반드시 오버라이딩 해야 한다.
 - 또한 해당 객체는 부모타입인 BbsCommandImpl로 참조할 수 있다. */
-public class UserListCommand implements AdminCommandImpl{
+public class StudyRoomListCommand implements AdminCommandImpl{
 
 	@Override
 	public void execute(Model model) {
 		
-		System.out.println("UserListCommand > execute() 호출");
+//		System.out.println("UserListCommand > execute() 호출");
 		
 		/*
 		- 컨트롤로에서 인자로 전달한 model객체에는 request객체가 저장되어 있다.
@@ -30,25 +31,19 @@ public class UserListCommand implements AdminCommandImpl{
 		HttpServletRequest req = (HttpServletRequest)paramMap.get("req");
 		
 		// DAO객체 생성
-		AdminUserTemplateDAO dao = new AdminUserTemplateDAO();
+		AdminStudyRoomTemplateDAO dao = new AdminStudyRoomTemplateDAO();
 		
 		// 검색어 관련 폼값 처리
 		String addQueryString = "";
-		String searchColumn = req.getParameter("searchColumn");
 		String searchWord = req.getParameter("searchWord");
-
-		if(searchColumn == null) {
-			searchColumn = "PROFESSOR";
-		}
 		
-		addQueryString = String.format("searchColumn=%s", searchColumn);
-		paramMap.put("searchColumn",searchColumn);
+//		System.out.println("UserListController > userType : " + userType + ", searchUser : " + searchWord);
+		
 				
 		if(searchWord != null) {
 			addQueryString += String.format("searchWord=%s", searchWord);
 			paramMap.put("searchWord", searchWord);
 		}
-		paramMap.put("subject_idx", req.getParameter("subject_idx"));
 		
 		// paramMap : list_flag, table, Word 
 		
@@ -69,11 +64,11 @@ public class UserListCommand implements AdminCommandImpl{
 					Integer.parseInt(req.getParameter("nowPage"));
 		
 		// 리스트에 출력할 게시물의 구간을 계산
-		int start = (nowPage-1) * pageSize + 1;
-		int end = nowPage * pageSize;
+//		int start = (nowPage-1) * pageSize + 1;
+//		int end = nowPage * pageSize;
 		
-		paramMap.put("start", start);
-		paramMap.put("end", end);
+//		paramMap.put("start", start);
+//		paramMap.put("end", end);
 		
 				
 		
@@ -81,36 +76,24 @@ public class UserListCommand implements AdminCommandImpl{
 		
 		
 		
-		ArrayList<Admin_UserVO> listRows = dao.listPage(paramMap);
+		ArrayList<InfoVO> listRows = dao.listPage(paramMap);
 		
 		// 가상번호 계산하여 부여하기
 		int virtualNum = 0;
 		int countNum = 0;
 		
-		System.out.println("UserListCommand > totalRecordCount = " + totalRecordCount );
-		for(Admin_UserVO row : listRows)
+		for(InfoVO row : listRows)
 		{
 			virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
-			row.setVirtualNum(virtualNum);
-			String phone_num = row.getPhone_num();
-			phone_num = phone_num.substring(0, 3) + "-"
-						+phone_num.substring(4, 7) + "-"
-						+phone_num.substring(7);
-			row.setPhone_num(phone_num);
 		}
 		 
 		// 리스트에 출력한 list컬렉션을 model객체에 저장한 후 뷰로 전달한다.
-		String pagingImg = PagingUtil_admin.pagingImg(totalRecordCount, pageSize, blockPage, nowPage, 
-											req.getContextPath()+"/admin/userList?"+addQueryString);
+////		String pagingImg = PagingUtil_admin.pagingImg(totalRecordCount, pageSize, blockPage, nowPage, 
+//											req.getContextPath()+"/admin/attend/editAttend?"+addQueryString);
 		
-		if(searchColumn == "PROFESSOR")
-			model.addAttribute("showProfessor", "im_professor");
-		else
-			model.addAttribute("showProfessor", "im_not_professor");
-			
-		model.addAttribute("pagingImg", pagingImg);
-		model.addAttribute("totalPage", totalPage);
-		model.addAttribute("nowPage", nowPage);
+//		model.addAttribute("pagingImg", pagingImg);
+//		model.addAttribute("totalPage", totalPage);
+//		model.addAttribute("nowPage", nowPage);
 		model.addAttribute("listRows", listRows);
 		model.addAttribute("paramMap", paramMap);
 		

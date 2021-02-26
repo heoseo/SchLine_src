@@ -7,14 +7,7 @@
 
 <!DOCTYPE html>
 <html>
-<script>
-function changeUserType(d){
-	var searchColumn = d.value;
-	console.log("searchColumn : " + searchColumn);
-	location.href="/schline/admin/userList?searchColumn="+searchColumn;
-}
 
-</script>
 
 <head>
 	<%@ include file="/resources/adminRes/include/head.jsp" %>
@@ -22,16 +15,7 @@ function changeUserType(d){
 
 <body>
     <!-- Preloader -->
-    <div class="preloader">
-        <div class="cssload-speeding-wheel"></div>
-    </div>
     <div id="wrapper">
-        <!-- 상단 네비 바 -->
-        <%@ include file="/resources/adminRes/include/top_nav.jsp" %>
-        
-        <!-- 왼쪽 메뉴 -->
-        <%@ include file="/resources/adminRes/include/leftMenu.jsp" %>
-        
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
@@ -41,23 +25,25 @@ function changeUserType(d){
                     </div>
                 </div>
                 
-                
+                <form:form >
+	                
+					<select name="searchColumn" class="form-control" style="width:120px; margin-bottom:15px;" onchange="changeUserType(this)">
+						<c:if test="${ not empty paramMap}">
+						    <option value="PROFESSOR" <c:if test="${paramMap.searchColumn == 'PROFESSOR'}">selected</c:if>>교수</option>
+						    <option value="STUDENT" <c:if test="${paramMap.searchColumn == 'STUDENT'}">selected</c:if>>학생</option>
+						    <option value="ADMIN" <c:if test="${paramMap.searchColumn == 'ADMIN'}">selected</c:if>>관리자</option>
+						</c:if>
+					</select>
+	                        <input name="searchWord" type="text" placeholder="Search..." class="form-control">
+	                        	 <a href="/schline/admin/userList?searchColumn=${paramMap.searchColumn }&searchWord=${paramMap.searchWord}"><i class="fa fa-search"></i></a>
+                </form:form>
                 
 				
                 <div class="row">
 	                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
 	                    <li>
-	               			<form:form role="search" class="app-search hidden-xs" >
-	                
-								<select name="searchColumn" class="form-control" style="width:120px; margin-bottom:15px;" onchange="changeUserType(this)">
-									<c:if test="${ not empty paramMap}">
-									    <option value="PROFESSOR" <c:if test="${paramMap.searchColumn == 'PROFESSOR'}">selected</c:if>>교수</option>
-									    <option value="STUDENT" <c:if test="${paramMap.searchColumn == 'STUDENT'}">selected</c:if>>학생</option>
-									    <option value="ADMIN" <c:if test="${paramMap.searchColumn == 'ADMIN'}">selected</c:if>>관리자</option>
-									</c:if>
-								</select>
-		                            <input name="searchWord" type="text" placeholder="Search..." class="form-control">
-		                            	 <a href="/schline/admin/userList?searchColumn=${paramMap.searchColumn }&searchWord=${paramMap.searchWord}"><i class="fa fa-search"></i></a>
+	               			<form:form role="search" class="app-search hidden-xs">
+								<input type="hidden" value=${subject_idx }/>		                            
 	                        </form:form>
                          </li>
 	                </ul>
@@ -70,9 +56,6 @@ function changeUserType(d){
                                             <th>#</th>
                                             <th>ID</th>
                                             <th>이름</th>
-                                            <c:if test="${showProfessor eq 'im_professor'}">
-                                            <th>담당과목</th>
-                                            </c:if>
                                             <th>연락처</th>
                                             <th>이메일</th>
                                         </tr>
@@ -94,10 +77,6 @@ function changeUserType(d){
 														<td >${row.virtualNum }</td>
 														<td >${row.user_id}</td>
 														<td >${row.user_name }</td>
-														<c:if test="${showProfessor eq 'im_professor'}">
-			                                            <td><a href="">${row.subject_name }</a></td>
-			                                            <input type="hidden" value="${row.subject_idx }"/>
-			                                            </c:if>
 														<td >${row.phone_num }</td>
 														<td >${row.email }</td>
 														<!-- <td class="text-center">--</td> -->
@@ -130,19 +109,6 @@ function changeUserType(d){
     <!-- Bootstrap Core JavaScript -->
     
     <%@ include file="/resources/adminRes/include/bottom_script.jsp" %>
-     <script type="text/javascript">
-//         $(document).ready(function () {
-//             $.toast({
-//                 heading: 'Welcome to Pixel admin',
-//                 text: 'Use the predefined ones, or specify a custom position object.',
-//                 position: 'top-right',
-//                 loaderBg: '#ff6849',
-//                 icon: 'info',
-//                 hideAfter: 3500,
-//                 stack: 6
-//             })
-//         });
-    </script>
 </body>
 
 </html>
