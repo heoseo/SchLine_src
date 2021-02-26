@@ -13,6 +13,8 @@ public class Admin_UserVO {
 	// 가상번호 부여를 위한 멤버변수 추가
 	private int virtualNum;
 	
+	private String subject_name;
+	private String subject_idx;
 	
 	public String getEnabled() {
 		return enabled;
@@ -76,6 +78,18 @@ public class Admin_UserVO {
 	}
 	public void setVirtualNum(int virtualNum) {
 		this.virtualNum = virtualNum;
+	}
+	public String getSubject_idx() {
+		return subject_idx;
+	}
+	public void setSubject_idx(String subject_idx) {
+		this.subject_idx = subject_idx;
+	}
+	public String getSubject_name() {
+		return subject_name;
+	}
+	public void setSubject_name(String subject_name) {
+		this.subject_name = subject_name;
 	}
 
 }
