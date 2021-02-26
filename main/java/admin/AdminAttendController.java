@@ -59,11 +59,9 @@ public class AdminAttendController {
 		
 //		model.addAttribute("req", req);
 
-		System.out.println("attend.toString > "+attend.toString());
 		String attendance_flag = attend.getAttendance_flag();
 		String attendance_idx = attend.getAttendance_idx();
 		
-		System.out.println("editAttend flag : " + attendance_flag+ " idx : " + attendance_idx);
 		Map<String, Object> paramMap = model.asMap();
 		paramMap.put("attendance_idx", attendance_idx);
 		paramMap.put("attendance_flag", attendance_flag);

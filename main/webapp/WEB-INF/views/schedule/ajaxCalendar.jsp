@@ -1,4 +1,6 @@
 
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="schline.ExamDTO"%> 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Calendar"%>
@@ -99,13 +101,13 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 			<col width="14%" />
 		</colgroup>
 		<tr>
+			<th id="title">일</th>
 			<th id="title">월</th>
 			<th id="title">화</th>
 			<th id="title">수</th>
 			<th id="title">목</th>
 			<th id="title">금</th>
 			<th id="title">토</th>
-			<th id="title">일</th>
 		</tr>
 		<tr>
 		<%
@@ -118,14 +120,49 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 			</td>
 		<%}
 
+		
+		
+
+		
 		//요일채우기(일1, 토7)
 		int day;
 		for(day=1 ; day<=last_day ; day++){ 			
+			
 		%>
 		
 			<td id="td" class="choicDay">
+				<%
+				//오늘날짜 표시
+				// 현재 날짜
+				Date nowDay = new Date(); 
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-M-dd");
+				
+				String nowDayStr = simpleDateFormat.format(nowDay);
+				String setDay = year+"-"+month+"-"+day;
+				
+				System.out.println("ajaxCalendar > nowDayStr : " + nowDayStr + " setDay : " + setDay);
+				if(nowDayStr.equals(setDay)){
+				%>
+				<style>
+				.nowDayShow {
+				  width:30px;
+				  background-color: #bdf;
+				  margin-top:6px;
+				  padding:0.5em;
+				  line-height: 1em;
+				  border-radius:5em;
+				  -moz-border-radius: 5em;
+				  -webkit-border-radius: 5em;
+				}
+				</style>
+				<div class='nowDayShow'><%=day %></div>
+				<%	
+				}
+				else{
+				%>
 				<%=day %>
 				<%
+				}
 				for(ExamDTO dto : lists) { 
 					String yearStr = Integer.toString(year);
 					String monthStr = "";
@@ -142,7 +179,9 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
 					String exam_date = dto.getExam_date().toString();
 
 					//디버깅용.
-					System.out.println("exam_date : " + exam_date);
+// 					System.out.println("exam_date : " + exam_date);
+					
+					
 					if(exam_date.equals(nowDate)) {
 						//디버깅용
 						//System.out.println("들어옴");

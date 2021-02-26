@@ -145,7 +145,7 @@
 																</c:when>
 																<c:otherwise>
 																<td><a href='javascript:show_pop(${attend.attendance_flag }, ${attend.attendance_idx });'>
-																	${attend.attendance_flag }+${attend.attendance_idx }</a></td>
+																	${attend.attendance_flag }</a></td>
 																</c:otherwise>
 															</c:choose>
 													</c:forEach>
