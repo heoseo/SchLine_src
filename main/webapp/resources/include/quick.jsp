@@ -7,7 +7,7 @@
 	border-radius:5px;
 	padding: 10px 40px 10px 40px;
 	border-radius: 5px;
-	background:#ADD8E6;
+	background:#44afccb6;
 	style="font-weight:bold; 
 	color:#145374;
 }
@@ -24,7 +24,7 @@ color:#145374;
 			<ul>
 			    <li>
 			    <a href="#class" class="list-group-item-action" style="font-weight:bold; color:#495464;">
-			    	강의실</a>
+			    	코<span style="opacity:0">결</span>스</a>
 			    </li><br />
 			    <li>
 			    <a href="#attend" class="list-group-item-action" style="font-weight:bold; color:#495464;">

@@ -12,6 +12,7 @@ import admin.FcmDTO;
 public interface ClassDTOImpl {
 	public ArrayList<ClassDTO> listCourse(ClassDTO classdto);
 	public ArrayList<VideoDTO> listLecture(VideoDTO videoDTO );
+	public ArrayList<VideoDTO> applistLecture(@Param("subject_idx") String subject_idx, @Param("user_id") String user_id );
 	public ArrayList<VideoDTO> listVideo(@Param("user") String user_id);
 	public String whatsub_id(@Param("idx") String user_id);
 	public void upvid (@Param("idx") String subject_idx, @Param("end") String end_date,
@@ -30,4 +31,5 @@ public interface ClassDTOImpl {
 	public String divID(String user_id);
 	public String stu_id(String bgroup , String bindent);
 	public ArrayList<FcmDTO> FcmSchedule ();
+	public void updateToken(@Param("token") String token ,@Param("id") String user_id);
 }
