@@ -215,9 +215,6 @@ function dbup() {
            },
 		success : function(d) {
 			$('#save_time').val(d.setTime);//d.키값 => 벨유값 들어옴
-		},
-		error : function(e) {
-			alert("오류" + e.status + ":" + e.statusText);
 		}
 	});
 }

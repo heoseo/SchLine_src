@@ -8,8 +8,29 @@ public class VideoDTO {
 	private String video_end;
 	private String server_saved;
 	private String rnum;
+	private String play_time;
+	private String currenttime;
+	private String attendance_flag;
 	
 	
+	public String getPlay_time() {
+		return play_time;
+	}
+	public void setPlay_time(String play_time) {
+		this.play_time = play_time;
+	}
+	public String getCurrenttime() {
+		return currenttime;
+	}
+	public void setCurrenttime(String currenttime) {
+		this.currenttime = currenttime;
+	}
+	public String getAttendance_flag() {
+		return attendance_flag;
+	}
+	public void setAttendance_flag(String attendance_flag) {
+		this.attendance_flag = attendance_flag;
+	}
 	public String getServer_saved() {
 		return server_saved;
 	}
