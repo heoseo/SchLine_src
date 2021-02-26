@@ -27,7 +27,7 @@
 			<div class="spotlight">
 				<div class="content">
 					<header class="major">
-						<h2>강의실</h2>
+						<h2>코스</h2>
 					</header>
 					
 <div id="pattern" class="pattern">
@@ -37,7 +37,7 @@
        <li>	
 		<a href="./class/time.do?subject_idx=${row.subject_idx }"  class="inner">					
 			<div class="li-img">
-			 <c:set var="ran"><%= java.lang.Math.round(java.lang.Math.random() *40)+1 %></c:set>
+			 <c:set var="ran"><%= java.lang.Math.round(java.lang.Math.random() *10)%>${row.subject_idx}</c:set>
          	 <img src="https://picsum.photos/200/150/?image=${ran}" alt="sample image">
             </div>
              <div class="li-text">

@@ -38,6 +38,16 @@
          order by video_idx asc
     ) Tb
   </select>
+  <select id="applistLecture" resultType="schline.VideoDTO"
+	parameterType="schline.VideoDTO">
+	select Tb.*, rownum rNum from (
+        select V.*,a.currenttime,a.play_time,a.attendance_flag from attendance_tb A 
+        inner join video_tb V
+        on V.video_idx = A.video_idx
+        where V.subject_idx = #{subject_idx} and user_id = #{user_id} order by A.video_idx asc
+    ) Tb
+  </select>
+  
 
 	<select id="listVideo" resultType="schline.VideoDTO" parameterType="String">
 	select Tb.*, rownum rNum from (
@@ -73,6 +83,10 @@
 	update  attendance_tb set play_time =#{play_time}, 
 	attendance_flag =#{attendance_flag}, currenttime =#{currenttime}
 	 where user_id = #{user_id} and video_idx = #{video_idx}
+	</update>
+	<update id="updateToken" parameterType="schline.AttendanceDTO">
+	update  user_tb set device_id =#{token}
+	 where user_id = #{id} 
 	</update>
 	<select id="selectat" resultType="schline.AttendanceDTO">
 	select * from attendance_tb where user_id = #{user} and video_idx = #{idx}

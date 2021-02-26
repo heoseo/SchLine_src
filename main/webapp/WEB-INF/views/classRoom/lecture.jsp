@@ -90,7 +90,8 @@
 					<img src="../resources/images/lecture_thumbnail.png" class="media-object" style="width:40px;margin-bottom:-5px">
 	
 					<td class="text-left">
-					<a href="../class/play.do?title=${row.server_saved }&sub_idx=${row.subject_idx }&name=${row.video_title }&idx=${row.video_idx}"  target="_blank">${row.video_title }</a>
+					<a href='javascript:void(0);' onclick="vidOpne('${row.server_saved }',${row.subject_idx },'${row.video_title }',${row.video_idx});">
+					${row.video_title }</a>
 					</td>
 					<td class="text-center">${row.video_end }</td>
 				</tr>
@@ -112,7 +113,13 @@
         document.getElementById("modal").style.display="none";
     }   
 </script>
+<script>
+function vidOpne(saved, sub ,title,vid){
+	var url = "../class/play.do?title="+saved+"&sub_idx="+sub+"&name="+title+"&idx="+vid;
+	var win = window.open(url, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=700,height=600");
+}
 
+</script>
 <!-- 하단 인클루드 -->
 <jsp:include page="/resources/include/footer.jsp" />
 </html>
