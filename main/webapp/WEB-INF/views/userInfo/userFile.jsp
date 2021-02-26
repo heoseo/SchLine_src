@@ -42,7 +42,7 @@
 	 						제출한 파일이 없습니다. 
 	 					</td>
 	 				</tr>
-				</c:when>
+				</c:when> 
 				<c:otherwise>
 					<c:forEach items="${lists }" var="row">
 						<tr>

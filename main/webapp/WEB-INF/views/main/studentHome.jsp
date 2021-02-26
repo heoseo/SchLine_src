@@ -62,6 +62,7 @@
 			</header>
 			
 		</section>
+		<span style="clear:both;"></span>
 
 <!-- 3.캘린더시작 -->		
 
@@ -71,7 +72,7 @@
 			<%@ include file="../schedule/calendarMain.jsp" %>
 			</header>
 		</section>
-		
+		<span style="clear:both;"></span>
 <!-- 3.캘린더끝. -->		
 		
 		

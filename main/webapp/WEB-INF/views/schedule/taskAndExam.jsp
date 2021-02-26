@@ -84,8 +84,8 @@ function paging(nowPage){
 						</c:otherwise>
 					</c:choose>
 					</td>
-					<td>
-						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}" target="_blank">
+					<td><!--  target="_blank" -->
+						<a href="viewPop.do?IDX=${row.IDX}&noti_or_exam=${row.noti_or_exam}&subject_idx=${row.SUB_IDX}">
 							제목 : ${row.TITLE } 
 						</a>
 					</td>

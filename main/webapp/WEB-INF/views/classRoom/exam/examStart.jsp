@@ -4,6 +4,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+function examstart(subject_idx, exam_type, exam_idx){
+	var c = confirm('시험을 시작하시겠습니까? 시작하면 시험을 다시 치룰 수 없습니다.');
+	if(c){
+		location.href="../class/examList.do?subject_idx="+subject_idx+
+				"&exam_type="+exam_type+"&exam_idx="+exam_idx;
+	}
+}
+</script>
 <title>시험 </title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
@@ -39,9 +48,9 @@
  <td>${row.exam_name }</td>
  <td>${row.exam_date }</td>
  <td>
- 	<a href="../class/examList.do?subject_idx=${row.subject_idx }&exam_type=${row.exam_type}&exam_idx=${row.exam_idx}" class="button primary">
-    	시험시작
-    </a>
+ 	<button class="button primary" onclick="examstart(${row.subject_idx }, ${row.exam_type}, ${row.exam_idx})">
+ 	시험시작
+ 	</button>
 </td>
 </tr>
 </c:forEach>
