@@ -8,7 +8,6 @@
 <!DOCTYPE html>
 <html>
 
-
 <head>
 	<%@ include file="/resources/adminRes/include/head.jsp" %>
 </head>
@@ -40,17 +39,10 @@
                 <div class="row">
 	                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
 	                    <li>
-	               			<form:form role="search" class="app-search hidden-xs">
+	               			<form:form role="search" class="app-search hidden-xs" style="margin-bottom:10px;" >
 	                
-								<select name="searchColumn" class="form-control" style="width:120px; margin-bottom:15px;">
-									<c:if test="${ not empty paramMap}">
-									    <option value="PROFESSOR" <c:if test="${paramMap.searchColumn == 'PROFESSOR'}">selected</c:if>>교수</option>
-									    <option value="STUDENT" <c:if test="${paramMap.searchColumn == 'STUDENT'}">selected</c:if>>학생</option>
-									    <option value="ADMIN" <c:if test="${paramMap.searchColumn == 'ADMIN'}">selected</c:if>>관리자</option>
-									</c:if>
-								</select>
 		                            <input name="searchWord" type="text" placeholder="Search..." class="form-control">
-		                            	 <a href="/schline/admin/userList"><i class="fa fa-search"></i></a>
+		                            	 <a href="/schline/admin/userList?searchColumn=${paramMap.searchColumn }&searchWord=${paramMap.searchWord}"><i class="fa fa-search"></i></a>
 	                        </form:form>
                          </li>
 	                </ul>
@@ -61,10 +53,11 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ID</th>
                                             <th>이름</th>
-                                            <th>연락처</th>
-                                            <th>이메일</th>
+                                            <th>닉네임</th>
+                                            <th>누적시간</th>
+                                            <th>신고 횟수</th>
+                                            <th>블랙리스트</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -81,11 +74,12 @@
 													varStatus="loop">
 													<!-- 리스트반복시작 -->
 													<tr>
-														<td >${row.virtualNum }</td>
-														<td >${row.user_id}</td>
-														<td >${row.user_name }</td>
-														<td >${row.phone_num }</td>
-														<td >${row.email }</td>
+														<td >${row.user_id }</td>
+														<td >${row.user_name}</td>
+														<td >${row.info_nick }</td>
+														<td >${row.info_time }</td>
+			                                            <td><a href="">${row.reported_count }</a></td>
+														<td ><c:if test="${row.reported_count >= 10 }">O</c:if></td>
 														<!-- <td class="text-center">--</td> -->
 													</tr>
 													<!-- 리스트반복끝 -->
@@ -107,8 +101,6 @@
                 </div>
             </div>
             <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2020 &copy; Pixel Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
         </div>
         <!-- /#page-wrapper -->
     </div>

@@ -26,7 +26,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">사용자 조회 </h4>
+                        <h4 class="page-title">개설 과목 조회</h4>
                     </div>
                 </div>
                 
@@ -76,24 +76,23 @@
 													<!-- 리스트반복시작 -->
 													<tr>
 														<td class="text-center">${row.subject_idx }</td>
-														<td class="text-center" id="showStudentList">
-<!-- 															<div id="showStudentList"> -->
-																${row.subject_name}
-<!-- 															</p> -->
-																<script>
-																$(function(){
-																	$('#showStudentList').click(function(){
-																		var win = window.open("/schline/admin/class/userList?subject_idx=${row.subject_idx}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=600");
-																	});
-																});
-														        </script>
-<%-- 															<a href="/schline/admin/class/userList?subject_idx=${row.subject_idx }">${row.subject_name}</a> --%>
+														<td class="text-center">
+															<a href='javascript:window.open("/schline/admin/class/userList?subject_idx=${row.subject_idx}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=600")'>
+															${row.subject_name}
+															</a>
 														</td>
 														<td class="text-center">${row.user_name }</td>
 														<!-- <td class="text-center">--</td> -->
 													</tr>
 													<!-- 리스트반복끝 -->
 												</c:forEach>
+												<script>
+													$(function(){
+														$('#showStudentList').click(function(){
+															var win = window.open("/schline/admin/class/userList?subject_idx=${row.subject_idx}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=600");
+														});
+													});
+										        </script>
 											</c:otherwise>
 										</c:choose>
                                         
