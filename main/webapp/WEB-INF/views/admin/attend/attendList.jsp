@@ -35,63 +35,191 @@
                 </div>
                 
                 
-                
+                <div class="row">
+                    <div class="col-sm-3">
+                    	<ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
+		                    <li>
+		                        <form:form role="search" class="app-search hidden-xs" style="margin-bottom : 10px;">
+		                            <input name="searchSubject" type="text" placeholder="Search..." class="form-control">
+		                            	 <a href="/schline/admin/attend?searchUser=${paramMap.searchSubject }"><i class="fa fa-search"></i></a>
+		                        </form:form>
+		                    </li>
+		                </ul>
+                    </div>
+                    <div class="col-sm-9">
+                    	<ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
+		                    <li>
+		                        <form:form role="search" class="app-search hidden-xs" style="margin-bottom : 10px;" >
+		                            <input name="searchUser" type="text" placeholder="Search..." class="form-control">
+		                            	 <a href="/schline/admin/attend?searchUser=${paramMap.searchUser }"><i class="fa fa-search"></i></a>
+		                        </form:form>
+		                    </li>
+		                </ul>
+                    </div>
+                </div>
 				
                 <div class="row">
-	                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
-	                    <li>
-	               			<form:form role="search" class="app-search hidden-xs">
-	                
-								<select name="searchColumn" class="form-control" style="width:120px; margin-bottom:15px;">
-									<c:if test="${ not empty paramMap}">
-									    <option value="PROFESSOR" <c:if test="${paramMap.searchColumn == 'PROFESSOR'}">selected</c:if>>교수</option>
-									    <option value="STUDENT" <c:if test="${paramMap.searchColumn == 'STUDENT'}">selected</c:if>>학생</option>
-									    <option value="ADMIN" <c:if test="${paramMap.searchColumn == 'ADMIN'}">selected</c:if>>관리자</option>
-									</c:if>
-								</select>
-		                            <input name="searchWord" type="text" placeholder="Search..." class="form-control">
-		                            	 <a href="/schline/admin/userList"><i class="fa fa-search"></i></a>
-	                        </form:form>
-                         </li>
-	                </ul>
-                    <div class="col-sm-12">
+                    <div class="col-sm-3">
                         <div class="white-box">
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>ID</th>
-                                            <th>이름</th>
-                                            <th>연락처</th>
-                                            <th>이메일</th>
+                                            <th>과목명</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <c:choose>
-											<c:when test="${empty listRows }">
+											<c:when test="${empty subjectLists }">
 												<tr>
 													<td colspan="5" class="text-center">
-														등록된 게시물이 없습니다 ^^*
 													</td>
 												</tr>
 											</c:when>
 											<c:otherwise>
-												<c:forEach items="${listRows }" var="row" 
+												<c:forEach items="${subjectLists }" var="subject" 
 													varStatus="loop">
 													<!-- 리스트반복시작 -->
 													<tr>
-														<td >${row.virtualNum }</td>
-														<td >${row.user_id}</td>
-														<td >${row.user_name }</td>
-														<td >${row.phone_num }</td>
-														<td >${row.email }</td>
-														<!-- <td class="text-center">--</td> -->
+														<td >${subject.subject_idx}</td>
+														<td><a href='javascript:window.open("/schline/admin/class/userList?subject_idx=${row.subject_idx}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=600")'>${subject.subject_name }</a></td>
 													</tr>
 													<!-- 리스트반복끝 -->
 												</c:forEach>
 											</c:otherwise>
 										</c:choose>
+                                        
+                                        <!-- 페이지번호 -->
+									<tr >
+										<td colspan="5" align="center">${pagingImg }</td>
+									</tr>
+                                    </tbody>
+                                </table>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="white-box">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>이름</th>
+											<th>1</th>
+											<th>2</th>
+											<th>3</th>
+											<th>4</th>
+											<th>5</th>
+											<th>6</th>
+											<th>7</th>
+											<th>8</th>
+											<th>9</th>
+											<th>10</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:choose>
+											<c:when test="${empty attendLists }">
+												<tr>
+													<td colspan="5" class="text-center">
+													</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<c:forEach items="${attendLists }" var="attendList" 
+													varStatus="loop2">
+													<tr>
+													<c:forEach items="${attendList }" var="attend" 
+													varStatus="loop2">
+														<!-- 리스트반복시작 -->
+															<c:choose>
+																<c:when test="${loop2.count eq 1 }">
+																<td >${attend.user_id }</td>
+																</c:when>
+																<c:when test="${loop2.count eq 2 }">
+																<td >${attend.user_name }</td>
+																</c:when>
+																<c:otherwise>
+																<td><a href='javascript:show_pop(${attend.attendance_flag }, ${attend.attendance_idx });'>
+																	${attend.attendance_flag }+${attend.attendance_idx }</a></td>
+																</c:otherwise>
+															</c:choose>
+													</c:forEach>
+													</tr>
+												</c:forEach>
+											</c:otherwise>
+										</c:choose>
+										
+										<!-- The Modal -->
+									    <div id="changeModal" class="modal">
+									 
+									      <!-- Modal content -->
+									      <div class="modal-content">
+								                <p style="text-align: center; line-height: 1.5;"><span style="font-size: 14pt;">출석 변경</span></p>
+									            
+									            <form:form name="change_flag_frm" id="change_flag_frm" role="search" class="app-search hidden-xs" >
+						                
+													<select name="attendance_flag" id="attendance_flag" class="form-control" style="width:120px; margin-bottom:15px;" >
+													    <option value="1">O</option>
+													    <option value="0">X</option>
+													</select>
+													
+													<input type="hiddesn" id="attendance_idx" name="attendance_idx" value="" />
+						                        </form:form>
+									            
+									            <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="close_pop();">
+									                <span class="pop_bt" style="font-size: 13pt;" >
+									                     닫기
+									                </span>
+									            </div>
+									      </div>
+									 
+									    </div>
+									        <!--End Modal-->
+									 
+									 
+									    <script>
+									      
+									        function show_pop(flag, idx){
+									        	if(flag == 1){
+									        		$("#attendance_flag").val("1");
+									        	}
+									        	else if(flag==0){
+									        		$("#attendance_flag").val("2");
+									        	}
+									        	document.getElementById("attendance_idx").value=idx;
+									        	console.log("attendance_idx:"+document.getElementById("attendance_idx").value);
+									        	$("#changeModal").modal("show");
+									        }
+									        function close_pop(flag) {
+									        	
+									        	var sendData  = $('#change_flag_frm').serialize();
+									        	alert("sendData : " + sendData);
+									        	$.ajax({
+									        		url: "/schline/admin/attend/editAttend",
+									        		type: "POST",
+									        		dataType: "json",
+									        		data: sendData ,
+									        		contentType : "application/json; charset=utf-8",
+									        		beforeSend : function(xhr){
+									                    xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+									                   }, 
+									        		success: function(result){
+									        			$('#changeModal').hide();
+							    						location.reload();
+									        		}
+						        		         });
+								        	
+									        	
+									        };
+									        
+									      </script>
+
+
                                         
                                         <!-- 페이지번호 -->
 									<tr >

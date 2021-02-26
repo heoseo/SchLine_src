@@ -62,18 +62,31 @@ public class AdminUserTemplateDAO {
 		}
 		
 		String searchColumn = (String) map.get("searchColumn");
+		String searchWord = (String) map.get("searchWord");
+
+		String sql = "";
 		
-		String sql = "	SELECT * "
+		if(searchColumn == "PROFESSOR")
+			sql = "		SELECT * "
 				+ "		FROM ( "
 				+ "			SELECT Tb.*, rownum rNum "
 				+ "			FROM ( "
 				+ "				SELECT subject_idx, subject_name, U.* "
 				+ "				FROM user_tb U, subject_tb S "
 				+ "				WHERE U.user_id = S.user_id "
-				+ "					AND authority = '"+map.get("searchColumn")+"' ";
+				+ "					AND authority = 'PROFESSOR' ";
+		else
+			sql = "		SELECT * "
+					+ "	FROM ( "
+					+ "		SELECT Tb.*, rownum rNum "
+					+ "		FROM ( "
+					+ "			SELECT * "
+					+ "			FROM user_tb U "
+					+ "			WHERE authority = '"+searchColumn+"' ";
 		
-		if(map.get("searchWord")!=null)
-		sql += " 					AND user_name LIKE '%"+map.get("searchWord")+"%' ";				
+		if(searchWord!=null)
+			sql += " 				AND user_name LIKE '%"+searchWord+"%' ";	
+		
 		sql += " 			ORDER BY U.user_id ASC"
 		+"    				) Tb"
 		+"				)";

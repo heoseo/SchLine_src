@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 
 import admin.AdminCommandImpl;
 import admin.model.AdminUserTemplateDAO;
-import schline.AttendanceDTO;
 import schline.ClassDTO;
 import schline.GradeDTOImpl;
 import schline.UserVO;
@@ -32,20 +31,13 @@ public class AttendListCommand implements AdminCommandImpl{
 		AdminClassTemplateDAO classDAO = new AdminClassTemplateDAO();
 		
 		// 검색어 관련 폼값 처리
-		String searchColumn = req.getParameter("searchColumn");
-		if(searchColumn == null) {
-			searchColumn = "PROFESSOR";
-			System.out.println("UserListController > searchColumn 안들어옴.");
-		}
 		String searchSubject = req.getParameter("searchSubject");
 		String searchUser = req.getParameter("searchUser");
-		
-		
 		
 		paramMap.put("searchSubject",searchSubject);
 		paramMap.put("searchUser",searchUser);
 				
-		
+		System.out.println("searchSubject : " +searchSubject  + " searchUser: " +searchUser );
 		
 		
 		// 과목 나열
@@ -53,28 +45,40 @@ public class AttendListCommand implements AdminCommandImpl{
 		
 		// 출석 나열
 		//해당과목 듣는 학생 리스트
-		ArrayList<Admin_UserVO> userLists = attendDAO.userList(paramMap);
+		ArrayList<Admin_UserVO> userList = attendDAO.userList(paramMap);
 //		ArrayList<ArrayList<AttendanceDTO>>
 		
-		for(Admin_UserVO user : userLists) {
+		ArrayList<ArrayList<AttendanceDTO>> attendLists = new ArrayList<ArrayList<AttendanceDTO>>();
+		for(Admin_UserVO user : userList) {
+			if(paramMap.get("searchUser") == null)
+				paramMap.put("searchUser", user.getUser_name());
+			else
+				paramMap.put("searchUser", user.getUser_name());
 			
+			
+			AttendanceDTO dto_for_user_id = new AttendanceDTO();
+			AttendanceDTO dto_for_user_name = new AttendanceDTO();
+			
+			dto_for_user_id.setUser_id(user.getUser_id());
+			dto_for_user_name.setUser_name(user.getUser_name());
+			
+			ArrayList<AttendanceDTO> attendList = attendDAO.attendList(paramMap);
+			attendList.add(0, dto_for_user_id);
+			attendList.add(1, dto_for_user_name);
+			
+//			for(AttendanceDTO attend : attendList) {
+//				System.out.println(attend.getAttendance_idx());
+//			}
+			
+			attendLists.add(attendList);
 		}
 		
 		
 		model.addAttribute("subjectLists", subjectLists);
-		model.addAttribute("userLists", userLists);
+		model.addAttribute("attendLists", attendLists);
 		model.addAttribute("paramMap", paramMap);
 		
 		
-		
-		
-
-		
-		
-		
-		
-		
-		//출석
 		
 	}
 }
