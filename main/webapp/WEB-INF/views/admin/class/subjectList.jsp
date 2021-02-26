@@ -6,9 +6,8 @@
 <html>
 
 
-<head>
 	<%@ include file="/resources/adminRes/include/head.jsp" %>
-</head>
+
 
 <body>
     <!-- Preloader -->
@@ -27,7 +26,7 @@
             <div class="container-fluid">
                 <div class="row bg-title">
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">사용자 조회 </h4>
+                        <h4 class="page-title">개설 과목 조회</h4>
                     </div>
                 </div>
                 
@@ -57,9 +56,9 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>과목</th>
-                                            <th>담당교수</th>
+                                            <th class="text-center">#</th>
+                                            <th class="text-center">과목</th>
+                                            <th class="text-center">담당교수</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -76,13 +75,24 @@
 													varStatus="loop">
 													<!-- 리스트반복시작 -->
 													<tr>
-														<td >${row.subject_idx }</td>
-														<td >${row.subject_name}</td>
-														<td >${row.user_name }</td>
+														<td class="text-center">${row.subject_idx }</td>
+														<td class="text-center">
+															<a href='javascript:window.open("/schline/admin/class/userList?subject_idx=${row.subject_idx}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=600")'>
+															${row.subject_name}
+															</a>
+														</td>
+														<td class="text-center">${row.user_name }</td>
 														<!-- <td class="text-center">--</td> -->
 													</tr>
 													<!-- 리스트반복끝 -->
 												</c:forEach>
+												<script>
+													$(function(){
+														$('#showStudentList').click(function(){
+															var win = window.open("/schline/admin/class/userList?subject_idx=${row.subject_idx}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=800,height=600");
+														});
+													});
+										        </script>
 											</c:otherwise>
 										</c:choose>
                                         
@@ -99,6 +109,8 @@
                     </div>
                 </div>
             </div>
+            
+            
             <!-- /.container-fluid -->
             <footer class="footer text-center"> 2020 &copy; Pixel Admin brought to you by <a
                     href="https://www.wrappixel.com/">wrappixel.com</a> </footer>

@@ -68,11 +68,11 @@ public class ClassListCommand implements AdminCommandImpl{
 					Integer.parseInt(req.getParameter("nowPage"));
 		
 		// 리스트에 출력할 게시물의 구간을 계산
-		int start = (nowPage-1) * pageSize + 1;
-		int end = nowPage * pageSize;
+//		int start = (nowPage-1) * pageSize + 1;
+//		int end = nowPage * pageSize;
 		
-		paramMap.put("start", start);
-		paramMap.put("end", end);
+//		paramMap.put("start", start);
+//		paramMap.put("end", end);
 		
 				
 		

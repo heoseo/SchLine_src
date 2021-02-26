@@ -41,9 +41,8 @@ body{
 <!-- /////////////////////Main시작////////////////////// -->
 <body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
 
-
 	<div id="main" style="border-radius: 10px; vertical-align: middle;">
-	
+
 		<div style="text-align: center; background:#ADD8E6; 
 		 padding-bottom: 10px; padding-top: 10px;" >
 			<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="200px" alt="스쿨라인 로고"  class="img-circle" />

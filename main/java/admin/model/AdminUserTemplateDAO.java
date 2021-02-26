@@ -31,8 +31,20 @@ public class AdminUserTemplateDAO {
 		if(map.get("searchWord") != null) {
 			sql += " 		AND user_name LIKE '%" + map.get("searchWord") + "%' ";
 		}
+		if(map.get("subject_idx") != null) {
+			sql = "		SELECT COUNT(*) "
+			+ "			FROM ("
+				+ "			SELECT Tb.*, rownum rNum "
+				+ "			FROM ("
+				+ "				SELECT U.* "
+				+ "				FROM registration_tb R, user_tb U "
+				+ "				WHERE R.user_id = U.user_id "
+				+ "   				AND subject_idx = "+map.get("subject_idx")+" "
+				+ "				ORDER BY U.user_id ASC"
+				+ "				) Tb "
+				+ "			) ";
+		}
 		int result = template.queryForObject(sql, Integer.class);
-		System.out.println("AdminUserTEmpolateDAO > getotalCount : " + result);
 		
 		// 쿼리문에서 count(*)를 통해 정수값 반환
 		return result;
@@ -50,18 +62,31 @@ public class AdminUserTemplateDAO {
 		}
 		
 		String searchColumn = (String) map.get("searchColumn");
+		String searchWord = (String) map.get("searchWord");
+
+		String sql = "";
 		
-		String sql = "	SELECT * "
+		if(searchColumn == "PROFESSOR")
+			sql = "		SELECT * "
 				+ "		FROM ( "
 				+ "			SELECT Tb.*, rownum rNum "
 				+ "			FROM ( "
 				+ "				SELECT subject_idx, subject_name, U.* "
 				+ "				FROM user_tb U, subject_tb S "
 				+ "				WHERE U.user_id = S.user_id "
-				+ "					AND authority = '"+map.get("searchColumn")+"' ";
+				+ "					AND authority = 'PROFESSOR' ";
+		else
+			sql = "		SELECT * "
+					+ "	FROM ( "
+					+ "		SELECT Tb.*, rownum rNum "
+					+ "		FROM ( "
+					+ "			SELECT * "
+					+ "			FROM user_tb U "
+					+ "			WHERE authority = '"+searchColumn+"' ";
 		
-		if(map.get("searchWord")!=null)
-		sql += " 					AND user_name LIKE '%"+map.get("searchWord")+"%' ";				
+		if(searchWord!=null)
+			sql += " 				AND user_name LIKE '%"+searchWord+"%' ";	
+		
 		sql += " 			ORDER BY U.user_id ASC"
 		+"    				) Tb"
 		+"				)";
@@ -71,23 +96,24 @@ public class AdminUserTemplateDAO {
 		
 		
 		
-//		if(map.get("subject_idx") != null) {
-//			sql = "		SELECT * "
-//			+ "			FROM ("
-//				+ "			SELECT Tb.*, rownum rNum "
-//				+ "			FROM ("
-//				+ "				SELECT U.* "
-//				+ "				FROM registration_tb R, user_tb U "
-//				+ "				WHERE R.user_id = U.user_id "
-//				+ "   				AND subject_idx = 1 "
-//				+ "				ORDER BY U.user_id ASC"
-//				+ "				) Tb "
-//				+ "			) ";
-//			if(flag ==true)
-//				sql +=" WHERE rNum BETWEEN "+start+" and "+end;
-//			
-//					
-//		}
+		// subject_idx != null ==> 과목조회에서 과목을 클릭했음.
+		System.out.println("AdminUserTEmplateDAO > subject_idx : " + map.get("subject_idx"));
+		if(map.get("subject_idx") != null) {
+			sql = "		SELECT * "
+			+ "			FROM ("
+				+ "			SELECT Tb.*, rownum rNum "
+				+ "			FROM ("
+				+ "				SELECT U.* "
+				+ "				FROM registration_tb R, user_tb U "
+				+ "				WHERE R.user_id = U.user_id "
+				+ "   				AND subject_idx = "+map.get("subject_idx")+" "
+				+ "				ORDER BY U.user_id ASC"
+				+ "				) Tb "
+				+ "			) ";
+			if(flag ==true)
+				sql +=" WHERE rNum BETWEEN "+start+" and "+end;
+					
+		}
 		
 		return (ArrayList<Admin_UserVO>)
 				template.query(sql, 

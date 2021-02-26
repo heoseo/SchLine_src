@@ -20,7 +20,7 @@
  #no{
   	background: #e8e8e8;
    	opacity: 0.9;
-   	color: white;
+   	color: black;
    	font-weight:bold;  
     border-radius: 15px; 
    	border: solid 0.5px white;
@@ -60,7 +60,7 @@
 					<div class="container">
 						<h5><a href="../class/grade.do?subject_idx=${row.subject_idx }">
 						<i class="fas fa-check" id="sub"></i>${row.subject_name }</a></h5>
-						<table class="table table-hover" style="font-size:5px; text-align:center;">
+						<table class="table table-hover" style="font-size:6px; text-align:center;">
 								<c:choose>	
 									<c:when test="${row.rnum==1 }">
 						 			
@@ -68,13 +68,13 @@
 											<c:forEach items="${atten1 }" var="row2">
 												<c:if test="${row2.attendance_flag==2 }">
 													<td id="yes" style="margin-right: 30px;">
-													O
+													${row2.rnum }강 O
 													</td>
 													<td id="space"></td>
 													</c:if>
 													<c:if test="${row2.attendance_flag!=2 }">
 													<td id="no">
-													X
+													${row2.rnum }강 X
 													</td>
 													<td id="space"></td>
 													</c:if>	
@@ -86,13 +86,13 @@
 											<c:forEach items="${atten2 }" var="row3">
 												<c:if test="${row3.attendance_flag==2 }">
 												<td id="yes" style="margin-right: 30px;">
-												O
+													${row3.rnum }강 O
 												</td>
 												<td id="space"></td>
 												</c:if>
 												<c:if test="${row3.attendance_flag!=2 }">
 												<td id="no">
-												X
+													${row3.rnum }강 X
 												</td>
 												<td id="space"></td>
 												</c:if>	
@@ -105,13 +105,13 @@
 											<c:forEach items="${atten3 }" var="row4">
 												<c:if test="${row4.attendance_flag==2 }">
 												<td id="yes" style="margin-right: 30px;">
-												O
+													${row4.rnum }강 O
 												</td>
 												<td id="space"></td>
 												</c:if>
 												<c:if test="${row4.attendance_flag!=2 }">
 												<td id="no">
-												X
+													${row4.rnum }강 X
 												</td>
 												<td id="space"></td>
 												</c:if>	
@@ -123,13 +123,13 @@
 											<c:forEach items="${atten4 }" var="row5">
 												<c:if test="${row5.attendance_flag==2 }">
 												<td id="yes" style="margin-right: 30px;">
-												O
+													${row5.rnum }강 O
 												</td>
 												<td id="space"></td>
 												</c:if>
 												<c:if test="${row5.attendance_flag!=2 }">
 												<td id="no">
-												X
+													${row5.rnum }강 X
 												</td>
 												<td id="space"></td>
 												</c:if>	
@@ -140,18 +140,18 @@
 										<tr>
 											<c:forEach items="${atten5 }" var="row6">
 											
-													<c:if test="${row6.attendance_flag==2 }">
-													<td id="yes" style="margin-right: 30px;">
-													O
-													</td>
-													<td id="space"></td>
-													</c:if>
-													<c:if test="${row6.attendance_flag!=2 }">
-													<td id="no">
-													X
-													</td>
-													<td id="space"></td>
-													</c:if>											
+												<c:if test="${row6.attendance_flag==2 }">
+												<td id="yes" style="margin-right: 30px;">
+													${row6.rnum }강 O
+												</td>
+												<td id="space"></td>
+												</c:if>
+												<c:if test="${row6.attendance_flag!=2 }">
+												<td id="no">
+													${row6.rnum }강 X
+												</td>
+												<td id="space"></td>
+												</c:if>											
 									
 											</c:forEach>		
 										</tr>
