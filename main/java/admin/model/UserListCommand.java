@@ -35,21 +35,20 @@ public class UserListCommand implements AdminCommandImpl{
 		// 검색어 관련 폼값 처리
 		String addQueryString = "";
 		String searchColumn = req.getParameter("searchColumn");
+		String searchWord = req.getParameter("searchWord");
+
 		if(searchColumn == null) {
 			searchColumn = "PROFESSOR";
-			System.out.println("UserListController > searchColumn 안들어옴.");
 		}
-		String searchWord = req.getParameter("searchWord");
-		
-		System.out.println("UserListController > searchColumn : " + searchColumn + ", searchWord : " + searchWord);
 		
 		addQueryString = String.format("searchColumn=%s", searchColumn);
 		paramMap.put("searchColumn",searchColumn);
 				
 		if(searchWord != null) {
 			addQueryString += String.format("searchWord=%s", searchWord);
-			paramMap.put("searchUser", searchWord);
+			paramMap.put("searchWord", searchWord);
 		}
+		paramMap.put("subject_idx", req.getParameter("subject_idx"));
 		
 		// paramMap : list_flag, table, Word 
 		
@@ -93,12 +92,22 @@ public class UserListCommand implements AdminCommandImpl{
 		{
 			virtualNum = totalRecordCount - (((nowPage-1)*pageSize) + countNum++);
 			row.setVirtualNum(virtualNum);
+			String phone_num = row.getPhone_num();
+			phone_num = phone_num.substring(0, 3) + "-"
+						+phone_num.substring(4, 7) + "-"
+						+phone_num.substring(7);
+			row.setPhone_num(phone_num);
 		}
 		 
 		// 리스트에 출력한 list컬렉션을 model객체에 저장한 후 뷰로 전달한다.
 		String pagingImg = PagingUtil_admin.pagingImg(totalRecordCount, pageSize, blockPage, nowPage, 
 											req.getContextPath()+"/admin/userList?"+addQueryString);
 		
+		if(searchColumn == "PROFESSOR")
+			model.addAttribute("showProfessor", "im_professor");
+		else
+			model.addAttribute("showProfessor", "im_not_professor");
+			
 		model.addAttribute("pagingImg", pagingImg);
 		model.addAttribute("totalPage", totalPage);
 		model.addAttribute("nowPage", nowPage);

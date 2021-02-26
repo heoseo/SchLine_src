@@ -41,7 +41,7 @@
 					
 					<a href="SubjectAtten.do" class="list-group-item">
 						<i class="fas fa-book-reader" id="icon">&nbsp&nbsp</i>
-						<span style="text-align: center;">수강 목록</span>
+						<span style="text-align: center;">출결 현황</span>
 					</a>
 					
 					<a href="SubjectGrade.do" class="list-group-item">

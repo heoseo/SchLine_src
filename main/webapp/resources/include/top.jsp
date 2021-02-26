@@ -54,6 +54,10 @@ if(session.getAttribute("user_id") != null){
 	nav ul li.dropdown:hover > div.dropdown-menu {display:block; margin:0;}
 </style>
 
+
+<%
+// 	if(!request.getRequestURI().contains("accessDenied")){
+%>
 		<!-- Nav -->
 		<nav id="nav">
 

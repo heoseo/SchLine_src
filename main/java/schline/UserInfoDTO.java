@@ -23,8 +23,14 @@ public class UserInfoDTO {
 	private String subject_name;
 	private String team_idx;
 	private String block_user;
-	
-	
+	private String block_nick;
+
+	public String getBlock_nick() {
+		return block_nick;
+	}
+	public void setBlock_nick(String block_nick) {
+		this.block_nick = block_nick;
+	}
 	public String getProfessor() {
 		return professor;
 	}

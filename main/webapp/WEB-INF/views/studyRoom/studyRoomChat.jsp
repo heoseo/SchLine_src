@@ -19,6 +19,7 @@ $(document).ready(function() {
 var ws; 
 var messages;
 
+//소켓오픈
 function openSocket(){
    if(ws !== undefined && ws.readyState !== WebSocket.CLOSED ){
       writeResponse("WebSocket is already opened.");
@@ -28,15 +29,15 @@ function openSocket(){
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    //해당컴에 해당하는 경로로 변경해주기!
-   ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+   //ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+   ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
+    //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
 
-    //ws = new WebSocket("ws://192.168.25.47:9999/schline/echo.do/websocket");
    
    //채팅창 open
-   
       ws.onopen = function(event){
         //사용자가 입장했을때 다른사람들에게 뿌려줌
-        $('#inputMessage').val("admin|'${info_nick}'님 도서관 입장하셨습니다.");
+        $('#inputMessage').val("admin|'${info_nick}'님 도서관 입장하셨습니다.<br/>");
          send();
          //메세지인풋 다시 null로 만들어줌
          $('#inputMessage').val('');
@@ -51,15 +52,24 @@ function openSocket(){
    
    //상대가 메세지 보냈을때
    ws.onmessage = function(event){ 
-      console.log('writeResponse'); 
-      console.log(event.data);
+      console.log('상대메세지'+event.data); 
       writeResponse(event.data);
    };
    //채팅 종료
    ws.onclose = function(event){
       send("admin|'${info_nick}'님이 퇴실하셨습니다.");
    };
+   //에러발생
+	ws.onerror = function(event) {
+		wsError(event);
+	};
 }
+
+function wsError(event) {
+	writeResponse("에러 발생");
+	writeResponse(event.data);
+}
+
 
 var block;//신고와 차단용 변수 생성
 
@@ -70,7 +80,8 @@ function send(){
     var msg = document.getElementById("inputMessage").value;
     var sender = document.getElementById("info_nick").value;
     var user_img = document.getElementById("info_img").value; //내 프로필
-      var time = nowTime();
+    var time = nowTime();
+    var ww;
    
       //사용자 닉네임을 통해 프로필 이미지 불러오기
 //    $('.profile profile-img-a').attr("background", "url('"+user_img+") 0 0 no-repeat'");
@@ -93,10 +104,23 @@ function send(){
        $('#inputMessage').val('');
          return false;
     }
-   
+      //신고할때
+      else if(msg.startsWith("#")==true){
+         var a = msg.split("#");
+         var b = a[1];//닉네임
+         $('#messageWindow').css("text-align", "center");
+         //닉네임 체크 및 신고
+         ajaxPro("1", b);//1은 신고, 0은 차단, 2는 프로필확인
+         messages.scrollTop = messages.scrollHeight;
+         $('#inputMessage').val("");
+         return false;
+      }
+
+       
+       
     //서버로 메세지 전송
     ws.send(sender+'|'+ msg + '|' + user_img);
-   
+
     //귓속말할때
     if(msg.startsWith("/")==true){
       var x = msg.split("/");
@@ -115,17 +139,8 @@ function send(){
         return false;
       }
     }
-   //신고할때
-   else if(msg.startsWith("#")==true){//수정필요
-      var a = msg.split("#");
-      var b = a[1];//닉네임
-      $('#messageWindow').css("text-align", "center");
-      
-      //닉네임 체크 및 신고
-      ajaxPro("1", b);//1은 신고, 0은 차단, 2는 프로필확인
-      messages.scrollTop = messages.scrollHeight;
-       return;
-   }
+
+   
    
    var text = '';
        text += '<div class="chat chat-right">';
@@ -194,13 +209,14 @@ function ajaxPro(d, ot_nick) {
                  $('#inputMessage').val("");
              }
              else if(r.check==0){//차단하기 성공시
-                  messages.innerHTML += "[알림]'"+ot_nick+"차단 완료";
+                  messages.innerHTML += "[알림]'"+ot_nick+"차단 완료<br/>";
                   messages.scrollTop = messages.scrollHeight;
                  $('#inputMessage').val("");
              }
          }
          else{//나머지
             alert("존재하지않는 사용자입니다.");
+            $('#inputMessage').val("");
          }
       },
       error : function(e){
@@ -250,8 +266,8 @@ function writeResponse(text){
       url : "../class/studyBlock.do",
       dataType : "json",
       type : "post",
-      async: false, //동기방식으로 변경
       contentType : "application/x-www-form-urlencoded;charset:utf-8",
+      async: false, //동기방식으로 변경
        data : {ot_nick : sender},
        beforeSend : function(xhr){
             xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
