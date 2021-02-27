@@ -9,7 +9,8 @@
 <!-- 나머지 head속성은 인클루드에 있어요 -->
 <!-- 상단  인클루드 : 메뉴별 페이지 이동설정 해야함★★★★★★-->
 <%@ include file="/resources/include/top_professor.jsp"%>
-<body class="is-preload" >
+
+<body class="is-preload">
 	<div id="main">
 	<br /><br />
 	<div style="text-align:center; font-weight:bold; font-size:1.2em">
@@ -18,7 +19,7 @@
 		<!-- ### 게시판의 body 부분 start ### -->
 		<div style="padding: 10px;">
 			<div class="text-right">
-				<button type="button" class="btn btn-default" style="font-weight:bold; color:#145374 "
+				<button type="button" class="btn btn-default" style="font-weight:bold; color:#145374; border: 2px solid gray; "
 					onclick="location.href='notiWrite.do?nowPage=${nowPage}';">
 					<i class="fas fa-plus" style="padding-right:5px;"></i>
 					공지사항</button>
@@ -57,7 +58,7 @@
 				<tr>
 				<td class="text-center">${row.RNUM}</td>
 					<td class="text-left">
-						<a href="notiView.do?board_idx=${row.board_idx }&nowPage=${nowPage }">${row.board_title }</a>
+						<a style="color: #145374;" href="notiView.do?board_idx=${row.board_idx }&nowPage=${nowPage }">${row.board_title }</a>
 					</td>
 					<td class="text-center">${row.user_name }</td>
 					<td class="text-center">${row.board_postdate }</td>

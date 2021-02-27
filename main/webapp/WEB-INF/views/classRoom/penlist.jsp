@@ -51,8 +51,8 @@
 </form:form>
 	</div>
 
-	<div class="table-wrapper">
-		<table class="table table-bordered table-hover table-striped">
+	<div>
+		<table class="table table-hover table-striped">
 			<thead>
 				<tr>
 					<th style="text-align:center;">번호</th>
@@ -89,13 +89,13 @@
 		</c:choose>	
 			</tbody>
 		</table>
-		<table border="1" width="90%">
-		<tr>
-			<td align="center">
+		<table width="90%" style="border: none;">
+		<tr style="border: none;">
+			<td align="center" style="border: none;">
 				${pagingImg }
 			</td>
 		</tr>
-	</table>
+		</table>
 	</div>
 </div> 
             

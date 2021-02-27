@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>성적 페이지 </title>
+<title>성적</title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
 
