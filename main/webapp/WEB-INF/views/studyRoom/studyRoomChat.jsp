@@ -31,10 +31,10 @@ function openSocket(){
    //해당컴에 해당하는 경로로 변경해주기!
    //ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
 
-   ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
+   //ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
     //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
 
-   //ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
+   ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
 
 
    
