@@ -291,7 +291,7 @@ function snap() {
 	// Define the size of the rectangle that will be filled (basically the entire element)
 	context.fillRect(0, 0, w, h);
 	// Grab the image from the video
-	context.drawImage(video, 0, 0, w, h);
+	context.drawImage(video, 0, 0, w, h);                    
 	canvas.style.display="none";
 	sreenShot();
 }
