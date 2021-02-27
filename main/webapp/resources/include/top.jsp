@@ -52,9 +52,11 @@ if(session.getAttribute("user_id") != null){
 <style>
 /*    nav ul li.dropdown:hover > ul.dropdown-menu {display:block; margin:0;} */
    nav ul li.dropdown:hover > div.dropdown-menu {display:block; margin:0;}
-  ul > li.active > a { background-color: #3163C9;}
+  ul > li.active > a { background-color: #d3e7ec;}
 /*  ul > li.active > a { background-color: #ADD8E6;} */
- .nav-item.active .category-txt{ color:white;}
+/*  .nav-item.active .category-txt{ color:white;} */
+ 
+ 
 </style>
 
 
