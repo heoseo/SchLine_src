@@ -12,7 +12,19 @@
 		  
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
-	</head>
+<style type="text/css">
+	body{
+	/* 	background: #074684; */
+	/* 	background: #b1bed5; */
+	 	background: #bee5d3;
+	
+	}
+	nav{
+		color: white;
+	}
+
+</style>
+</head>
 <!-- 강의실 왼쪽메뉴 선택바 -->
 <style>
 #icon {
@@ -24,7 +36,7 @@
 	background: #F7F7F7; 
 	text-decoration: underline;
 }
-
+ 
 </style>
 <div id="main" class="container-fluid">
 	<br/>

@@ -377,7 +377,7 @@ $('.profile-img').on('click', function () {
 <!-- 채팅 출력창 -->
 <div id="messageWindow" class="border"
    style="height: 500px; overflow: auto; padding: 20px; 
-   border-radius: 5px; border: solid 2px #145374;">
+   border-radius: 5px; border: solid 2px gray;">
 </div>
 
 <table class="table table-hover table-striped"
@@ -390,7 +390,7 @@ $('.profile-img').on('click', function () {
       <input type="hidden" id="info_img" name="info_img" value="<c:url value='/resources/profile_image/${info_img}'/>" />
    </form:form>
    <tr>
-      <td>
+      <td style="background: white;">
          <!-- 엔터키 입력시 전송 설정 --> <input type="text" id="inputMessage"
          class="form-control float-left mr-1" placeholder="채팅내용을 입력하세요."
          onkeyup="enterkey();" style="min-width: 0; width: 78%;" />

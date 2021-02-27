@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>코스 페이지 </title>
+<title>제출 파일</title>
 <!-- 상단 인클루드 -->
 <!-- 목록 
 사용자 - 개인정보, 설정
