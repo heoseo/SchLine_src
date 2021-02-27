@@ -126,8 +126,8 @@ function openSocket(){
     //ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜집
     //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
 
-//     ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
-    ws = new WebSocket("ws://192.168.0.4:8080/schline/EchoServer.do");	// 서윤
+     ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
+    //ws = new WebSocket("ws://192.168.0.4:8080/schline/EchoServer.do");	// 서윤
 
 
    //채팅창 open
