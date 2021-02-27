@@ -26,8 +26,7 @@
 					class="fas fa-chalkboard" id="icon"></i>&emsp;<span
 					style="text-align: center;">코스</span>
 				</a> <a href="/schline/class/time.do?subject_idx=${param.subject_idx }" class="list-group-item"> 
-				<i class="fab fa-youtube"id="icon"></i>&emsp;<span style="text-align: center;"
-					id="name">강의</span>
+				<i class="fab fa-youtube"id="icon"></i>&emsp;<span style="text-align: center;" id="name">강의</span>
 
 				</a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
 					id="icon"></i>&emsp;<span style="text-align: center;">협업</span>
