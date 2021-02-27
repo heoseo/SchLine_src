@@ -128,7 +128,7 @@ tr td:first-child {
    <br /><br />
    <div class="row">
       <div class="col-sm-5">
-         <form:form action="../class/studyRoomChat.do" method="post" onsubmit="return btn1();">
+         <form:form action="../studyRoom/studyRoomChat.do" method="post" onsubmit="return btn1();">
             <!-- 사진안에 글씨작성 -->
             <div class="entry" class="image">
                <br />
