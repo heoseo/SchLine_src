@@ -122,12 +122,7 @@ function openSocket(){
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    	//ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
-<<<<<<< HEAD
-    ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜집
-    //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
-=======
-    ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");
->>>>>>> daeun
+    ws = new WebSocket("ws://192.168.0.4:8080/schline/EchoServer.do");
 
 
    //채팅창 open
