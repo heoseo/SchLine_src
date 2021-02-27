@@ -24,6 +24,8 @@
 	width: 100%;
 	text-align: center;
 	border-radius:5px;
+	color: white;
+	box-shadow: 2px 2px 2px;
 }
 #loginButton button:hover {
 	background:e8e8e8;
@@ -39,7 +41,8 @@ body{
 }
 </style>
 <!-- /////////////////////Main시작////////////////////// -->
-<body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" >
+<body class="is-preload" data-spy="scroll" data-target="#myScrollspy" data-offset="1" style="
+padding: 5%; padding-left: 25%; padding-right: 25%; padding-top: 8%">
 
 	<div id="main" style="border-radius: 10px; vertical-align: middle;">
 
@@ -82,8 +85,8 @@ body{
 						<input type="text" name="id" value="201701700">
 						<span style="padding-bottom: 10px; font-size: 0.8em; color: gray; ">비밀번호</span> 
 						<input type="password" name="pass" value="qwer1234">
-					<div style="border-radius:5px; background:#44A9C5" class="loginButton">				
-						<button type="submit" id="loginButton" style="font-weight:bold;">
+					<div style="border-radius:5px; background:#44A9C5; color: white;" class="loginButton">				
+						<button type="submit" id="loginButton" style="font-weight:bold; border: 1px solid;">
 							로그인</button>
 					</div>
 					</p>
@@ -95,6 +98,6 @@ body{
 	</div>
 		
 	<!-- /////////////////////메인끝////////////////////// -->
-		</body>
+</body>
 
 </html>

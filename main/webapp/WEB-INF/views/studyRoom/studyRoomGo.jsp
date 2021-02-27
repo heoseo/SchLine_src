@@ -296,9 +296,9 @@ document.oncontextmenu = function() {
                	클릭해서 다운받으세요
             </audio>
             
- 			<table style="background-color: white;  margin: 0;color: black; font-size: 0.7em;">
- 				<tr style="text-align: right; min-height:0; height:5px;">
- 					<td>
+ 			<table style="background-color: white;  margin: 0;color: black; font-size: 0.7em; border: none;">
+ 				<tr style="text-align: right; min-height:0; height:5px; border: none;">
+ 					<td style="border: none">
 		 				<span id="current_time" ></span>
 		 				<span id="cutm" ></span> / <span id="study_time" ></span>
 		 				&nbsp;&nbsp;
@@ -309,7 +309,7 @@ document.oncontextmenu = function() {
 		 				&nbsp;&nbsp;
 					  <button id="order" data-toggle="popover" data-placement="top"
 					   title="" data-content="/닉네임/: 귓속말  , @닉네임: 프로필보기   #닉네임 : 신고"
-						   style="text-align:center;">명령어</button>
+						   style="text-align:center; border: 2px solid gray;">명령어</button>
 						<script>
 						$(document).ready(function(){
 						  $('[data-toggle="popover"]').popover();   

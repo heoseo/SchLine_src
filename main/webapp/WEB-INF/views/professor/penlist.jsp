@@ -76,7 +76,7 @@
 					<tr>
 						<td class="text-center">${row.virtualNum }</td>
 						<td class="text-left">
-							<a href="./view.do?pen_idx=${row.pen_idx}
+							<a style="color: #145374" href="./view.do?pen_idx=${row.pen_idx}
 								&nowPage=${nowPage}">${row.board_title}</a>
 						</td>
 						<td class="text-center">${row.hits }</td>
@@ -88,9 +88,9 @@
 		</c:choose>	
 			</tbody>
 		</table>
-		<table border="1" width="90%">
-		<tr>
-			<td align="center">
+		<table width="90%" style="border: none;">
+		<tr style="border: none;">
+			<td align="center" style="border: none;">
 				${pagingImg }
 			</td>
 		</tr>
