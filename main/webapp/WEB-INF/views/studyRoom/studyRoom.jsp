@@ -182,7 +182,7 @@ tr td:first-child {
                      <!--             <input type="text" id="user_id" value="lave"/> --> <!--             <input type="text" id="info_nick" value="라부" /> -->
                </span> <br />
                   <button class="btn btn-light" id="editGo" 
-                  style="font-weight: bold; margin-top: 10px;" data-toggle="modal"
+                  style="font-weight: bold; margin-top: 10px; border: solid 1px lightGray;" data-toggle="modal"
                      data-target="#myModal">수정</button> <!-- Modal 시작 -->
                   <div class="modal fade" id="myModal">
                      <div
