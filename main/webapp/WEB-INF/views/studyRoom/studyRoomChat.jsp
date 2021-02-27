@@ -201,7 +201,7 @@ function ajaxPro(d, ot_nick) {
 //           alert("아이디확인"+r);
          if(r.result==1){//반환 성공값이 1일때
              if(d==2){//프로필보기용
-               window.open("../class/openProfile.do?ot_nick="+ot_nick+"&user_id=${user_id}", "_blank", "width=600px, height=600px");
+               window.open("../class/openProfile.do?ot_nick="+ot_nick+"&user_id=${user_id}", "_blank", "width=500px, height=500px");
              }//프로필보기가 아닐경우 아무일도 하지않는다.
              else if(r.check==1){//신고하기 성공시
                   messages.innerHTML += "[알림]'"+ot_nick+"'를 신고했습니다.<br/>";
