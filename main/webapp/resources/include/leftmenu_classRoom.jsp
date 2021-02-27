@@ -39,6 +39,7 @@ $(function(){
 </script>
 <div id="main" class="container-fluid">
 
+<<<<<<< HEAD
    <div class="row content">
    <br />
       <div class="col-sm-2 sidenav">
@@ -57,6 +58,18 @@ $(function(){
                id="icon"></i>&emsp;<span style="text-align: center;"
                id="name">과제함</span>
             </a>
+=======
+	<div class="row content">
+	<br />
+		<div class="col-sm-2 sidenav">
+			<br />
+			<div class="list-group">
+				<a href="/schline/main/class.do" class="list-group-item"> <i
+					class="fas fa-chalkboard" id="icon"></i>&emsp;<span
+					style="text-align: center;">코스</span>
+				</a> <a href="/schline/class/time.do?subject_idx=${param.subject_idx }" class="list-group-item"> 
+				<i class="fab fa-youtube"id="icon"></i>&emsp;<span style="text-align: center;" id="name">강의</span>
+>>>>>>> 6279e4ef38cc759e1b1c74de4b1efe38982ba5c2
 
             </a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item" id="team"> <i class="fas fa-users"
                id="icon"></i>&emsp;<span style="text-align: center;">협업</span>

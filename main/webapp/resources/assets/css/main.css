@@ -51,6 +51,7 @@ blockquote, q {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+	border: solid 2px gray;
 }
 
 body {
@@ -102,31 +103,23 @@ input, select, textarea {
 	}
 
 	body {
-<<<<<<< HEAD
-		background-color: #ADD8E6;
-		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
-		background-image: url("images/overlay.png"), linear-gradient(45deg, #FFFFFF 0%, #eff8ff 0%);	
-=======
 		background-color: #1687a7;
 /* 		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
 /* 		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
 /* 		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
 		background-image: url("images/overlay.png"), linear-gradient(45deg, #FFFFFF 0%, #ADD8E6 0%);	
->>>>>>> daeun
 		
 	}
 
 		body.is-preload *, body.is-preload *:before, body.is-preload *:after {
-			-moz-animation: none !important;
-			-webkit-animation: none !important;
-			-ms-animation: none !important;
-			animation: none !important;
-			-moz-transition: none !important;
-			-webkit-transition: none !important;
-			-ms-transition: none !important;
-			transition: none !important;
+/* 			-moz-animation: none !important; */
+/* 			-webkit-animation: none !important; */
+/* 			-ms-animation: none !important; */
+/* 			animation: none !important; */
+/* 			-moz-transition: none !important; */
+/* 			-webkit-transition: none !important; */
+/* 			-ms-transition: none !important; */
+/* 			transition: none !important; */
 		}
 
 /* Type */
@@ -2750,10 +2743,11 @@ input, select, textarea {
 		width: 100%;
 		color: #145374;
 		font-weight: bold;
+		border: solid 2px gray;
 	}
 
 		table tbody tr {
-			border: solid 1px;
+			border: solid 1px gray;
 			border-left: 0;
 			border-right: 0;
 		}
@@ -2771,11 +2765,11 @@ input, select, textarea {
 		}
 
 		table thead {
-			border-bottom: solid 2px;
+			border-bottom: solid 2px gray;
 		}
 
 		table tfoot {
-			border-top: solid 2px;
+			border-top: solid 2px gray;
 		}
 
 		table.alt {
@@ -2783,7 +2777,7 @@ input, select, textarea {
 		}
 
 			table.alt tbody tr td {
-				border: solid 1px;
+				border: solid 2px gray;
 				border-left-width: 0;
 				border-top-width: 0;
 				
@@ -2806,7 +2800,7 @@ input, select, textarea {
 			}
 
 	table tbody tr {
-		border-color: rgba(255, 255, 255, 0.35);
+		border-color: gray;
 	}
 
 		table tbody tr:nth-child(2n + 1) {
@@ -2819,15 +2813,15 @@ input, select, textarea {
 	}
 
 	table thead {
-		border-bottom-color: rgba(255, 255, 255, 0.35);
+		border-bottom-color: gray;
 	}
 
 	table tfoot {
-		border-top-color: rgba(255, 255, 255, 0.35);
+		border-top-color: gray;
 	}
 
 	table.alt tbody tr td {
-		border-color: rgba(255, 255, 255, 0.35);
+		border-color: gray;
 	}
 
 /* Features */
@@ -3675,7 +3669,7 @@ input, select, textarea {
 		}
 
 		#main table tbody tr {
-/* 			border-color: #dddddd; */
+/* 			border-color: gray; */
 		}
 
 		#main table tbody tr:nth-child(2n + 1) {
@@ -3688,24 +3682,24 @@ input, select, textarea {
 		}
 
 		#main table thead {
-			border-bottom-color: #dddddd;
+			border-bottom-color: gray;
 		}
 
 		#main table tfoot {
-			border-top-color: #dddddd;
+			border-top-color: gray;
 		}
 
 		#main table.alt tbody tr td {
-			border-color: #dddddd;
+			border-color: gray;
 		}
 
 		#main .spotlight .image {
-			border-color: #dddddd;
+			border-color: gray;
 		}
 
 		#main > .main {
 			padding: 5em 5em 3em 5em ;
-			border-top: solid 1px #dddddd;
+			border-top: solid 1px gray;
 		}
 
 			#main > .main:first-child {
