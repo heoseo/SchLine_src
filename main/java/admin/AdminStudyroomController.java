@@ -1,5 +1,7 @@
 package admin;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import admin.model.AdminAttendTemplateDAO;
+import admin.model.AdminStudyRoomTemplateDAO;
 import admin.model.ClassListCommand;
 import admin.model.StudyRoomListCommand;
 import admin.model.UserListCommand;
@@ -44,6 +48,25 @@ public class AdminStudyroomController {
 		command.execute(model);
 		
 		return "admin/studyRoom/userList";
+	}
+	
+	
+	@RequestMapping("/admin/studyRoom/editBlackList")
+	public String editBlackList( Model model, HttpServletRequest req) {
+		
+
+		String user_id = req.getParameter("user_id");
+        
+		
+		Map<String, Object> paramMap = model.asMap();
+		paramMap.put("user_id", user_id);
+
+		AdminStudyRoomTemplateDAO attendDAO = new AdminStudyRoomTemplateDAO(); 
+		attendDAO.editBlackList(paramMap);
+		
+		
+		return "admin/attend/attendList";
+		
 	}
 	
 	
