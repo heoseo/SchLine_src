@@ -52,13 +52,19 @@ if(session.getAttribute("user_id") != null){
 <style>
 /*    nav ul li.dropdown:hover > ul.dropdown-menu {display:block; margin:0;} */
    nav ul li.dropdown:hover > div.dropdown-menu {display:block; margin:0;}
- ul > li.active > a { background-color: #6B66FF;}
+  ul > li.active > a { background-color: #3163C9;}
+/*  ul > li.active > a { background-color: #ADD8E6;} */
  .nav-item.active .category-txt{ color:white;}
 </style>
 
 
 <script>
 $(function(){
+/*    var sBtn = $("ul > li");    //  ul > li 이를 sBtn으로 칭한다. (클릭이벤트는 li에 적용 된다.)
+   sBtn.find("a").click(function(){   // sBtn에 속해 있는  a 찾아 클릭 하면.
+      sBtn.removeClass("active");     // sBtn 속에 (active) 클래스를 삭제 한다.
+       $(this).parent().addClass("active"); // 클릭한 a에 (active)클래스를 넣는다.
+   }) */
    if(location.pathname.indexOf('class') != -1) {
    $('#classRoom').addClass('active');
    }
@@ -106,8 +112,8 @@ $(function(){
                &nbsp;</i><%=session.getAttribute("user_name") %></a></li>
             <li><a href="javascript:document.logout.submit()">
             <i class="fas fa-sign-out-alt" style="font-size:25px;">&nbsp;</i>
-               <span class="category-txt">로그아웃</span>
-               </a></li>
+            	<span class="category-txt">로그아웃</span>
+            	</a></li>
          </ul>
       </nav>
       

@@ -48,7 +48,7 @@ public class StudyRoomController {
 	
 	
 	//공부방 메인
-	@RequestMapping("/class/studyRoom.do")
+	@RequestMapping("/studyRoom/studyRoom.do")
 	public String studyRoom (HttpSession session, Model model, Principal principal) {
 		
 		/*
@@ -112,7 +112,7 @@ public class StudyRoomController {
 	
 	//마이바티스로 변경
 	//공부방 채팅 이동
-	@RequestMapping("/class/studyRoomChat.do")
+	@RequestMapping("/studyRoom/studyRoomChat.do")
 	public String studyRoomChatGo(Model model, HttpServletRequest req, HttpSession session,
 			Authentication authentication) {
 		

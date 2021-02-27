@@ -133,55 +133,53 @@
 												<c:forEach items="${attendLists }" var="attendList" 
 													varStatus="loop2">
 													<tr>
-<c:forEach items="${attendList }" var="attend" 
-varStatus="loop2">
-	<!-- 리스트반복시작 -->
-		<c:choose>
-			<c:when test="${loop2.count eq 1 }">
-			<td >${attend.user_id }</td>
-			</c:when>
-			<c:when test="${loop2.count eq 2 }">
-			<td >${attend.user_name }</td>
-			</c:when>
-			<c:otherwise>
-			<td>
-			<a href='javascript:void(0);' onclick='show_pop(${attend.attendance_flag }, "${attend.attendance_idx }");'>
-				${attend.attendance_flag }</a>
-			</td>
-			</c:otherwise>
-		</c:choose>
-</c:forEach>
+													<c:forEach items="${attendList }" var="attend" 
+													varStatus="loop2">
+														<!-- 리스트반복시작 -->
+															<c:choose>
+																<c:when test="${loop2.count eq 1 }">
+																<td >${attend.user_id }</td>
+																</c:when>
+																<c:when test="${loop2.count eq 2 }">
+																<td >${attend.user_name }</td>
+																</c:when>
+																<c:otherwise>
+																<td>
+																<a href='javascript:void(0);' onclick='show_pop(${attend.attendance_flag }, "${attend.attendance_idx }");'>
+																	<c:if test="${attend.attendance_flag eq 0 }">X</c:if>
+																	<c:if test="${attend.attendance_flag eq 1 }">0</c:if>
+																</a>
+																</td>
+																</c:otherwise>
+															</c:choose>
+													</c:forEach>
 													</tr>
 												</c:forEach>
 											</c:otherwise>
 										</c:choose>
 										
 										<!-- The Modal -->
-									    <div id="changeModal" class="modal">
-									 
-									      <!-- Modal content -->
-									      <div class="modal-content">
-								                <p style="text-align: center; line-height: 1.5;"><span style="font-size: 14pt;">출석 변경</span></p>
+										  <div class="modal" id="changeModal">
+										    <div class="modal-dialog">
+										      <div class="modal-content">
+										      
+										      	<p style="text-align: center; line-height: 1.5;"><span style="font-size: 14pt;">출석 변경</span></p>
 									            
-									            <form:form name="change_flag_frm" id="change_flag_frm" role="search" class="app-search hidden-xs" >
 						                
-													<select name="attendance_flag" id="attendance_flag" class="form-control" style="width:120px; margin-bottom:15px;" >
-													    <option value="1">O</option>
-													    <option value="0">X</option>
-													</select>
+						                						<select name="attendance_flag" id="attendance_flag" class="form-control" style="width:120px; margin-bottom:15px;" >
+																    <option value="1">O</option>
+																    <option value="0">X</option>
+																</select>
+													          <button type="button" class="btn btn-danger" data-dismiss="modal" onClick="close_pop();">Close</button>
 													
-													<input type="hiddesn" id="attendance_idx" name="attendance_idx" value="" />
-						                        </form:form>
-									            
-									            <div style="cursor:pointer;background-color:#DDDDDD;text-align: center;padding-bottom: 10px;padding-top: 10px;" onClick="close_pop();">
-									                <span class="pop_bt" style="font-size: 13pt;" >
-									                     닫기
-									                </span>
-									            </div>
-									      </div>
-									 
-									    </div>
-									        <!--End Modal-->
+													
+													<input type="hidden" id="attendance_idx" name="attendance_idx" value="" />
+										        
+										        
+										      </div>
+										    </div>
+										  </div>
+										
 									 
 									 
 									    <script>

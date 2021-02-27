@@ -166,7 +166,7 @@ $(function() {
 							<span class="calYear" id="calYear"><%=now_year%></span><span>년</span> 
 							<span class="calMon" id="calMon"><%=now_month%></span><span>월</span>
 						
-							&nbsp&nbsp
+							&nbsp;&nbsp;
 							<span id="button">
 								<!-- 캘린더 버튼. 이전달달 -->
 								<button id="calBefore" class="button small">
