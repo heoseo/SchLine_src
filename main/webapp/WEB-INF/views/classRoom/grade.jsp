@@ -67,7 +67,7 @@
 			</c:when>
 			<c:otherwise>
 						<tr>
-							<td colspan="10" style="text-align:center; font-size:1.2em">과제 현황</td>
+							<td colspan="10" style="text-align:center; font-size:1.2em">성적</td>
 						</tr>
 						<tr align="center" align="center">
 							<c:forEach items="${gradelists }" var="row">
