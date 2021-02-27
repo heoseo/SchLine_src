@@ -29,24 +29,26 @@
 				<i class="fab fa-youtube"
 					id="icon"></i>&emsp;<span style="text-align: center;"
 					id="name">강의</span>
-
-				</a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
-					id="icon"></i>&emsp;<span style="text-align: center;">협업</span>
-					
-				<a href="/schline/class/grade.do?subject_idx=${param.subject_idx }" class="list-group-item">
-					<i class="fas fa-file-alt" id="icon"></i>&emsp;
-					<span style="text-align: center;" id="name">성적</span>
-					
-				</a> <a href="/schline/class/examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
-					class="fas fa-clipboard-check" id="icon"></i>&emsp;<span
-					style="text-align: center;" id="name">시험</span>
 				</a> 
 				
 				<a href="/schline/class/taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item"> <i class="fa fa-archive"
 					id="icon"></i>&emsp;<span style="text-align: center;"
 					id="name">과제함</span>
 				</a>
-
+				<a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item"> <i class="fas fa-users"
+					id="icon"></i>&emsp;<span style="text-align: center;">협업</span>
+				</a>
+					
+				<a href="/schline/class/examStart.do?subject_idx=${param.subject_idx }&exam_type=2" class="list-group-item"> <i
+					class="fas fa-clipboard-check" id="icon"></i>&emsp;<span
+					style="text-align: center;" id="name">시험</span>
+				</a> 
+				<a href="/schline/class/grade.do?subject_idx=${param.subject_idx }" class="list-group-item">
+					<i class="fas fa-file-alt" id="icon"></i>&emsp;
+					<span style="text-align: center;" id="name">성적</span>
+					
+				</a> 
+				
 
             <div class="dropdown dropright">
                <div class="list-group-item dropdown-toggle" data-toggle="dropdown">

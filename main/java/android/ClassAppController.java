@@ -74,7 +74,7 @@ public ArrayList<ClassDTO> courseList(HttpServletRequest req){
 	}
 	@RequestMapping("/android/atupdate.do")
 	@ResponseBody
-    public String atupdate(HttpServletRequest req, HttpSession session) {
+    public void atupdate(HttpServletRequest req, HttpSession session) {
        String idx = req.getParameter("idx");
        String play = req.getParameter("play");
        String current = req.getParameter("current");
@@ -85,10 +85,10 @@ public ArrayList<ClassDTO> courseList(HttpServletRequest req){
        dto.setPlay_time(play);
        dto.setVideo_idx(idx);
        dto.setUser_id(req.getParameter("user_id"));
-       System.out.println("안드 디비 업뎃");
+       System.out.println("안드디비 idx"+idx+" 플레이"+play+" current"+current+" attend:"+attend+"아이디"+dto.getUser_id());
        sqlSession.getMapper(ClassDTOImpl.class).atupdatedb(dto);
        
-       return "10초마다dp";
+    
         
     }
 }
