@@ -31,10 +31,10 @@ function openSocket(){
    //해당컴에 해당하는 경로로 변경해주기!
    //ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
 
-   //ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
+   ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
     //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
 
-   ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
+   //ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
 
 
    
@@ -377,10 +377,10 @@ $('.profile-img').on('click', function () {
 <!-- 채팅 출력창 -->
 <div id="messageWindow" class="border"
    style="height: 500px; overflow: auto; padding: 20px; 
-   border-radius: 5px; border: solid 2px #145374;">
+   border-radius: 5px; bo border-color: #145374; border: solid 2px #145374;">
 </div>
 
-<table class="table table-hover table-striped"
+<table class="table table-bordered table-hover table-striped"
    style="min-width: 0; width: 100%; max-height: 100%;">
    <!-- 히든폼으로 사용자정보 가져오기 -->
    <form:form id="peopleFrm">
