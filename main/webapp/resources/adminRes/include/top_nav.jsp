@@ -5,8 +5,10 @@
             <div class="navbar-header"> <a class="navbar-toggle hidden-sm hidden-md hidden-lg "
                     href="javascript:void(0)" data-toggle="collapse" data-target=".navbar-collapse"><i
                         class="fa fa-bars"></i></a>
-                <div class="top-left-part"><a style="margin-left: 20px; margin-bottom: 10px;"class="logo" href="<%=request.getContextPath()%>"><b><img
-                                src="<%=request.getContextPath() %>/resources/images/mini_logo.png" alt="home" /></b></a>
+                <div class="top-left-part">
+                	<a style="margin-left: 10px; margin-bottom: 10px;"class="logo" href="<%=request.getContextPath()%>"><b>
+                		<img style="height : 60%;" src="<%=request.getContextPath() %>/resources/images/logo.png" alt="home" /></b>
+                	</a>
                 </div>
                 <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
                     <li>

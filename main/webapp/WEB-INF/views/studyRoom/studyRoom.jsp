@@ -128,7 +128,7 @@ tr td:first-child {
    <br /><br />
    <div class="row">
       <div class="col-sm-5">
-         <form:form action="../class/studyRoomChat.do" method="post" onsubmit="return btn1();">
+         <form:form action="../studyRoom/studyRoomChat.do" method="post" onsubmit="return btn1();">
             <!-- 사진안에 글씨작성 -->
             <div class="entry" class="image">
                <br />
@@ -182,7 +182,7 @@ tr td:first-child {
                      <!--             <input type="text" id="user_id" value="lave"/> --> <!--             <input type="text" id="info_nick" value="라부" /> -->
                </span> <br />
                   <button class="btn btn-light" id="editGo" 
-                  style="font-weight: bold; margin-top: 10px;" data-toggle="modal"
+                  style="font-weight: bold; margin-top: 10px; border: solid 1px lightGray;" data-toggle="modal"
                      data-target="#myModal">수정</button> <!-- Modal 시작 -->
                   <div class="modal fade" id="myModal">
                      <div

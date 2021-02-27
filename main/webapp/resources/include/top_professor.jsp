@@ -37,17 +37,9 @@ header{
   justify-content: space-between;
   align-items: center;
 }
-body{
-
- 	background: #bee5d3;
-	
-}
-nav{
-	color: white;
-}
-a{
-color: white;
-}
+body{background: #bee5d3;}
+nav{color: white;}
+a{color: white;}
 </style>
 	</head>
 	

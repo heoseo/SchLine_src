@@ -96,4 +96,23 @@ public class AdminStudyRoomTemplateDAO {
 	
 
 	
+	
+	
+public void editBlackList(Map<String, Object> map) {
+		
+		String sql = "	UPDATE chattinginfo_tb "
+				+ "		SET reported_count=0 "
+				+ "		WHERE user_id=? ";
+		
+		final String user_id = (String) map.get("user_id");
+		
+		template.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+				ps.setString(1, user_id);
+			}
+		});
+	}
+	
 }

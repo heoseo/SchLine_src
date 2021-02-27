@@ -24,7 +24,7 @@ function openSocket(){
    if(ws !== undefined && ws.readyState !== WebSocket.CLOSED ){
       writeResponse("WebSocket is already opened.");
       return;
-   }
+   }zz
    
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
@@ -34,8 +34,9 @@ function openSocket(){
    //ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
     //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
 
-   ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
+//    ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
 
+   ws = new WebSocket("ws://192.168.0.4:8080/schline/EchoServer.do"); // 서윤
 
    
    //채팅창 open
@@ -380,7 +381,7 @@ $('.profile-img').on('click', function () {
    border-radius: 5px; border: solid 2px gray;">
 </div>
 
-<table class="table table-hover table-striped"
+<table class="table table-bordered table-hover table-striped"
    style="min-width: 0; width: 100%; max-height: 100%;">
    <!-- 히든폼으로 사용자정보 가져오기 -->
    <form:form id="peopleFrm">

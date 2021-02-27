@@ -114,7 +114,6 @@ public class AdminAttendTemplateDAO {
 		String sql = "	UPDATE attendance_tb "
 				+ "		SET attendance_flag=? "
 				+ "		WHERE attendance_idx=? ";
-		System.out.println("flag : " + map.get("attendance_flag")+ " idx : " + map.get("attendance_idx"));
 		
 		final int attendance_flag = Integer.parseInt((String) map.get("attendance_flag"));
 		final int attendance_idx = Integer.parseInt((String) map.get("attendance_idx"));
