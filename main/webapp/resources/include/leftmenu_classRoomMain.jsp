@@ -25,7 +25,16 @@
 	text-decoration: underline;
 }
 </style>
-
+<script>
+$(function(){
+	   if(location.pathname.indexOf('totalTask') != -1) {
+	   $('#totalTask').addClass('active');
+	   }
+	   else if(location.pathname.indexOf('main/class') != -1) {
+	   $('#mainclass').addClass('active');
+	   }
+	})
+</script>
 <div id="main" class="container-fluid">
 <br />
 	<div class="row content">
@@ -33,11 +42,11 @@
 		<div class="col-sm-2 sidenav">
 			<div class="list-group">
 
-			    <a href="/schline/main/class.do" class="list-group-item">
+			    <a href="/schline/main/class.do" class="list-group-item" id="mainclass">
 			    	<i class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i>
 					<span style="text-align: center;">코스</span>
 				</a>
-				<a href="/schline/class/totalTask.do" class="list-group-item">
+				<a href="/schline/class/totalTask.do" class="list-group-item" id="totalTask">
 					<i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
 					<!-- 기존거★ -->
 <!-- 						<span style="text-align: center;">종합과제함</span> -->

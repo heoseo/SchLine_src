@@ -26,6 +26,22 @@
 	text-decoration: underline;
 }
 </style>
+<script>
+$(function(){
+	   if(location.pathname.indexOf('userinfo') != -1) {
+	   $('#userinfo').addClass('active');
+	   }
+	   else if(location.pathname.indexOf('SubjectAtten') != -1) {
+	   $('#SubjectAtten').addClass('active');
+	   }
+	   else if(location.pathname.indexOf('SubjectGrade') != -1) {
+	   $('#SubjectGrade').addClass('active');
+	   }
+	   else if(location.pathname.indexOf('SubjectFile') != -1) {
+	   $('#SubjectFile').addClass('active');
+	   }
+	})
+</script>
 <div id="main" class="container-fluid">
 	<br/>
 	<div class="row content">
@@ -34,22 +50,22 @@
 				<div class="list-group">
 				
 				<!-- 기존 코스★★★★★ -->
-					<a href="userinfo.do" class="list-group-item">
+					<a href="userinfo.do" class="list-group-item" id="userinfo">
 						<i class="	fas fa-user-alt" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">사용자</span>
 					</a>
 					
-					<a href="SubjectAtten.do" class="list-group-item">
+					<a href="SubjectAtten.do" class="list-group-item" id="SubjectAtten">
 						<i class="fas fa-book-reader" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">출결 현황</span>
 					</a>
 					
-					<a href="SubjectGrade.do" class="list-group-item">
+					<a href="SubjectGrade.do" class="list-group-item" id="SubjectGrade">
 						<i class="fas fa-lightbulb" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">성적 조회</span>
 					</a>
 					
-					<a href="SubjectFile.do" class="list-group-item">
+					<a href="SubjectFile.do" class="list-group-item" id="SubjectFile">
 						<i class="fas fa-folder" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">제출 파일</span>
 					</a>

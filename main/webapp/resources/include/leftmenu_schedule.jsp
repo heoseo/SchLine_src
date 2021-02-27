@@ -8,6 +8,16 @@
 	padding-left: 5px;
 }
 </style>
+<script>
+$(function(){
+	   if(location.pathname.indexOf('calendar') != -1) {
+	   $('#calendar').addClass('active');
+	   }
+	   else if(location.pathname.indexOf('alertList') != -1) {
+	   $('#alertList').addClass('active');
+	   }
+	})
+</script>
 <!-- 강의실 왼쪽메뉴 선택바 -->
 <div id="main" class="container-fluid">
 
@@ -17,11 +27,11 @@
 			<br />
 			<div class="list-group">
 				<!-- fas fa-clock, fas fa-bell -->
-				<a href="<%=request.getContextPath() %>/schedule/alertList.do?type=allBoard" class="list-group-item">
+				<a href="<%=request.getContextPath() %>/schedule/alertList.do?type=allBoard" class="list-group-item" id="alertList">
 					<i class="fas fa-clock" id="icon">&nbsp&nbsp</i>
 					<span>공지사항</span>
 				</a>
-				<a href="<%=request.getContextPath() %>/schedule/calendar.do" class="list-group-item">
+				<a href="<%=request.getContextPath() %>/schedule/calendar.do" class="list-group-item" id="calendar">
 					<i class="far fa-calendar-alt" id="icon">&nbsp&nbsp</i>
 					<span style="text-align: center;">캘린더</span>
 				</a>
