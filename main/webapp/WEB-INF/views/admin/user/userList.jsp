@@ -7,7 +7,14 @@
 
 <!DOCTYPE html>
 <html>
+<script>
+function changeUserType(d){
+	var searchColumn = d.value;
+	console.log("searchColumn : " + searchColumn);
+	location.href="/schline/admin/userList?searchColumn="+searchColumn;
+}
 
+</script>
 
 <head>
 	<%@ include file="/resources/adminRes/include/head.jsp" %>
@@ -40,9 +47,9 @@
                 <div class="row">
 	                <ul class="nav navbar-top-links navbar-left m-l-20 hidden-xs">
 	                    <li>
-	               			<form:form role="search" class="app-search hidden-xs">
+	               			<form:form role="search" class="app-search hidden-xs" >
 	                
-								<select name="searchColumn" class="form-control" style="width:120px; margin-bottom:15px;">
+								<select name="searchColumn" class="form-control" style="width:120px; margin-bottom:15px;" onchange="changeUserType(this)">
 									<c:if test="${ not empty paramMap}">
 									    <option value="PROFESSOR" <c:if test="${paramMap.searchColumn == 'PROFESSOR'}">selected</c:if>>교수</option>
 									    <option value="STUDENT" <c:if test="${paramMap.searchColumn == 'STUDENT'}">selected</c:if>>학생</option>
@@ -50,7 +57,7 @@
 									</c:if>
 								</select>
 		                            <input name="searchWord" type="text" placeholder="Search..." class="form-control">
-		                            	 <a href="/schline/admin/userList"><i class="fa fa-search"></i></a>
+		                            	 <a href="/schline/admin/userList?searchColumn=${paramMap.searchColumn }&searchWord=${paramMap.searchWord}"><i class="fa fa-search"></i></a>
 	                        </form:form>
                          </li>
 	                </ul>
@@ -63,6 +70,9 @@
                                             <th>#</th>
                                             <th>ID</th>
                                             <th>이름</th>
+                                            <c:if test="${showProfessor eq 'im_professor'}">
+                                            <th>담당과목</th>
+                                            </c:if>
                                             <th>연락처</th>
                                             <th>이메일</th>
                                         </tr>
@@ -84,6 +94,10 @@
 														<td >${row.virtualNum }</td>
 														<td >${row.user_id}</td>
 														<td >${row.user_name }</td>
+														<c:if test="${showProfessor eq 'im_professor'}">
+			                                            <td><a href="">${row.subject_name }</a></td>
+			                                            <input type="hidden" value="${row.subject_idx }"/>
+			                                            </c:if>
 														<td >${row.phone_num }</td>
 														<td >${row.email }</td>
 														<!-- <td class="text-center">--</td> -->
@@ -107,8 +121,6 @@
                 </div>
             </div>
             <!-- /.container-fluid -->
-            <footer class="footer text-center"> 2020 &copy; Pixel Admin brought to you by <a
-                    href="https://www.wrappixel.com/">wrappixel.com</a> </footer>
         </div>
         <!-- /#page-wrapper -->
     </div>

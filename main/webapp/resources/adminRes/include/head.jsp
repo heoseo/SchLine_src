@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  
+<head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,8 +12,7 @@
         content="Pixel Admin is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
     <meta name="robots" content="noindex,nofollow">
     <title>Pixel Admin Template by WrapPixel</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/adminRes/jquery/jquery-3.5.1.min.js"></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"/></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrollex.min.js"/></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrolly.min.js"/></script>
@@ -19,6 +20,8 @@
 	<script src="<%=request.getContextPath() %>/resources/assets/js/breakpoints.min.js"/></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/util.js"/></script>
 	<script src="<%=request.getContextPath() %>/resources/assets/js/main.js"/></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="canonical" href="https://www.wrappixel.com/templates/pixel-admin-lite/" />
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16"
@@ -43,3 +46,13 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+</head>
+
+<style>
+*{
+/* font-size: larger; */
+}
+</style>
+<%-- 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"/></script> --%>
+<%-- 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrollex.min.js"/></script> --%>
+<%-- 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrolly.min.js"/></script> --%>

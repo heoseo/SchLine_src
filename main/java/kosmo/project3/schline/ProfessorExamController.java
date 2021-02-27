@@ -331,7 +331,16 @@ public class ProfessorExamController {
 		String user_id = principal.getName();
 		String exam_idx = req.getParameter("exam_idx");
 		String exam_name = req.getParameter("exam_name");
-		String exam_date = req.getParameter("exam_date");
+		String getdata = req.getParameter("exam_date");
+	    SimpleDateFormat date12Format = new SimpleDateFormat("MM/dd/yyyy hh:mm a", Locale.US);
+	    SimpleDateFormat date24Format = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+	    String exam_date = "";
+	    try {
+	    	exam_date = date24Format.format(date12Format.parse(getdata)).toString();
+		}
+	    catch (ParseException e) {
+			e.printStackTrace();
+		}
 		String exam_content = req.getParameter("exam_content");
 		String exam_scoring = req.getParameter("exam_scoring");
 		System.out.printf("user_id: %s, exam_name: %s, exam_date: %s, exam_content: %s, score:%s"
@@ -340,7 +349,6 @@ public class ProfessorExamController {
 		int result = sqlSession.getMapper(SchlineDAOImpl.class)
 				.updateTask(exam_name, exam_date, exam_content, exam_scoring, exam_idx);
 		System.out.println("과제수정결과:"+result);
-		
 		
 		if(result==1) {
 			map.put("result", result);
