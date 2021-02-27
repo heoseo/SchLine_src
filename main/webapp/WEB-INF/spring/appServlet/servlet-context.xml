@@ -69,17 +69,8 @@ http://www.springframework.org/schema/task http://www.springframework.org/schema
    </beans:bean>
    
    
-   <!-- 웹소켓 -->
-    <websocket:handlers>
-      <websocket:mapping handler="echoHandler" path="/echo.do" />
-      <websocket:sockjs />
-   </websocket:handlers>
-    <!-- /echo로 요청이 들어오면 WebSocket을 
-        kosmo.project3.schline.EchoHandler 클래스에서 처리함 -->
-   <beans:bean id="echoHandler" class="kosmo.project3.schline.EchoHandler"></beans:bean>
-      <!-- 여기서 정의 안한다면 @ServerEndpoint(path)로 정의가능 -->
-      
-      
+
+     
       
    <!-- 파일업로드를 위한 빈 생성 -->
     <beans:bean id="multipartResolver"
