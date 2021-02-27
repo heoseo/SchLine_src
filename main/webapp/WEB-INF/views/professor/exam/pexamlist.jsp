@@ -254,7 +254,7 @@ textarea { height : 200px; }
  	<input type="text" name="exam_date" id="task_date" class="form-control datetimepicker-input" data-target="#datetimepicker1">
  	<div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker"> 
  	<div class="input-group-text"><i class="fa fa-calendar"></i></div> </div> </div>
- 	
+
  	</td>
  	<td style="width:10%; border: 1px solid gray;"><input type="number" name="exam_scoring" id="task_scoring" style="width:100%; border: 1px solid gray;"/></td>
  	</tr>

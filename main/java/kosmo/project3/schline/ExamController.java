@@ -68,7 +68,7 @@ public class ExamController {
 		map.put("user_name", user_name);
 		map.put("subject_name", subject_name);
 		
-		//시험일때 경로(시험시작)(equals 대신 자꾸 ==을 쓰네요..)
+		//시험일때 경로(시험시작)
 		if(!exam_type.equals("1")) {
 			
 			

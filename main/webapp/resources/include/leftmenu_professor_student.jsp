@@ -36,7 +36,17 @@
 	background: #F7F7F7; 
 	text-decoration: underline;
 }
- 
+
+
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #a7c3ca;
+    border-color: #a7c3ca;
+}
+
+
 </style>
 <div id="main" class="container-fluid">
 	<br/>
