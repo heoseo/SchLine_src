@@ -7,6 +7,14 @@
    text-align: left;
    padding-left: 5px;
 }
+
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #a7c3ca;
+    border-color: #a7c3ca;
+}
 </style>
 <script>
 $(function(){

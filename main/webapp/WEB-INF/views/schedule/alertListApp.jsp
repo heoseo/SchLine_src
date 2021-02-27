@@ -42,9 +42,11 @@ function paging(nowPage){
 <style type="text/css">
 body {
 	margin: 0 auto;
+	background-color : #fff;
 	padding-left: 10px;
 	padding-right: 10px;
-  	height: 51em
+  	height: 51em;
+  	background-image: url(images/overlay.png), linear-gradient(45deg, #FFFFFF 0%, #fff 0%);
 }
 #selectBoard{
 	margin-bottom: 15px;
