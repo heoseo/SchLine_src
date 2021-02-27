@@ -15,6 +15,14 @@
    </head>
 <!-- 강의실 왼쪽메뉴 선택바 -->
 <style>
+
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #a7c3ca;
+    border-color: #a7c3ca;
+}
 #icon {
    font-size: 20px;
    text-align: left;
@@ -24,6 +32,14 @@
    color: black;
    background: #F7F7F7; 
    text-decoration: underline;
+}
+
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #a7c3ca;
+    border-color: #a7c3ca;
 }
 </style>
 <script>
