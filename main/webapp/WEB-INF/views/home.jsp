@@ -43,7 +43,7 @@ body{
 
 	<div id="main" style="border-radius: 10px; vertical-align: middle;">
 
-		<div style="text-align: center; background:#ADD8E6; 
+		<div style="text-align: center; background:#44A9C5; 
 		 padding-bottom: 10px; padding-top: 10px;" >
 			<img src="<%=request.getContextPath() %>/resources/images/logo.png" width="200px" alt="스쿨라인 로고"  class="img-circle" />
 		</div>
@@ -82,7 +82,7 @@ body{
 						<input type="text" name="id" value="201701700">
 						<span style="padding-bottom: 10px; font-size: 0.8em; color: gray; ">비밀번호</span> 
 						<input type="password" name="pass" value="qwer1234">
-					<div style="border-radius:5px; background:#ADD8E6;" class="loginButton">				
+					<div style="border-radius:5px; background:#44A9C5;" class="loginButton">				
 						<button type="submit" id="loginButton" style="font-weight:bold;">
 							로그인</button>
 					</div>
