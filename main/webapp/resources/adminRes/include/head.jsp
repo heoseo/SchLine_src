@@ -47,6 +47,12 @@
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
+
+<style>
+*{
+/* font-size: larger; */
+}
+</style>
 <%-- 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"/></script> --%>
 <%-- 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrollex.min.js"/></script> --%>
 <%-- 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.scrolly.min.js"/></script> --%>

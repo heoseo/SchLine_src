@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 
-import schline.AttendanceDTO;
 import schline.ClassDTO;
 import schline.UserVO;
 import schline.util.JdbcTemplateConst;
@@ -25,7 +24,6 @@ public class AdminAttendTemplateDAO {
 	
 	public AdminAttendTemplateDAO() {
 		this.template = JdbcTemplateConst.template;
-		System.out.println("AdminUserTemplateDAO() 생성자 호출");
 	}
 	
 	public void close() {
@@ -74,7 +72,6 @@ public class AdminAttendTemplateDAO {
 		
 		
 		
-		
 		return (ArrayList<Admin_UserVO>)
 				template.query(sql, 
 				new BeanPropertyRowMapper<Admin_UserVO>(
@@ -84,18 +81,24 @@ public class AdminAttendTemplateDAO {
 	
 	public ArrayList<AttendanceDTO> attendList(
 			Map<String, Object> map){
-		
-		
+		String subject_name =  (String) map.get("subject_name");
+		if (subject_name == null) subject_name = "자바";
 		
 		String sql = " 	SELECT Tb.*, rownum rNum "
 				+ "		FROM ( "
 			    + " 			SELECT * "
 			    + "				FROM attendance_tb A "
 				+ " 			INNER JOIN video_tb V ON A.video_idx=V.video_idx "
-				+ " 			WHERE subject_idx = "+ map.get("subject_idx")+" AND user_id = " + map.get("subject_idx") 
+				+ " 			WHERE subject_idx = (SELECT subject_idx "
+				+ "									FROM subject_tb "
+				+ "									WHERE subject_name LIKE '%"+ subject_name +"%' "
+				+ "									)"
+				+ "					AND user_id = (	SELECT user_id "
+				+ "									FROM user_tb "
+				+ "									WHERE user_name LIKE '%" + map.get("searchUser") +"%' "
+				+ "									)" 
 				+ " 			ORDER BY A.video_idx asc   "
 				+ "			 ) Tb ";
-		
 		
 		
 		
@@ -104,6 +107,29 @@ public class AdminAttendTemplateDAO {
 				template.query(sql, 
 				new BeanPropertyRowMapper<AttendanceDTO>(
 						AttendanceDTO.class));
+	}
+	
+	public void editAttend(Map<String, Object> map) {
+		
+		String sql = "	UPDATE attendance_tb "
+				+ "		SET attendance_flag=? "
+				+ "		WHERE attendance_idx=? ";
+		System.out.println("flag : " + map.get("attendance_flag")+ " idx : " + map.get("attendance_idx"));
+		
+		final int attendance_flag = Integer.parseInt((String) map.get("attendance_flag"));
+		final int attendance_idx = Integer.parseInt((String) map.get("attendance_idx"));
+		
+		
+		template.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement ps) throws SQLException {
+
+				ps.setInt(1, attendance_flag);
+				ps.setInt(2, attendance_idx);
+				
+			}
+		});
 	}
 
 }
