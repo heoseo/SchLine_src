@@ -47,7 +47,7 @@ align-content: center;
 </head>
 
 <!-- body 시작 -->
-<body class="is-preload">	
+<body class="is-preload" style="background:white;">	
 
 	<!-- 읽은 공지사항 리스트 출력하기 -->
 	<c:forEach items="${viewList }" var="row">
