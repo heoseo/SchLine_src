@@ -22,6 +22,7 @@
 }
 
 
+<<<<<<< HEAD
 
 </style>
 <script>
@@ -47,28 +48,26 @@ $(function(){
    })
 </script>
 <div id="main" class="container-fluid">
+	<div class="row content">
+	<br />
+		<div class="col-sm-2 sidenav">
+			<br />
+			<div class="list-group">
+				<a href="/schline/main/class.do" class="list-group-item"> <i
+					class="fas fa-chalkboard" id="icon"></i>&emsp;<span
+					style="text-align: center;">코스</span>
+				</a> <a href="/schline/class/time.do?subject_idx=${param.subject_idx }" class="list-group-item"> 
+				<i class="fab fa-youtube"
+					id="icon"></i>&emsp;<span style="text-align: center;"
+					id="name">강의</span>
+				</a> 
+				
+				<a href="/schline/class/taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item"> <i class="fa fa-archive"
+					id="icon"></i>&emsp;<span style="text-align: center;"
+					id="name">과제함</span>
+				</a>
 
-   <div class="row content">
-   <br />
-      <div class="col-sm-2 sidenav">
-         <br />
-         <div class="list-group">
-            <a href="/schline/main/class.do" class="list-group-item"> <i
-               class="fas fa-chalkboard" id="icon"></i>&emsp;<span
-               style="text-align: center;">코스</span>
-            </a> 
-            <a href="/schline/class/time.do?subject_idx=${param.subject_idx }" class="list-group-item" id="time"> 
-            <i class="fab fa-youtube active"
-               id="icon"></i>&emsp;<span style="text-align: center;"
-               id="name">강의</span>
-            </a>   
-               
-             <a href="/schline/class/taskList.do?subject_idx=${param.subject_idx }&exam_type=1" class="list-group-item" id="task"> <i class="fa fa-archive"
-               id="icon"></i>&emsp;<span style="text-align: center;"
-               id="name">과제함</span>
-            </a>
-
-            </a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item" id="team"> <i class="fas fa-users"
+				 <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item" id="team"> <i class="fas fa-users"
                id="icon"></i>&emsp;<span style="text-align: center;">협업</span>
                
                
