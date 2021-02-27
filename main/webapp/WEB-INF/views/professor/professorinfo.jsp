@@ -5,16 +5,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>코스 페이지 </title>
+<title>학생 정보</title>
 <!-- 상단 인클루드 -->
+<%@ include file="/resources/include/top_professor.jsp"%>
 <!-- 목록 
 사용자 - 개인정보, 설정
 수강 과목  - 수강친청 연결, 과목리스트, 과목당 출석여부
 성적  - 과목리스트 ->과목별 성적 출력 , 전체성적
 -->
-<%@ include file="/resources/include/top_professor.jsp"%>
-
-
+</head>
 <!-- body 시작 -->
 <body class="is-preload">
 <!-- 왼쪽메뉴 include -->
@@ -26,7 +25,7 @@
       <small style="font-size:1.2em;">학생 정보</small>
     </div>
     <br />
-	<table class="table table-bordered table-hover table-striped" style="font-size:15px; text-align:center;">	
+	<table class="table table-hover table-striped" style="font-size:15px; text-align:center;">	
     	<tr>
     		<td rowspan="2" width="10%">이름</td>
     		<td rowspan="2" width="15%">학번</td>
@@ -42,12 +41,12 @@
     	<c:forEach items="${lists }" var="row">
 	    	<tr>
 	    		<td>
-	    		<a href="../professor/studentinfo.do?user_id=${row.user_id }">
+	    		<a style="color:#145374" href="../professor/studentinfo.do?user_id=${row.user_id }">
 	    		${row.user_name }
 	    		</a>
 	    		</td>
 	    		<td>
-	    		<a href="../professor/studentinfo.do?user_id=${row.user_id }">
+	    		<a style="color:#145374" href="../professor/studentinfo.do?user_id=${row.user_id }">
 	    		${row.user_id }
 	    		</a>
 	    		</td>

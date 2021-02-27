@@ -19,11 +19,13 @@
    font-size: 20px;
    text-align: left;
 }
+
 #hover {
    color: black;
    background: #F7F7F7; 
    text-decoration: underline;
 }
+
 
 
 .list-group-item.active {
@@ -49,7 +51,6 @@ $(function(){
    <br />
       <div class="col-sm-2 sidenav">
          <div class="list-group">
-
              <a href="/schline/main/class.do" class="list-group-item" id="mainclass">
                 <i class="fas fa-chalkboard" id="icon">&nbsp&nbsp</i>
                <span style="text-align: center;">코스</span>
@@ -58,7 +59,6 @@ $(function(){
                <i class="fa fa-archive" id="icon">&nbsp&nbsp</i>
                <!-- 기존거★ -->
 <!--                   <span style="text-align: center;">종합과제함</span> -->
-
                <!-- 드롭다운 테스트 -->
                <span style="text-align: center;">종합과제함</span>
             </a>

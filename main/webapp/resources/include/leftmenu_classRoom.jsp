@@ -68,7 +68,6 @@ $(function(){
                id="name">과제함</span>
             </a>
 
-
             </a> <a href="/schline/class/teamTask.do?subject_idx=${param.subject_idx }&" class="list-group-item" id="team"> <i class="fas fa-users"
                id="icon"></i>&emsp;<span style="text-align: center;">협업</span>
                
@@ -84,8 +83,6 @@ $(function(){
                
             </a> 
             
-
-
             <div class="dropdown dropright">
                <div class="list-group-item dropdown-toggle" data-toggle="dropdown"  id="penboard">
                   <i class="fas fa-table" id="icon"></i>&emsp;<span

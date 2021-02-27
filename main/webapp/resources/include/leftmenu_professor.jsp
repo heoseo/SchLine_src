@@ -2,16 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		
-<!-- 		<!-- 추가한 부트부분 -->
-<!-- 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
-		
-<!-- 		  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-		  
-		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
+
 	</head>
 <!-- 강의실 왼쪽메뉴 선택바 -->
 <style>
@@ -43,7 +34,7 @@
 				<div class="list-group">
 				
 				<!-- 기존 코스★★★★★ -->
-					<a href="professorinfo.do" class="list-group-item" >
+					<a style="color:#145374"  href="professorinfo.do" class="list-group-item" >
 						<i class="fas fa-vector-square" id="icon">&nbsp&nbsp</i>
 						<span style="text-align: center;">전체 보기</span>
 					</a>

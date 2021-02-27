@@ -23,7 +23,8 @@ function deleteRow(idx,  saved){
 	<br />
 		<div class="container">
 		<div style="padding:50px" align="right">
-		<button type="reset" class="btn" onclick="location.href='../professor/videowrite.do?subject_idx=${subject_idx}'">강의업로드</button>	
+		<button type="reset" class="btn" style="border: 2px solid gray;" 
+		onclick="location.href='../professor/videowrite.do?subject_idx=${subject_idx}'">강의업로드</button>	
 		</div>		
 		<table class="table table-bordered table-hover table-striped">
 	
