@@ -103,9 +103,9 @@
 		<table class="alt" style="text-align:center">
 		<h5>차단 유저 관리</h5>
 		<c:choose>	
-			<c:when test="${empty lists }">
+			<c:when test="${empty lists2 }">
  				<tr>
- 					<td colspan="6" align="center" height="100">
+ 					<td colspan="6" align="center" height="100px" >
  						차단된 유저가 없습니다 
  					</td>
  				</tr>
@@ -113,10 +113,10 @@
 			<c:otherwise>
 				<c:forEach items="${lists2 }" var="row">
 					<tr>
-						<td>${row.block_user }</td>
+						<td>${row.block_nick }</td>
 						<td style="width:5%">
 						<a href="blockDelete.do?block_user=${row.block_user }">
-						<img src="../resources/images/download.png" alt="download" style="max-width:100%; height:auto;"/>
+						<i class="fas fa-times"></i>
 						</a>
 						</td>
 					</tr>

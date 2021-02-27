@@ -122,7 +122,7 @@ tr td:first-child {
    <!-- 왼쪽메뉴 include -->
 <%--    <jsp:include page="/resources/include/leftmenu_classRoom.jsp" /><!-- flag구분예정 --> --%>
 <div style="text-align: center; background: white;"> 
-
+<br />
    <!-- 페이지 레이아웃 구분 클래스 생성 -->
    <div class="container">
    <br /><br />
@@ -159,7 +159,7 @@ tr td:first-child {
              <input type="submit" value="보내기" />
       </form:form> --%>
       
-      <div class="col-sm-3">
+      <div class="col-sm-4">
          <!-- 프로필 -->
          <table class="table table-bordered table-hover table-striped" style="font-size: 0.8em">
             <tr>

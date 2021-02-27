@@ -18,8 +18,9 @@
 button {min-width: 0;width: 30%;cursor: pointer;padding: 3px;min-height: 0;
    height: 40px;font-size: 0.7em;margin-bottom: 10px;}
 #entry {width: 100%;height: 85%;padding: 10px; background-image:url('');}
-#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px; vertical-align: middle;}
-#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;vertical-align: middle;}
+#re {font-size: 0.7em;min-height: 0;min-width: 0;width: 10%;height: 30px; vertical-align: middle; border: none; outline: none; text-decoration: none;}
+#st {font-size: 0.7em;min-height: 0;min-width: 0;width: 10%;height: 30px;vertical-align: middle;border: none;outline: none; text-decoration: none;}
+#order {font-size: 0.7em;min-height: 0;min-width: 0;width: 20%;height: 30px;vertical-align: middle;border: none; }
 </style>
 
 
@@ -28,7 +29,6 @@ button {min-width: 0;width: 30%;cursor: pointer;padding: 3px;min-height: 0;
 <div id="main" class="container-fluid" style="text-align: center;"> 
 <!-- <div class="container"> -->
 <br />
-
 <script type="text/javascript">
 $(function () {
     window.onload = function () {
@@ -298,22 +298,26 @@ document.oncontextmenu = function() {
                <a href="<%=request.getContextPath()%>/resources/music/audio.mp3">여기</a>를
                	클릭해서 다운받으세요
             </audio>
- 			<table style="background-color: white;  margin: 0;color: black; font-size: 0.8em;">
+            
+ 			<table style="background-color: white;  margin: 0;color: black; font-size: 0.7em;">
  				<tr style="text-align: right; min-height:0; height:5px;">
  					<td>
-		 				<span id="current_time" style="font-size: 0.7em;"></span>
-		 				<span id="cutm" style="font-size: 0.7em;"></span> /
-		                <span id="study_time" style="font-size: 0.7em;"></span>
- 					</td>
- 					<td>
-					  <button data-toggle="popover" style="font-size: 0.7em;" data-placement="top"
+		 				<span id="current_time" ></span>
+		 				<span id="cutm" ></span> / <span id="study_time" ></span>
+		 				&nbsp;&nbsp;
+		               <button id="re" onclick="play()"><img src="../resources/images/mplay.png" alt="" /></button><!-- 재시작 -->
+		               <button id="st" onclick="stop()"><img src="../resources/images/mpause.png" alt="" /></button><!-- 정지 -->
+<!--  					</td> -->
+<!--  					<td> -->
+		 				&nbsp;&nbsp;
+					  <button id="order" data-toggle="popover" data-placement="top"
 					   title="" data-content="/닉네임/: 귓속말  , @닉네임: 프로필보기   #닉네임 : 신고"
-					   style="text-align:center;">명령어</button>
-					<script>
-					$(document).ready(function(){
-					  $('[data-toggle="popover"]').popover();   
-					});
-					</script>
+						   style="text-align:center;">명령어</button>
+						<script>
+						$(document).ready(function(){
+						  $('[data-toggle="popover"]').popover();   
+						});
+						</script>
  					</td>
  				</tr>
  			</table>
@@ -326,8 +330,6 @@ document.oncontextmenu = function() {
             	<div style="vertical-align: middle; text-align: center;">
 <!--                <progress value="" id="progress"></progress> -->
                <!--       <div> -->
-               <button id="re" onclick="play()">RESTART</button>
-               <button id="st" onclick="stop()">STOP</button>
                <!--       <input type="button" value="PLAY" onclick="play()"/> -->
                <!--       <input type="button" value="STOP" onclick="stop()"/> -->
                <br /> 
@@ -346,11 +348,12 @@ document.oncontextmenu = function() {
             <jsp:include page="studyRoomChat.jsp" />
 
          </div>
-      </div><br />
+      </div>
+      <br />
    </div>
    </div>
    </div>
-<!--    </div> -->
+   </div>
 
    <jsp:include page="/resources/include/bottom.jsp" />
 </body>
