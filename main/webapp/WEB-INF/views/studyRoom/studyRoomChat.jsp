@@ -30,8 +30,12 @@ function openSocket(){
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    //해당컴에 해당하는 경로로 변경해주기!
    //ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
-   ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
+
+   //ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
     //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
+
+   ws = new WebSocket("ws://192.168.219.119:8080/schline/EchoServer.do");//다은
+
 
    
    //채팅창 open
@@ -201,7 +205,7 @@ function ajaxPro(d, ot_nick) {
 //           alert("아이디확인"+r);
          if(r.result==1){//반환 성공값이 1일때
              if(d==2){//프로필보기용
-               window.open("../class/openProfile.do?ot_nick="+ot_nick+"&user_id=${user_id}", "_blank", "width=600px, height=600px");
+               window.open("../class/openProfile.do?ot_nick="+ot_nick+"&user_id=${user_id}", "_blank", "width=500px, height=500px");
              }//프로필보기가 아닐경우 아무일도 하지않는다.
              else if(r.check==1){//신고하기 성공시
                   messages.innerHTML += "[알림]'"+ot_nick+"'를 신고했습니다.<br/>";

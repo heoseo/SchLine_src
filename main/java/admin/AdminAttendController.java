@@ -54,13 +54,15 @@ public class AdminAttendController {
 	}
 	
 	
-	@RequestMapping(value="/admin/attend/editAttend", method=RequestMethod.POST)
-	public String editAttend(@RequestBody AttendanceMiniDTO attend, Model model, HttpServletRequest req) {
+	@RequestMapping("/admin/attend/editAttend")
+	public String editAttend( Model model, HttpServletRequest req) {
 		
 //		model.addAttribute("req", req);
 
-		String attendance_flag = attend.getAttendance_flag();
-		String attendance_idx = attend.getAttendance_idx();
+		String attendance_idx = req.getParameter("attendance_idx");
+        String attendance_flag = req.getParameter("attendance_flag");
+        
+		System.out.println("AdminAttendConaroller > idx : " + attendance_idx + " flag : " + attendance_flag);
 		
 		Map<String, Object> paramMap = model.asMap();
 		paramMap.put("attendance_idx", attendance_idx);
@@ -69,7 +71,7 @@ public class AdminAttendController {
 		AdminAttendTemplateDAO attendDAO = new AdminAttendTemplateDAO(); 
 		attendDAO.editAttend(paramMap);
 		
-		return "true";
+		return "admin/attend/attendList";
 		
 	}
 	

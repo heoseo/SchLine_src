@@ -133,22 +133,24 @@
 												<c:forEach items="${attendLists }" var="attendList" 
 													varStatus="loop2">
 													<tr>
-													<c:forEach items="${attendList }" var="attend" 
-													varStatus="loop2">
-														<!-- 리스트반복시작 -->
-															<c:choose>
-																<c:when test="${loop2.count eq 1 }">
-																<td >${attend.user_id }</td>
-																</c:when>
-																<c:when test="${loop2.count eq 2 }">
-																<td >${attend.user_name }</td>
-																</c:when>
-																<c:otherwise>
-																<td><a href='javascript:show_pop(${attend.attendance_flag }, ${attend.attendance_idx });'>
-																	${attend.attendance_flag }</a></td>
-																</c:otherwise>
-															</c:choose>
-													</c:forEach>
+<c:forEach items="${attendList }" var="attend" 
+varStatus="loop2">
+	<!-- 리스트반복시작 -->
+		<c:choose>
+			<c:when test="${loop2.count eq 1 }">
+			<td >${attend.user_id }</td>
+			</c:when>
+			<c:when test="${loop2.count eq 2 }">
+			<td >${attend.user_name }</td>
+			</c:when>
+			<c:otherwise>
+			<td>
+			<a href='javascript:void(0);' onclick='show_pop(${attend.attendance_flag }, "${attend.attendance_idx }");'>
+				${attend.attendance_flag }</a>
+			</td>
+			</c:otherwise>
+		</c:choose>
+</c:forEach>
 													</tr>
 												</c:forEach>
 											</c:otherwise>
@@ -189,7 +191,7 @@
 									        		$("#attendance_flag").val("1");
 									        	}
 									        	else if(flag==0){
-									        		$("#attendance_flag").val("2");
+									        		$("#attendance_flag").val("0");
 									        	}
 									        	document.getElementById("attendance_idx").value=idx;
 									        	console.log("attendance_idx:"+document.getElementById("attendance_idx").value);
@@ -197,29 +199,28 @@
 									        }
 									        function close_pop(flag) {
 									        	
-									        	var sendData  = $('#change_flag_frm').serialize();
-									        	alert("sendData : " + sendData);
+									        	var attendance_flag = document.getElementById("attendance_flag").value;
+									        	var attendance_idx = document.getElementById("attendance_idx").value;
+									        	
 									        	$.ajax({
 									        		url: "/schline/admin/attend/editAttend",
-									        		type: "POST",
-									        		dataType: "json",
-									        		data: sendData ,
-									        		contentType : "application/json; charset=utf-8",
-									        		beforeSend : function(xhr){
-									                    xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
-									                   }, 
-									        		success: function(result){
-									        			$('#changeModal').hide();
-							    						location.reload();
-									        		}
-						        		         });
-								        	
+									        	    type:"post",
+									        	    data : {
+									        	   		attendance_flag : attendance_flag,
+									        	    	attendance_idx : attendance_idx
+									        		},
+									        	    beforeSend : function(xhr){
+									        	    	xhr.setRequestHeader( "${_csrf.headerName}", "${_csrf.token}" );
+									        	    },
+									        	    success: function(data){ 
+									        	    }
+									        	});
+							        	    	$('#changeModal').hide();
+								    			location.reload();
 									        	
 									        };
 									        
 									      </script>
-
-
                                         
                                         <!-- 페이지번호 -->
 									<tr >
@@ -246,19 +247,6 @@
     <!-- Bootstrap Core JavaScript -->
     
     <%@ include file="/resources/adminRes/include/bottom_script.jsp" %>
-     <script type="text/javascript">
-//         $(document).ready(function () {
-//             $.toast({
-//                 heading: 'Welcome to Pixel admin',
-//                 text: 'Use the predefined ones, or specify a custom position object.',
-//                 position: 'top-right',
-//                 loaderBg: '#ff6849',
-//                 icon: 'info',
-//                 hideAfter: 3500,
-//                 stack: 6
-//             })
-//         });
-    </script>
 </body>
 
 </html>

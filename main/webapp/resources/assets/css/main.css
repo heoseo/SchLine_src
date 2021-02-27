@@ -102,11 +102,19 @@ input, select, textarea {
 	}
 
 	body {
+<<<<<<< HEAD
 		background-color: #ADD8E6;
 		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%);
 		background-image: url("images/overlay.png"), linear-gradient(45deg, #FFFFFF 0%, #eff8ff 0%);	
+=======
+		background-color: #1687a7;
+/* 		background-image: url("images/overlay.png"), -moz-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
+/* 		background-image: url("images/overlay.png"), -webkit-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
+/* 		background-image: url("images/overlay.png"), -ms-linear-gradient(45deg, #e37682 15%, #5f4d93 85%); */
+		background-image: url("images/overlay.png"), linear-gradient(45deg, #FFFFFF 0%, #ADD8E6 0%);	
+>>>>>>> daeun
 		
 	}
 
@@ -3245,15 +3253,14 @@ input, select, textarea {
 		-webkit-transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
 		-ms-transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
 		transition: background-color 0.2s ease, border-top-left-radius 0.2s ease, border-top-right-radius 0.2s ease, padding 0.2s ease;
-		background-color: #ffffff;
-		color: #636363;
+		color: #00000;
 		position: absolute;
 /* 		position: fixed; 추가 */
 /* 		top: -1px; 추가 */
 		width: 64em;
 		max-width: calc(100% - 4em);
 /* 		padding: 1em; */
-		background-color: #ADD8E6;
+		background-color: #44a9c5;
 		border-top-left-radius: 0.25em;
 		border-top-right-radius: 0.25em;
 		cursor: pointer;
