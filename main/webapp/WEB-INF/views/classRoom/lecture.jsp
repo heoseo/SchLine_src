@@ -43,8 +43,7 @@
 <br />
    <div style="text-align: center;">
       <small><span id="opne_btn" style="cursor:pointer; font-size:1.2em">강의 <i class="fas fa-info-circle"></i></span></small><!-- flag구분예정-->
-   </div>
-   <hr /><!-- 구분자 -->
+   </div><br />
 
 <div id="modal">
     <div class="modal_content">
