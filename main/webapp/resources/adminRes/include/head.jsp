@@ -50,7 +50,7 @@
 
 <style>
 *{
-/* font-size: larger; */
+	font-size: 15px; 
 }
 </style>
 <%-- 	<script src="<%=request.getContextPath() %>/resources/assets/js/jquery.min.js"/></script> --%>
