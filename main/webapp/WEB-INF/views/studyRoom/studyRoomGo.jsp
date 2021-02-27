@@ -309,7 +309,7 @@ document.oncontextmenu = function() {
 		 				&nbsp;&nbsp;
 					  <button id="order" data-toggle="popover" data-placement="top"
 					   title="" data-content="/닉네임/: 귓속말  , @닉네임: 프로필보기   #닉네임 : 신고"
-						   style="text-align:center;">명령어</button>
+						   style="text-align:center; border:solid 2px gray; ">명령어</button>
 						<script>
 						$(document).ready(function(){
 						  $('[data-toggle="popover"]').popover();   

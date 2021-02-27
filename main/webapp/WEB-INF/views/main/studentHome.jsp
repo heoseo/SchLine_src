@@ -126,7 +126,7 @@
 					
 	<!-- 					<input type="image" src="" alt="" /> -->
 						<span class="image">
-							<a href="./class/studyRoom.do">
+							<a href="./studyRoom/studyRoom.do">
 								<img src="<%=request.getContextPath() %>/resources/images/study3.jpg" alt="공부방 이동"
 <%-- 								<img src="<%=request.getContextPath() %>/resources/images/harry2.JPG" alt="공부방 이동" --%>
 <%-- 								<img src="<%=request.getContextPath() %>/resources/images/harry.png" alt="공부방 이동" --%>
