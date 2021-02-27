@@ -255,7 +255,8 @@ textarea { height : 200px; }
  	<div class="input-group-text"><i class="fa fa-calendar"></i></div> </div> </div>
  	
  	</td>
- 	<td style="width:10%"><input type="number" name="exam_scoring" id="task_scoring" style="width:100%"/></td>
+ 	<td style="width:10%"><input type="number" name="exam_scoring" id="task_scoring" style="width:100%; 
+ 	border: solid 1px #cdd0cb; border-radius: 5px;"/></td>
  	</tr>
  	<tr>
  	<td style="vertical-align:middle;">과제<br/>내용</td>
