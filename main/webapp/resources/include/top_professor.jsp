@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 상단 인클루드 -->
-
+<html>
+<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -30,12 +31,22 @@
 header{
   height: 75px;
   padding: 1rem;
-  color: white;
   background: teal;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+body{
+
+ 	background: #bee5d3;
+	
+}
+nav{
+	color: white;
+}
+a{
+color: white;
 }
 </style>
 	</head>
@@ -68,7 +79,8 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav" style="background-color: #ADD8E6; color:#145374; font-weight:bold;">
+<!-- 			<nav id="nav" style="background-color: #448ef6; font-weight:bold;"> -->
+			<nav id="nav" style="background-color: #5eaaa8; font-weight:bold;">
 				<ul>
     				<li class="nav-item">
 						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->

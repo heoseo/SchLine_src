@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>공지사항</title>
+		<title>공지사항 글쓰기</title>
 <!-- 나머지 head속성은 인클루드에 있어요 -->
 <!-- 상단  인클루드 : 메뉴별 페이지 이동설정 해야함★★★★★★-->
 <%@ include file="/resources/include/top_professor.jsp"%>

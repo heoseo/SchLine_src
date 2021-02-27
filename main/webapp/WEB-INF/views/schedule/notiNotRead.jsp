@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>알림</title>
+<title>일정</title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
 <script>

@@ -163,11 +163,11 @@ $(function() {
 							&nbsp&nbsp
 							<span id="button">
 								<!-- 캘린더 버튼. 이전달달 -->
-								<button id="calBefore" class="button small">
+								<button id="calBefore" class="button small" style="border: 2px solid gray;">
 									<i class='fas fa-chevron-left'></i>
 								</button>
 								<!-- 캘린더 버튼. 다음달 -->				
-								<button id="calAfter" class="button small" style="margin-right: 0px">
+								<button id="calAfter" class="button small" style="margin-right: 0px; border: 2px solid gray;">
 									<i class='fas fa-chevron-right'></i>
 								</button>
 							</span>

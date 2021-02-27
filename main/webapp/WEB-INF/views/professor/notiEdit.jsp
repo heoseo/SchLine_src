@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>알림</title>
+<title>공지사항 수정하기</title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top_professor.jsp"%>
 
@@ -46,6 +46,20 @@
 		}
 	}
 </script>
+<style type="text/css">
+body{
+/* 	background: #074684; */
+/* 	background: #b1bed5; */
+ 	background: #bee5d3;
+	
+}
+nav{
+	color: white;
+}
+a{
+color: white;
+} 
+</style>
 </head>
 
 
@@ -114,7 +128,9 @@
 						onclick="location.href='notiBoardList.do?nowPage=${param.nowPage }';">
 						리스트보기</button>
 				</div>	
-				
+			<br />
+			<br />
+			<br />
 			</div>	
 			</form:form>
 </c:forEach>

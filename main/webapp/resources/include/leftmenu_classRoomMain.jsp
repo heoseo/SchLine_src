@@ -19,11 +19,7 @@
 	font-size: 20px;
 	text-align: left;
 }
-#hover {
-	color: black;
-	background: #F7F7F7; 
-	text-decoration: underline;
-}
+
 </style>
 
 <div id="main" class="container-fluid">

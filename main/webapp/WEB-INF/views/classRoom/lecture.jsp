@@ -57,16 +57,14 @@
 </div>
 	<table class="table table-hover table-striped">
 				<colgroup>
-				<col width="40px"/>
-				<col width="40px"/>
-				<col width="300"/>
 				<col width="100px"/>
+				<col width="*"/>
+				<col width="200px"/>
 			</colgroup>	
 			<thead>
-				<tr>
+				<tr style="font-size: 20px;">
 					<th class="text-center" style="font-weight:bold;">No</th>
-					<th class="text-center" style="font-weight:bold;"></th>
-					<th style="font-weight:bold; text-align: left;">제목</th>
+					<th style="font-weight:bold; text-align: left; padding-left: 106px;">제목</th>
 					<th class="text-center" style="font-weight:bold;">출석인정일</th>
 				</tr>
 			</thead>
@@ -85,11 +83,10 @@
 					<td class="text-center"><!-- 가상번호 -->
 						${row.rnum }. 	
 					</td>
-					<td class="text-right">
-					<img src="../resources/images/lecture_thumbnail.png" class="media-object" style="width:40px;margin-bottom:-5px">
-	
-					<td class="text-left">
-					<a href='javascript:void(0);' onclick="vidOpne('${row.server_saved }',${row.subject_idx },'${row.video_title }',${row.video_idx});">
+					<td class="text-left" style="padding-left: 30px;">
+					<img src="../resources/images/lecture_thumbnail.png" class="media-object" style="width:40px;margin-bottom:-5px; ">	
+					<a href='javascript:void(0);' style="padding-left: 30px;"
+					onclick="vidOpne('${row.server_saved }',${row.subject_idx },'${row.video_title }',${row.video_idx});">
 					${row.video_title }</a>
 					</td>
 					<td class="text-center">${row.video_end }</td>
