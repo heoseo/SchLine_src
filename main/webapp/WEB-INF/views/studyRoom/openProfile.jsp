@@ -34,8 +34,8 @@
 }
 
 #profile_img {
-	width: 400px;
-	height: 400px%;
+	width: 200px;
+	height: 200px%;
 	object-fit: cover; /* 이미지 비율 유지한채로 가공 */
 }
 </style>
@@ -81,13 +81,10 @@
 	<!-- 메인 로고 이미지 -->
 	<div align="center">
 	<br />
-	<h1><u>프로필 보기</u></h1>
-		<a href="#"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
-<%-- 			<img src="<%=request.getContextPath() %>/resources/images/logo3.png" width="400px" alt="스쿨라인 로고" /> --%>
-		</a>
+	<h2 style="font-weight: bold;"><u>프로필 보기</u></h2>
 	</div>
 	
-	<div align="center">
+<!-- 	<div align="center"> -->
 		<table>
 			<tr >
 				<td  style="text-align: center;">
@@ -107,12 +104,12 @@
 				</span> 
 				</td>
 				<tr>
-					<td style="font-size: 2em;">닉네임 : ${ot.info_nick }</td>
+					<td style="font-size: 1em;">닉네임 : ${ot.info_nick }</td>
 				</tr>
 				<tr style="text-align: center;">
 					<td>
 					<c:if test="${block_check eq 0}">
-						<button class="primary ml-auto" onclick="ajaxPro2();" >
+						<button class="primary ml-auto" onclick="ajaxPro2();" style="background-color: orange;" >
 							차단하기
 						</button>
 					</c:if>
@@ -121,15 +118,10 @@
 							차단해제
 						</button>
 					</c:if>
-						&nbsp;&nbsp;
 					</td>
 				</tr>
-
-				
-				
 		</table>
-		<br />
-	</div>
+<!-- 	</div> -->
 	<!-- Form -->
 		<form:form method="post" action="" enctype="multipart/form-data">
 			<input type="hidden" name="ot_img" value="${ot.info_img }" />
