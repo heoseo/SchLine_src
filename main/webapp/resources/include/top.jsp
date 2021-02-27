@@ -67,7 +67,6 @@ $(function(){
       sBtn.removeClass("active");     // sBtn 속에 (active) 클래스를 삭제 한다.
        $(this).parent().addClass("active"); // 클릭한 a에 (active)클래스를 넣는다.
    }) */
-   
    if(location.pathname.indexOf('class') != -1) {
    $('#classRoom').addClass('active');
    }

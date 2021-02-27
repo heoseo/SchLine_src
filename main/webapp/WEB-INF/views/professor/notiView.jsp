@@ -5,32 +5,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>알림</title>
+<title>상세보기</title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top_professor.jsp"%>
-
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-
-			<!-- JS파일이 부트스트랩보다 위에 있어야 min.js에러가 안남 -->
-			
-			<!-- Scripts -->
-			<script src='<c:url value="/resources/assets/js/jquery.min.js"/>'></script>
-			<script src='<c:url value="/resources/assets/js/jquery.scrollex.min.js"/>'></script>
-			<script src='<c:url value="/resources/assets/js/jquery.scrolly.min.js"/>'></script>
-			<script src='<c:url value="/resources/assets/js/browser.min.js"/>'></script>
-			<script src='<c:url value="/resources/assets/js/breakpoints.min.js"/>'></script>
-			<script src='<c:url value="/resources/assets/js/util.js"/>'></script>
-			<script src='<c:url value="/resources/assets/js/main.js"/>'></script>
-			
-			<!-- 드롭다운용 부트 -->
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-			<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>	
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-						
-	
-		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
 
 </head>
 <style type="text/css">
