@@ -7,7 +7,6 @@
 <!-- <div class="container"> -->
 <!-- 채팅 -->
 <script type="text/javascript">
-
 $(document).ready(function() {
    messages = document.getElementById("messageWindow");
    openSocket();
@@ -15,22 +14,22 @@ $(document).ready(function() {
    var info_nick = $('#info_nick').val();//닉네임
 //    alert(info_nick);
 });
-
 var ws; 
 var messages;
-
 //소켓오픈
 function openSocket(){
    if(ws !== undefined && ws.readyState !== WebSocket.CLOSED ){
       writeResponse("WebSocket is already opened.");
       return;
-   }zz
+   }
    
    //웹소켓 객체 만드는 코드
    //호출명 뒤에 /websocket 해주어야 웹소켓 200에러 막을  수 있다.
    //해당컴에 해당하는 경로로 변경해주기!
-
-   ws = new WebSocket("ws://192.168.219.102:8080/schline/EchoServer.do");
+   //ws = new WebSocket("ws://localhost:9999/schline/echo.do/websocket");
+   //ws = new WebSocket("ws://192.168.25.47:9999/schline/EchoServer.do");//다혜
+    //ws = new WebSocket("ws://192.168.219.113:9999/schline/EchoServer.do");//성준
+   ws = new WebSocket("ws://192.168.231.7:8080/schline/EchoServer.do");//다은
 
 
    
@@ -60,23 +59,18 @@ function openSocket(){
       send("admin|'${info_nick}'님이 퇴실하셨습니다.");
    };
    //에러발생
-	ws.onerror = function(event) {
-		wsError(event);
-	};
+   ws.onerror = function(event) {
+      wsError(event);
+   };
 }
-
 function wsError(event) {
-	writeResponse("에러 발생");
-	writeResponse(event.data);
+   writeResponse("에러 발생");
+   writeResponse(event.data);
 }
-
-
 var block;//신고와 차단용 변수 생성
-
 //접속자 메세지 입력후 '보내기' 눌렀을때
 function send(){
 //    $('#messageWindow').css("color", "black");
-
     var msg = document.getElementById("inputMessage").value;
     var sender = document.getElementById("info_nick").value;
     var user_img = document.getElementById("info_img").value; //내 프로필
@@ -115,12 +109,10 @@ function send(){
          $('#inputMessage').val("");
          return false;
       }
-
        
        
     //서버로 메세지 전송
     ws.send(sender+'|'+ msg + '|' + user_img);
-
     //귓속말할때
     if(msg.startsWith("/")==true){
       var x = msg.split("/");
@@ -139,7 +131,6 @@ function send(){
         return false;
       }
     }
-
    
    
    var text = '';
@@ -157,7 +148,6 @@ function send(){
        text += '</div>';
       
        messages.innerHTML += text;
-
    //입력했던 대화내용 지워줌
    $('#inputMessage').val("");
    //스크롤 아래로
@@ -179,10 +169,6 @@ function send(){
       }
    });
 }//send끝
-
-
-
-
 //닉네임 확인(닉네임확인, 프로필보기, 신고, 차단 동시진행)
 function ajaxPro(d, ot_nick) {
    $.ajax({
@@ -224,29 +210,19 @@ function ajaxPro(d, ot_nick) {
       }
    });
 }
-
-
 //채팅종료
 function closeSocket(){
-	send("admin|'${info_nick}'님이 퇴실하셨습니다.");
-   	ws.close();
+   send("admin|'${info_nick}'님이 퇴실하셨습니다.");
+      ws.close();
 }
-
-
 // function bl_check(num) {
 //    return num;
 // }
-
-
 function blockPeople() {
    
 }
-
-
-
 //상대응답
 function writeResponse(text){
-
     var msgAll = text.split('|');
     var sender = msgAll[0];
     var con = msgAll[1];
@@ -315,8 +291,6 @@ function writeResponse(text){
     //스크롤바 항상 아래로
    messages.scrollTop = messages.scrollHeight;
 } 
-
-
 //상대방이 보낸 메세지를 출력하기위한 부분
 function makeBalloon(id, cont, img){
    //현재시각 불러오기
@@ -337,13 +311,10 @@ function makeBalloon(id, cont, img){
    msg += '</div>';
    return msg;
 }
-
-
 function clearText(){ 
    console.log(messages.parentNode);
    messages.parentNode.removeChild(messages)
 }
-
 //키보드 눌렀을때 보내기함수 호출
 function enterkey(){
    if(window.event.keyCode==13){
@@ -359,7 +330,6 @@ function nowTime(){
    
    return ampm+" "+h+":"+m;
 }
-
 //프로필 이미지 눌렀을때
 $('.profile-img').on('click', function () {
    alert('이미지클릭');

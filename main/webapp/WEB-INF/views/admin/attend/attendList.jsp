@@ -146,8 +146,8 @@
 																<c:otherwise>
 																<td>
 																<a href='javascript:void(0);' onclick='show_pop(${attend.attendance_flag }, "${attend.attendance_idx }");'>
-																	<c:if test="${attend.attendance_flag eq 0 }">X</c:if>
-																	<c:if test="${attend.attendance_flag eq 1 }">0</c:if>
+																	<c:if test="${attend.attendance_flag eq 0 or attend.attendance_flag eq 1 }">X</c:if>
+																	<c:if test="${attend.attendance_flag eq 2 }">O</c:if>
 																</a>
 																</td>
 																</c:otherwise>
@@ -167,7 +167,7 @@
 									            
 						                
 						                						<select name="attendance_flag" id="attendance_flag" class="form-control" style="width:120px; margin-bottom:15px;" >
-																    <option value="1">O</option>
+																    <option value="2">O</option>
 																    <option value="0">X</option>
 																</select>
 													          <button type="button" class="btn btn-danger" data-dismiss="modal" onClick="close_pop();">Close</button>
@@ -185,8 +185,8 @@
 									    <script>
 									      
 									        function show_pop(flag, idx){
-									        	if(flag == 1){
-									        		$("#attendance_flag").val("1");
+									        	if(flag == 2){
+									        		$("#attendance_flag").val("2");
 									        	}
 									        	else if(flag==0){
 									        		$("#attendance_flag").val("0");

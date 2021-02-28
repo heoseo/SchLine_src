@@ -11,7 +11,7 @@
  	text-align: left;
  }
  #yes{
- 	background: #d9ecf2;
+ 	background: #79a8c1;
     opacity: 0.9;
     font-weight:bold;
     border-radius: 15px; 
@@ -60,7 +60,7 @@
 					<div class="container">
 						<h5><a href="./class/grade.do?subject_idx=${row.subject_idx }">
 						<i class="fas fa-check" id="sub"></i>${row.subject_name }</a></h5>
-						<table class="table table-hover" style="font-size:15px; text-align:center;">
+						<table class="table table-hover" style="font-size:15px; text-align:center;border-color: #ff000000;">
 								<c:choose>	
 									<c:when test="${row.rnum==1 }">
 						 			
@@ -68,13 +68,13 @@
 											<c:forEach items="${atten1 }" var="row2">
 												<c:if test="${row2.attendance_flag==2 }">
 													<td id="yes" style="margin-right: 30px;">
-													${row2.rnum }강 O
+													${row2.rnum }강
 													</td>
 													<td id="space"></td>
 													</c:if>
 													<c:if test="${row2.attendance_flag!=2 }">
 													<td id="no">
-													${row2.rnum }강 X
+													${row2.rnum }강
 													</td>
 													<td id="space"></td>
 													</c:if>	
