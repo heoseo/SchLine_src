@@ -19,11 +19,13 @@
    font-size: 20px;
    text-align: left;
 }
+
 #hover {
    color: black;
    background: #F7F7F7; 
    text-decoration: underline;
 }
+
 
 
 .list-group-item.active {

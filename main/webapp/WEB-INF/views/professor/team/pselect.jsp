@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
+		<title>과제/시험</title>
 		
 <script>
 function changeteam(){

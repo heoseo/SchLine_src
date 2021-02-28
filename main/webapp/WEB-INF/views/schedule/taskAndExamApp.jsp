@@ -54,7 +54,7 @@ body {
 </head>
 
 <!-- body 시작 -->
-<body class="is-preload">
+<body class="is-preload" style="background:white;">
 	
 	<div><!-- mainDiv시작 -->
 		<br />

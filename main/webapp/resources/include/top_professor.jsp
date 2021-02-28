@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!-- 상단 인클루드 -->
-
+<html>
+<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -30,13 +31,14 @@
 header{
   height: 75px;
   padding: 1rem;
-  color: white;
   background: teal;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+body{background: #bee5d3;} 
+nav{color: white;}
 </style>
 	</head>
 	
@@ -68,7 +70,8 @@ if(session.getAttribute("user_id") != null){
 </style>
 
 		<!-- Nav -->
-			<nav id="nav" style="background-color: #ADD8E6; color:#145374; font-weight:bold;">
+<!-- 			<nav id="nav" style="background-color: #448ef6; font-weight:bold;"> -->
+			<nav id="nav" style="background-color: #5eaaa8; font-weight:bold;">
 				<ul>
     				<li class="nav-item">
 						<a href="/schline/"><!-- ★★이미지클릭시 home으로 가기. home요청명 적기 -->
@@ -76,17 +79,17 @@ if(session.getAttribute("user_id") != null){
  						</a>
 					</li>
     				<li class="nav-item">
-						<a href="/schline/professor/video.do">
+						<a style="color: white;" href="/schline/professor/video.do">
 						강의
 						</a>
 					</li>
 					
 	 				<li class="nav-item">
-						<a href="/schline/professor/select.do" >
+						<a style="color: white;"  href="/schline/professor/select.do" >
 						과제</a>
 					</li>
 				
-					<li><a href="/schline/professor/pexamlist.do">시험</a></li>
+					<li><a style="color: white;"  href="/schline/professor/pexamlist.do">시험</a></li>
 					<li>
 						<div class="dropdown nav-item" >
 							<div class="nav-item dropdown-toggle" data-toggle="dropdown" style="font-weight:bold;">
@@ -100,9 +103,9 @@ if(session.getAttribute("user_id") != null){
 						</div>
 					</li>
 
-					<li><a href="/schline/professor/professorinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">&nbsp;</i>학생관리</a></li>
+					<li><a style="color: white;"  href="/schline/professor/professorinfo.do"><i class="fas fa-user-circle" style="font-size:25px;">&nbsp;</i>학생관리</a></li>
 
-					<li><a href="javascript:document.logout.submit()">
+					<li><a style="color: white;"  href="javascript:document.logout.submit()">
 					<i class="fas fa-sign-out-alt">&nbsp;</i>로그아웃</a></li>
 				</ul>
 			</nav>

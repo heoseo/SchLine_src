@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<title>코스 페이지 </title>
+<title>코스</title>
 <!-- 상단 인클루드 -->
 <%@ include file="/resources/include/top.jsp"%>
 <style type="text/css">
@@ -33,7 +33,7 @@ a:hover {
 	text-decoration: none;
 }
 .td{
-	border: solid 1px #e8e8e8; 
+	border: solid 1px gray; 
 	border-radius: 10px;
 }
 .td:hover{

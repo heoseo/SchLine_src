@@ -48,7 +48,7 @@ ArrayList<ExamDTO> lists = (ArrayList<ExamDTO>)request.getAttribute("lists");
    padding-bottom: 50px;
    font-size: 15px;
    font-weight: normal;
-    border: solid 1px #C0C0C0;
+    border: solid 1px gray;
    text-align:left;
    padding-left:2px;
 }
