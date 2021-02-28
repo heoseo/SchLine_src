@@ -12,7 +12,19 @@
 		  
 		<link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="<%=request.getContextPath() %>/resources/assets/css/noscript.css" /></noscript>
-	</head>
+<style type="text/css">
+	body{
+	/* 	background: #074684; */
+	/* 	background: #b1bed5; */
+	 	background: #bee5d3;
+	
+	}
+	nav{
+		color: white;
+	}
+
+</style>
+</head>
 <!-- 강의실 왼쪽메뉴 선택바 -->
 <style>
 #icon {
@@ -26,12 +38,14 @@
 }
 
 
+
 .list-group-item.active {
     z-index: 2;
     color: #fff;
     background-color: #a7c3ca;
     border-color: #a7c3ca;
 }
+
 
 </style>
 <div id="main" class="container-fluid">
